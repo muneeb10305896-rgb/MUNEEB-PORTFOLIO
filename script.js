@@ -10,32 +10,30 @@ let mouseX = 0;
 let mouseY = 0;
 let ringX = 0;
 let ringY = 0;
-let isMoving = true;
 
-// Update cursor position directly on every mousemove
+// Update coordinates using pageX/pageY to account for scrolling
 document.addEventListener('mousemove', (e) => {
-  mouseX = e.clientX;
-  mouseY = e.clientY;
-  isMoving = true;
+  mouseX = e.pageX;
+  mouseY = e.pageY;
+}, { passive: true });
 
-  // Update cursor immediately
-  requestAnimationFrame(() => {
-    if (cursor) {
-      cursor.style.left = mouseX + 'px';
-      cursor.style.top = mouseY + 'px';
-    }
-  });
-}, false);
+// Unified animation loop for both the dot and the ring
+function renderCursor() {
+  if (cursor) {
+    cursor.style.left = mouseX + 'px';
+    cursor.style.top = mouseY + 'px';
+  }
 
-// Animate ring with easing
-setInterval(() => {
-  if (ring && isMoving) {
+  if (ring) {
     ringX += (mouseX - ringX) * 0.12;
     ringY += (mouseY - ringY) * 0.12;
     ring.style.left = (ringX - 18) + 'px';
     ring.style.top = (ringY - 18) + 'px';
   }
-}, 16);
+  
+  requestAnimationFrame(renderCursor);
+}
+renderCursor();
 
 const hoverables = 'a, button, .badge, .skill-pill, .exp-tag, .contact-link, .pc-contact-btn';
 document.querySelectorAll(hoverables).forEach(el => {

@@ -172,12 +172,14 @@ function updateVelocityTracks() {
   t2pos += speed;
   scrollVelocity *= 0.9;
 
-  // Seamless loop: reset exactly when half has scrolled
-  if (half1 > 0 && t1pos <= -half1) {
-    t1pos += half1; // Jump back seamlessly
+  // Seamless infinite loop using modulo - no jumps or pops
+  if (half1 > 0) {
+    // Keep position within -half1 to 0 range for smooth wrapping
+    t1pos = ((t1pos % half1) - half1) % half1;
   }
-  if (half2 > 0 && t2pos >= half2) {
-    t2pos -= half2; // Jump back seamlessly
+  if (half2 > 0) {
+    // Keep position within 0 to half2 range for smooth wrapping
+    t2pos = t2pos % half2;
   }
 
   track1.style.transform = `translateX(${t1pos}px)`;

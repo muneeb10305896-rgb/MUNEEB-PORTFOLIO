@@ -234,7 +234,7 @@ document.querySelectorAll('.hero-stats [data-count]').forEach(el => {
 });
 
 /* ============================================
-   DRAGGABLE LANYARD — VERLET PHYSICS
+   DRAGGABLE LANYARD — MASSIVE BLEED FIX
    ============================================ */
 (function initLanyard() {
   const stage  = document.getElementById('lanyardStage');
@@ -243,25 +243,21 @@ document.querySelectorAll('.hero-stats [data-count]').forEach(el => {
   if (!stage || !canvas || !card) return;
   const ctx = canvas.getContext('2d');
 
-  let anchorX = 0, anchorY = 0;
+  // We are creating an invisible 800px border around your container. 
+  // The string will only clip if you drag it more than 800px offscreen.
+  const EXPAND = 800; 
 
   function sizeCanvas() { 
-    // Make canvas cover the entire screen to prevent clipping
-    canvas.width = window.innerWidth; 
-    canvas.height = window.innerHeight; 
-    canvas.style.position = 'fixed';
-    canvas.style.top = '0px';
-    canvas.style.left = '0px';
-    canvas.style.pointerEvents = 'none';
-    canvas.style.zIndex = '9999';
-
-    // Allow scrolling through the box, but keep the card draggable
-    stage.style.pointerEvents = 'none';
-    card.style.pointerEvents = 'auto';
-
-    const rect = stage.getBoundingClientRect();
-    anchorX = rect.left + stage.clientWidth / 2;
-    anchorY = rect.top;
+    // 1. Force the cage to let the card out
+    stage.style.overflow = 'visible';
+    
+    // 2. Make the canvas massive and center it over the stage
+    canvas.width = stage.clientWidth + (EXPAND * 2);
+    canvas.height = stage.clientHeight + (EXPAND * 2);
+    canvas.style.position = 'absolute';
+    canvas.style.top = `-${EXPAND}px`;
+    canvas.style.left = `-${EXPAND}px`;
+    canvas.style.pointerEvents = 'none'; // Scroll passes right through
   }
   sizeCanvas();
 
@@ -270,6 +266,10 @@ document.querySelectorAll('.hero-stats [data-count]').forEach(el => {
   const GRAVITY  = 0.75;
   const FRICTION = 0.96;
   const STIFFNESS = 40;
+
+  // Set the anchor perfectly in the middle-top of the stage
+  let anchorX = EXPAND + (stage.clientWidth / 2);
+  let anchorY = EXPAND; 
 
   const points = [];
   for (let i = 0; i < SEGMENTS; i++) {
@@ -280,15 +280,17 @@ document.querySelectorAll('.hero-stats [data-count]').forEach(el => {
 
   let dragging = false, dragX = 0, dragY = 0;
 
+  // Convert mouse clicks to our massive canvas coordinates
   function pointerXY(e) {
+    const r = canvas.getBoundingClientRect();
     const cx = e.touches ? e.touches[0].clientX : e.clientX;
     const cy = e.touches ? e.touches[0].clientY : e.clientY;
-    return { x: cx, y: cy };
+    return { x: cx - r.left, y: cy - r.top };
   }
 
   card.addEventListener('pointerdown', e => {
     dragging = true; last.pinned = true;
-    stage.style.cursor = 'grabbing';
+    document.body.style.cursor = 'grabbing'; // Change cursor globally while dragging
     const p = pointerXY(e); dragX = p.x; dragY = p.y;
     e.preventDefault(); 
   });
@@ -297,33 +299,16 @@ document.querySelectorAll('.hero-stats [data-count]').forEach(el => {
     const p = pointerXY(e); dragX = p.x; dragY = p.y;
   });
   window.addEventListener('pointerup', () => {
-    if (dragging) { dragging = false; last.pinned = false; stage.style.cursor = 'grab'; }
+    if (dragging) { dragging = false; last.pinned = false; document.body.style.cursor = ''; }
   });
 
-  window.addEventListener('resize', sizeCanvas);
-
-  let physicsScrollX = window.scrollX;
-  let physicsScrollY = window.scrollY;
+  window.addEventListener('resize', () => {
+    sizeCanvas();
+    anchorX = EXPAND + (stage.clientWidth / 2);
+    anchorY = EXPAND;
+  });
 
   function simulate() {
-    // Keep string physics locked to the document when scrolling
-    const dx = window.scrollX - physicsScrollX;
-    const dy = window.scrollY - physicsScrollY;
-    physicsScrollX = window.scrollX;
-    physicsScrollY = window.scrollY;
-
-    if (dx !== 0 || dy !== 0) {
-      for (const p of points) {
-        p.x -= dx; p.ox -= dx;
-        p.y -= dy; p.oy -= dy;
-      }
-    }
-
-    // Update anchor dynamically based on viewport
-    const stageRect = stage.getBoundingClientRect();
-    anchorX = stageRect.left + stage.clientWidth / 2;
-    anchorY = stageRect.top;
-
     for (const p of points) {
       if (p.pinned) continue;
       const vx = (p.x - p.ox) * FRICTION;
@@ -352,8 +337,7 @@ document.querySelectorAll('.hero-stats [data-count]').forEach(el => {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     ctx.lineJoin = 'round'; ctx.lineCap = 'round';
     
-    // Draw string
-    const grad = ctx.createLinearGradient(0, 0, 0, canvas.height);
+    const grad = ctx.createLinearGradient(0, anchorY, 0, anchorY + (SEGMENTS * SEG_LEN * 2));
     grad.addColorStop(0, '#7c6dfa'); grad.addColorStop(1, '#4fc3f7');
     ctx.strokeStyle = grad; ctx.lineWidth = 7;
     ctx.beginPath();
@@ -361,24 +345,21 @@ document.querySelectorAll('.hero-stats [data-count]').forEach(el => {
     for (let i = 1; i < points.length; i++) ctx.lineTo(points[i].x, points[i].y);
     ctx.stroke();
     
-    // Draw highlight strip
     ctx.strokeStyle = 'rgba(255,255,255,.25)'; ctx.lineWidth = 2;
     ctx.beginPath();
     ctx.moveTo(points[0].x, points[0].y);
     for (let i = 1; i < points.length; i++) ctx.lineTo(points[i].x, points[i].y);
     ctx.stroke();
     
-    // Draw anchor knob
     ctx.fillStyle = '#9b8df8';
     ctx.beginPath(); ctx.arc(anchorX, anchorY + 2, 5, 0, Math.PI * 2); ctx.fill();
 
-    // Position card perfectly relative to its container
     const secondLast = points[SEGMENTS - 2];
     const angle = Math.atan2(last.y - secondLast.y, last.x - secondLast.x) - Math.PI / 2;
-    const stageRect = stage.getBoundingClientRect();
     
-    card.style.left = (last.x - stageRect.left) + 'px';
-    card.style.top  = (last.y - stageRect.top) + 'px';
+    // Reverse the math to attach the card perfectly back into the stage wrapper
+    card.style.left = (last.x - EXPAND) + 'px';
+    card.style.top  = (last.y - EXPAND) + 'px';
     card.style.transform = `translate(-50%, 0) rotate(${angle}rad)`;
     
     const holo = card.querySelector('.id-holo');

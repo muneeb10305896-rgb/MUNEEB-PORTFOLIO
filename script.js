@@ -171,8 +171,6 @@ setTimeout(() => {
   }
   if (track2) {
     half2 = track2.scrollWidth / 2;
-    // Start the right-moving track shifted to the left 
-    // so it doesn't immediately show an empty gap!
     t2pos = -half2; 
   }
 }, 100);
@@ -180,21 +178,15 @@ setTimeout(() => {
 function updateVelocityTracks() {
   const speed = 1.5 + Math.abs(scrollVel) * 0.18;
 
-  // Track 1: Moving Left
   if (half1 > 0 && track1) {
     t1pos -= speed; 
-    if (t1pos <= -half1) {
-      t1pos += half1; // Wrap seamlessly
-    }
+    if (t1pos <= -half1) t1pos += half1; 
     track1.style.transform = `translateX(${t1pos}px)`;
   }
 
-  // Track 2: Moving Right
   if (half2 > 0 && track2) {
     t2pos += speed; 
-    if (t2pos >= 0) {
-      t2pos -= half2; // Wrap seamlessly back to the left
-    }
+    if (t2pos >= 0) t2pos -= half2; 
     track2.style.transform = `translateX(${t2pos}px)`;
   }
 
@@ -209,11 +201,9 @@ const revealObserver = new IntersectionObserver(entries => {
     if (e.isIntersecting) {
       e.target.classList.add('visible');
       e.target.classList.remove('from-top', 'from-bottom');
-      // animate counters inside
       e.target.querySelectorAll('[data-count]').forEach(animateCounter);
       if (e.target.hasAttribute('data-count')) animateCounter(e.target);
     } else {
-      // replay each time it re-enters — and exit toward the edge it leaves from
       e.target.classList.remove('visible');
       const aboveViewport = e.boundingClientRect.top < 0;
       e.target.classList.toggle('from-top', aboveViewport);
@@ -236,7 +226,6 @@ function animateCounter(el) {
     el.textContent = cur + suffix;
   }, 30);
 }
-// also observe the hero stat counter directly
 document.querySelectorAll('.hero-stats [data-count]').forEach(el => {
   const heroObs = new IntersectionObserver(ents => {
     ents.forEach(en => { if (en.isIntersecting) animateCounter(el); });
@@ -254,7 +243,26 @@ document.querySelectorAll('.hero-stats [data-count]').forEach(el => {
   if (!stage || !canvas || !card) return;
   const ctx = canvas.getContext('2d');
 
-  function sizeCanvas() { canvas.width = stage.clientWidth; canvas.height = stage.clientHeight; }
+  let anchorX = 0, anchorY = 0;
+
+  function sizeCanvas() { 
+    // Make canvas cover the entire screen to prevent clipping
+    canvas.width = window.innerWidth; 
+    canvas.height = window.innerHeight; 
+    canvas.style.position = 'fixed';
+    canvas.style.top = '0px';
+    canvas.style.left = '0px';
+    canvas.style.pointerEvents = 'none';
+    canvas.style.zIndex = '9999';
+
+    // Allow scrolling through the box, but keep the card draggable
+    stage.style.pointerEvents = 'none';
+    card.style.pointerEvents = 'auto';
+
+    const rect = stage.getBoundingClientRect();
+    anchorX = rect.left + stage.clientWidth / 2;
+    anchorY = rect.top;
+  }
   sizeCanvas();
 
   const SEGMENTS = 18;
@@ -262,9 +270,6 @@ document.querySelectorAll('.hero-stats [data-count]').forEach(el => {
   const GRAVITY  = 0.75;
   const FRICTION = 0.96;
   const STIFFNESS = 40;
-
-  let anchorX = stage.clientWidth / 2;
-  let anchorY = 0;
 
   const points = [];
   for (let i = 0; i < SEGMENTS; i++) {
@@ -276,17 +281,16 @@ document.querySelectorAll('.hero-stats [data-count]').forEach(el => {
   let dragging = false, dragX = 0, dragY = 0;
 
   function pointerXY(e) {
-    const r = stage.getBoundingClientRect();
     const cx = e.touches ? e.touches[0].clientX : e.clientX;
     const cy = e.touches ? e.touches[0].clientY : e.clientY;
-    return { x: cx - r.left, y: cy - r.top };
+    return { x: cx, y: cy };
   }
 
   card.addEventListener('pointerdown', e => {
     dragging = true; last.pinned = true;
     stage.style.cursor = 'grabbing';
     const p = pointerXY(e); dragX = p.x; dragY = p.y;
-    e.preventDefault();
+    e.preventDefault(); 
   });
   window.addEventListener('pointermove', e => {
     if (!dragging) return;
@@ -296,9 +300,30 @@ document.querySelectorAll('.hero-stats [data-count]').forEach(el => {
     if (dragging) { dragging = false; last.pinned = false; stage.style.cursor = 'grab'; }
   });
 
-  window.addEventListener('resize', () => { sizeCanvas(); anchorX = stage.clientWidth / 2; });
+  window.addEventListener('resize', sizeCanvas);
+
+  let physicsScrollX = window.scrollX;
+  let physicsScrollY = window.scrollY;
 
   function simulate() {
+    // Keep string physics locked to the document when scrolling
+    const dx = window.scrollX - physicsScrollX;
+    const dy = window.scrollY - physicsScrollY;
+    physicsScrollX = window.scrollX;
+    physicsScrollY = window.scrollY;
+
+    if (dx !== 0 || dy !== 0) {
+      for (const p of points) {
+        p.x -= dx; p.ox -= dx;
+        p.y -= dy; p.oy -= dy;
+      }
+    }
+
+    // Update anchor dynamically based on viewport
+    const stageRect = stage.getBoundingClientRect();
+    anchorX = stageRect.left + stage.clientWidth / 2;
+    anchorY = stageRect.top;
+
     for (const p of points) {
       if (p.pinned) continue;
       const vx = (p.x - p.ox) * FRICTION;
@@ -307,13 +332,14 @@ document.querySelectorAll('.hero-stats [data-count]').forEach(el => {
       p.x += vx; p.y += vy + GRAVITY;
     }
     if (dragging) { last.x = dragX; last.y = dragY; last.ox = dragX; last.oy = dragY; }
+    
     for (let k = 0; k < STIFFNESS; k++) {
       for (let i = 0; i < points.length - 1; i++) {
         const a = points[i], b = points[i + 1];
-        const dx = b.x - a.x, dy = b.y - a.y;
-        const d = Math.hypot(dx, dy) || 0.001;
+        const distX = b.x - a.x, distY = b.y - a.y;
+        const d = Math.hypot(distX, distY) || 0.001;
         const diff = (SEG_LEN - d) / d;
-        const ox = dx * diff * 0.5, oy = dy * diff * 0.5;
+        const ox = distX * diff * 0.5, oy = distY * diff * 0.5;
         if (!a.pinned) { a.x -= ox; a.y -= oy; }
         if (!b.pinned) { b.x += ox; b.y += oy; }
       }
@@ -325,6 +351,8 @@ document.querySelectorAll('.hero-stats [data-count]').forEach(el => {
   function render() {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     ctx.lineJoin = 'round'; ctx.lineCap = 'round';
+    
+    // Draw string
     const grad = ctx.createLinearGradient(0, 0, 0, canvas.height);
     grad.addColorStop(0, '#7c6dfa'); grad.addColorStop(1, '#4fc3f7');
     ctx.strokeStyle = grad; ctx.lineWidth = 7;
@@ -332,28 +360,33 @@ document.querySelectorAll('.hero-stats [data-count]').forEach(el => {
     ctx.moveTo(points[0].x, points[0].y);
     for (let i = 1; i < points.length; i++) ctx.lineTo(points[i].x, points[i].y);
     ctx.stroke();
-    // highlight strip
+    
+    // Draw highlight strip
     ctx.strokeStyle = 'rgba(255,255,255,.25)'; ctx.lineWidth = 2;
     ctx.beginPath();
     ctx.moveTo(points[0].x, points[0].y);
     for (let i = 1; i < points.length; i++) ctx.lineTo(points[i].x, points[i].y);
     ctx.stroke();
-    // anchor knob
+    
+    // Draw anchor knob
     ctx.fillStyle = '#9b8df8';
     ctx.beginPath(); ctx.arc(anchorX, anchorY + 2, 5, 0, Math.PI * 2); ctx.fill();
 
+    // Position card perfectly relative to its container
     const secondLast = points[SEGMENTS - 2];
     const angle = Math.atan2(last.y - secondLast.y, last.x - secondLast.x) - Math.PI / 2;
-    card.style.left = last.x + 'px';
-    card.style.top  = last.y + 'px';
+    const stageRect = stage.getBoundingClientRect();
+    
+    card.style.left = (last.x - stageRect.left) + 'px';
+    card.style.top  = (last.y - stageRect.top) + 'px';
     card.style.transform = `translate(-50%, 0) rotate(${angle}rad)`;
+    
     const holo = card.querySelector('.id-holo');
     if (holo) holo.style.transform = `rotate(${angle * 30}deg)`;
   }
 
   (function loop() { simulate(); render(); requestAnimationFrame(loop); })();
 
-  // little nudge so visitors notice it swings
   setTimeout(() => { last.x += 80; }, 1600);
 })();
 
@@ -370,9 +403,7 @@ document.querySelectorAll('.exp-card').forEach(card => {
 });
 
 /* ============================================
-   MAGNETIC + 3D SPRING CARDS  (Framer-Motion style)
-   Hover NEAR a box and it springs toward your cursor,
-   tilts in 3D, lifts, and glows — all with bouncy spring physics.
+   MAGNETIC + 3D SPRING CARDS
    ============================================ */
 let mouseGX = -99999, mouseGY = -99999;
 window.addEventListener('mousemove', e => { mouseGX = e.clientX; mouseGY = e.clientY; }, { passive: true });
@@ -385,17 +416,14 @@ function registerCards(selector, cfg) {
     el.style.willChange = 'transform, box-shadow';
     springCards.push({
       el, cfg,
-      // current + velocity for spring integration
       mx:0, my:0, rx:0, ry:0, sc:1, gz:0,
       vmx:0, vmy:0, vrx:0, vry:0, vsc:0, vgz:0,
-      // targets
       tmx:0, tmy:0, trx:0, try_:0, tsc:1, tgz:0,
       glow:0, vglow:0, tglow:0
     });
   });
 }
 
-//                       radius  pull  maxPull tilt  lift   depth
 registerCards('.skill-card',   { radius:230, pull:.32, maxPull:30, tilt:24, lift:1.07, depth:48 });
 registerCards('.exp-card',     { radius:280, pull:.26, maxPull:34, tilt:9,  lift:1.025, depth:0 });
 registerCards('.edu-card',     { radius:250, pull:.30, maxPull:30, tilt:13, lift:1.035, depth:30 });
@@ -404,7 +432,6 @@ registerCards('.info-card',    { radius:210, pull:.30, maxPull:26, tilt:11, lift
 registerCards('.contact-link', { radius:210, pull:.42, maxPull:28, tilt:8,  lift:1.04, depth:0 });
 
 const clampV = (v, m) => Math.max(-m, Math.min(m, v));
-// spring step: returns [newPos, newVel] — slight overshoot = that Framer bounce
 const STIFF = 0.11, DAMP = 0.76;
 function step(pos, vel, target) {
   vel = (vel + (target - pos) * STIFF) * DAMP;
@@ -415,22 +442,20 @@ function springLoop() {
   const vh = window.innerHeight;
   for (const c of springCards) {
     const r = c.el.getBoundingClientRect();
-    // skip far-offscreen cards (and let them rest at identity)
     if (r.bottom < -120 || r.top > vh + 120) {
       c.tmx = c.tmy = c.trx = c.try_ = c.tgz = c.tglow = 0; c.tsc = 1;
     } else {
-      // base centre with current translate removed (no feedback loop)
       const cx = r.left + r.width / 2 - c.mx;
       const cy = r.top  + r.height / 2 - c.my;
       const dx = mouseGX - cx, dy = mouseGY - cy;
       const dist = Math.hypot(dx, dy);
       if (dist < c.cfg.radius) {
-        const f = 1 - dist / c.cfg.radius;          // closeness 0..1
-        const ease = f * f * (3 - 2 * f);           // smoothstep
+        const f = 1 - dist / c.cfg.radius;
+        const ease = f * f * (3 - 2 * f);
         c.tmx = clampV(dx * c.cfg.pull, c.cfg.maxPull) * ease;
         c.tmy = clampV(dy * c.cfg.pull, c.cfg.maxPull) * ease;
-        c.try_ = (dx / (r.width  / 2)) * c.cfg.tilt * ease;   // rotateY
-        c.trx  = (-dy / (r.height / 2)) * c.cfg.tilt * ease;  // rotateX
+        c.try_ = (dx / (r.width  / 2)) * c.cfg.tilt * ease;
+        c.trx  = (-dy / (r.height / 2)) * c.cfg.tilt * ease;
         c.tsc  = 1 + (c.cfg.lift - 1) * ease;
         c.tgz  = c.cfg.depth * ease;
         c.tglow = ease;

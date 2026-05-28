@@ -369,30 +369,98 @@ document.querySelectorAll('.exp-card').forEach(card => {
   });
 });
 
-/* —— 3D SKILL CARD TILT (maxed) —— */
-document.querySelectorAll('.skill-card').forEach(card => {
-  card.addEventListener('mousemove', e => {
-    const r = card.getBoundingClientRect();
-    const x = (e.clientX - r.left) / r.width  - 0.5;
-    const y = (e.clientY - r.top)  / r.height - 0.5;
-    card.style.transform = `perspective(700px) rotateX(${-y * 22}deg) rotateY(${x * 22}deg) translateZ(30px) scale(1.05)`;
-    card.style.boxShadow = `${-x * 40}px ${-y * 40}px 60px rgba(124,109,250,.4), 0 0 0 1px rgba(124,109,250,.35)`;
-    card.style.borderColor = 'rgba(124,109,250,.6)';
-  });
-  card.addEventListener('mouseleave', () => { card.style.transform = ''; card.style.boxShadow = ''; card.style.borderColor = ''; });
-});
+/* ============================================
+   MAGNETIC + 3D SPRING CARDS  (Framer-Motion style)
+   Hover NEAR a box and it springs toward your cursor,
+   tilts in 3D, lifts, and glows — all with bouncy spring physics.
+   ============================================ */
+let mouseGX = -99999, mouseGY = -99999;
+window.addEventListener('mousemove', e => { mouseGX = e.clientX; mouseGY = e.clientY; }, { passive: true });
+window.addEventListener('mouseout', e => { if (!e.relatedTarget) { mouseGX = -99999; mouseGY = -99999; } });
 
-/* —— EDU / CERT CARD TILT (maxed) —— */
-document.querySelectorAll('.edu-card, .cert-card').forEach(card => {
-  card.addEventListener('mousemove', e => {
-    const r = card.getBoundingClientRect();
-    const x = (e.clientX - r.left) / r.width  - 0.5;
-    const y = (e.clientY - r.top)  / r.height - 0.5;
-    card.style.transform = `translateY(-8px) perspective(900px) rotateX(${-y * 10}deg) rotateY(${x * 10}deg) scale(1.02)`;
-    card.style.boxShadow = `${-x * 30}px ${14 - y * 20}px 45px rgba(124,109,250,.3), 0 0 0 1px rgba(124,109,250,.25)`;
+const springCards = [];
+function registerCards(selector, cfg) {
+  document.querySelectorAll(selector).forEach(el => {
+    el.style.transformStyle = 'preserve-3d';
+    el.style.willChange = 'transform, box-shadow';
+    springCards.push({
+      el, cfg,
+      // current + velocity for spring integration
+      mx:0, my:0, rx:0, ry:0, sc:1, gz:0,
+      vmx:0, vmy:0, vrx:0, vry:0, vsc:0, vgz:0,
+      // targets
+      tmx:0, tmy:0, trx:0, try_:0, tsc:1, tgz:0,
+      glow:0, vglow:0, tglow:0
+    });
   });
-  card.addEventListener('mouseleave', () => { card.style.transform = ''; card.style.boxShadow = ''; });
-});
+}
+
+//                       radius  pull  maxPull tilt  lift   depth
+registerCards('.skill-card',   { radius:230, pull:.32, maxPull:30, tilt:24, lift:1.07, depth:48 });
+registerCards('.exp-card',     { radius:280, pull:.26, maxPull:34, tilt:9,  lift:1.025, depth:0 });
+registerCards('.edu-card',     { radius:250, pull:.30, maxPull:30, tilt:13, lift:1.035, depth:30 });
+registerCards('.cert-card',    { radius:250, pull:.30, maxPull:30, tilt:13, lift:1.035, depth:30 });
+registerCards('.info-card',    { radius:210, pull:.30, maxPull:26, tilt:11, lift:1.04, depth:0 });
+registerCards('.contact-link', { radius:210, pull:.42, maxPull:28, tilt:8,  lift:1.04, depth:0 });
+
+const clampV = (v, m) => Math.max(-m, Math.min(m, v));
+// spring step: returns [newPos, newVel] — slight overshoot = that Framer bounce
+const STIFF = 0.11, DAMP = 0.76;
+function step(pos, vel, target) {
+  vel = (vel + (target - pos) * STIFF) * DAMP;
+  return [pos + vel, vel];
+}
+
+function springLoop() {
+  const vh = window.innerHeight;
+  for (const c of springCards) {
+    const r = c.el.getBoundingClientRect();
+    // skip far-offscreen cards (and let them rest at identity)
+    if (r.bottom < -120 || r.top > vh + 120) {
+      c.tmx = c.tmy = c.trx = c.try_ = c.tgz = c.tglow = 0; c.tsc = 1;
+    } else {
+      // base centre with current translate removed (no feedback loop)
+      const cx = r.left + r.width / 2 - c.mx;
+      const cy = r.top  + r.height / 2 - c.my;
+      const dx = mouseGX - cx, dy = mouseGY - cy;
+      const dist = Math.hypot(dx, dy);
+      if (dist < c.cfg.radius) {
+        const f = 1 - dist / c.cfg.radius;          // closeness 0..1
+        const ease = f * f * (3 - 2 * f);           // smoothstep
+        c.tmx = clampV(dx * c.cfg.pull, c.cfg.maxPull) * ease;
+        c.tmy = clampV(dy * c.cfg.pull, c.cfg.maxPull) * ease;
+        c.try_ = (dx / (r.width  / 2)) * c.cfg.tilt * ease;   // rotateY
+        c.trx  = (-dy / (r.height / 2)) * c.cfg.tilt * ease;  // rotateX
+        c.tsc  = 1 + (c.cfg.lift - 1) * ease;
+        c.tgz  = c.cfg.depth * ease;
+        c.tglow = ease;
+      } else {
+        c.tmx = c.tmy = c.trx = c.try_ = c.tgz = c.tglow = 0; c.tsc = 1;
+      }
+    }
+    [c.mx, c.vmx]   = step(c.mx, c.vmx, c.tmx);
+    [c.my, c.vmy]   = step(c.my, c.vmy, c.tmy);
+    [c.rx, c.vrx]   = step(c.rx, c.vrx, c.trx);
+    [c.ry, c.vry]   = step(c.ry, c.vry, c.try_);
+    [c.sc, c.vsc]   = step(c.sc, c.vsc, c.tsc);
+    [c.gz, c.vgz]   = step(c.gz, c.vgz, c.tgz);
+    [c.glow, c.vglow] = step(c.glow, c.vglow, c.tglow);
+
+    c.el.style.transform =
+      `perspective(820px) translate3d(${c.mx.toFixed(2)}px, ${c.my.toFixed(2)}px, ${c.gz.toFixed(2)}px) ` +
+      `rotateX(${c.rx.toFixed(2)}deg) rotateY(${c.ry.toFixed(2)}deg) scale(${c.sc.toFixed(3)})`;
+    if (c.glow > 0.003) {
+      const g = c.glow;
+      c.el.style.boxShadow =
+        `${(-c.ry * 1.6).toFixed(1)}px ${(c.rx * 1.6 + 14 * g).toFixed(1)}px ${(40 * g).toFixed(0)}px rgba(124,109,250,${(0.38 * g).toFixed(3)}), ` +
+        `0 0 0 1px rgba(124,109,250,${(0.4 * g).toFixed(3)})`;
+    } else {
+      c.el.style.boxShadow = '';
+    }
+  }
+  requestAnimationFrame(springLoop);
+}
+springLoop();
 
 /* —— PARALLAX FLOATING SHAPES ON SCROLL —— */
 const floatShapes = document.querySelectorAll('.floating-shape');

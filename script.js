@@ -259,9 +259,9 @@ document.querySelectorAll('.hero-stats [data-count]').forEach(el => {
 
   const SEGMENTS = 18;
   const SEG_LEN  = 9;
-  const GRAVITY  = 0.85;
-  const FRICTION = 0.99;
-  const STIFFNESS = 18;
+  const GRAVITY  = 0.75;
+  const FRICTION = 0.96;
+  const STIFFNESS = 40;
 
   let anchorX = stage.clientWidth / 2;
   let anchorY = 0;

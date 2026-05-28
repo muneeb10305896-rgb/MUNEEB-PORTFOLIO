@@ -20,7 +20,7 @@
   --radius:  16px;
 }
 
-html { scroll-behavior: smooth; font-size: 16px; }
+html { scroll-behavior: smooth; font-size: 16px; overflow-x: hidden; }
 body {
   background: var(--bg);
   color: var(--text);
@@ -409,7 +409,7 @@ h1 {
 .track2 { margin-top: .5rem; color: rgba(79,195,247,.18); }
 
 /* —— SECTIONS —— */
-.section { padding: 5.5rem 2.5rem; max-width: 1100px; margin: 0 auto; position: relative; z-index: 1; }
+.section { padding: 5.5rem 2.5rem; max-width: 1100px; margin: 0 auto; position: relative; z-index: 1; overflow: hidden; }
 #contact { padding-bottom: 2.5rem; }
 .section-label { font-size: .75rem; letter-spacing: .14em; text-transform: uppercase; color: var(--accent); margin-bottom: .7rem; font-weight: 500; }
 .section-title { font-family: 'Syne', sans-serif; font-size: clamp(1.8rem, 3.5vw, 2.5rem); font-weight: 700; margin-bottom: .5rem; }
@@ -665,8 +665,17 @@ h1 {
 .divider { height: 1px; background: linear-gradient(90deg,transparent,var(--accent),transparent); opacity: .2; margin: 0 2.5rem; }
 
 /* —— FOOTER —— */
-footer { text-align: center; padding: 2.2rem; border-top: 1px solid var(--border); color: var(--muted); font-size: .83rem; position: relative; z-index: 1; }
+footer {
+  text-align: center; padding: 1.4rem 2.2rem;
+  border-top: 1px solid var(--border); color: var(--muted); font-size: .83rem;
+  position: relative; z-index: 1; overflow: hidden;
+}
 footer span { color: var(--accent); }
+/* kill any overflowing fixed/absolute content below the footer */
+footer::after {
+  content: ''; display: block; position: absolute;
+  left: 0; right: 0; bottom: 0; height: 0;
+}
 
 /* —— BACK TO TOP —— */
 #backToTop {

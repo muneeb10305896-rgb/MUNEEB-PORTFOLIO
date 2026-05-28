@@ -26,53 +26,43 @@ muneeb-portfolio/
 
 ## 🚀 How to Deploy (Free — GitHub Pages)
 
-### Step 1: Create a GitHub account
-Go to https://github.com and sign up if you don't have an account.
+### Step 1: Your repo is ready
+The repository is already created at: https://github.com/muneeb10305896-rgb/MUNEEB-PORTFOLIO
 
-### Step 2: Create a new repository
-1. Click the **+** icon → **New repository**
-2. Name it: `muneeb-portfolio` (or your GitHub username: `username.github.io`)
-3. Set to **Public**
-4. Click **Create repository**
-
-### Step 3: Upload the files
-1. Click **uploading an existing file**
-2. Drag and drop ALL files including the `assets/` folder
-3. Click **Commit changes**
-
-### Step 4: Enable GitHub Pages
+### Step 2: Enable GitHub Pages
 1. Go to **Settings** → **Pages**
 2. Source: **Deploy from a branch**
 3. Branch: **main** → **/ (root)**
 4. Click **Save**
 
-### Step 5: Your site is live!
+### Step 3: Your site is live!
 After ~2 minutes your portfolio will be live at:
-`https://yourusername.github.io/muneeb-portfolio/`
+`https://muneeb10305896-rgb.github.io/MUNEEB-PORTFOLIO/`
 
 ---
 
 ## ✏️ How to Update Content
 
 ### Change your name/info
-Open `index.html` in any text editor (Notepad, VS Code) and search for the text you want to change.
+Open `index.html` in any text editor (VS Code, Notepad) and search for the text you want to change.
 
 ### Change your photo
-Replace `assets/muneeb.jpg` with a new photo. Keep the same filename.
+Replace `assets/muneeb.jpg` with a new photo. Keep the same filename or update references in HTML.
 
 ### Change colors
 Open `style.css` and edit the `:root` variables at the top:
 ```css
 :root {
-  --accent:  #7c6dfa;  /* main purple */
-  --accent2: #4fc3f7;  /* cyan blue */
-  --accent3: #ff6b9d;  /* pink */
+  --bg:      #07070f;      /* background */
+  --accent:  #7c6dfa;      /* main purple */
+  --accent2: #4fc3f7;      /* cyan blue */
+  --accent3: #ff6b9d;      /* pink */
+  --text:    #f0eef8;      /* text color */
 }
 ```
 
-### Add the contact form (real emails)
-Sign up at https://formspree.io for free.
-Replace the contact section in index.html with a form pointing to your Formspree endpoint.
+### Update work experience, education, skills
+Edit the respective sections in `index.html`. Find sections with class names like `.exp-card`, `.edu-card`, `.skill-card`.
 
 ---
 

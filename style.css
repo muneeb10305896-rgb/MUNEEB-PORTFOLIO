@@ -52,8 +52,6 @@ body {
   position: fixed; width: 12px; height: 12px;
   background: var(--accent); border-radius: 50%;
   pointer-events: none; z-index: 9999;
-  top: 0; left: 0;
-  margin-left: -6px; margin-top: -6px;
   transition: width .15s, height .15s, background .15s;
   mix-blend-mode: screen;
   will-change: left, top;
@@ -63,8 +61,6 @@ body {
   position: fixed; width: 36px; height: 36px;
   border: 1.5px solid rgba(124,109,250,.5); border-radius: 50%;
   pointer-events: none; z-index: 9998;
-  top: 0; left: 0;
-  margin-left: -18px; margin-top: -18px;
   transition: width .12s ease, height .12s ease, border-color .12s;
   will-change: left, top;
   backface-visibility: hidden;

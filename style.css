@@ -615,37 +615,78 @@ h1 {
 .contact-link:hover::before { opacity: 1; }
 .contact-link:hover::after { opacity: 1; transform: translateX(0) scale(1); }
 .cl-icon {
-  width: 44px; height: 44px; border-radius: 10px;
+  width: 48px; height: 48px; border-radius: 12px;
   background: rgba(124,109,250,.12); display: flex;
   align-items: center; justify-content: center;
-  flex-shrink: 0; font-size: 1.1rem; transition: all .4s;
+  flex-shrink: 0; font-size: 1.4rem; transition: all .4s;
   position: relative; z-index: 2;
   color: var(--accent);
-  border: 1px solid rgba(124,109,250,.2);
+  border: 1.5px solid rgba(124,109,250,.2);
+  line-height: 1;
 }
 .contact-link:hover .cl-icon {
-  transform: perspective(800px) rotateX(-10deg) rotateY(-10deg) scale(1.2);
-  background: rgba(124,109,250,.25);
+  transform: perspective(800px) rotateX(-12deg) rotateY(-12deg) scale(1.25);
+  background: rgba(124,109,250,.3);
   border-color: var(--accent);
-  box-shadow: 0 8px 20px rgba(124,109,250,.3);
+  box-shadow: 0 12px 30px rgba(124,109,250,.35);
 }
-.cl-icon svg { width: 24px; height: 24px; }
+.cl-icon i { display: flex; align-items: center; justify-content: center; }
 
 /* Brand-specific colors */
-.contact-email .cl-icon { background: rgba(234,67,53,.15); color: #ea4335; }
-.contact-email:hover .cl-icon { background: rgba(234,67,53,.25); box-shadow: 0 8px 20px rgba(234,67,53,.3); }
+.contact-email .cl-icon {
+  background: linear-gradient(135deg, rgba(234,67,53,.15), rgba(234,67,53,.08));
+  color: #ea4335;
+  border-color: rgba(234,67,53,.3);
+}
+.contact-email:hover .cl-icon {
+  background: linear-gradient(135deg, rgba(234,67,53,.3), rgba(234,67,53,.2));
+  border-color: #ea4335;
+  box-shadow: 0 12px 30px rgba(234,67,53,.35);
+}
 
-.contact-linkedin .cl-icon { background: rgba(0,119,181,.15); color: #0077b5; }
-.contact-linkedin:hover .cl-icon { background: rgba(0,119,181,.25); box-shadow: 0 8px 20px rgba(0,119,181,.3); }
+.contact-linkedin .cl-icon {
+  background: linear-gradient(135deg, rgba(0,119,181,.15), rgba(0,119,181,.08));
+  color: #0077b5;
+  border-color: rgba(0,119,181,.3);
+}
+.contact-linkedin:hover .cl-icon {
+  background: linear-gradient(135deg, rgba(0,119,181,.3), rgba(0,119,181,.2));
+  border-color: #0077b5;
+  box-shadow: 0 12px 30px rgba(0,119,181,.35);
+}
 
-.contact-github .cl-icon { background: rgba(255,255,255,.1); color: #fff; }
-.contact-github:hover .cl-icon { background: rgba(255,255,255,.2); box-shadow: 0 8px 20px rgba(255,255,255,.2); }
+.contact-github .cl-icon {
+  background: linear-gradient(135deg, rgba(255,255,255,.12), rgba(255,255,255,.06));
+  color: #ffffff;
+  border-color: rgba(255,255,255,.2);
+}
+.contact-github:hover .cl-icon {
+  background: linear-gradient(135deg, rgba(255,255,255,.25), rgba(255,255,255,.15));
+  border-color: #ffffff;
+  box-shadow: 0 12px 30px rgba(255,255,255,.25);
+}
 
-.contact-instagram .cl-icon { background: rgba(245,84,136,.15); color: #f55488; }
-.contact-instagram:hover .cl-icon { background: rgba(245,84,136,.25); box-shadow: 0 8px 20px rgba(245,84,136,.3); }
+.contact-instagram .cl-icon {
+  background: linear-gradient(135deg, rgba(245,84,136,.15), rgba(245,84,136,.08));
+  color: #f55488;
+  border-color: rgba(245,84,136,.3);
+}
+.contact-instagram:hover .cl-icon {
+  background: linear-gradient(135deg, rgba(245,84,136,.3), rgba(245,84,136,.2));
+  border-color: #f55488;
+  box-shadow: 0 12px 30px rgba(245,84,136,.35);
+}
 
-.contact-phone .cl-icon { background: rgba(76,175,80,.15); color: #4caf50; }
-.contact-phone:hover .cl-icon { background: rgba(76,175,80,.25); box-shadow: 0 8px 20px rgba(76,175,80,.3); }
+.contact-phone .cl-icon {
+  background: linear-gradient(135deg, rgba(76,175,80,.15), rgba(76,175,80,.08));
+  color: #4caf50;
+  border-color: rgba(76,175,80,.3);
+}
+.contact-phone:hover .cl-icon {
+  background: linear-gradient(135deg, rgba(76,175,80,.3), rgba(76,175,80,.2));
+  border-color: #4caf50;
+  box-shadow: 0 12px 30px rgba(76,175,80,.35);
+}
 
 .cl-label { font-weight: 600; font-size: .86rem; letter-spacing: .05em; }
 .cl-val { font-size: .78rem; color: var(--muted); margin-top: .15rem; }

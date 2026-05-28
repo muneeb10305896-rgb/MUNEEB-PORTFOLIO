@@ -159,18 +159,30 @@ const track1 = document.getElementById('track1');
 const track2 = document.getElementById('track2');
 let t1pos = 0, t2pos = 0;
 
-let velRaf = null;
+// Calculate track widths (should be set after DOM is ready)
+let half1 = 0, half2 = 0;
+setTimeout(() => {
+  if (track1) half1 = track1.scrollWidth / 2;
+  if (track2) half2 = track2.scrollWidth / 2;
+}, 100);
+
 function updateVelocityTracks() {
   const speed = 1 + Math.abs(scrollVelocity) * 0.05;
-  t1pos -= speed; t2pos += speed;
+  t1pos -= speed;
+  t2pos += speed;
   scrollVelocity *= 0.9;
-  const half1 = track1.scrollWidth / 2;
-  const half2 = track2.scrollWidth / 2;
-  if (Math.abs(t1pos) >= half1) t1pos = 0;
-  if (Math.abs(t2pos) >= half2) t2pos = 0;
+
+  // Seamless loop: reset exactly when half has scrolled
+  if (half1 > 0 && t1pos <= -half1) {
+    t1pos += half1; // Jump back seamlessly
+  }
+  if (half2 > 0 && t2pos >= half2) {
+    t2pos -= half2; // Jump back seamlessly
+  }
+
   track1.style.transform = `translateX(${t1pos}px)`;
   track2.style.transform = `translateX(${t2pos}px)`;
-  velRaf = requestAnimationFrame(updateVelocityTracks);
+  requestAnimationFrame(updateVelocityTracks);
 }
 updateVelocityTracks();
 

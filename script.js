@@ -159,31 +159,42 @@ const track1 = document.getElementById('track1');
 const track2 = document.getElementById('track2');
 let t1pos = 0, t2pos = 0;
 
-// Calculate track widths (should be set after DOM is ready)
+// Calculate track widths
 let half1 = 0, half2 = 0;
 setTimeout(() => {
-  if (track1) half1 = track1.scrollWidth / 2;
-  if (track2) half2 = track2.scrollWidth / 2;
+  if (track1) {
+    half1 = track1.scrollWidth / 2;
+  }
+  if (track2) {
+    half2 = track2.scrollWidth / 2;
+    // CRITICAL FIX: Start the right-moving track shifted to the left 
+    // so it doesn't immediately show an empty gap!
+    t2pos = -half2; 
+  }
 }, 100);
 
 function updateVelocityTracks() {
   const speed = 1 + Math.abs(scrollVelocity) * 0.05;
-  t1pos -= speed;
-  t2pos += speed;
+
+  // Track 1: Moving Left
+  if (half1 > 0 && track1) {
+    t1pos -= speed; 
+    if (t1pos <= -half1) {
+      t1pos += half1; // Wrap seamlessly when half the track is hidden
+    }
+    track1.style.transform = `translateX(${t1pos}px)`;
+  }
+
+  // Track 2: Moving Right
+  if (half2 > 0 && track2) {
+    t2pos += speed; 
+    if (t2pos >= 0) {
+      t2pos -= half2; // Wrap seamlessly back to the left
+    }
+    track2.style.transform = `translateX(${t2pos}px)`;
+  }
+
   scrollVelocity *= 0.9;
-
-  // Seamless infinite loop using modulo - no jumps or pops
-  if (half1 > 0) {
-    // Keep position within -half1 to 0 range for smooth wrapping
-    t1pos = ((t1pos % half1) - half1) % half1;
-  }
-  if (half2 > 0) {
-    // Keep position within 0 to half2 range for smooth wrapping
-    t2pos = t2pos % half2;
-  }
-
-  track1.style.transform = `translateX(${t1pos}px)`;
-  track2.style.transform = `translateX(${t2pos}px)`;
   requestAnimationFrame(updateVelocityTracks);
 }
 updateVelocityTracks();

@@ -4,23 +4,32 @@
 
 /* ── CUSTOM CURSOR ── */
 const cursor = document.getElementById('cursor');
-const ring   = document.getElementById('cursor-ring');
-let mx = 0, my = 0, rx = 0, ry = 0;
+const ring = document.getElementById('cursor-ring');
 
-document.addEventListener('mousemove', e => {
-  mx = e.clientX;
-  my = e.clientY;
-  cursor.style.left = (mx - 6) + 'px';
-  cursor.style.top = (my - 6) + 'px';
+let mouseX = 0;
+let mouseY = 0;
+let ringX = 0;
+let ringY = 0;
+
+document.addEventListener('mousemove', (e) => {
+  mouseX = e.clientX;
+  mouseY = e.clientY;
+
+  // Force cursor visibility and update position
+  cursor.style.left = (mouseX - 6) + 'px';
+  cursor.style.top = (mouseY - 6) + 'px';
+  cursor.style.display = 'block';
+  ring.style.display = 'block';
 }, { passive: true });
-function animateCursorRing() {
-  rx += (mx - rx) * 0.15;
-  ry += (my - ry) * 0.15;
-  ring.style.left = (rx - 18) + 'px';
-  ring.style.top = (ry - 18) + 'px';
-  requestAnimationFrame(animateCursorRing);
+
+function updateRing() {
+  ringX += (mouseX - ringX) * 0.15;
+  ringY += (mouseY - ringY) * 0.15;
+  ring.style.left = (ringX - 18) + 'px';
+  ring.style.top = (ringY - 18) + 'px';
+  requestAnimationFrame(updateRing);
 }
-animateCursorRing();
+updateRing();
 
 const hoverables = 'a, button, .badge, .skill-pill, .exp-tag, .contact-link, .pc-contact-btn';
 document.querySelectorAll(hoverables).forEach(el => {

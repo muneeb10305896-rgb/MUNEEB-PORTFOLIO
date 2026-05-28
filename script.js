@@ -293,3 +293,25 @@ document.querySelectorAll('.edu-card, .cert-card').forEach(card => {
     if (eRaf) cancelAnimationFrame(eRaf);
   });
 });
+
+/* ── CONTACT LINK HOVER GLOW ── */
+document.querySelectorAll('.contact-link').forEach(link => {
+  let cmx = 0, cmy = 0, cRaf = null;
+  link.addEventListener('mousemove', e => {
+    const r = link.getBoundingClientRect();
+    cmx = ((e.clientX - r.left) / r.width * 100);
+    cmy = ((e.clientY - r.top) / r.height * 100);
+    if (!cRaf) {
+      cRaf = requestAnimationFrame(() => {
+        link.style.setProperty('--mx', cmx + '%');
+        link.style.setProperty('--my', cmy + '%');
+        cRaf = null;
+      });
+    }
+  });
+  link.addEventListener('mouseleave', () => {
+    link.style.setProperty('--mx', '100%');
+    link.style.setProperty('--my', '100%');
+    if (cRaf) cancelAnimationFrame(cRaf);
+  });
+});

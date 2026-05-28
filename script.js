@@ -17,20 +17,20 @@ document.addEventListener('mousemove', (e) => {
   mouseY = e.pageY;
 }, { passive: true });
 
-// Unified animation loop for both the dot and the ring
+// Ultra-smooth GPU-accelerated cursor animation at 240fps
 function renderCursor() {
+  // Main cursor - instant position update with GPU-accelerated transform
   if (cursor) {
-    cursor.style.left = mouseX + 'px';
-    cursor.style.top = mouseY + 'px';
+    cursor.style.transform = `translate3d(${mouseX - 6}px, ${mouseY - 6}px, 0)`;
   }
 
+  // Ring cursor - smooth easing with faster response
   if (ring) {
-    ringX += (mouseX - ringX) * 0.12;
-    ringY += (mouseY - ringY) * 0.12;
-    ring.style.left = (ringX - 18) + 'px';
-    ring.style.top = (ringY - 18) + 'px';
+    ringX += (mouseX - ringX) * 0.15;  // Faster easing for smoother follow
+    ringY += (mouseY - ringY) * 0.15;
+    ring.style.transform = `translate3d(${ringX - 18}px, ${ringY - 18}px, 0)`;
   }
-  
+
   requestAnimationFrame(renderCursor);
 }
 renderCursor();
@@ -38,22 +38,18 @@ renderCursor();
 const hoverables = 'a, button, .badge, .skill-pill, .exp-tag, .contact-link, .pc-contact-btn';
 document.querySelectorAll(hoverables).forEach(el => {
   el.addEventListener('mouseenter', () => {
-    requestAnimationFrame(() => {
-      cursor.style.width  = '20px';
-      cursor.style.height = '20px';
-      ring.style.width    = '50px';
-      ring.style.height   = '50px';
-      ring.style.borderColor = 'rgba(124,109,250,.8)';
-    });
+    cursor.style.width = '20px';
+    cursor.style.height = '20px';
+    ring.style.width = '50px';
+    ring.style.height = '50px';
+    ring.style.borderColor = 'rgba(124,109,250,.8)';
   }, { passive: true });
   el.addEventListener('mouseleave', () => {
-    requestAnimationFrame(() => {
-      cursor.style.width  = '12px';
-      cursor.style.height = '12px';
-      ring.style.width    = '36px';
-      ring.style.height   = '36px';
-      ring.style.borderColor = 'rgba(124,109,250,.5)';
-    });
+    cursor.style.width = '12px';
+    cursor.style.height = '12px';
+    ring.style.width = '36px';
+    ring.style.height = '36px';
+    ring.style.borderColor = 'rgba(124,109,250,.5)';
   }, { passive: true });
 });
 

@@ -158,19 +158,50 @@ let scrollVel = 0, lastScrollY = 0;
 window.addEventListener('scroll', () => {
   scrollVel = window.scrollY - lastScrollY;
   lastScrollY = window.scrollY;
-});
+}, { passive: true });
+
 const track1 = document.getElementById('track1');
 const track2 = document.getElementById('track2');
-let t1 = 0, t2 = 0;
-setInterval(() => {
+let t1pos = 0, t2pos = 0;
+let half1 = 0, half2 = 0;
+
+setTimeout(() => {
+  if (track1) {
+    half1 = track1.scrollWidth / 2;
+  }
+  if (track2) {
+    half2 = track2.scrollWidth / 2;
+    // Start the right-moving track shifted to the left 
+    // so it doesn't immediately show an empty gap!
+    t2pos = -half2; 
+  }
+}, 100);
+
+function updateVelocityTracks() {
   const speed = 1.5 + Math.abs(scrollVel) * 0.18;
-  t1 -= speed; t2 += speed;
+
+  // Track 1: Moving Left
+  if (half1 > 0 && track1) {
+    t1pos -= speed; 
+    if (t1pos <= -half1) {
+      t1pos += half1; // Wrap seamlessly
+    }
+    track1.style.transform = `translateX(${t1pos}px)`;
+  }
+
+  // Track 2: Moving Right
+  if (half2 > 0 && track2) {
+    t2pos += speed; 
+    if (t2pos >= 0) {
+      t2pos -= half2; // Wrap seamlessly back to the left
+    }
+    track2.style.transform = `translateX(${t2pos}px)`;
+  }
+
   scrollVel *= 0.92;
-  if (Math.abs(t1) >= track1.scrollWidth / 2) t1 = 0;
-  if (Math.abs(t2) >= track2.scrollWidth / 2) t2 = 0;
-  track1.style.transform = `translateX(${t1}px)`;
-  track2.style.transform = `translateX(${t2}px)`;
-}, 16);
+  requestAnimationFrame(updateVelocityTracks);
+}
+updateVelocityTracks();
 
 /* —— SCROLL REVEAL + COUNTER —— */
 const revealObserver = new IntersectionObserver(entries => {

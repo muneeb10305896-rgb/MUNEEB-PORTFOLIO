@@ -91,13 +91,13 @@ function resizeCanvas() {
 resizeCanvas();
 window.addEventListener('resize', resizeCanvas);
 
-const particles = Array.from({ length: 40 }, () => ({
+const particles = Array.from({ length: 20 }, () => ({
   x:  Math.random() * window.innerWidth,
   y:  Math.random() * window.innerHeight,
-  r:  Math.random() * 1.5 + 0.3,
-  vx: (Math.random() - 0.5) * 0.2,
-  vy: (Math.random() - 0.5) * 0.2,
-  o:  Math.random() * 0.3 + 0.1
+  r:  Math.random() * 1.2 + 0.2,
+  vx: (Math.random() - 0.5) * 0.15,
+  vy: (Math.random() - 0.5) * 0.15,
+  o:  Math.random() * 0.2 + 0.05
 }));
 
 function drawParticles() {

@@ -1,0 +1,420 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Muneeb Ahmed Butt – Portfolio</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div id="cursor"></div>
+<div id="cursor-ring"></div>
+<canvas id="particle-canvas"></canvas>
+
+<!-- NAV -->
+<nav id="main-nav">
+  <a class="nav-logo" href="#hero">MAB.</a>
+  <ul class="nav-links">
+    <li><a href="#about">About</a></li>
+    <li><a href="#experience">Experience</a></li>
+    <li><a href="#skills">Skills</a></li>
+    <li><a href="#education">Education</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+  <a class="nav-cta" href="mailto:muneeb10305896@gmail.com">Hire Me</a>
+  <button class="nav-hamburger" id="navHamburger" aria-label="Toggle menu">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+
+<!-- MOBILE MENU -->
+<div class="mobile-menu" id="mobileMenu">
+  <ul>
+    <li><a href="#about" onclick="closeMobileMenu()">About</a></li>
+    <li><a href="#experience" onclick="closeMobileMenu()">Experience</a></li>
+    <li><a href="#skills" onclick="closeMobileMenu()">Skills</a></li>
+    <li><a href="#education" onclick="closeMobileMenu()">Education</a></li>
+    <li><a href="#contact" onclick="closeMobileMenu()">Contact</a></li>
+  </ul>
+</div>
+
+<!-- HERO -->
+<section id="hero" class="hero-section">
+  <div class="hero-bg">
+    <div class="grid-overlay"></div>
+    <div class="blob blob1"></div>
+    <div class="blob blob2"></div>
+    <div class="blob blob3"></div>
+  </div>
+  <div class="hero-inner">
+    <div class="hero-text">
+      <div class="hero-tag">
+        <span class="tag-dot"></span>
+        Open to opportunities in Finland
+      </div>
+      <h1>
+        <span class="line-reveal"><span>Hi, I'm</span></span>
+        <span class="line-reveal"><span class="grad">Muneeb</span></span>
+        <span class="line-reveal"><span>Ahmed Butt</span></span>
+      </h1>
+      <div class="typewriter-wrap">
+        <span class="typewriter-text" id="typewriter"></span><span class="tw-cursor"></span>
+      </div>
+      <div class="hero-btns">
+        <a class="btn-primary" href="#experience">View Experience</a>
+        <a class="btn-outline" href="#contact">Get In Touch</a>
+      </div>
+      <div class="hero-stats">
+        <div class="stat"><div class="stat-val">5+</div><div class="stat-label">Roles held</div></div>
+        <div class="stat"><div class="stat-val">2024</div><div class="stat-label">Harvard Aspire</div></div>
+        <div class="stat"><div class="stat-val">UEF</div><div class="stat-label">Currently studying</div></div>
+        <div class="stat"><div class="stat-val">ESN</div><div class="stat-label">Erasmus Network</div></div>
+      </div>
+    </div>
+
+    <!-- HOLOGRAPHIC PROFILE CARD -->
+    <div class="pc-card-wrapper" id="pcWrap">
+      <div class="pc-card" id="pcCard">
+        <div class="pc-inside"></div>
+        <div class="pc-shine"></div>
+        <div class="pc-glare"></div>
+        <div class="pc-avatar-wrap">
+          <img src="assets/muneeb.jpg" alt="Muneeb Ahmed Butt" class="pc-avatar-img" loading="lazy" />
+        </div>
+        <div class="pc-content">
+          <div class="pc-details">
+            <h3>Muneeb A. Butt</h3>
+            <p>IT Student &amp; Developer</p>
+          </div>
+        </div>
+        <div class="pc-user-info">
+          <div class="pc-user-left">
+            <div class="pc-mini-avatar">
+              <img src="assets/muneeb.jpg" alt="Muneeb mini" loading="lazy" />
+            </div>
+            <div>
+              <div class="pc-handle">@muneeb.fi</div>
+              <div class="pc-status">&#9679; Available</div>
+            </div>
+          </div>
+          <button class="pc-contact-btn" onclick="document.getElementById('contact').scrollIntoView({behavior:'smooth'})">Contact</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- VELOCITY SCROLL -->
+<div class="velocity-section">
+  <div class="velocity-track track1" id="track1">
+    <span>IT Developer</span><span>UEF Kuopio</span><span>Web Development</span><span>Network Support</span><span>Harvard Aspire</span><span>ESN Savo</span><span>Truck Dispatcher</span><span>Finland &#127467;&#127470;</span>
+    <span>IT Developer</span><span>UEF Kuopio</span><span>Web Development</span><span>Network Support</span><span>Harvard Aspire</span><span>ESN Savo</span><span>Truck Dispatcher</span><span>Finland &#127467;&#127470;</span>
+  </div>
+  <div class="velocity-track track2" id="track2">
+    <span>DEVSiNC</span><span>Bahria University</span><span>Hameed Latif Hospital</span><span>Pioneer Enterprises</span><span>CDA Lahore</span><span>Data Handling</span><span>Problem Solving</span><span>Networking</span>
+    <span>DEVSiNC</span><span>Bahria University</span><span>Hameed Latif Hospital</span><span>Pioneer Enterprises</span><span>CDA Lahore</span><span>Data Handling</span><span>Problem Solving</span><span>Networking</span>
+  </div>
+</div>
+
+<!-- ABOUT -->
+<section id="about" class="section">
+  <div class="floating-shape fs1"></div>
+  <div class="floating-shape fs2"></div>
+  <div class="section-label reveal">About Me</div>
+  <div class="section-title reveal" data-delay="1">Who I am</div>
+  <p class="section-sub reveal" data-delay="2">From Lahore to Kuopio — building a career in IT one step at a time.</p>
+  <div class="about-grid">
+    <div class="about-text reveal-left" data-delay="1">
+      <p>I'm <strong>Muneeb Ahmed Butt</strong>, an IT student at the <strong>University of Eastern Finland</strong> (Kuopio), currently also working as an <strong>IT Developer at DEVSiNC</strong> remotely. My journey spans web development, network support, logistics, and community work across Pakistan and Finland.</p>
+      <p>I completed the <strong>2024 Aspire Leaders Program at Harvard Business School</strong>, a global leadership program focused on critical thinking, communication, and social impact — 30 hours of coursework with an international community.</p>
+      <p>I'm also an active member of the <strong>Erasmus Student Network (ESN Savo)</strong>, supporting international student communities in Finland.</p>
+      <div class="about-badges">
+        <span class="badge">IT Developer</span>
+        <span class="badge">Web Projects</span>
+        <span class="badge">Networking</span>
+        <span class="badge">Data Handling</span>
+        <span class="badge">ESN Member</span>
+        <span class="badge">Harvard Aspire Alumni</span>
+        <span class="badge">Category B License</span>
+      </div>
+    </div>
+    <div class="info-cards reveal-right" data-delay="2">
+      <div class="info-card"><div class="info-icon">&#127891;</div><div><h4>Currently Studying</h4><p>B.Sc. IT — University of Eastern Finland, Kuopio</p></div></div>
+      <div class="info-card"><div class="info-icon">&#128188;</div><div><h4>Currently Working</h4><p>IT Developer at DEVSiNC (Remote) — July 2025–present</p></div></div>
+      <div class="info-card"><div class="info-icon">&#128205;</div><div><h4>Location</h4><p>Teerentie 2 G 39, Kuopio, Finland</p></div></div>
+      <div class="info-card"><div class="info-icon">&#127758;</div><div><h4>Languages</h4><p>English · Finnish (learning) · Urdu</p></div></div>
+      <div class="info-card"><div class="info-icon">&#128663;</div><div><h4>Driver's License</h4><p>Category B (passenger car)</p></div></div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- EXPERIENCE -->
+<section id="experience" class="section">
+  <div class="floating-shape fs3"></div>
+  <div class="section-label reveal">Experience</div>
+  <div class="section-title reveal" data-delay="1">Where I've worked</div>
+  <p class="section-sub reveal" data-delay="2">Real-world roles across web development, IT, logistics, and NGO work.</p>
+  <div class="exp-list">
+
+    <div class="exp-card reveal" data-delay="1">
+      <div class="exp-card-bar"></div><div class="exp-glow"></div>
+      <div class="exp-header">
+        <div class="exp-role">IT Developer</div>
+        <div class="exp-date">July 2025 – Present</div>
+      </div>
+      <div class="exp-company">DEVSiNC &middot; Remote, Lahore</div>
+      <ul class="exp-bullets">
+        <li>Managed and updated company websites, ensuring functionality and content accuracy</li>
+        <li>Assisted in developing customer-required websites based on specifications</li>
+        <li>Worked on multiple web projects, supporting design, updates, and maintenance</li>
+        <li>Collaborated with team members using development tools and version control</li>
+      </ul>
+      <div class="exp-tags">
+        <span class="exp-tag">Web Development</span>
+        <span class="exp-tag">Git</span>
+        <span class="exp-tag">Version Control</span>
+        <span class="exp-tag">IT Projects</span>
+      </div>
+    </div>
+
+    <div class="exp-card reveal" data-delay="2">
+      <div class="exp-card-bar"></div><div class="exp-glow"></div>
+      <div class="exp-header">
+        <div class="exp-role">Network System Specialist (Intern)</div>
+        <div class="exp-date">March – Sept 2025</div>
+      </div>
+      <div class="exp-company">Hameed Latif Hospital &middot; Lahore, Pakistan</div>
+      <ul class="exp-bullets">
+        <li>Assisted in IT and network system setup and maintenance</li>
+        <li>Provided technical support to hospital staff and doctors</li>
+        <li>Helped manage patient record systems and troubleshoot issues</li>
+        <li>Monitored system performance and ensured data security and uptime</li>
+      </ul>
+      <div class="exp-tags">
+        <span class="exp-tag">Network Support</span>
+        <span class="exp-tag">IT Troubleshooting</span>
+        <span class="exp-tag">Hardware</span>
+        <span class="exp-tag">Data Security</span>
+      </div>
+    </div>
+
+    <div class="exp-card reveal" data-delay="3">
+      <div class="exp-card-bar"></div><div class="exp-glow"></div>
+      <div class="exp-header">
+        <div class="exp-role">Executive Committee Member</div>
+        <div class="exp-date">Sept 2021 – Aug 2025</div>
+      </div>
+      <div class="exp-company">Chanan Development Association (CDA) &middot; Lahore, Pakistan</div>
+      <ul class="exp-bullets">
+        <li>Maintained and organized NGO records, reports, and documentation accurately</li>
+        <li>Managed data related to community projects, volunteers, and activities</li>
+        <li>Coordinated planning, communication, and execution of development initiatives</li>
+        <li>Worked with stakeholders to track progress and outcomes of programs</li>
+      </ul>
+      <div class="exp-tags">
+        <span class="exp-tag">Leadership</span>
+        <span class="exp-tag">Project Coordination</span>
+        <span class="exp-tag">Data Management</span>
+        <span class="exp-tag">NGO</span>
+      </div>
+    </div>
+
+    <div class="exp-card reveal" data-delay="4">
+      <div class="exp-card-bar"></div><div class="exp-glow"></div>
+      <div class="exp-header">
+        <div class="exp-role">Truck Dispatcher</div>
+        <div class="exp-date">April 2023 – Feb 2024</div>
+      </div>
+      <div class="exp-company">Pioneer Enterprises &middot; Remote, United States</div>
+      <ul class="exp-bullets">
+        <li>Managed dispatch operations using DAT Load Board and RingCentral</li>
+        <li>Updated digital records, load statuses, and documentation accurately</li>
+        <li>Coordinated with drivers and brokers via online systems</li>
+        <li>Resolved operational issues using digital tools</li>
+      </ul>
+      <div class="exp-tags">
+        <span class="exp-tag">DAT Load Board</span>
+        <span class="exp-tag">RingCentral</span>
+        <span class="exp-tag">Dispatching</span>
+        <span class="exp-tag">Logistics</span>
+      </div>
+    </div>
+
+    <div class="exp-card reveal" data-delay="5">
+      <div class="exp-card-bar"></div><div class="exp-glow"></div>
+      <div class="exp-header">
+        <div class="exp-role">Data Entry Specialist</div>
+        <div class="exp-date">March 2022 – Jan 2023</div>
+      </div>
+      <div class="exp-company">Onestop Grocery Store &middot; Lahore, Pakistan</div>
+      <ul class="exp-bullets">
+        <li>Managed sales and inventory data using IPOS system</li>
+        <li>Ensured data accuracy and maintained daily and monthly reports</li>
+        <li>Supported store operations through organized data management</li>
+      </ul>
+      <div class="exp-tags">
+        <span class="exp-tag">IPOS</span>
+        <span class="exp-tag">Data Entry</span>
+        <span class="exp-tag">Inventory</span>
+        <span class="exp-tag">Reporting</span>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- SKILLS -->
+<section id="skills" class="section">
+  <div class="section-label reveal">Skills</div>
+  <div class="section-title reveal" data-delay="1">What I bring</div>
+  <p class="section-sub reveal" data-delay="2">Technical and professional skills built through real-world roles and study.</p>
+  <div class="skills-grid">
+    <div class="skill-card reveal-scale" data-delay="1">
+      <div class="skill-cat">IT &amp; Systems</div>
+      <div class="skill-name">Core IT Skills</div>
+      <div class="skill-items">
+        <span class="skill-pill">IT Operations</span><span class="skill-pill">IT Support</span><span class="skill-pill">Troubleshooting</span><span class="skill-pill">Networking</span><span class="skill-pill">Hardware &amp; Software</span>
+      </div>
+    </div>
+    <div class="skill-card reveal-scale" data-delay="2">
+      <div class="skill-cat">Development</div>
+      <div class="skill-name">Web &amp; Tools</div>
+      <div class="skill-items">
+        <span class="skill-pill">Web Development</span><span class="skill-pill">Git &amp; GitHub</span><span class="skill-pill">VS Code</span><span class="skill-pill">HTML/CSS</span>
+      </div>
+    </div>
+    <div class="skill-card reveal-scale" data-delay="3">
+      <div class="skill-cat">Data &amp; Office</div>
+      <div class="skill-name">Productivity</div>
+      <div class="skill-items">
+        <span class="skill-pill">Microsoft Word</span><span class="skill-pill">Microsoft Excel</span><span class="skill-pill">Data Entry</span><span class="skill-pill">IPOS</span><span class="skill-pill">Reporting</span>
+      </div>
+    </div>
+    <div class="skill-card reveal-scale" data-delay="4">
+      <div class="skill-cat">Logistics</div>
+      <div class="skill-name">Operations</div>
+      <div class="skill-items">
+        <span class="skill-pill">DAT Load Board</span><span class="skill-pill">RingCentral</span><span class="skill-pill">Dispatching</span><span class="skill-pill">Documentation</span>
+      </div>
+    </div>
+    <div class="skill-card reveal-scale" data-delay="1">
+      <div class="skill-cat">Soft Skills</div>
+      <div class="skill-name">Professional</div>
+      <div class="skill-items">
+        <span class="skill-pill">Problem Solving</span><span class="skill-pill">Problem Analysis</span><span class="skill-pill">Team Work</span><span class="skill-pill">Communication</span>
+      </div>
+    </div>
+    <div class="skill-card reveal-scale" data-delay="2">
+      <div class="skill-cat">Learning</div>
+      <div class="skill-name">In Progress</div>
+      <div class="skill-items">
+        <span class="skill-pill">Python</span><span class="skill-pill">R Programming</span><span class="skill-pill">Databases</span><span class="skill-pill">Finnish</span><span class="skill-pill">React</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- EDUCATION -->
+<section id="education" class="section">
+  <div class="section-label reveal">Education</div>
+  <div class="section-title reveal" data-delay="1">Academic background</div>
+  <p class="section-sub reveal" data-delay="2">From computer science fundamentals to specialised IT studies in Finland.</p>
+  <div class="edu-list">
+    <div class="edu-card reveal-left" data-delay="1">
+      <div class="edu-icon">&#127467;&#127470;</div>
+      <div>
+        <div class="edu-degree">Bachelor's Degree in Information Technology</div>
+        <div class="edu-school">University of Eastern Finland (UEF)</div>
+        <div class="edu-meta">September 2025 – Present &middot; Kuopio, Finland</div>
+      </div>
+    </div>
+    <div class="edu-card reveal-left" data-delay="2">
+      <div class="edu-icon">&#127891;</div>
+      <div>
+        <div class="edu-degree">Bachelor of Technology in Computer Science</div>
+        <div class="edu-school">Bahria University</div>
+        <div class="edu-meta">2023 – 2025 &middot; Lahore, Pakistan</div>
+      </div>
+    </div>
+    <div class="edu-card reveal-left" data-delay="3">
+      <div class="edu-icon">&#128218;</div>
+      <div>
+        <div class="edu-degree">Intermediate — ICS (Computer Science)</div>
+        <div class="edu-school">KIPS Education System</div>
+        <div class="edu-meta">2021 – 2023 &middot; Lahore, Pakistan</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section-label reveal" style="margin-top:2.5rem;margin-bottom:.5rem">Certifications</div>
+  <div class="cert-card reveal" data-delay="1">
+    <div class="cert-badge">&#127963;&#65039;</div>
+    <div>
+      <div class="cert-title">2024 Aspire Leaders Program</div>
+      <div class="cert-issuer">Harvard Business School (HBS) &middot; Aspire Institute &middot; November 2024</div>
+      <div class="cert-desc">Global leadership and personal development program focused on critical thinking, communication, self-confidence, and social impact. Completed 30 hours of coursework within an international learning community. Mode: Online.</div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- CONTACT -->
+<section id="contact" class="section">
+  <div class="section-label reveal">Contact</div>
+  <div class="section-title reveal" data-delay="1">Let's connect</div>
+  <p class="section-sub reveal" data-delay="2">Open to IT roles, internships, and collaborations in Finland and remotely.</p>
+  <div class="contact-grid">
+    <div class="reveal-left">
+      <div class="contact-links">
+        <a class="contact-link" href="mailto:muneeb10305896@gmail.com">
+          <div class="cl-icon">&#9993;&#65039;</div>
+          <div><div class="cl-label">Email</div><div class="cl-val">muneeb10305896@gmail.com</div></div>
+        </a>
+        <a class="contact-link" href="https://www.linkedin.com/in/muneeb-ahmed-butt-4a384438a/" target="_blank">
+          <div class="cl-icon">&#128188;</div>
+          <div><div class="cl-label">LinkedIn</div><div class="cl-val">muneeb-ahmed-butt</div></div>
+        </a>
+        <a class="contact-link" href="https://github.com/muneeb10305896-rgb" target="_blank">
+          <div class="cl-icon">&#128187;</div>
+          <div><div class="cl-label">GitHub</div><div class="cl-val">muneeb10305896-rgb</div></div>
+        </a>
+        <a class="contact-link" href="https://www.instagram.com/muneeb.ahmed.butt.fi/" target="_blank">
+          <div class="cl-icon">&#128247;</div>
+          <div><div class="cl-label">Instagram</div><div class="cl-val">muneeb.ahmed.butt.fi</div></div>
+        </a>
+        <a class="contact-link" href="tel:+358417414677">
+          <div class="cl-icon">&#128222;</div>
+          <div><div class="cl-label">Phone</div><div class="cl-val">(+358) 417 414 677</div></div>
+        </a>
+      </div>
+    </div>
+    <div class="reveal-right">
+      <div class="map-wrap">
+        <iframe
+          title="Muneeb location map"
+          src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d940!2d27.6785!3d62.8988!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2sTeerentie%202%2C%2070150%20Kuopio%2C%20Finland!5e0!3m2!1sen!2sfi!4v1"
+          loading="lazy" allowfullscreen></iframe>
+      </div>
+      <p class="map-label">&#128205; Teerentie 2 G 39, 70150 Kuopio, Finland</p>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <p>Designed &amp; built &middot; <span>Muneeb Ahmed Butt</span> &middot; University of Eastern Finland &middot; Kuopio &#127467;&#127470;</p>
+</footer>
+
+<script src="script.js"></script>
+</body>
+</html>

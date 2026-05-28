@@ -383,15 +383,23 @@ h1 {
 .section-title { font-family: 'Syne', sans-serif; font-size: clamp(1.8rem, 3.5vw, 2.5rem); font-weight: 700; margin-bottom: .5rem; }
 .section-sub { color: var(--muted); max-width: 520px; margin-bottom: 3rem; font-weight: 300; }
 
-/* —— SCROLL REVEAL —— */
-.reveal       { opacity:0; transform:translateY(40px); transition:opacity .7s cubic-bezier(.16,1,.3,1), transform .7s cubic-bezier(.16,1,.3,1); }
-.reveal-left  { opacity:0; transform:translateX(-40px); transition:opacity .7s cubic-bezier(.16,1,.3,1), transform .7s cubic-bezier(.16,1,.3,1); }
-.reveal-right { opacity:0; transform:translateX(40px); transition:opacity .7s cubic-bezier(.16,1,.3,1), transform .7s cubic-bezier(.16,1,.3,1); }
-.reveal-scale { opacity:0; transform:scale(.92); transition:opacity .7s cubic-bezier(.16,1,.3,1), transform .7s cubic-bezier(.16,1,.3,1); }
-.reveal.visible, .reveal-left.visible, .reveal-right.visible, .reveal-scale.visible { opacity:1; transform:none; }
-[data-delay="1"] { transition-delay:.1s; } [data-delay="2"] { transition-delay:.2s; }
-[data-delay="3"] { transition-delay:.3s; } [data-delay="4"] { transition-delay:.4s; }
-[data-delay="5"] { transition-delay:.5s; }
+/* —— SCROLL REVEAL (maxed) —— */
+.reveal, .reveal-left, .reveal-right, .reveal-scale {
+  opacity: 0; filter: blur(12px); will-change: transform, opacity, filter;
+  transition: opacity 1s cubic-bezier(.16,1,.3,1),
+              transform 1.1s cubic-bezier(.16,1,.3,1),
+              filter .9s ease;
+}
+.reveal       { transform: perspective(1000px) translateY(90px) scale(.94) rotateX(-12deg); }
+.reveal-left  { transform: perspective(1000px) translateX(-110px) rotateY(18deg) scale(.95); }
+.reveal-right { transform: perspective(1000px) translateX(110px) rotateY(-18deg) scale(.95); }
+.reveal-scale { transform: perspective(1000px) scale(.7) rotate(-3deg); }
+.reveal.visible, .reveal-left.visible, .reveal-right.visible, .reveal-scale.visible {
+  opacity: 1; filter: blur(0); transform: none;
+}
+[data-delay="1"] { transition-delay:.08s; } [data-delay="2"] { transition-delay:.18s; }
+[data-delay="3"] { transition-delay:.28s; } [data-delay="4"] { transition-delay:.38s; }
+[data-delay="5"] { transition-delay:.48s; }
 
 /* —— ABOUT —— */
 .about-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 3rem; align-items: start; }

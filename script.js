@@ -163,9 +163,9 @@ const track1 = document.getElementById('track1');
 const track2 = document.getElementById('track2');
 let t1 = 0, t2 = 0;
 setInterval(() => {
-  const speed = 1 + Math.abs(scrollVel) * 0.05;
+  const speed = 1.5 + Math.abs(scrollVel) * 0.18;
   t1 -= speed; t2 += speed;
-  scrollVel *= 0.9;
+  scrollVel *= 0.92;
   if (Math.abs(t1) >= track1.scrollWidth / 2) t1 = 0;
   if (Math.abs(t2) >= track2.scrollWidth / 2) t2 = 0;
   track1.style.transform = `translateX(${t1}px)`;
@@ -180,9 +180,12 @@ const revealObserver = new IntersectionObserver(entries => {
       // animate counters inside
       e.target.querySelectorAll('[data-count]').forEach(animateCounter);
       if (e.target.hasAttribute('data-count')) animateCounter(e.target);
+    } else {
+      // replay the reveal each time it re-enters the viewport
+      e.target.classList.remove('visible');
     }
   });
-}, { threshold: 0.08 });
+}, { threshold: 0.12 });
 document.querySelectorAll('.reveal, .reveal-left, .reveal-right, .reveal-scale').forEach(el => revealObserver.observe(el));
 
 function animateCounter(el) {

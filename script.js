@@ -177,15 +177,19 @@ const revealObserver = new IntersectionObserver(entries => {
   entries.forEach(e => {
     if (e.isIntersecting) {
       e.target.classList.add('visible');
+      e.target.classList.remove('from-top', 'from-bottom');
       // animate counters inside
       e.target.querySelectorAll('[data-count]').forEach(animateCounter);
       if (e.target.hasAttribute('data-count')) animateCounter(e.target);
     } else {
-      // replay the reveal each time it re-enters the viewport
+      // replay each time it re-enters — and exit toward the edge it leaves from
       e.target.classList.remove('visible');
+      const aboveViewport = e.boundingClientRect.top < 0;
+      e.target.classList.toggle('from-top', aboveViewport);
+      e.target.classList.toggle('from-bottom', !aboveViewport);
     }
   });
-}, { threshold: 0.12 });
+}, { threshold: 0.12, rootMargin: '-5% 0px -5% 0px' });
 document.querySelectorAll('.reveal, .reveal-left, .reveal-right, .reveal-scale').forEach(el => revealObserver.observe(el));
 
 function animateCounter(el) {
@@ -334,25 +338,37 @@ document.querySelectorAll('.exp-card').forEach(card => {
   });
 });
 
-/* —— 3D SKILL CARD TILT —— */
+/* —— 3D SKILL CARD TILT (maxed) —— */
 document.querySelectorAll('.skill-card').forEach(card => {
   card.addEventListener('mousemove', e => {
     const r = card.getBoundingClientRect();
     const x = (e.clientX - r.left) / r.width  - 0.5;
     const y = (e.clientY - r.top)  / r.height - 0.5;
-    card.style.transform = `perspective(600px) rotateX(${-y * 12}deg) rotateY(${x * 12}deg) translateZ(8px)`;
-    card.style.boxShadow = `${-x * 15}px ${-y * 15}px 30px rgba(124,109,250,.15)`;
+    card.style.transform = `perspective(700px) rotateX(${-y * 22}deg) rotateY(${x * 22}deg) translateZ(30px) scale(1.05)`;
+    card.style.boxShadow = `${-x * 40}px ${-y * 40}px 60px rgba(124,109,250,.4), 0 0 0 1px rgba(124,109,250,.35)`;
+    card.style.borderColor = 'rgba(124,109,250,.6)';
   });
-  card.addEventListener('mouseleave', () => { card.style.transform = ''; card.style.boxShadow = ''; });
+  card.addEventListener('mouseleave', () => { card.style.transform = ''; card.style.boxShadow = ''; card.style.borderColor = ''; });
 });
 
-/* —— EDU / CERT CARD TILT —— */
+/* —— EDU / CERT CARD TILT (maxed) —— */
 document.querySelectorAll('.edu-card, .cert-card').forEach(card => {
   card.addEventListener('mousemove', e => {
     const r = card.getBoundingClientRect();
     const x = (e.clientX - r.left) / r.width  - 0.5;
     const y = (e.clientY - r.top)  / r.height - 0.5;
-    card.style.transform = `translateY(-3px) perspective(800px) rotateX(${-y * 4}deg) rotateY(${x * 4}deg)`;
+    card.style.transform = `translateY(-8px) perspective(900px) rotateX(${-y * 10}deg) rotateY(${x * 10}deg) scale(1.02)`;
+    card.style.boxShadow = `${-x * 30}px ${14 - y * 20}px 45px rgba(124,109,250,.3), 0 0 0 1px rgba(124,109,250,.25)`;
   });
-  card.addEventListener('mouseleave', () => { card.style.transform = ''; });
+  card.addEventListener('mouseleave', () => { card.style.transform = ''; card.style.boxShadow = ''; });
+});
+
+/* —— PARALLAX FLOATING SHAPES ON SCROLL —— */
+const floatShapes = document.querySelectorAll('.floating-shape');
+window.addEventListener('scroll', () => {
+  const y = window.scrollY;
+  floatShapes.forEach((s, i) => {
+    const depth = (i % 3 + 1) * 0.12;
+    s.style.transform = `translateY(${y * depth}px) rotate(${y * 0.04 * (i + 1)}deg)`;
+  });
 });

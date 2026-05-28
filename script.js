@@ -10,26 +10,32 @@ let mouseX = 0;
 let mouseY = 0;
 let ringX = 0;
 let ringY = 0;
+let isMoving = true;
 
+// Update cursor position directly on every mousemove
 document.addEventListener('mousemove', (e) => {
   mouseX = e.clientX;
   mouseY = e.clientY;
+  isMoving = true;
 
-  // Force cursor visibility and update position
-  cursor.style.left = (mouseX - 6) + 'px';
-  cursor.style.top = (mouseY - 6) + 'px';
-  cursor.style.display = 'block';
-  ring.style.display = 'block';
-}, { passive: true });
+  // Update cursor immediately
+  requestAnimationFrame(() => {
+    if (cursor) {
+      cursor.style.left = mouseX + 'px';
+      cursor.style.top = mouseY + 'px';
+    }
+  });
+}, false);
 
-function updateRing() {
-  ringX += (mouseX - ringX) * 0.15;
-  ringY += (mouseY - ringY) * 0.15;
-  ring.style.left = (ringX - 18) + 'px';
-  ring.style.top = (ringY - 18) + 'px';
-  requestAnimationFrame(updateRing);
-}
-updateRing();
+// Animate ring with easing
+setInterval(() => {
+  if (ring && isMoving) {
+    ringX += (mouseX - ringX) * 0.12;
+    ringY += (mouseY - ringY) * 0.12;
+    ring.style.left = (ringX - 18) + 'px';
+    ring.style.top = (ringY - 18) + 'px';
+  }
+}, 16);
 
 const hoverables = 'a, button, .badge, .skill-pill, .exp-tag, .contact-link, .pc-contact-btn';
 document.querySelectorAll(hoverables).forEach(el => {

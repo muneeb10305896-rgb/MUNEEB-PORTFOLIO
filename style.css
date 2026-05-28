@@ -51,7 +51,8 @@ body {
 #cursor {
   position: fixed; width: 12px; height: 12px;
   background: var(--accent); border-radius: 50%;
-  pointer-events: none; z-index: 9999;
+  pointer-events: none; z-index: 99999;
+  top: -6px; left: -6px;
   transition: width .15s, height .15s, background .15s;
   mix-blend-mode: screen;
   will-change: left, top;
@@ -60,7 +61,8 @@ body {
 #cursor-ring {
   position: fixed; width: 36px; height: 36px;
   border: 1.5px solid rgba(124,109,250,.5); border-radius: 50%;
-  pointer-events: none; z-index: 9998;
+  pointer-events: none; z-index: 99998;
+  top: -18px; left: -18px;
   transition: width .12s ease, height .12s ease, border-color .12s;
   will-change: left, top;
   backface-visibility: hidden;

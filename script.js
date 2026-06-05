@@ -19,12 +19,13 @@ document.addEventListener('mousemove', e => {
   cursor.style.left = mouseX + 'px';
   cursor.style.top  = mouseY + 'px';
 });
-setInterval(() => {
+(function animateRing() {
   ringX += (mouseX - ringX) * 0.15;
   ringY += (mouseY - ringY) * 0.15;
   ring.style.left = ringX + 'px';
   ring.style.top  = ringY + 'px';
-}, 16);
+  requestAnimationFrame(animateRing);
+})();
 
 const hoverables = 'a, button, .badge, .skill-pill, .exp-tag, .contact-link, .id-card';
 document.querySelectorAll(hoverables).forEach(el => {
@@ -254,7 +255,7 @@ document.querySelectorAll('.hero-stats [data-count]').forEach(el => {
     canvas.style.top = '0px';
     canvas.style.left = '0px';
     canvas.style.pointerEvents = 'none'; // Lets you scroll through the string
-    canvas.style.zIndex = '999'; // High enough to render over backgrounds
+    canvas.style.zIndex = '50'; // Above content but below nav (z-index: 100)
 
     // This is the mobile scroll fix: ghost the container, keep the card active.
     stage.style.pointerEvents = 'none'; 

@@ -47,6 +47,7 @@ const nav            = document.getElementById('main-nav');
 const backToTop      = document.getElementById('backToTop');
 const sections       = document.querySelectorAll('section[id]');
 const navLinks       = document.querySelectorAll('.nav-link');
+const sectionDots    = document.querySelectorAll('.section-dot');
 
 window.addEventListener('scroll', () => {
   const scrollTop = window.scrollY;
@@ -56,13 +57,16 @@ window.addEventListener('scroll', () => {
   nav.classList.toggle('scrolled', scrollTop > 60);
   backToTop.classList.toggle('show', scrollTop > 600);
 
-  // active nav link
+  // active nav link + section dots
   let current = '';
   sections.forEach(sec => {
-    if (scrollTop >= sec.offsetTop - 120) current = sec.getAttribute('id');
+    if (scrollTop >= sec.offsetTop - 180) current = sec.getAttribute('id');
   });
   navLinks.forEach(link => {
     link.classList.toggle('active', link.getAttribute('href') === '#' + current);
+  });
+  sectionDots.forEach(dot => {
+    dot.classList.toggle('active', dot.dataset.section === current);
   });
 });
 

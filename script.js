@@ -477,3 +477,56 @@ window.addEventListener('scroll', () => {
     s.style.transform = `translateY(${y * depth}px) rotate(${y * 0.04 * (i + 1)}deg)`;
   });
 });
+
+/* —— SKILL BARS —— */
+const sbarObserver = new IntersectionObserver(entries => {
+  entries.forEach(e => {
+    if (e.isIntersecting) {
+      e.target.querySelectorAll('.sbar-fill').forEach(bar => {
+        bar.style.width = bar.dataset.width + '%';
+      });
+      sbarObserver.unobserve(e.target);
+    }
+  });
+}, { threshold: 0.25 });
+document.querySelectorAll('.skills-bars').forEach(el => sbarObserver.observe(el));
+
+/* —— CONTACT FORM (Formspree) —— */
+const contactForm = document.getElementById('contactForm');
+const cfStatus   = document.getElementById('cfStatus');
+const cfSubmit   = document.getElementById('cfSubmit');
+
+if (contactForm) {
+  contactForm.addEventListener('submit', async e => {
+    e.preventDefault();
+    const btnText = cfSubmit.querySelector('.cf-btn-text');
+    cfSubmit.disabled = true;
+    cfSubmit.classList.add('loading');
+    btnText.textContent = 'Sending…';
+    cfStatus.className = 'cf-status';
+    cfStatus.textContent = '';
+
+    try {
+      const res = await fetch(contactForm.action, {
+        method: 'POST',
+        body: new FormData(contactForm),
+        headers: { Accept: 'application/json' }
+      });
+      if (res.ok) {
+        contactForm.reset();
+        cfStatus.className = 'cf-status success';
+        cfStatus.textContent = '✓ Message sent! I\'ll get back to you as soon as possible.';
+      } else {
+        const data = await res.json().catch(() => ({}));
+        throw new Error(data.error || 'Server error');
+      }
+    } catch {
+      cfStatus.className = 'cf-status error';
+      cfStatus.textContent = '✗ Something went wrong. Please email me directly at muneeb10305896@gmail.com';
+    }
+
+    cfSubmit.disabled = false;
+    cfSubmit.classList.remove('loading');
+    btnText.textContent = 'Send Message';
+  });
+}

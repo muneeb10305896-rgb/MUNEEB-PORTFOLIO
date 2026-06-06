@@ -226,63 +226,122 @@ let tickLanyard = () => {};
   const card   = document.getElementById('idCard');
   if (!stage || !canvas || !card) return;
 
-  document.body.appendChild(canvas);
   const ctx  = canvas.getContext('2d');
-  const holo = card.querySelector('.id-holo'); // cached — not queried every frame
+  const holo = card.querySelector('.id-holo');
+
+  /* ---- ROPE LAYER: wrapper keeps canvas + card in the same stacking context ---- */
+  const layer = document.createElement('div');
+  layer.id = 'ropeLayer';
+  document.body.appendChild(layer);
+  layer.style.cssText = 'position:fixed;inset:0;width:100%;height:100%;pointer-events:none;z-index:50;';
+
+  // move both canvas and card into the layer
+  layer.appendChild(canvas);
+  canvas.style.cssText = 'position:absolute;inset:0;width:100%;height:100%;pointer-events:none;';
+
+  layer.appendChild(card);
+  card.style.position      = 'absolute';  // same positioning context as canvas
+  card.style.pointerEvents = 'auto';
+  card.style.touchAction   = 'none';
+  card.style.zIndex        = '1';         // above canvas (default 0) within the layer
+
+  /* ---- physics constants ---- */
+  const SEGMENTS = 18, SEG_LEN = 9, GRAVITY = 0.75, FRICTION = 0.96, STIFFNESS = 40;
+  let anchorX = 0, anchorY = 0;
+  const points = [];
+  for (let i = 0; i < SEGMENTS; i++) points.push({ x: 0, y: 0, ox: 0, oy: 0, pinned: i === 0 });
+  const last = points[SEGMENTS - 1];
+
+  /* ---- position helpers ---- */
+  function resetToAnchor() {
+    const sr = stage.getBoundingClientRect();
+    anchorX = sr.left + sr.width / 2;
+    anchorY = sr.top;
+    for (let i = 0; i < SEGMENTS; i++) {
+      const y = anchorY + i * SEG_LEN;
+      points[i].x = anchorX; points[i].y = y;
+      points[i].ox = anchorX; points[i].oy = y;
+    }
+  }
+  resetToAnchor();
+  card.style.left = last.x + 'px';
+  card.style.top  = last.y + 'px';
+  // subtle fade-in so the card doesn't flash in (it's no longer inside the animated stage)
+  card.style.opacity = '0';
+  requestAnimationFrame(() => {
+    card.style.transition = 'opacity 0.7s ease 0.3s';
+    card.style.opacity = '1';
+  });
 
   function sizeCanvas() {
     canvas.width  = window.innerWidth;
     canvas.height = window.innerHeight;
-    canvas.style.cssText = 'position:fixed;top:0;left:0;pointer-events:none;z-index:50;';
-    stage.style.pointerEvents = 'none';
-    card.style.pointerEvents  = 'auto';
-    buildGradient();
   }
-
-  // gradient cached — recreated only on resize, not every frame
-  let ropeGrad = null;
   function buildGradient() {
-    ropeGrad = ctx.createLinearGradient(0, 0, 0, canvas.height);
-    ropeGrad.addColorStop(0, '#7c6dfa');
-    ropeGrad.addColorStop(1, '#4fc3f7');
+    const g = ctx.createLinearGradient(0, 0, 0, canvas.height);
+    g.addColorStop(0, '#7c6dfa');
+    g.addColorStop(1, '#4fc3f7');
+    return g;
   }
+  let ropeGrad = buildGradient();
   sizeCanvas();
-  window.addEventListener('resize', sizeCanvas, { passive: true });
 
-  const SEGMENTS = 18, SEG_LEN = 9, GRAVITY = 0.75, FRICTION = 0.96, STIFFNESS = 40;
-  let anchorX = window.innerWidth / 2, anchorY = 0;
+  window.addEventListener('resize', () => {
+    sizeCanvas();
+    ropeGrad = buildGradient();
+    const sr = stage.getBoundingClientRect();
+    anchorX = sr.left + sr.width / 2;
+    anchorY = sr.top;
+    points[0].x = anchorX; points[0].y = anchorY;
+    points[0].ox = anchorX; points[0].oy = anchorY;
+    // if card is way off-screen after resize, reset it
+    if (last.x < -300 || last.x > window.innerWidth + 300 ||
+        last.y < -300 || last.y > window.innerHeight + 300) {
+      resetToAnchor();
+      card.style.left = last.x + 'px';
+      card.style.top  = last.y + 'px';
+    }
+  }, { passive: true });
 
-  const points = [];
-  for (let i = 0; i < SEGMENTS; i++) {
-    points.push({ x: anchorX, y: anchorY + i * SEG_LEN, ox: anchorX, oy: anchorY + i * SEG_LEN, pinned: i === 0 });
-  }
-  const last = points[SEGMENTS - 1];
-
+  /* ---- drag interaction ---- */
   let dragging = false, dragX = 0, dragY = 0;
   function pointerXY(e) {
     return e.touches ? { x: e.touches[0].clientX, y: e.touches[0].clientY } : { x: e.clientX, y: e.clientY };
   }
+
   card.addEventListener('pointerdown', e => {
     dragging = true; last.pinned = true;
-    document.body.style.cursor = 'grabbing';
     const p = pointerXY(e); dragX = p.x; dragY = p.y;
     e.preventDefault();
   });
+
   window.addEventListener('pointermove', e => {
     if (!dragging) return;
-    const p = pointerXY(e); dragX = p.x; dragY = p.y;
-  });
-  window.addEventListener('pointerup', () => {
-    if (dragging) { dragging = false; last.pinned = false; document.body.style.cursor = ''; }
+    const p = pointerXY(e);
+    dragX = Math.max(60, Math.min(window.innerWidth  - 60, p.x));
+    dragY = Math.max(30, Math.min(window.innerHeight - 30, p.y));
   });
 
+  function endDrag() {
+    if (dragging) { dragging = false; last.pinned = false; }
+  }
+  window.addEventListener('pointerup',     endDrag);
+  window.addEventListener('pointercancel', endDrag);
+  window.addEventListener('blur',          endDrag);   // window loses focus → end drag
+
+  card.addEventListener('dblclick', () => {
+    resetToAnchor();
+    card.style.left = last.x + 'px';
+    card.style.top  = last.y + 'px';
+  });
+
+  /* ---- physics tick ---- */
   tickLanyard = function() {
-    // single getBoundingClientRect call shared by both simulate and render
-    const stageRect = stage.getBoundingClientRect();
-    anchorX = stageRect.left + stageRect.width / 2;
-    anchorY = stageRect.top;
+    const sr = stage.getBoundingClientRect();
+    anchorX = sr.left + sr.width / 2;
+    anchorY = sr.top;
 
-    // simulate
+    // Verlet integration
     for (const p of points) {
       if (p.pinned) continue;
       const vx = (p.x - p.ox) * FRICTION;
@@ -291,11 +350,14 @@ let tickLanyard = () => {};
       p.x += vx; p.y += vy + GRAVITY;
     }
     if (dragging) { last.x = dragX; last.y = dragY; last.ox = dragX; last.oy = dragY; }
+
+    // constraint solving
     for (let k = 0; k < STIFFNESS; k++) {
-      for (let i = 0; i < points.length - 1; i++) {
+      for (let i = 0; i < SEGMENTS - 1; i++) {
         const a = points[i], b = points[i + 1];
-        const dx = b.x - a.x, dy = b.y - a.y;
-        const d  = Math.hypot(dx, dy) || 0.001;
+        let dx = b.x - a.x, dy = b.y - a.y;
+        let d = Math.hypot(dx, dy);
+        if (d < 0.001) { dx = 0.01; dy = -0.01; d = Math.hypot(dx, dy); }
         const diff = (SEG_LEN - d) / d;
         const ox = dx * diff * 0.5, oy = dy * diff * 0.5;
         if (!a.pinned) { a.x -= ox; a.y -= oy; }
@@ -305,34 +367,38 @@ let tickLanyard = () => {};
       if (dragging) { last.x = dragX; last.y = dragY; }
     }
 
-    // render
+    // render rope
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     ctx.lineJoin = 'round'; ctx.lineCap = 'round';
 
     ctx.strokeStyle = ropeGrad; ctx.lineWidth = 7;
     ctx.beginPath();
     ctx.moveTo(points[0].x, points[0].y);
-    for (let i = 1; i < points.length; i++) ctx.lineTo(points[i].x, points[i].y);
+    for (let i = 1; i < SEGMENTS; i++) ctx.lineTo(points[i].x, points[i].y);
     ctx.stroke();
 
     ctx.strokeStyle = 'rgba(255,255,255,.25)'; ctx.lineWidth = 2;
     ctx.beginPath();
     ctx.moveTo(points[0].x, points[0].y);
-    for (let i = 1; i < points.length; i++) ctx.lineTo(points[i].x, points[i].y);
+    for (let i = 1; i < SEGMENTS; i++) ctx.lineTo(points[i].x, points[i].y);
     ctx.stroke();
 
     ctx.fillStyle = '#9b8df8';
     ctx.beginPath(); ctx.arc(anchorX, anchorY + 2, 5, 0, Math.PI * 2); ctx.fill();
 
-    const secondLast = points[SEGMENTS - 2];
-    const angle = Math.atan2(last.y - secondLast.y, last.x - secondLast.x) - Math.PI / 2;
-    card.style.left      = (last.x - stageRect.left) + 'px';
-    card.style.top       = (last.y - stageRect.top)  + 'px';
+    // position card — viewport coords because the layer is position:fixed inset:0
+    const sl = points[SEGMENTS - 2];
+    const angle = Math.atan2(last.y - sl.y, last.x - sl.x) - Math.PI / 2;
+    card.style.left      = last.x + 'px';
+    card.style.top       = last.y + 'px';
     card.style.transform = `translate(-50%,0) rotate(${angle}rad)`;
     if (holo) holo.style.transform = `rotate(${angle * 30}deg)`;
   };
 
-  setTimeout(() => { last.x += 80; }, 1600);
+  // initial swing-in
+  setTimeout(() => {
+    if (Math.abs(last.x - anchorX) < 10) last.x += 80;
+  }, 1600);
 })();
 
 /* —— EXP CARD MOUSE GLOW —— */

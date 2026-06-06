@@ -94,7 +94,7 @@ body::after {
   position: fixed; width: 12px; height: 12px;
   background: var(--accent); border-radius: 50%;
   pointer-events: none; z-index: 9999;
-  transform: translate(-50%, -50%);
+  left: 0; top: 0; will-change: transform;
   transition: width .2s, height .2s, background .2s;
   mix-blend-mode: screen;
 }
@@ -102,7 +102,7 @@ body::after {
   position: fixed; width: 36px; height: 36px;
   border: 1.5px solid rgba(124,109,250,.5); border-radius: 50%;
   pointer-events: none; z-index: 9998;
-  transform: translate(-50%, -50%);
+  left: 0; top: 0; will-change: transform;
   transition: width .15s ease, height .15s ease, border-color .15s;
 }
 

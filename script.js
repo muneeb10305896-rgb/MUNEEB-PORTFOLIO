@@ -2,6 +2,11 @@
    MUNEEB AHMED BUTT — PORTFOLIO JAVASCRIPT
    ============================================ */
 
+/* —— TOUCH DETECTION —— */
+if ('ontouchstart' in window || navigator.maxTouchPoints > 0) {
+  document.documentElement.classList.add('is-touch');
+}
+
 /* —— PRELOADER —— */
 window.addEventListener('load', () => {
   setTimeout(() => document.getElementById('preloader').classList.add('done'), 1400);
@@ -10,27 +15,36 @@ window.addEventListener('load', () => {
 /* —— CUSTOM CURSOR (transform-based — no layout reflow on mousemove) —— */
 const cursor = document.getElementById('cursor');
 const ring   = document.getElementById('cursor-ring');
+
+// BUG FIX: Force the custom cursor to ignore mouse interactions so it doesn't cause a shaking/hover loop
+if (cursor) cursor.style.pointerEvents = 'none';
+if (ring) ring.style.pointerEvents = 'none';
+
 let mouseX = 0, mouseY = 0, ringX = 0, ringY = 0;
-let cHalf = 6, rHalf = 18; // half-sizes for centring each element
+// Fixed halves — ring/cursor stay at their CSS dimensions; size change is
+// done via transform:scale so no width/height layout recalculation fires.
+const cHalf = 6, rHalf = 18;
+let cursorScale = 1, ringScale = 1;
 
 document.addEventListener('mousemove', e => {
   mouseX = e.clientX; mouseY = e.clientY;
-  cursor.style.transform = `translate(${mouseX - cHalf}px,${mouseY - cHalf}px)`;
+  cursor.style.transform = `translate(${mouseX - cHalf}px,${mouseY - cHalf}px) scale(${cursorScale})`;
 }, { passive: true });
 
-const hoverables = 'a, button, .badge, .skill-pill, .exp-tag, .contact-link, .id-card';
+// .id-card is intentionally excluded — see comment in initLanyard.
+const hoverables = 'a, button, .badge, .skill-pill, .exp-tag, .contact-link';
 document.querySelectorAll(hoverables).forEach(el => {
   el.addEventListener('mouseenter', () => {
-    cursor.style.width = '20px'; cursor.style.height = '20px'; cHalf = 10;
-    cursor.style.transform = `translate(${mouseX - cHalf}px,${mouseY - cHalf}px)`;
-    ring.style.width = '50px'; ring.style.height = '50px'; rHalf = 25;
+    cursorScale = 20 / 12;         // visually grows dot to ~20px
+    ringScale   = 50 / 36;         // visually grows ring to ~50px
     ring.style.borderColor = 'rgba(124,109,250,.8)';
+    cursor.style.transform = `translate(${mouseX - cHalf}px,${mouseY - cHalf}px) scale(${cursorScale})`;
   });
   el.addEventListener('mouseleave', () => {
-    cursor.style.width = '12px'; cursor.style.height = '12px'; cHalf = 6;
-    cursor.style.transform = `translate(${mouseX - cHalf}px,${mouseY - cHalf}px)`;
-    ring.style.width = '36px'; ring.style.height = '36px'; rHalf = 18;
+    cursorScale = 1;
+    ringScale   = 1;
     ring.style.borderColor = 'rgba(124,109,250,.5)';
+    cursor.style.transform = `translate(${mouseX - cHalf}px,${mouseY - cHalf}px) scale(${cursorScale})`;
   });
 });
 
@@ -160,10 +174,13 @@ window.addEventListener('scroll', () => {
 const track1 = document.getElementById('track1');
 const track2 = document.getElementById('track2');
 let t1pos = 0, t2pos = 0, half1 = 0, half2 = 0;
-setTimeout(() => {
+function measureTracks() {
   if (track1) half1 = track1.scrollWidth / 2;
   if (track2) { half2 = track2.scrollWidth / 2; t2pos = -half2; }
-}, 100);
+}
+/* measure after fonts load (reliable width) and on resize */
+document.fonts.ready.then(measureTracks);
+window.addEventListener('resize', measureTracks, { passive: true });
 
 function tickVelocity() {
   const speed = 1.5 + Math.abs(scrollVel) * 0.18;
@@ -240,37 +257,69 @@ let tickLanyard = () => {};
   canvas.style.cssText = 'position:absolute;inset:0;width:100%;height:100%;pointer-events:none;';
 
   layer.appendChild(card);
-  card.style.position      = 'absolute';  // same positioning context as canvas
-  card.style.pointerEvents = 'auto';
-  card.style.touchAction   = 'none';
-  card.style.zIndex        = '1';         // above canvas (default 0) within the layer
+  card.style.cssText += ';position:absolute;pointer-events:auto;touch-action:none;z-index:1;will-change:transform;';
+
+  // move hint into the layer so it's not hidden behind it
+  const hint = stage.querySelector('.lanyard-hint');
+  if (hint) { layer.appendChild(hint); hint.style.zIndex = '2'; }
 
   /* ---- physics constants ---- */
-  const SEGMENTS = 18, SEG_LEN = 9, GRAVITY = 0.75, FRICTION = 0.96, STIFFNESS = 40;
+  const SEGMENTS  = 18;
+  const SEG_LEN   = 9;
+  const GRAVITY   = 0.75;
+  const FRICTION  = 0.96;
+  const STIFFNESS = 40;
+  // A point is considered "at rest" when its per-axis velocity is below this.
+  // Using max-axis (not sum) prevents false positives when one axis drifts.
+  const REST_VEL  = 0.08;   // px/frame threshold
+  // Frames with max-vel below REST_VEL before we freeze the simulation.
+  const REST_FRAMES_NEEDED = 45; // ~0.75s at 60fps
+
   let anchorX = 0, anchorY = 0;
   const points = [];
-  for (let i = 0; i < SEGMENTS; i++) points.push({ x: 0, y: 0, ox: 0, oy: 0, pinned: i === 0 });
+  for (let i = 0; i < SEGMENTS; i++) {
+    points.push({ x: 0, y: 0, ox: 0, oy: 0, pinned: i === 0 });
+  }
   const last = points[SEGMENTS - 1];
+
+  /* ---- rest-state tracking ---- */
+  // resting=true means the physics loop is frozen; the card is held at the
+  // straight-hang position and updated only when anchor moves (scroll/resize).
+  let resting         = false;
+  let restFrameCount  = 0;
+  // canRest arms after the swing-in kick at 1600ms plus settling time.
+  // Before this flag is set, restFrameCount never increments.
+  let canRest         = false;
+  setTimeout(() => { canRest = true; }, 1600 + 800); // arm 800ms after kick
+
+  // Straight-hang resting position for each point (updated from anchor).
+  function getRestY(i) { return anchorY + i * SEG_LEN; }
+
+  function applyRestPositions() {
+    for (let i = 0; i < SEGMENTS; i++) {
+      points[i].x  = anchorX;
+      points[i].y  = getRestY(i);
+      points[i].ox = anchorX;
+      points[i].oy = getRestY(i);
+    }
+  }
 
   /* ---- position helpers ---- */
   function resetToAnchor() {
     const sr = stage.getBoundingClientRect();
     anchorX = sr.left + sr.width / 2;
     anchorY = sr.top;
-    for (let i = 0; i < SEGMENTS; i++) {
-      const y = anchorY + i * SEG_LEN;
-      points[i].x = anchorX; points[i].y = y;
-      points[i].ox = anchorX; points[i].oy = y;
-    }
+    applyRestPositions();
   }
   resetToAnchor();
-  card.style.left = last.x + 'px';
-  card.style.top  = last.y + 'px';
-  // subtle fade-in so the card doesn't flash in (it's no longer inside the animated stage)
-  card.style.opacity = '0';
+
+  card.style.left      = `${last.x}px`;
+  card.style.top       = `${last.y}px`;
+  card.style.transform = 'translate(-50%, 0)';
+  card.style.opacity   = '0';
   requestAnimationFrame(() => {
     card.style.transition = 'opacity 0.7s ease 0.3s';
-    card.style.opacity = '1';
+    card.style.opacity    = '1';
   });
 
   function sizeCanvas() {
@@ -292,26 +341,37 @@ let tickLanyard = () => {};
     const sr = stage.getBoundingClientRect();
     anchorX = sr.left + sr.width / 2;
     anchorY = sr.top;
-    points[0].x = anchorX; points[0].y = anchorY;
+    points[0].x  = anchorX; points[0].y  = anchorY;
     points[0].ox = anchorX; points[0].oy = anchorY;
-    // if card is way off-screen after resize, reset it
-    if (last.x < -300 || last.x > window.innerWidth + 300 ||
-        last.y < -300 || last.y > window.innerHeight + 300) {
+
+    if (resting) {
+      // Update the frozen straight-hang positions to the new anchor.
+      applyRestPositions();
+    } else if (
+      last.x < -300 || last.x > window.innerWidth  + 300 ||
+      last.y < -300 || last.y > window.innerHeight + 300
+    ) {
       resetToAnchor();
-      card.style.left = last.x + 'px';
-      card.style.top  = last.y + 'px';
     }
   }, { passive: true });
 
   /* ---- drag interaction ---- */
   let dragging = false, dragX = 0, dragY = 0;
   function pointerXY(e) {
-    return e.touches ? { x: e.touches[0].clientX, y: e.touches[0].clientY } : { x: e.clientX, y: e.clientY };
+    return e.touches
+      ? { x: e.touches[0].clientX, y: e.touches[0].clientY }
+      : { x: e.clientX,            y: e.clientY            };
   }
 
   card.addEventListener('pointerdown', e => {
-    dragging = true; last.pinned = true;
-    const p = pointerXY(e); dragX = p.x; dragY = p.y;
+    // Unfreeze physics so dragging responds immediately.
+    resting        = false;
+    restFrameCount = 0;
+    canRest        = true; // allow re-settling after this drag
+    dragging       = true;
+    last.pinned    = true;
+    const p = pointerXY(e);
+    dragX = p.x; dragY = p.y;
     e.preventDefault();
   });
 
@@ -323,23 +383,40 @@ let tickLanyard = () => {};
   });
 
   function endDrag() {
-    if (dragging) { dragging = false; last.pinned = false; }
+    if (dragging) {
+      dragging    = false;
+      last.pinned = false;
+      // Reset counter so the card must fully settle again after the throw.
+      restFrameCount = 0;
+    }
   }
   window.addEventListener('pointerup',     endDrag);
   window.addEventListener('pointercancel', endDrag);
-  window.addEventListener('blur',          endDrag);   // window loses focus → end drag
+  window.addEventListener('blur',          endDrag);
 
   card.addEventListener('dblclick', () => {
     resetToAnchor();
-    card.style.left = last.x + 'px';
-    card.style.top  = last.y + 'px';
+    resting        = false;
+    restFrameCount = 0;
   });
 
   /* ---- physics tick ---- */
   tickLanyard = function() {
+    // Always update anchor from the stage (handles scroll, layout shifts, etc.)
     const sr = stage.getBoundingClientRect();
     anchorX = sr.left + sr.width / 2;
     anchorY = sr.top;
+
+    /* -- RESTING STATE: physics frozen, card held straight -- */
+    if (resting) {
+      // Keep anchor pinned (anchor may have drifted via scroll)
+      applyRestPositions();
+      // Still need to render so the rope doesn't disappear on scroll.
+      renderRope(0); // angle=0 → perfectly vertical hang
+      return;
+    }
+
+    /* -- ACTIVE PHYSICS -- */
 
     // Verlet integration
     for (const p of points) {
@@ -347,19 +424,24 @@ let tickLanyard = () => {};
       const vx = (p.x - p.ox) * FRICTION;
       const vy = (p.y - p.oy) * FRICTION;
       p.ox = p.x; p.oy = p.y;
-      p.x += vx; p.y += vy + GRAVITY;
+      p.x += vx;
+      p.y += vy + GRAVITY;
     }
-    if (dragging) { last.x = dragX; last.y = dragY; last.ox = dragX; last.oy = dragY; }
+    if (dragging) {
+      last.x  = dragX; last.y  = dragY;
+      last.ox = dragX; last.oy = dragY;
+    }
 
-    // constraint solving
+    // Constraint solving
     for (let k = 0; k < STIFFNESS; k++) {
       for (let i = 0; i < SEGMENTS - 1; i++) {
         const a = points[i], b = points[i + 1];
         let dx = b.x - a.x, dy = b.y - a.y;
-        let d = Math.hypot(dx, dy);
+        let d  = Math.hypot(dx, dy);
         if (d < 0.001) { dx = 0.01; dy = -0.01; d = Math.hypot(dx, dy); }
         const diff = (SEG_LEN - d) / d;
-        const ox = dx * diff * 0.5, oy = dy * diff * 0.5;
+        const ox   = dx * diff * 0.5;
+        const oy   = dy * diff * 0.5;
         if (!a.pinned) { a.x -= ox; a.y -= oy; }
         if (!b.pinned) { b.x += ox; b.y += oy; }
       }
@@ -367,35 +449,72 @@ let tickLanyard = () => {};
       if (dragging) { last.x = dragX; last.y = dragY; }
     }
 
-    // render rope
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
-    ctx.lineJoin = 'round'; ctx.lineCap = 'round';
+    // Render
+    const sl    = points[SEGMENTS - 2];
+    const angle = Math.atan2(last.y - sl.y, last.x - sl.x) - Math.PI / 2;
+    renderRope(angle);
 
-    ctx.strokeStyle = ropeGrad; ctx.lineWidth = 7;
+    /* -- REST DETECTION (not during drag) -- */
+    if (!dragging && canRest) {
+      // Find the maximum per-axis velocity across all free points.
+      // Using max-axis velocity prevents early freeze when one axis still moves.
+      let maxVel = 0;
+      for (const p of points) {
+        if (p.pinned) continue;
+        const vx = Math.abs(p.x - p.ox);
+        const vy = Math.abs(p.y - p.oy);
+        if (vx > maxVel) maxVel = vx;
+        if (vy > maxVel) maxVel = vy;
+      }
+      if (maxVel < REST_VEL) {
+        restFrameCount++;
+        if (restFrameCount >= REST_FRAMES_NEEDED) {
+          // Snap cleanly to straight-hang and freeze.
+          applyRestPositions();
+          resting = true;
+        }
+      } else {
+        restFrameCount = 0;
+      }
+    }
+  };
+
+  /* ---- render helper (shared between active and resting paths) ---- */
+  function renderRope(angle) {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    ctx.lineJoin = 'round';
+    ctx.lineCap  = 'round';
+
+    ctx.strokeStyle = ropeGrad;
+    ctx.lineWidth   = 7;
     ctx.beginPath();
     ctx.moveTo(points[0].x, points[0].y);
     for (let i = 1; i < SEGMENTS; i++) ctx.lineTo(points[i].x, points[i].y);
     ctx.stroke();
 
-    ctx.strokeStyle = 'rgba(255,255,255,.25)'; ctx.lineWidth = 2;
+    ctx.strokeStyle = 'rgba(255,255,255,.25)';
+    ctx.lineWidth   = 2;
     ctx.beginPath();
     ctx.moveTo(points[0].x, points[0].y);
     for (let i = 1; i < SEGMENTS; i++) ctx.lineTo(points[i].x, points[i].y);
     ctx.stroke();
 
     ctx.fillStyle = '#9b8df8';
-    ctx.beginPath(); ctx.arc(anchorX, anchorY + 2, 5, 0, Math.PI * 2); ctx.fill();
+    ctx.beginPath();
+    ctx.arc(anchorX, anchorY + 2, 5, 0, Math.PI * 2);
+    ctx.fill();
 
-    // position card — viewport coords because the layer is position:fixed inset:0
-    const sl = points[SEGMENTS - 2];
-    const angle = Math.atan2(last.y - sl.y, last.x - sl.x) - Math.PI / 2;
-    card.style.left      = last.x + 'px';
-    card.style.top       = last.y + 'px';
-    card.style.transform = `translate(-50%,0) rotate(${angle}rad)`;
-    if (holo) holo.style.transform = `rotate(${angle * 30}deg)`;
-  };
+    card.style.left      = `${last.x.toFixed(2)}px`;
+    card.style.top       = `${last.y.toFixed(2)}px`;
+    card.style.transform = `translate(-50%, 0) rotate(${angle.toFixed(4)}rad)`;
 
-  // initial swing-in
+    // holo rotation: remove the 30x amplifier (it made sub-pixel jitter visible
+    // as a dramatic spinning effect). A gentle 4x is enough for the effect.
+    if (holo) holo.style.transform = `rotate(${(angle * 4).toFixed(3)}deg)`;
+  }
+
+  // Initial swing-in: nudge the last point sideways after the card fades in.
+  // canRest is armed at 1600+800ms so this kick is fully excluded.
   setTimeout(() => {
     if (Math.abs(last.x - anchorX) < 10) last.x += 80;
   }, 1600);
@@ -417,6 +536,10 @@ document.querySelectorAll('.exp-card').forEach(card => {
 let mouseGX = -99999, mouseGY = -99999;
 window.addEventListener('mousemove', e => { mouseGX = e.clientX; mouseGY = e.clientY; }, { passive: true });
 window.addEventListener('mouseout',  e => { if (!e.relatedTarget) { mouseGX = -99999; mouseGY = -99999; } });
+/* touch support for 3D spring cards */
+window.addEventListener('touchstart', e => { const t = e.touches[0]; mouseGX = t.clientX; mouseGY = t.clientY; }, { passive: true });
+window.addEventListener('touchmove',  e => { const t = e.touches[0]; mouseGX = t.clientX; mouseGY = t.clientY; }, { passive: true });
+window.addEventListener('touchend',   () => { mouseGX = -99999; mouseGY = -99999; }, { passive: true });
 
 const springCards = [];
 function registerCards(selector, cfg) {

@@ -5,29 +5,18 @@
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
 :root {
-  --bg:      #07070f;
-  --bg2:     #0e0e1a;
-  --bg3:     #141420;
-  --accent:  #7c6dfa;
-  --accent2: #4fc3f7;
-  --accent3: #ff6b9d;
-  --text:    #f0eef8;
-  --muted:   #7a789a;
-  --card:    #0f0f1c;
-  --border:  rgba(124,109,250,0.15);
-  --radius:  16px;
+  --bg: #07070f; --accent: #7c6dfa; --accent2: #4fc3f7; --accent3: #ff6b9d;
+  --text: #f0eef8; --muted: #7a789a; --card: #0f0f1c; --border: rgba(124,109,250,0.15); --radius: 16px;
 }
 
 html { scroll-behavior: smooth; font-size: 16px; overflow-x: hidden; }
-body {
-  background: var(--bg);
-  color: var(--text);
-  font-family: 'DM Sans', sans-serif;
-  line-height: 1.7;
-  overflow-x: hidden;
-  cursor: none;
-  position: relative;
-}
+body { background: var(--bg); color: var(--text); font-family: 'DM Sans', sans-serif; line-height: 1.7; overflow-x: hidden; }
+@media (hover: hover) and (pointer: fine) { body { cursor: none; } }
+
+/* —— CRITICAL FIXES FOR JITTER —— */
+.lanyard-hint { pointer-events: none !important; }
+#ropeCanvas { pointer-events: none !important; }
+#cursor, #cursor-ring { pointer-events: none !important; }
 
 /* —— SITE-WIDE 3D ANIMATED BACKGROUND —— */
 body::before {
@@ -403,7 +392,8 @@ h1 {
 .id-card {
   position: absolute; left: 50%; top: 200px; z-index: 5;
   width: 250px; height: 360px;
-  will-change: transform; transform-origin: 50% -40px;
+  will-change: transform;
+  transform-origin: 50% -40px;
 }
 .id-clip-bar {
   position: absolute; top: -12px; left: 50%; transform: translateX(-50%);
@@ -426,7 +416,10 @@ h1 {
   position: absolute; inset: 0;
   background: conic-gradient(from 0deg,#7c6dfa55,#4fc3f755,#ff6b9d55,#7c6dfa55);
   mix-blend-mode: color-dodge; opacity: .45; z-index: 2;
-  transition: transform .1s linear;
+  /* FIX: transition removed — the 0.1s lag between card angle and holo
+     angle meant sub-pixel Verlet jitter was rendered as a visible spinning
+     holographic animation. The JS now applies the holo rotation directly
+     with a 4x (not 30x) multiplier, which is subtle enough without lag. */
 }
 .id-content {
   position: absolute; inset: 0; z-index: 3;
@@ -483,6 +476,8 @@ h1 {
 /* —— SECTIONS —— */
 .section { padding: 5.5rem 2.5rem; max-width: 1100px; margin: 0 auto; position: relative; z-index: 1; overflow: hidden; }
 #contact { padding-bottom: 2.5rem; }
+@media (max-width: 700px) { .section { padding: 3rem 1.2rem; } }
+@media (max-width: 400px) { .section { padding: 2.5rem 1rem; } }
 .section-label {
   font-size: .75rem; letter-spacing: .14em; text-transform: uppercase;
   color: var(--accent); margin-bottom: .7rem; font-weight: 500;
@@ -525,7 +520,7 @@ h1 {
 /* —— 3D DEPTH LAYERS —— */
 .skill-cat, .skill-name, .skill-items,
 .edu-degree, .edu-school, .cert-title, .cert-issuer,
-.exp-role, .id-photo, .id-name {
+.exp-role {
   transition: transform .4s cubic-bezier(.16,1,.3,1);
 }
 .skill-card:hover .skill-cat   { transform: translateZ(28px); }
@@ -930,7 +925,7 @@ footer::before {
   position: fixed; bottom: 2rem; right: 2rem; z-index: 90;
   width: 46px; height: 46px; border-radius: 50%;
   background: linear-gradient(135deg, var(--accent), #9b8df8);
-  color: #fff; border: none; font-size: 1.2rem; cursor: none;
+  color: #fff; border: none; font-size: 1.2rem;
   box-shadow: 0 4px 20px rgba(124,109,250,.4);
   opacity: 0; visibility: hidden; transform: translateY(20px);
   transition: opacity .35s, visibility .35s, transform .35s cubic-bezier(.34,1.56,.64,1);
@@ -953,20 +948,17 @@ footer::before {
   .lanyard-stage { height: 520px; max-width: 350px; margin: 0 auto; }
 }
 @media (max-width: 700px) {
-  body { cursor: auto; }
   #cursor, #cursor-ring { display: none; }
   #backToTop { cursor: pointer; }
   .about-grid, .contact-grid { grid-template-columns: 1fr; }
-  nav { padding: .9rem 1.2rem; }
   .nav-links { display: none; }
   .nav-cta { display: none; }
   .nav-cv { display: none; }
   .nav-hamburger { display: flex; }
-  .section { padding: 3.5rem 1.2rem; }
   .hero-section { padding: 5rem 1.2rem 3rem; }
   .hero-stats { gap: 1.8rem; }
   .divider { margin: 0 1.2rem; }
-  h1 { font-size: 2.4rem; }
+  h1 { font-size: 2.1rem; }
   .exp-header { flex-direction: column; gap: .4rem; }
   .scroll-down { display: none; }
   .lanyard-stage { height: 480px; }
@@ -979,6 +971,59 @@ footer::before {
   .skills-bars { grid-template-columns: 1fr; gap: .9rem; }
   .section-dots { display: none; }
   #main-nav { padding: .9rem 1.2rem; }
+}
+
+/* —— TOUCH DEVICE OVERRIDES —— */
+/* Prevent sticky hover transforms on touch devices */
+.is-touch *:hover {
+  transform: none !important;
+}
+.is-touch #cursor,
+.is-touch #cursor-ring { display: none; }
+.is-touch body { cursor: auto; }
+.is-touch #backToTop { cursor: pointer; }
+
+/* —— ADDITIONAL MOBILE FRIENDLY —— */
+a, button, input, textarea, select, .nav-hamburger, .badge, .exp-tag, .skill-pill, .contact-link { touch-action: manipulation; }
+
+/* Very small screens */
+@media (max-width: 420px) {
+  h1 { font-size: 2rem; }
+  .hero-tag { font-size: .7rem; padding: .25rem .7rem; }
+  .hero-btns { flex-direction: column; }
+  .btn-primary, .btn-outline, .btn-cv { width: 100%; justify-content: center; text-align: center; }
+  .hero-stats { gap: 1.2rem; margin-top: 2rem; }
+  .stat-val { font-size: 1.5rem; }
+  .hero-stats .stat { flex: 1; min-width: 80px; }
+  .typewriter-wrap { font-size: 1rem; min-height: 1.6rem; }
+  .about-badges { gap: .4rem; }
+  .badge { font-size: .72rem; padding: .2rem .6rem; }
+  .info-card { padding: .9rem 1rem; }
+  .cv-banner { padding: 1.2rem 1rem; }
+  .cv-banner-actions { flex-direction: column; gap: .5rem; }
+  .cv-view-btn, .cv-download-btn { width: 100%; justify-content: center; }
+  .exp-card { padding: 1.2rem 1.1rem; }
+  .skill-card { padding: 1.1rem; }
+  .edu-card { flex-direction: column; gap: .8rem; padding: 1.2rem 1.1rem; }
+  .cert-card { flex-direction: column; gap: .8rem; padding: 1.2rem 1.1rem; }
+  .contact-form { padding: 1.3rem 1.1rem; }
+  .contact-link { padding: .7rem .9rem; }
+  .map-wrap iframe { height: 160px; }
+  .map-strip .map-wrap iframe { height: 140px; }
+  footer { padding: 1.8rem 1rem 1.4rem; }
+  #backToTop { width: 40px; height: 40px; bottom: 1rem; right: 1rem; font-size: 1rem; }
+  .velocity-track { font-size: 1rem; }
+}
+
+/* Tablets up to 950px */
+@media (min-width: 701px) and (max-width: 950px) {
+  .hero-btns { flex-wrap: wrap; }
+  .btn-cv { width: auto; }
+  .about-grid { gap: 2rem; }
+  .contact-grid { gap: 1.8rem; }
+  .lanyard-stage { height: 520px; }
+  .skills-bars { grid-template-columns: 1fr; gap: 1rem; }
+  .hero-inner { grid-template-columns: 1fr 300px; gap: 1.5rem; }
 }
 
 /* —— REDUCED MOTION —— */

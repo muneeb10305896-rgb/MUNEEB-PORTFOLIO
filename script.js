@@ -175,6 +175,9 @@ if (langToggleBtn) {
   const saved = (() => { try { return localStorage.getItem('lang'); } catch (e) { return null; } })() || 'en';
   applyLanguage(saved);
 })();
+
+/* —— THEME TOGGLE —— */
+const themeToggleBtn = document.getElementById('themeToggle');
 if (themeToggleBtn) {
   themeToggleBtn.addEventListener('click', () => {
     const next = document.documentElement.dataset.theme === 'light' ? 'dark' : 'light';

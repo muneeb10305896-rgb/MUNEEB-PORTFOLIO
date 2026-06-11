@@ -176,35 +176,39 @@ function tickParticles() {
 }
 
 /* —— TYPEWRITER —— */
-const phrases = [
+const twPhrases = [
   'IT Student at UEF, Finland 🇫🇮',
   'IT Developer at DEVSiNC',
   'Harvard Aspire 2024 Alumni',
   'ESN Savo Board Member',
   'Web Developer & Problem Solver'
 ];
-let phraseIdx = 0, charIdx = 0, isTyping = true;
+let twIdx = 0, twPos = 0, twDir = 1, twLast = performance.now();
+const twSpeed = 55, twPause = 1500;
 const twEl = document.getElementById('typewriter');
-function typeStep() {  if (isTyping) {
-    if (charIdx <= phrases[phraseIdx].length) {
-      twEl.textContent = phrases[phraseIdx].slice(0, charIdx++);
-      setTimeout(typeStep, 55);
-    } else { isTyping = false; setTimeout(typeStep, 1800); }
-  } else {
-    if (charIdx > 0) {
-      twEl.textContent = phrases[phraseIdx].slice(0, --charIdx);
-      setTimeout(typeStep, 28);
-    } else {
-      isTyping = true;
-      phraseIdx = (phraseIdx + 1) % phrases.length;
-      setTimeout(typeStep, 300);
+
+if (!REDUCED_MOTION) {
+  requestAnimationFrame(function twTick(now) {
+    const dt = now - twLast;
+    if (dt < twSpeed) { requestAnimationFrame(twTick); return; }
+    twLast = now;
+
+    const p = twPhrases[twIdx];
+    twPos += twDir;
+
+    if (twPos > p.length) {
+      twDir = -1; twPos = p.length;
+      twLast = now - twSpeed + twPause; // extra pause at full text
+    } else if (twPos < 0) {
+      twDir = 1; twPos = 0;
+      twIdx = (twIdx + 1) % twPhrases.length;
+      twLast = now - twSpeed + 250; // brief pause before next phrase
     }
-  }
-}
-if (REDUCED_MOTION) {
-  twEl.textContent = phrases[0];
+    twEl.textContent = p.slice(0, twPos);
+    requestAnimationFrame(twTick);
+  });
 } else {
-  typeStep();
+  twEl.textContent = twPhrases[0];
 }
 
 /* —— VELOCITY SCROLL —— */

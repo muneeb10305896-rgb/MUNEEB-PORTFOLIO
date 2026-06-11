@@ -171,6 +171,7 @@ body::after {
 }
 .nav-links a:hover, .nav-links a.active { color: var(--text); }
 .nav-links a:hover::after, .nav-links a.active::after { width: 100%; }
+.nav-right { display: flex; align-items: center; gap: .6rem; }
 .nav-cta {
   background: linear-gradient(135deg, var(--accent), #9b8df8);
   color: #fff; padding: .42rem 1.2rem; border-radius: 8px;
@@ -1001,7 +1002,34 @@ footer::before {
 html[data-theme="light"] .theme-toggle .icon-sun  { display: none; }
 html[data-theme="light"] .theme-toggle .icon-moon { display: block; }
 
-/* smooth cross-fade while switching (class added briefly by JS) */
+/* —— LANGUAGE TOGGLE —— */
+.lang-toggle {
+  display: flex; align-items: center; justify-content: center;
+  width: 38px; height: 38px; border-radius: 50%; flex-shrink: 0;
+  border: 1px solid var(--border); background: transparent;
+  color: var(--text); font-size: .75rem; font-weight: 700; letter-spacing: .02em;
+  font-family: inherit; cursor: pointer; line-height: 1;
+  transition: border-color .25s, background .25s, transform .35s cubic-bezier(.34,1.56,.64,1);
+}
+.lang-toggle:hover { border-color: var(--accent); background: rgba(124,109,250,.12); transform: scale(1.08); }
+.lang-toggle:active { transform: scale(.92); }
+
+/* === VIEW TRANSITIONS THEME WIPE === */
+/* Only active when the browser supports the View Transitions API */
+::view-transition-old(root) {
+  animation: none;
+  mix-blend-mode: normal;
+}
+::view-transition-new(root) {
+  animation: wipe-reveal 500ms ease-out forwards;
+  mix-blend-mode: normal;
+  clip-path: circle(0% at var(--wipe-x, 50%) var(--wipe-y, 50%));
+}
+@keyframes wipe-reveal {
+  from { clip-path: circle(0% at var(--wipe-x, 50%) var(--wipe-y, 50%)); }
+  to   { clip-path: circle(150% at var(--wipe-x, 50%) var(--wipe-y, 50%)); }
+}
+/* fallback cross-fade when View Transitions are not supported */
 html.theme-switching body,
 html.theme-switching body::before,
 html.theme-switching body::after,
@@ -1104,7 +1132,9 @@ html[data-theme="light"] #particle-canvas { opacity: .5; }
   .nav-cta { display: none; }
   .nav-cv { display: none; }
   .nav-hamburger { display: flex; }
-  .theme-toggle { width: 34px; height: 34px; margin-left: auto; margin-right: .7rem; }
+  .theme-toggle { width: 34px; height: 34px; }
+  .lang-toggle  { width: 34px; height: 34px; margin-left: .4rem; }
+  .nav-hamburger { margin-left: .4rem; }
   .mobile-menu { top: 62px; }
 }
 

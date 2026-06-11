@@ -17,15 +17,187 @@ function syncThemeExtras() {
 }
 syncThemeExtras();
 
-const themeToggleBtn = document.getElementById('themeToggle');
+/* —— TRANSLATIONS (EN / FI) —— */
+const translations = {
+  en: {
+    'nav.about': 'About',
+    'nav.experience': 'Experience',
+    'nav.skills': 'Skills',
+    'nav.education': 'Education',
+    'nav.contact': 'Contact',
+    'nav.cv': 'CV',
+    'nav.hire-me': 'Hire Me',
+    'hero.tag': 'Open to opportunities in Finland',
+    'hero.hi': "Hi, I'm",
+    'hero.view-exp': 'View Experience',
+    'hero.get-in-touch': 'Get In Touch',
+    'hero.dl-cv': 'Download CV',
+    'hero.roles': 'Roles held',
+    'hero.studying': 'Currently studying',
+    'hero.erasmus': 'Erasmus Network',
+    'about.label': 'About Me',
+    'about.title': 'My Introduction',
+    'about.sub': 'From Lahore to Kuopio — my journey in tech spans two continents and keeps growing.',
+    'exp.label': 'Experience',
+    'exp.title': 'My Career So Far',
+    'exp.sub': 'Building digital products, contributing to open culture, and learning every day.',
+    'skills.label': 'Skills',
+    'skills.title': 'Tech Stack',
+    'skills.sub': 'Tools and technologies I work with across the stack.',
+    'skills.prof-label': 'Key Proficiencies',
+    'skills.prof-sub': 'Skill levels based on real-world experience across roles.',
+    'edu.label': 'Education',
+    'edu.title': 'Academic Background',
+    'edu.sub': 'Formal education that shaped my path.',
+    'edu.certs': 'Certifications',
+    'contact.label': 'Contact',
+    'contact.title': 'Let\'s Connect',
+    'contact.sub': 'Open to IT roles, freelance projects, and meaningful collaborations across Finland and beyond.',
+    'contact.email': 'Email',
+    'contact.linkedin': 'LinkedIn',
+    'contact.github': 'GitHub',
+    'contact.location': 'Location',
+    'form.name': 'Your Name',
+    'form.email': 'Your Email',
+    'form.subject': 'Subject',
+    'form.message': 'Your Message',
+    'form.send': 'Send Message',
+    'form.ph-name': 'Your full name',
+    'form.ph-email': 'your@email.com',
+    'form.ph-subject': 'Job opportunity, collaboration, hello…',
+    'form.ph-message': 'Tell me more about the opportunity or project…',
+    'scroll': 'Scroll',
+    'lanyard.hint': 'Drag me & let go',
+    'cert.verify': 'Verify credential',
+    'cert.view': 'View certificate',
+    'cv.preview': 'Preview',
+    'cv.download': 'Download',
+    'footer.text': 'Designed & built by Muneeb Ahmed Butt',
+  },
+  fi: {
+    'nav.about': 'Tietoja',
+    'nav.experience': 'Kokemus',
+    'nav.skills': 'Taidot',
+    'nav.education': 'Koulutus',
+    'nav.contact': 'Yhteys',
+    'nav.cv': 'CV',
+    'nav.hire-me': 'Ota yhteyttä',
+    'hero.tag': 'Avoin työmahdollisuuksille Suomessa',
+    'hero.hi': 'Hei, olen',
+    'hero.view-exp': 'Katso kokemus',
+    'hero.get-in-touch': 'Ota yhteyttä',
+    'hero.dl-cv': 'Lataa CV',
+    'hero.roles': 'Tehtävissä',
+    'hero.studying': 'Opiskelee',
+    'hero.erasmus': 'Erasmus-verkosto',
+    'about.label': 'Tietoja minusta',
+    'about.title': 'Esittely',
+    'about.sub': 'Lahdesta Kuopioon — matkani teknologian parissa ulottuu kahdelle mantereelle ja jatkuu edelleen.',
+    'exp.label': 'Kokemus',
+    'exp.title': 'Urani tähän asti',
+    'exp.sub': 'Rakennan digitaalisia tuotteita, osallistun avoimeen kulttuuriin ja opin joka päivä.',
+    'skills.label': 'Taidot',
+    'skills.title': 'Teknologiapino',
+    'skills.sub': 'Työkalut ja teknologiat, joita käytän eri osa-alueilla.',
+    'skills.prof-label': 'Keskeiset taidot',
+    'skills.prof-sub': 'Taitotasot perustuvat tosielämän kokemukseen eri tehtävistä.',
+    'edu.label': 'Koulutus',
+    'edu.title': 'Akateeminen tausta',
+    'edu.sub': 'Muodollinen koulutus, joka on muovannut polkuani.',
+    'edu.certs': 'Sertifikaatit',
+    'contact.label': 'Yhteys',
+    'contact.title': 'Otetaan yhteyttä',
+    'contact.sub': 'Avoin IT-tehtäville, freelance-projekteille ja merkitykselliselle yhteistyölle Suomessa ja muualla.',
+    'contact.email': 'Sähköposti',
+    'contact.linkedin': 'LinkedIn',
+    'contact.github': 'GitHub',
+    'contact.location': 'Sijainti',
+    'form.name': 'Nimesi',
+    'form.email': 'Sähköpostisi',
+    'form.subject': 'Aihe',
+    'form.message': 'Viestisi',
+    'form.send': 'Lähetä viesti',
+    'form.ph-name': 'Koko nimesi',
+    'form.ph-email': 'sähköpostisi@osoite.fi',
+    'form.ph-subject': 'Työtilaisuus, yhteistyö, tervehdys…',
+    'form.ph-message': 'Kerro lisää mahdollisuudesta tai projektista…',
+    'scroll': 'Selaa',
+    'lanyard.hint': 'Vedä ja päästä',
+    'cert.verify': 'Todista',
+    'cert.view': 'Katso todistus',
+    'cv.preview': 'Esikatsele',
+    'cv.download': 'Lataa',
+    'footer.text': 'Suunnitellut ja toteuttanut Muneeb Ahmed Butt',
+  }
+};
+
+function applyLanguage(lang) {
+  const t = translations[lang];
+  if (!t) return;
+  document.querySelectorAll('[data-i18n]').forEach(el => {
+    const key = el.dataset.i18n;
+    if (t[key] !== undefined) {
+      el.textContent = t[key];
+    } else {
+      // fallback to English if key missing in target language
+      const fallback = translations.en[key];
+      if (fallback !== undefined) el.textContent = fallback;
+    }
+  });
+  // translate placeholders
+  document.querySelectorAll('[data-i18n-placeholder]').forEach(el => {
+    const key = el.dataset.i18nPlaceholder;
+    if (t[key] !== undefined) {
+      el.placeholder = t[key];
+    } else {
+      const fallback = translations.en[key];
+      if (fallback !== undefined) el.placeholder = fallback;
+    }
+  });
+  // update lang toggle button text
+  const langBtn = document.getElementById('langToggle');
+  if (langBtn) langBtn.textContent = lang === 'fi' ? 'EN' : 'FI';
+  document.documentElement.setAttribute('lang', lang === 'fi' ? 'fi' : 'en');
+  try { localStorage.setItem('lang', lang); } catch (e) {}
+}
+
+/* —— LANGUAGE TOGGLE —— */
+const langToggleBtn = document.getElementById('langToggle');
+if (langToggleBtn) {
+  langToggleBtn.addEventListener('click', () => {
+    const cur = (document.documentElement.getAttribute('lang') || 'en').slice(0,2);
+    const next = cur === 'fi' ? 'en' : 'fi';
+    applyLanguage(next);
+  });
+}
+// apply saved language on load, default English
+(function initLang() {
+  const saved = (() => { try { return localStorage.getItem('lang'); } catch (e) { return null; } })() || 'en';
+  applyLanguage(saved);
+})();
 if (themeToggleBtn) {
   themeToggleBtn.addEventListener('click', () => {
     const next = document.documentElement.dataset.theme === 'light' ? 'dark' : 'light';
-    document.documentElement.classList.add('theme-switching');
-    document.documentElement.dataset.theme = next;
+    // View Transitions wipe — capture toggle button position for clip-path origin
+    const rect = themeToggleBtn.getBoundingClientRect();
+    const x = Math.round(rect.left + rect.width  / 2);
+    const y = Math.round(rect.top  + rect.height / 2);
+    document.documentElement.style.setProperty('--wipe-x', x + 'px');
+    document.documentElement.style.setProperty('--wipe-y', y + 'px');
+
+    if (document.startViewTransition) {
+      document.startViewTransition(() => {
+        document.documentElement.dataset.theme = next;
+        syncThemeExtras();
+      });
+    } else {
+      // fallback for Firefox/Safari that don't support VT yet
+      document.documentElement.classList.add('theme-switching');
+      document.documentElement.dataset.theme = next;
+      syncThemeExtras();
+      setTimeout(() => document.documentElement.classList.remove('theme-switching'), 500);
+    }
     try { localStorage.setItem('theme', next); } catch (e) {}
-    syncThemeExtras();
-    setTimeout(() => document.documentElement.classList.remove('theme-switching'), 500);
   });
 }
 

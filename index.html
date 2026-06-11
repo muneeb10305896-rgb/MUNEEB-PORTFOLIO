@@ -6,6 +6,16 @@
 <title>Muneeb Ahmed Butt — Portfolio</title>
 <meta name="description" content="Muneeb Ahmed Butt — IT Student at University of Eastern Finland. IT Developer, web developer, and problem solver.">
 <meta name="theme-color" content="#07070f">
+<script>
+/* theme bootstrap — runs before CSS paints to avoid a flash of wrong theme */
+(function(){
+  try {
+    var t = localStorage.getItem('theme');
+    if (!t) t = window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark';
+    document.documentElement.dataset.theme = t;
+  } catch(e) { document.documentElement.dataset.theme = 'dark'; }
+})();
+</script>
 <meta property="og:type" content="website">
 <meta property="og:title" content="Muneeb Ahmed Butt — Portfolio">
 <meta property="og:description" content="IT Student at UEF Finland · IT Developer at DEVSiNC · Harvard Aspire 2024 Alumni · ESN Savo Member">
@@ -15,14 +25,36 @@
 <meta name="twitter:title" content="Muneeb Ahmed Butt — Portfolio">
 <meta name="twitter:description" content="IT Student at UEF Finland · IT Developer at DEVSiNC · Harvard Aspire 2024 Alumni">
 <meta name="twitter:image" content="https://muneeb10305896-rgb.github.io/MUNEEB-PORTFOLIO/assets/muneeb.jpg">
+<link rel="canonical" href="https://muneeb10305896-rgb.github.io/MUNEEB-PORTFOLIO/">
 <link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
-<link rel="preload" as="image" href="assets/muneeb.jpg" fetchpriority="high">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Person",
+  "name": "Muneeb Ahmed Butt",
+  "url": "https://muneeb10305896-rgb.github.io/MUNEEB-PORTFOLIO/",
+  "image": "https://muneeb10305896-rgb.github.io/MUNEEB-PORTFOLIO/assets/muneeb.jpg",
+  "jobTitle": "IT Developer",
+  "worksFor": { "@type": "Organization", "name": "DEVSiNC" },
+  "alumniOf": { "@type": "CollegeOrUniversity", "name": "University of Eastern Finland" },
+  "address": { "@type": "PostalAddress", "addressLocality": "Kuopio", "addressCountry": "FI" },
+  "email": "mailto:muneeb10305896@gmail.com",
+  "sameAs": [
+    "https://www.linkedin.com/in/muneeb-ahmed-butt-4a384438a/",
+    "https://github.com/muneeb10305896-rgb",
+    "https://www.instagram.com/muneeb.ahmed.butt.fi/"
+  ]
+}
+</script>
+<link rel="preload" as="image" href="assets/muneeb.webp" type="image/webp" fetchpriority="high">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="style.css">
 </head>
 <body>
+
+<a class="skip-link" href="#hero">Skip to content</a>
 
 <!-- PRELOADER -->
 <div id="preloader">
@@ -56,8 +88,12 @@
     <svg viewBox="0 0 20 20" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 3v10M5 13l5 5 5-5M3 17h14"/></svg>
     CV
   </a>
+  <button class="theme-toggle" id="themeToggle" aria-label="Switch theme" title="Switch theme">
+    <svg class="icon-sun" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"/></svg>
+    <svg class="icon-moon" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+  </button>
   <a class="nav-cta" href="mailto:muneeb10305896@gmail.com">Hire Me</a>
-  <button class="nav-hamburger" id="navHamburger" aria-label="Toggle menu">
+  <button class="nav-hamburger" id="navHamburger" aria-label="Toggle menu" aria-expanded="false" aria-controls="mobileMenu">
     <span></span><span></span><span></span>
   </button>
 </nav>
@@ -87,6 +123,8 @@
   </ul>
 </div>
 
+<main id="main-content">
+
 <!-- HERO -->
 <section id="hero" class="hero-section">
   <div class="hero-bg">
@@ -106,9 +144,10 @@
         <span class="line-reveal"><span class="grad">Muneeb</span></span>
         <span class="line-reveal"><span>Ahmed Butt</span></span>
       </h1>
-      <div class="typewriter-wrap">
+      <div class="typewriter-wrap" aria-hidden="true">
         <span class="typewriter-text" id="typewriter"></span><span class="tw-cursor"></span>
       </div>
+      <p class="sr-only">IT Student at UEF Finland, IT Developer at DEVSiNC, Harvard Aspire 2024 Alumni, ESN Savo member, web developer and problem solver.</p>
       <div class="hero-btns">
         <a class="btn-primary" href="#experience">View Experience</a>
         <a class="btn-outline" href="#contact">Get In Touch</a>
@@ -137,7 +176,10 @@
           <div class="id-content">
             <div class="id-org">Portfolio &middot; UEF Kuopio</div>
             <div class="id-photo">
-              <img src="assets/muneeb.jpg" alt="Muneeb Ahmed Butt" draggable="false" />
+              <picture>
+                <source srcset="assets/muneeb.webp" type="image/webp">
+                <img src="assets/muneeb-440.jpg" alt="Muneeb Ahmed Butt" width="220" height="220" draggable="false" />
+              </picture>
             </div>
             <div class="id-name">Muneeb A. Butt</div>
             <div class="id-title">IT Student &amp; Developer</div>
@@ -178,7 +220,7 @@
   <div class="floating-shape fs1"></div>
   <div class="floating-shape fs2"></div>
   <div class="section-label reveal">About Me</div>
-  <div class="section-title reveal" data-delay="1">My Introduction</div>
+  <h2 class="section-title reveal" data-delay="1">My Introduction</h2>
   <p class="section-sub reveal" data-delay="2">From Lahore to Kuopio — building a career in IT one step at a time.</p>
   <div class="about-grid">
     <div class="about-text reveal-left" data-delay="1">
@@ -245,7 +287,7 @@
 <section id="experience" class="section">
   <div class="floating-shape fs3"></div>
   <div class="section-label reveal">Experience</div>
-  <div class="section-title reveal" data-delay="1">My Work Experience</div>
+  <h2 class="section-title reveal" data-delay="1">My Work Experience</h2>
   <p class="section-sub reveal" data-delay="2">Real-world roles across web development, IT, logistics, and NGO work.</p>
   <div class="exp-list">
 
@@ -364,7 +406,7 @@
   <div class="floating-shape fs2"></div>
   <div class="floating-shape fs3"></div>
   <div class="section-label reveal">Skills</div>
-  <div class="section-title reveal" data-delay="1">My Skillset</div>
+  <h2 class="section-title reveal" data-delay="1">My Skillset</h2>
   <p class="section-sub reveal" data-delay="2">Technical and professional skills built through real-world roles and study.</p>
   <div class="skills-grid">
     <div class="skill-card reveal-scale" data-delay="1">
@@ -478,7 +520,7 @@
   <div class="floating-shape fs2"></div>
   <div class="floating-shape fs3"></div>
   <div class="section-label reveal">Education</div>
-  <div class="section-title reveal" data-delay="1">My Academic Background</div>
+  <h2 class="section-title reveal" data-delay="1">My Academic Background</h2>
   <p class="section-sub reveal" data-delay="2">From computer science fundamentals to specialised IT studies in Finland.</p>
   <div class="edu-list">
     <div class="edu-card reveal-left" data-delay="1">
@@ -509,11 +551,51 @@
 
   <div class="section-label reveal" style="margin-top:2.5rem;margin-bottom:.5rem">Certifications</div>
   <div class="cert-card reveal" data-delay="1">
+    <div class="cert-badge">&#128013;</div>
+    <div>
+      <div class="cert-title">Python (Basic)</div>
+      <div class="cert-issuer">HackerRank &middot; 2026 &middot; Credential ID: d68eb9c153f7</div>
+      <div class="cert-desc">Verified skills assessment covering Python fundamentals: scalar types, operators, control flow, strings, collections, iteration, modularity, classes, and exception handling.</div>
+      <a class="cert-verify" href="https://www.hackerrank.com/certificates/d68eb9c153f7" target="_blank" rel="noopener noreferrer">
+        Verify credential
+        <svg viewBox="0 0 20 20" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 15 15 5M7 5h8v8"/></svg>
+      </a>
+    </div>
+  </div>
+  <div class="cert-card reveal" data-delay="2">
+    <div class="cert-badge">&#9889;</div>
+    <div>
+      <div class="cert-title">JavaScript (Basic)</div>
+      <div class="cert-issuer">HackerRank &middot; 2026 &middot; Credential ID: 1b27c5657457</div>
+      <div class="cert-desc">Verified skills assessment covering JavaScript fundamentals: functions, currying, hoisting, scope, inheritance, events, and error handling.</div>
+      <a class="cert-verify" href="https://www.hackerrank.com/certificates/1b27c5657457" target="_blank" rel="noopener noreferrer">
+        Verify credential
+        <svg viewBox="0 0 20 20" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 15 15 5M7 5h8v8"/></svg>
+      </a>
+    </div>
+  </div>
+  <div class="cert-card reveal" data-delay="3">
+    <div class="cert-badge">&#129302;</div>
+    <div>
+      <div class="cert-title">Artificial Intelligence Literacy</div>
+      <div class="cert-issuer">IBM SkillsBuild &middot; 2026 &middot; Credly verified badge</div>
+      <div class="cert-desc">Foundational AI literacy: core AI concepts, machine learning basics, AI ethics, and practical applications of artificial intelligence in business and society.</div>
+      <a class="cert-verify" href="https://www.credly.com/badges/74002bea-b6a5-494c-9036-aa3c2827f133" target="_blank" rel="noopener noreferrer">
+        Verify credential
+        <svg viewBox="0 0 20 20" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 15 15 5M7 5h8v8"/></svg>
+      </a>
+    </div>
+  </div>
+  <div class="cert-card reveal" data-delay="4">
     <div class="cert-badge">&#127963;&#65039;</div>
     <div>
       <div class="cert-title">2024 Aspire Leaders Program</div>
       <div class="cert-issuer">Harvard Business School (HBS) &middot; Aspire Institute &middot; November 2024</div>
       <div class="cert-desc">Global leadership and personal development program focused on critical thinking, communication, self-confidence, and social impact. Completed 30 hours of coursework within an international learning community. Mode: Online.</div>
+      <a class="cert-verify" href="assets/Aspire_Leaders_2024_Certificate.pdf" target="_blank" rel="noopener noreferrer">
+        View certificate
+        <svg viewBox="0 0 20 20" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 15 15 5M7 5h8v8"/></svg>
+      </a>
     </div>
   </div>
 </section>
@@ -523,7 +605,7 @@
 <!-- CONTACT -->
 <section id="contact" class="section">
   <div class="section-label reveal">Contact</div>
-  <div class="section-title reveal" data-delay="1">Let's Connect</div>
+  <h2 class="section-title reveal" data-delay="1">Let's Connect</h2>
   <p class="section-sub reveal" data-delay="2">Open to IT roles, internships, and collaborations in Finland and remotely.</p>
   <div class="contact-grid">
     <div class="reveal-left">
@@ -551,7 +633,7 @@
         <a class="contact-link" href="https://github.com/muneeb10305896-rgb" target="_blank" rel="noopener noreferrer">
           <div class="cl-icon">
             <svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true">
-              <path fill="#f0eef8" d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23A11.509 11.509 0 0 1 12 5.803c1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222 0 1.606-.015 2.898-.015 3.293 0 .322.218.694.825.576C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/>
+              <path fill="currentColor" d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23A11.509 11.509 0 0 1 12 5.803c1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222 0 1.606-.015 2.898-.015 3.293 0 .322.218.694.825.576C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/>
             </svg>
           </div>
           <div><div class="cl-label">GitHub</div><div class="cl-val">muneeb10305896-rgb</div></div>
@@ -586,6 +668,7 @@
     <div class="reveal-right">
       <!-- Formspree: sign up at formspree.io → create form → replace YOUR_FORM_ID below -->
       <form class="contact-form" id="contactForm" action="https://formspree.io/f/xbdedodd" method="POST" novalidate>
+        <input type="text" name="_gotcha" tabindex="-1" autocomplete="off" aria-hidden="true" style="position:absolute;left:-9999px;width:1px;height:1px;opacity:0">
         <div class="cf-row">
           <div class="cf-field">
             <label class="cf-label" for="cf-name">Name</label>
@@ -622,6 +705,8 @@
     <p class="map-label">&#128205; Kuopio, Finland</p>
   </div>
 </section>
+
+</main>
 
 <footer>
   <div class="footer-social">

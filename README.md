@@ -125,3 +125,54 @@ This portfolio is **highly optimized** for smooth 60fps performance:
 ---
 
 Built with ❤️ · Kuopio, Finland 🇫🇮
+
+---
+
+## Changelog — June 2026 maintenance pass
+
+### Bug fixes
+- **Touch devices / tablets**: custom cursor was hidden only below 700px width, so iPads and touch laptops showed a stuck cursor dot at the corner. Now gated by `(hover: hover) and (pointer: fine)` instead of screen width.
+- **Contact form**: `novalidate` disabled native validation but JS never checked validity, so empty forms could be submitted to Formspree. Now runs `checkValidity()`/`reportValidity()` before sending. Added a honeypot field (`_gotcha`) to cut spam.
+- **Velocity marquee**: track widths were measured once 100 ms after script load — before fonts finished loading and never after rotation/resize — causing wrong wrap points. Widths now re-measure on `load` and `resize`.
+- **Preloader**: could trap the user forever if any resource hung. Added a 4-second failsafe.
+- **Anchor links**: sections were hidden under the fixed navbar when jumped to. Added `scroll-padding-top`.
+- **Scroll progress**: guarded against division by zero on short viewports.
+
+### Performance
+- Magnetic/3D spring cards now stop writing `style.transform`/`box-shadow` once settled (previously every card was restyled every frame, forever) and are disabled entirely on touch devices.
+- Lanyard rope physics + full-viewport canvas rendering now pause and the layer hides when the hero is scrolled well out of view.
+- Cursor listeners aren't attached on touch devices.
+
+### Accessibility
+- Skip-to-content link, `<main>` landmark, section titles converted from `<div>` to real `<h2>` headings.
+- Visible `:focus-visible` outlines (the site hides the native cursor, so keyboard users previously had no focus indication beyond browser defaults).
+- Hamburger button: `aria-expanded` + `aria-controls`; mobile menu closes on Escape and outside click.
+- Typewriter line is `aria-hidden` with a static screen-reader equivalent.
+- `prefers-reduced-motion` now also stops the JS-driven animations (particles, marquee, typewriter, card swing-in), not just CSS ones.
+
+### SEO
+- Canonical URL, JSON-LD `Person` structured data, intrinsic image dimensions on the ID-card photo (prevents layout shift).
+
+### Light theme — "Nordic Daylight" (added)
+Not a flat white swap. The light mode keeps the site's identity:
+- Tinted ice-lavender paper background (`#f3f2fb`) with the same drifting aurora, in pastel
+- Subtle indigo grid lines, frosted-light navbar and mobile menu
+- Cards become frosted white with soft colored shadows instead of neon glow
+- The lanyard ID card **intentionally stays dark** — like a real physical badge
+- Particles deepen slightly for contrast; cursor blend mode switches to `multiply`
+- Toggle in the navbar (sun/moon), persisted in `localStorage`, defaults to the visitor's OS preference, zero flash-of-wrong-theme on load (inline bootstrap script), smooth 450ms cross-fade on switch
+
+### June 2026 — round 2
+- **Light-mode bug**: contact GitHub icon was hardcoded near-white (`#f0eef8`) — invisible on white cards. Now `currentColor`, adapts to both themes.
+- **Certifications**: added HackerRank Python (Basic), HackerRank JavaScript (Basic), and IBM AI Literacy — each with a "Verify credential" link to HackerRank/Credly. Harvard Aspire moved to last position.
+- **Performance**: hero photo compressed 300KB JPG → 54KB WebP (440px @2x retina) with 56KB optimized JPG fallback via `<picture>`. Preload updated. Original kept for og:image social previews.
+- **Aspire certificate**: official completion certificate (signed by Tarun Khanna & Karim Lakhani) added at `assets/Aspire_Leaders_2024_Certificate.pdf`, linked from the Aspire card as "View certificate".
+
+### Device coverage pass
+- **Tablets (700–950px)**: full nav links overflowed at this width — nav now collapses to hamburger at 880px instead of 700px.
+- **iOS Safari**: `min-height: 100svh` on hero prevents the URL-bar resize jump.
+- **Small phones (≤380px)**: tuned type scale, paddings, stat sizes, marquee, lanyard height.
+- **Landscape phones (≤520px tall)**: hero releases its 100vh lock, lanyard shrinks, scroll indicator hidden.
+- **TV / 4K (≥1800px / ≥2500px)**: root font scales up, content containers widen so the page doesn't look like a postage stamp.
+- **Windows High Contrast (forced-colors)**: cards/buttons get system borders; decorative cursor + particles removed.
+- **Rotation**: particle count and connection-line cost now re-evaluate on resize/orientation change instead of being fixed at load.

@@ -2,10 +2,41 @@
    MUNEEB AHMED BUTT — PORTFOLIO JAVASCRIPT
    ============================================ */
 
+/* —— CAPABILITY FLAGS —— */
+const FINE_POINTER   = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
+const REDUCED_MOTION = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+/* —— THEME (initial value is set by the inline head script to avoid FOUC) —— */
+const themeMetaTag = document.querySelector('meta[name="theme-color"]');
+let particleRGB = '124,109,250';
+
+function syncThemeExtras() {
+  const light = document.documentElement.dataset.theme === 'light';
+  if (themeMetaTag) themeMetaTag.setAttribute('content', light ? '#f3f2fb' : '#07070f');
+  particleRGB = getComputedStyle(document.documentElement).getPropertyValue('--particle-rgb').trim() || particleRGB;
+}
+syncThemeExtras();
+
+const themeToggleBtn = document.getElementById('themeToggle');
+if (themeToggleBtn) {
+  themeToggleBtn.addEventListener('click', () => {
+    const next = document.documentElement.dataset.theme === 'light' ? 'dark' : 'light';
+    document.documentElement.classList.add('theme-switching');
+    document.documentElement.dataset.theme = next;
+    try { localStorage.setItem('theme', next); } catch (e) {}
+    syncThemeExtras();
+    setTimeout(() => document.documentElement.classList.remove('theme-switching'), 500);
+  });
+}
+
 /* —— PRELOADER —— */
-window.addEventListener('load', () => {
-  setTimeout(() => document.getElementById('preloader').classList.add('done'), 1400);
-});
+function hidePreloader() {
+  const pre = document.getElementById('preloader');
+  if (pre) pre.classList.add('done');
+}
+window.addEventListener('load', () => setTimeout(hidePreloader, REDUCED_MOTION ? 0 : 1400));
+// failsafe: never trap the user behind the preloader if a resource hangs
+setTimeout(hidePreloader, 4000);
 
 /* —— CUSTOM CURSOR (transform-based — no layout reflow on mousemove) —— */
 const cursor = document.getElementById('cursor');
@@ -13,26 +44,28 @@ const ring   = document.getElementById('cursor-ring');
 let mouseX = 0, mouseY = 0, ringX = 0, ringY = 0;
 let cHalf = 6, rHalf = 18; // half-sizes for centring each element
 
-document.addEventListener('mousemove', e => {
-  mouseX = e.clientX; mouseY = e.clientY;
-  cursor.style.transform = `translate(${mouseX - cHalf}px,${mouseY - cHalf}px)`;
-}, { passive: true });
+if (FINE_POINTER) {
+  document.addEventListener('mousemove', e => {
+    mouseX = e.clientX; mouseY = e.clientY;
+    cursor.style.transform = `translate(${mouseX - cHalf}px,${mouseY - cHalf}px)`;
+  }, { passive: true });
 
-const hoverables = 'a, button, .badge, .skill-pill, .exp-tag, .contact-link, .id-card';
-document.querySelectorAll(hoverables).forEach(el => {
-  el.addEventListener('mouseenter', () => {
-    cursor.style.width = '20px'; cursor.style.height = '20px'; cHalf = 10;
-    cursor.style.transform = `translate(${mouseX - cHalf}px,${mouseY - cHalf}px)`;
-    ring.style.width = '50px'; ring.style.height = '50px'; rHalf = 25;
-    ring.style.borderColor = 'rgba(124,109,250,.8)';
+  const hoverables = 'a, button, .badge, .skill-pill, .exp-tag, .contact-link, .id-card';
+  document.querySelectorAll(hoverables).forEach(el => {
+    el.addEventListener('mouseenter', () => {
+      cursor.style.width = '20px'; cursor.style.height = '20px'; cHalf = 10;
+      cursor.style.transform = `translate(${mouseX - cHalf}px,${mouseY - cHalf}px)`;
+      ring.style.width = '50px'; ring.style.height = '50px'; rHalf = 25;
+      ring.style.borderColor = 'rgba(124,109,250,.8)';
+    });
+    el.addEventListener('mouseleave', () => {
+      cursor.style.width = '12px'; cursor.style.height = '12px'; cHalf = 6;
+      cursor.style.transform = `translate(${mouseX - cHalf}px,${mouseY - cHalf}px)`;
+      ring.style.width = '36px'; ring.style.height = '36px'; rHalf = 18;
+      ring.style.borderColor = 'rgba(124,109,250,.5)';
+    });
   });
-  el.addEventListener('mouseleave', () => {
-    cursor.style.width = '12px'; cursor.style.height = '12px'; cHalf = 6;
-    cursor.style.transform = `translate(${mouseX - cHalf}px,${mouseY - cHalf}px)`;
-    ring.style.width = '36px'; ring.style.height = '36px'; rHalf = 18;
-    ring.style.borderColor = 'rgba(124,109,250,.5)';
-  });
-});
+}
 
 /* —— SCROLL PROGRESS + NAV + BACK TO TOP + ACTIVE LINKS —— */
 const scrollProgress = document.getElementById('scroll-progress');
@@ -44,7 +77,7 @@ const sectionDots    = document.querySelectorAll('.section-dot');
 
 window.addEventListener('scroll', () => {
   const scrollTop = window.scrollY;
-  const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+  const docHeight = Math.max(1, document.documentElement.scrollHeight - window.innerHeight);
   scrollProgress.style.width = (scrollTop / docHeight * 100) + '%';
   nav.classList.toggle('scrolled', scrollTop > 60);
   backToTop.classList.toggle('show', scrollTop > 600);
@@ -63,33 +96,54 @@ backToTop.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 's
 const hamburger  = document.getElementById('navHamburger');
 const mobileMenu = document.getElementById('mobileMenu');
 hamburger.addEventListener('click', () => {
-  hamburger.classList.toggle('open');
-  mobileMenu.classList.toggle('open');
+  const open = mobileMenu.classList.toggle('open');
+  hamburger.classList.toggle('open', open);
+  hamburger.setAttribute('aria-expanded', open);
 });
 function closeMobileMenu() {
   hamburger.classList.remove('open');
   mobileMenu.classList.remove('open');
+  hamburger.setAttribute('aria-expanded', 'false');
 }
+document.addEventListener('keydown', e => {
+  if (e.key === 'Escape' && mobileMenu.classList.contains('open')) closeMobileMenu();
+});
+document.addEventListener('click', e => {
+  if (mobileMenu.classList.contains('open') &&
+      !mobileMenu.contains(e.target) && !hamburger.contains(e.target)) {
+    closeMobileMenu();
+  }
+});
 
 /* —— PARTICLE CANVAS —— */
 const pCanvas  = document.getElementById('particle-canvas');
 const pCtx     = pCanvas.getContext('2d');
-const isMobile = window.matchMedia('(max-width: 700px)').matches;
-const PARTICLE_COUNT = isMobile ? 40 : 90;
-const CONNECT_DIST   = isMobile ? 0 : 130; // skip O(n²) connection lines on mobile
+const mobileMQ = window.matchMedia('(max-width: 700px)');
+let CONNECT_DIST = mobileMQ.matches ? 0 : 130; // skip O(n²) connection lines on mobile
 
-function resizeParticles() { pCanvas.width = window.innerWidth; pCanvas.height = window.innerHeight; }
+function makeParticle() {
+  return {
+    x: Math.random() * window.innerWidth,
+    y: Math.random() * window.innerHeight,
+    r: Math.random() * 1.5 + 0.3,
+    vx: (Math.random() - 0.5) * 0.3,
+    vy: (Math.random() - 0.5) * 0.3,
+    o: Math.random() * 0.5 + 0.1
+  };
+}
+const particles = Array.from({ length: mobileMQ.matches ? 40 : 90 }, makeParticle);
+
+function resizeParticles() {
+  pCanvas.width = window.innerWidth; pCanvas.height = window.innerHeight;
+  // adapt density + line cost when crossing the mobile breakpoint (rotation, window resize)
+  const small = mobileMQ.matches;
+  CONNECT_DIST = small ? 0 : 130;
+  const target = small ? 40 : 90;
+  while (particles.length > target) particles.pop();
+  while (particles.length < target) particles.push(makeParticle());
+}
 resizeParticles();
 window.addEventListener('resize', resizeParticles, { passive: true });
-
-const particles = Array.from({ length: PARTICLE_COUNT }, () => ({
-  x: Math.random() * window.innerWidth,
-  y: Math.random() * window.innerHeight,
-  r: Math.random() * 1.5 + 0.3,
-  vx: (Math.random() - 0.5) * 0.3,
-  vy: (Math.random() - 0.5) * 0.3,
-  o: Math.random() * 0.5 + 0.1
-}));
 
 function tickParticles() {
   pCtx.clearRect(0, 0, pCanvas.width, pCanvas.height);
@@ -99,7 +153,7 @@ function tickParticles() {
     if (p.y < 0) p.y = pCanvas.height; else if (p.y > pCanvas.height) p.y = 0;
     pCtx.beginPath();
     pCtx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
-    pCtx.fillStyle = `rgba(124,109,250,${p.o})`;
+    pCtx.fillStyle = `rgba(${particleRGB},${p.o})`;
     pCtx.fill();
   }
   if (CONNECT_DIST > 0) {
@@ -112,7 +166,7 @@ function tickParticles() {
           pCtx.beginPath();
           pCtx.moveTo(particles[i].x, particles[i].y);
           pCtx.lineTo(particles[j].x, particles[j].y);
-          pCtx.strokeStyle = `rgba(124,109,250,${0.09 * (1 - dist / CONNECT_DIST)})`;
+          pCtx.strokeStyle = `rgba(${particleRGB},${0.09 * (1 - dist / CONNECT_DIST)})`;
           pCtx.lineWidth = 0.5;
           pCtx.stroke();
         }
@@ -131,8 +185,7 @@ const phrases = [
 ];
 let phraseIdx = 0, charIdx = 0, isTyping = true;
 const twEl = document.getElementById('typewriter');
-function typeStep() {
-  if (isTyping) {
+function typeStep() {  if (isTyping) {
     if (charIdx <= phrases[phraseIdx].length) {
       twEl.textContent = phrases[phraseIdx].slice(0, charIdx++);
       setTimeout(typeStep, 55);
@@ -148,7 +201,11 @@ function typeStep() {
     }
   }
 }
-typeStep();
+if (REDUCED_MOTION) {
+  twEl.textContent = phrases[0];
+} else {
+  typeStep();
+}
 
 /* —— VELOCITY SCROLL —— */
 let scrollVel = 0, lastScrollY = 0;
@@ -160,10 +217,13 @@ window.addEventListener('scroll', () => {
 const track1 = document.getElementById('track1');
 const track2 = document.getElementById('track2');
 let t1pos = 0, t2pos = 0, half1 = 0, half2 = 0;
-setTimeout(() => {
+function measureTracks() {
   if (track1) half1 = track1.scrollWidth / 2;
-  if (track2) { half2 = track2.scrollWidth / 2; t2pos = -half2; }
-}, 100);
+  if (track2) { half2 = track2.scrollWidth / 2; if (t2pos === 0 || t2pos < -half2) t2pos = -half2; }
+}
+setTimeout(measureTracks, 100);
+window.addEventListener('load', measureTracks);
+window.addEventListener('resize', measureTracks, { passive: true });
 
 function tickVelocity() {
   const speed = 1.5 + Math.abs(scrollVel) * 0.18;
@@ -336,8 +396,17 @@ let tickLanyard = () => {};
   });
 
   /* ---- physics tick ---- */
+  let layerHidden = false;
   tickLanyard = function() {
     const sr = stage.getBoundingClientRect();
+
+    // skip all physics + rendering once the hero stage is well offscreen
+    if (sr.bottom < -250 || sr.top > window.innerHeight + 250) {
+      if (!layerHidden) { layer.style.visibility = 'hidden'; layerHidden = true; }
+      return;
+    }
+    if (layerHidden) { layer.style.visibility = 'visible'; layerHidden = false; }
+
     anchorX = sr.left + sr.width / 2;
     anchorY = sr.top;
 
@@ -396,9 +465,11 @@ let tickLanyard = () => {};
   };
 
   // initial swing-in
-  setTimeout(() => {
-    if (Math.abs(last.x - anchorX) < 10) last.x += 80;
-  }, 1600);
+  if (!REDUCED_MOTION) {
+    setTimeout(() => {
+      if (Math.abs(last.x - anchorX) < 10) last.x += 80;
+    }, 1600);
+  }
 })();
 
 /* —— EXP CARD MOUSE GLOW —— */
@@ -420,6 +491,7 @@ window.addEventListener('mouseout',  e => { if (!e.relatedTarget) { mouseGX = -9
 
 const springCards = [];
 function registerCards(selector, cfg) {
+  if (!FINE_POINTER) return;
   document.querySelectorAll(selector).forEach(el => {
     el.style.transformStyle = 'preserve-3d';
     el.style.willChange     = 'transform, box-shadow';
@@ -447,6 +519,7 @@ function stepSpring(pos, vel, target) {
 }
 
 function tickSpring() {
+  if (!FINE_POINTER) return; // no mouse → no magnetic effect, save the work
   const vh = window.innerHeight;
   for (const c of springCards) {
     const r = c.el.getBoundingClientRect();
@@ -478,6 +551,22 @@ function tickSpring() {
     [c.sc,   c.vsc]   = stepSpring(c.sc,   c.vsc,   c.tsc);
     [c.gz,   c.vgz]   = stepSpring(c.gz,   c.vgz,   c.tgz);
     [c.glow, c.vglow] = stepSpring(c.glow, c.vglow, c.tglow);
+
+    // idle detection: once a card has settled, stop touching the DOM for it
+    const settled =
+      Math.abs(c.mx) < .02 && Math.abs(c.my) < .02 &&
+      Math.abs(c.rx) < .02 && Math.abs(c.ry) < .02 &&
+      Math.abs(c.sc - 1) < .002 && Math.abs(c.gz) < .05 && c.glow < .003 &&
+      c.tmx === 0 && c.tmy === 0;
+    if (settled) {
+      if (!c.idle) {
+        c.idle = true;
+        c.el.style.transform = '';
+        c.el.style.boxShadow = '';
+      }
+      continue;
+    }
+    c.idle = false;
 
     c.el.style.transform =
       `perspective(820px) translate3d(${c.mx.toFixed(2)}px,${c.my.toFixed(2)}px,${c.gz.toFixed(2)}px) ` +
@@ -521,6 +610,11 @@ const cfSubmit    = document.getElementById('cfSubmit');
 if (contactForm) {
   contactForm.addEventListener('submit', async e => {
     e.preventDefault();
+    // novalidate is set for custom styling — run native validation manually
+    if (!contactForm.checkValidity()) {
+      contactForm.reportValidity();
+      return;
+    }
     const btnText = cfSubmit.querySelector('.cf-btn-text');
     cfSubmit.disabled = true; cfSubmit.classList.add('loading');
     btnText.textContent = 'Sending…';
@@ -566,9 +660,11 @@ document.addEventListener('visibilitychange', () => {
 
 function masterTick() {
   if (rafPaused) return;
-  tickCursorRing();
-  tickParticles();
-  tickVelocity();
+  if (FINE_POINTER) tickCursorRing();
+  if (!REDUCED_MOTION) {
+    tickParticles();
+    tickVelocity();
+  }
   tickLanyard();
   tickSpring();
   requestAnimationFrame(masterTick);

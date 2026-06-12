@@ -978,7 +978,6 @@ let tickLanyard = () => {};
     dragging = true; last.pinned = true;
     card.setPointerCapture(e.pointerId);
     const p = pointerXY(e); dragX = p.x; dragY = p.y;
-    e.preventDefault();
   });
 
   card.addEventListener('pointermove', e => {

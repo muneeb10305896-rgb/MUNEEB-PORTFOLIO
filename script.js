@@ -737,7 +737,7 @@ window.addEventListener('load', measureTracks);
 window.addEventListener('resize', measureTracks, { passive: true });
 
 function tickVelocity() {
-  const speed = 1.5 + Math.abs(scrollVel) * 0.18;
+  const speed = 3.0 + Math.abs(scrollVel) * 0.18;
   if (half1 > 0 && track1) {
     t1pos -= speed;
     if (t1pos <= -half1) t1pos += half1;
@@ -1177,8 +1177,8 @@ function masterTick() {
   if (FINE_POINTER) tickCursorRing();
   if (!REDUCED_MOTION) {
     tickParticles();
-    tickVelocity();
   }
+  tickVelocity();   // always run — CSS display:none handles reduced-motion users
   tickLanyard();
   tickSpring();
   requestAnimationFrame(masterTick);

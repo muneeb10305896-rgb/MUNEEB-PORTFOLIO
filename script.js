@@ -73,6 +73,63 @@ const translations = {
     'cv.preview': 'Preview',
     'cv.download': 'Download',
     'footer.text': 'Designed & built by Muneeb Ahmed Butt',
+    'hero.skip': 'Skip to content',
+    'hero.id-org': 'Portfolio · UEF Kuopio',
+    'hero.id-title': 'IT Student & Developer',
+    'hero.id-status': '● Available',
+    'about.p1': 'I\'m <strong>Muneeb Ahmed Butt</strong>, an IT student at the <strong>University of Eastern Finland</strong> (Kuopio), currently also working as an <strong>IT Developer at DEVSiNC</strong> remotely. My journey spans web development, network support, logistics, and community work across Pakistan and Finland.',
+    'about.p2': 'I completed the <strong>2024 Aspire Leaders Program at Harvard Business School</strong>, a global leadership program focused on critical thinking, communication, and social impact — 30 hours of coursework with an international community.',
+    'about.p3': 'I\'m also an active member of the <strong>Erasmus Student Network (ESN Savo)</strong>, supporting international student communities in Finland.',
+    'about.badge.it-dev': 'IT Developer',
+    'about.badge.web': 'Web Projects',
+    'about.badge.networking': 'Networking',
+    'about.badge.data': 'Data Handling',
+    'about.badge.esn': 'ESN Member',
+    'about.badge.harvard': 'Harvard Aspire Alumni',
+    'about.badge.license': 'Category B License',
+    'about.info.studying': 'Currently Studying',
+    'about.info.studying-desc': 'B.Sc. IT — University of Eastern Finland, Kuopio',
+    'about.info.working': 'Currently Working',
+    'about.info.working-desc': 'IT Developer at DEVSiNC (Remote) — July 2025–present',
+    'about.info.location': 'Location',
+    'about.info.location-desc': 'Kuopio, Finland',
+    'about.info.languages': 'Languages',
+    'about.info.languages-desc': 'English · Finnish (learning) · Urdu',
+    'about.info.driving': 'Driver\'s License',
+    'about.info.driving-desc': 'Category B (passenger car)',
+    'exp1.role': 'IT Developer',
+    'exp1.company': 'DEVSiNC · Remote, Lahore',
+    'exp2.role': 'Network System Specialist (Intern)',
+    'exp2.company': 'Hameed Latif Hospital · Lahore, Pakistan',
+    'exp3.role': 'Executive Committee Member',
+    'exp3.company': 'Chanan Development Association (CDA) · Lahore, Pakistan',
+    'exp4.role': 'Truck Dispatcher',
+    'exp4.company': 'Pioneer Enterprises · Remote, United States',
+    'exp5.role': 'Data Entry Specialist',
+    'exp5.company': 'Onestop Grocery Store · Lahore, Pakistan',
+    'skills.prof.ms-office': 'Microsoft Office Suite',
+    'skills.prof.data-entry': 'Data Entry & Management',
+    'skills.prof.problem-solving': 'Problem Solving & Analysis',
+    'skills.prof.it-support': 'IT Support & Networking',
+    'skills.prof.web-dev': 'Web Development (HTML/CSS)',
+    'skills.prof.react-java': 'React & Java Programming',
+    'skills.prof.git': 'Git & Version Control',
+    'skills.prof.python-r': 'Python & R Programming',
+    'edu.degree1': 'Bachelor\'s Degree in Information Technology',
+    'edu.school1': 'University of Eastern Finland (UEF)',
+    'edu.meta1': 'September 2025 — Present · Kuopio, Finland',
+    'edu.degree2': 'Bachelor of Technology in Computer Science',
+    'edu.school2': 'Bahria University',
+    'edu.meta2': '2023 — 2025 · Lahore, Pakistan',
+    'edu.degree3': 'Intermediate — ICS (Computer Science)',
+    'edu.school3': 'KIPS Education System',
+    'edu.meta3': '2021 — 2023 · Lahore, Pakistan',
+    'contact.instagram': 'Instagram',
+    'contact.phone': 'Phone',
+    'cv.meta.pdf': 'PDF',
+    'cv.meta.size': '202 KB',
+    'cv.meta.updated': 'Updated June 2026',
+    'footer.copyright': '© 2026 Muneeb Ahmed Butt. All rights reserved.',
   },
   fi: {
     'nav.about': 'Tietoja',
@@ -128,6 +185,63 @@ const translations = {
     'cv.preview': 'Esikatsele',
     'cv.download': 'Lataa',
     'footer.text': 'Suunnitellut ja toteuttanut Muneeb Ahmed Butt',
+    'hero.skip': 'Siirry sisältöön',
+    'hero.id-org': 'Portfolio · UEF Kuopio',
+    'hero.id-title': 'IT-opiskelija & -kehittäjä',
+    'hero.id-status': '● Saatavilla',
+    'about.p1': 'Olen <strong>Muneeb Ahmed Butt</strong>, IT-opiskelija <strong>Itä-Suomen yliopistossa</strong> (Kuopio), ja työskentelen tällä hetkellä etänä <strong>IT-kehittäjänä DEVSiNCillä</strong>. Matkani kattaa verkkokehitystä, verkko-tukea, logistiikkaa ja yhteisötyötä Pakistanissa ja Suomessa.',
+    'about.p2': 'Suoritin <strong>vuoden 2024 Aspire Leaders -ohjelman Harvard Business Schoolissa</strong>, maailmanlaajuisen johtajuusohjelman, joka keskittyi kriittiseen ajatteluun, viestintään ja yhteiskunnalliseen vaikuttamiseen — 30 tuntia kurssityötä kansainvälisessä yhteisössä.',
+    'about.p3': 'Olen myös aktiivinen jäsen <strong>Erasmus Student Networkissa (ESN Savo)</strong>, tukemassa kansainvälisiä opiskelijayhteisöjä Suomessa.',
+    'about.badge.it-dev': 'IT-kehittäjä',
+    'about.badge.web': 'Verkkoprojektit',
+    'about.badge.networking': 'Verkkotekniikka',
+    'about.badge.data': 'Datan käsittely',
+    'about.badge.esn': 'ESN-jäsen',
+    'about.badge.harvard': 'Harvard Aspire -alumni',
+    'about.badge.license': 'B-luokan ajokortti',
+    'about.info.studying': 'Opiskelee',
+    'about.info.studying-desc': 'B.Sc. IT — Itä-Suomen yliopisto, Kuopio',
+    'about.info.working': 'Työskentelee',
+    'about.info.working-desc': 'IT-kehittäjä DEVSiNCillä (etä) — heinäkuu 2025–nykyhetki',
+    'about.info.location': 'Sijainti',
+    'about.info.location-desc': 'Kuopio, Suomi',
+    'about.info.languages': 'Kielet',
+    'about.info.languages-desc': 'Englanti · Suomi (opiskelu) · Urdu',
+    'about.info.driving': 'Ajokortti',
+    'about.info.driving-desc': 'B-luokka (henkilöauto)',
+    'exp1.role': 'IT-kehittäjä',
+    'exp1.company': 'DEVSiNC · Etä, Lahore',
+    'exp2.role': 'Verkkojärjestelmäasiantuntija (harjoittelija)',
+    'exp2.company': 'Hameed Latif -sairaala · Lahore, Pakistan',
+    'exp3.role': 'Toimeenpanevan komitean jäsen',
+    'exp3.company': 'Chanan Development Association (CDA) · Lahore, Pakistan',
+    'exp4.role': 'Kuorma-auton lähettäjä',
+    'exp4.company': 'Pioneer Enterprises · Etä, Yhdysvallat',
+    'exp5.role': 'Tietojen syöttämisen asiantuntija',
+    'exp5.company': 'Onestop Grocery Store · Lahore, Pakistan',
+    'skills.prof.ms-office': 'Microsoft Office -paketti',
+    'skills.prof.data-entry': 'Tietojen syöttö & -hallinta',
+    'skills.prof.problem-solving': 'Ongelmanratkaisu & -analyysi',
+    'skills.prof.it-support': 'IT-tuki & -verkot',
+    'skills.prof.web-dev': 'Verkkokehitys (HTML/CSS)',
+    'skills.prof.react-java': 'React & Java-ohjelmointi',
+    'skills.prof.git': 'Git & versiohallinta',
+    'skills.prof.python-r': 'Python & R-ohjelmointi',
+    'edu.degree1': 'Tietotekniikan kandidaatin tutkinto',
+    'edu.school1': 'Itä-Suomen yliopisto (UEF)',
+    'edu.meta1': 'Syyskuu 2025 — Nykyhetki · Kuopio, Suomi',
+    'edu.degree2': 'Tietotekniikan tekniikan kandidaatti',
+    'edu.school2': 'Bahrian yliopisto',
+    'edu.meta2': '2023 — 2025 · Lahore, Pakistan',
+    'edu.degree3': 'Lukio — ICS (Tietojenkäsittelytiede)',
+    'edu.school3': 'KIPS-koulutusjärjestelmä',
+    'edu.meta3': '2021 — 2023 · Lahore, Pakistan',
+    'contact.instagram': 'Instagram',
+    'contact.phone': 'Puhelin',
+    'cv.meta.pdf': 'PDF',
+    'cv.meta.size': '202 kt',
+    'cv.meta.updated': 'Päivitetty kesäkuu 2026',
+    'footer.copyright': '© 2026 Muneeb Ahmed Butt. Kaikki oikeudet pidätetään.',
   }
 };
 
@@ -137,11 +251,11 @@ function applyLanguage(lang) {
   document.querySelectorAll('[data-i18n]').forEach(el => {
     const key = el.dataset.i18n;
     if (t[key] !== undefined) {
-      el.textContent = t[key];
+      el.innerHTML = t[key];
     } else {
       // fallback to English if key missing in target language
       const fallback = translations.en[key];
-      if (fallback !== undefined) el.textContent = fallback;
+      if (fallback !== undefined) el.innerHTML = fallback;
     }
   });
   // translate placeholders
@@ -350,7 +464,7 @@ function tickParticles() {
   }
 }
 
-/* —— TYPEWRITER —— */
+/* —— TYPEWRITER (setTimeout-based — reliable across all browsers) —— */
 const twPhrases = [
   'IT Student at UEF, Finland',
   'IT Developer at DEVSiNC',
@@ -358,31 +472,32 @@ const twPhrases = [
   'ESN Savo Board Member',
   'Web Developer & Problem Solver'
 ];
-let twIdx = 0, twPos = 0, twDir = 1, twLast = performance.now();
+let twIdx = 0, twPos = 0, twDir = 1;
 const twSpeed = 55, twPause = 1500;
 const twEl = document.getElementById('typewriter');
 
-if (!REDUCED_MOTION) {
-  requestAnimationFrame(function twTick(now) {
-    const dt = now - twLast;
-    if (dt < twSpeed) { requestAnimationFrame(twTick); return; }
-    twLast = now;
-
+if (!REDUCED_MOTION && twEl) {
+  (function twTick() {
     const p = twPhrases[twIdx];
     twPos += twDir;
 
     if (twPos > p.length) {
       twDir = -1; twPos = p.length;
-      twLast = now - twSpeed + twPause; // extra pause at full text
+      twEl.textContent = p;
+      setTimeout(twTick, twPause);
+      return;
     } else if (twPos < 0) {
       twDir = 1; twPos = 0;
       twIdx = (twIdx + 1) % twPhrases.length;
-      twLast = now - twSpeed + 250; // brief pause before next phrase
+      twEl.textContent = '';
+      setTimeout(twTick, 250);
+      return;
     }
+
     twEl.textContent = p.slice(0, twPos);
-    requestAnimationFrame(twTick);
-  });
-} else {
+    setTimeout(twTick, twSpeed);
+  })();
+} else if (twEl) {
   twEl.textContent = twPhrases[0];
 }
 

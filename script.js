@@ -1375,16 +1375,21 @@ if (contactForm) {
   if (!wrap) return;
   const iframe = wrap.querySelector('iframe');
   const ph     = document.getElementById('mapPlaceholder');
-  const MAP_SRC = 'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d234215.5!2d27.6785574!3d62.8965859!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x4684b08aaffec4f3%3A0xe7b6f77d9edff6c0!2sKuopio%2C%20Finland!5e0!3m2!1sen!2sfi!4v1';
+  const phText = document.getElementById('mapPlaceholderText');
+  const MAP_SRC = 'https://www.openstreetmap.org/export/embed.html?bbox=27.0%2C62.6%2C28.3%2C63.2&layer=mapnik&marker=62.8965859%2C27.6785574';
   let started = false;
   function loadMap() {
     if (started || !iframe) return;
     started = true;
-    iframe.addEventListener('load', () => {
-      iframe.style.display = 'block';
-      if (ph) ph.style.display = 'none';
-    }, { once: true });
     iframe.src = MAP_SRC;
+    /* Show iframe immediately — don't wait for the load event,
+       since loading="lazy" + display:none can prevent it from firing.
+       Once the iframe actually loads, hide the placeholder for polish. */
+    iframe.style.display = 'block';
+    if (ph) ph.style.display = 'none';
+    iframe.addEventListener('load', () => {
+      if (phText) phText.textContent = '';
+    }, { once: true });
   }
   if (ph) {
     ph.addEventListener('click', loadMap);

@@ -3,8 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title data-i18n="page.title">Muneeb Ahmed Butt — Portfolio</title>
-<meta name="description" content="Muneeb Ahmed Butt — IT Student at University of Eastern Finland. IT Developer, web developer, and problem solver.">
+<title data-i18n="page.title">Muneeb Ahmed Butt — Full-Stack Developer &amp; IT Manager | Portfolio</title>
+<meta name="description" content="Muneeb Ahmed Butt — Full-Stack Developer &amp; IT Manager at NORDASH, IT student at University of Eastern Finland.">
 <meta name="theme-color" content="#07070f">
 <script>
 /* theme bootstrap — runs before CSS paints to avoid a flash of wrong theme */
@@ -17,13 +17,13 @@
 })();
 </script>
 <meta property="og:type" content="website">
-<meta property="og:title" content="Muneeb Ahmed Butt — Portfolio">
-<meta property="og:description" content="IT Student at UEF Finland · IT Developer at DEVSiNC · Harvard Aspire 2024 Alumni · ESN Savo Member">
+<meta property="og:title" content="Muneeb Ahmed Butt — Full-Stack Developer &amp; IT Manager at NORDASH">
+<meta property="og:description" content="Full-Stack Developer &amp; IT Manager at NORDASH · IT Student at UEF Finland · IT Developer at DEVSiNC">
 <meta property="og:url" content="https://muneeb10305896-rgb.github.io/MUNEEB-PORTFOLIO/">
 <meta property="og:image" content="https://muneeb10305896-rgb.github.io/MUNEEB-PORTFOLIO/assets/muneeb.jpg">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="Muneeb Ahmed Butt — Portfolio">
-<meta name="twitter:description" content="IT Student at UEF Finland · IT Developer at DEVSiNC · Harvard Aspire 2024 Alumni">
+<meta name="twitter:title" content="Muneeb Ahmed Butt — Full-Stack Developer &amp; IT Manager at NORDASH">
+<meta name="twitter:description" content="Full-Stack Developer &amp; IT Manager at NORDASH · IT Student at UEF Finland · IT Developer at DEVSiNC">
 <meta name="twitter:image" content="https://muneeb10305896-rgb.github.io/MUNEEB-PORTFOLIO/assets/muneeb.jpg">
 <link rel="canonical" href="https://muneeb10305896-rgb.github.io/MUNEEB-PORTFOLIO/">
 <link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
@@ -34,9 +34,20 @@
   "name": "Muneeb Ahmed Butt",
   "url": "https://muneeb10305896-rgb.github.io/MUNEEB-PORTFOLIO/",
   "image": "https://muneeb10305896-rgb.github.io/MUNEEB-PORTFOLIO/assets/muneeb.jpg",
-  "jobTitle": "IT Developer",
-  "worksFor": { "@type": "Organization", "name": "DEVSiNC" },
+  "jobTitle": ["Full-Stack Developer & IT Manager", "IT Developer"],
+  "worksFor": [
+    { "@type": "Organization", "name": "NORDASH" },
+    { "@type": "Organization", "name": "DEVSiNC" }
+  ],
   "alumniOf": { "@type": "CollegeOrUniversity", "name": "University of Eastern Finland" },
+  "knowsAbout": [
+    "Web Development",
+    "React",
+    "Next.js",
+    "MongoDB",
+    "ERC-20 blockchain tokens",
+    "Network Support"
+  ],
   "address": { "@type": "PostalAddress", "addressLocality": "Kuopio", "addressCountry": "FI" },
   "email": "mailto:muneeb10305896@gmail.com",
   "sameAs": [
@@ -80,6 +91,7 @@
   <ul class="nav-links">
     <li><a href="#about" class="nav-link" data-i18n="nav.about">About</a></li>
     <li><a href="#experience" class="nav-link" data-i18n="nav.experience">Experience</a></li>
+    <li><a href="#projects" class="nav-link" data-i18n="nav.projects">Projects</a></li>
     <li><a href="#skills" class="nav-link" data-i18n="nav.skills">Skills</a></li>
     <li><a href="#education" class="nav-link" data-i18n="nav.education">Education</a></li>
 <li><a href="#contact" class="nav-link" data-i18n="nav.contact">Contact</a></li>
@@ -106,6 +118,7 @@
   <a class="section-dot" href="#hero"       data-section="hero"       aria-label="Top"></a>
   <a class="section-dot" href="#about"      data-section="about"      aria-label="About"></a>
   <a class="section-dot" href="#experience" data-section="experience" aria-label="Experience"></a>
+  <a class="section-dot" href="#projects" data-section="projects" aria-label="Projects"></a>
   <a class="section-dot" href="#skills"     data-section="skills"     aria-label="Skills"></a>
   <a class="section-dot" href="#education"  data-section="education"  aria-label="Education"></a>
 <a class="section-dot" href="#contact"    data-section="contact"    aria-label="Contact"></a>
@@ -116,6 +129,7 @@
   <ul>
     <li><a href="#about" onclick="closeMobileMenu()" data-i18n="nav.about">About</a></li>
     <li><a href="#experience" onclick="closeMobileMenu()" data-i18n="nav.experience">Experience</a></li>
+    <li><a href="#projects" onclick="closeMobileMenu()" data-i18n="nav.projects">Projects</a></li>
     <li><a href="#skills" onclick="closeMobileMenu()" data-i18n="nav.skills">Skills</a></li>
     <li><a href="#education" onclick="closeMobileMenu()" data-i18n="nav.education">Education</a></li>
 <li><a href="#contact" onclick="closeMobileMenu()" data-i18n="nav.contact">Contact</a></li>
@@ -138,9 +152,15 @@
   </div>
   <div class="hero-inner">
     <div class="hero-text">
-      <div class="hero-tag">
-        <span class="tag-dot"></span>
-        <span data-i18n="hero.tag">Open to opportunities in Finland</span>
+      <div class="hero-tags">
+        <div class="hero-tag">
+          <span class="tag-dot"></span>
+          <span data-i18n="hero.tag">Open to opportunities in Finland</span>
+        </div>
+        <div class="hero-tag hero-tag-nordash">
+          <span class="live-dot"></span>
+          <span data-i18n="hero.tag-nordash">Building NORDASH &mdash; Live</span>
+        </div>
       </div>
       <h1>
         <span class="line-reveal"><span data-i18n="hero.hi">Hi, I'm</span></span>
@@ -150,7 +170,7 @@
       <div class="typewriter-wrap" aria-hidden="true">
         <span class="typewriter-text" id="typewriter"></span><span class="tw-cursor"></span>
       </div>
-      <p class="sr-only" data-i18n="hero.sr-text">IT Student at UEF Finland, IT Developer at DEVSiNC, Harvard Aspire 2024 Alumni, ESN Savo member, web developer and problem solver.</p>
+      <p class="sr-only" data-i18n="hero.sr-text">Full-Stack Developer and IT Manager at NORDASH, IT Student at UEF Finland, IT Developer at DEVSiNC, Harvard Aspire 2024 Alumni, ESN Savo member, problem solver.</p>
       <div class="hero-btns">
         <a class="btn-primary" href="#experience" data-i18n="hero.view-exp">View Experience</a>
         <a class="btn-outline" href="#contact" data-i18n="hero.get-in-touch">Get In Touch</a>
@@ -158,12 +178,37 @@
           <svg viewBox="0 0 20 20" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 3v10M5 13l5 5 5-5M3 17h14"/></svg>
           <span data-i18n="hero.dl-cv">Download CV</span>
         </a>
+        <a class="btn-nordash-hero" href="https://nordash.vercel.app" target="_blank" rel="noopener noreferrer">
+          <span data-i18n="hero.nordash-cta">Visit NORDASH</span>
+          <span class="btn-arrow">&rarr;</span>
+        </a>
       </div>
       <div class="hero-stats">
-        <div class="stat"><div class="stat-val" data-count="5" data-suffix="+">0</div><div class="stat-label" data-i18n="hero.roles">Roles held</div></div>
+        <div class="stat"><div class="stat-val" data-count="6" data-suffix="+">6+</div><div class="stat-label" data-i18n="hero.roles">Roles held</div></div>
+        <div class="stat"><div class="stat-val">1</div><div class="stat-label">Startup built &amp; live</div></div>
         <div class="stat"><div class="stat-val">2024</div><div class="stat-label">Harvard Aspire</div></div>
         <div class="stat"><div class="stat-val">UEF</div><div class="stat-label" data-i18n="hero.studying">Currently studying</div></div>
         <div class="stat"><div class="stat-val">ESN</div><div class="stat-label" data-i18n="hero.erasmus">Erasmus Network</div></div>
+      </div>
+
+      <!-- NORDASH HERO CARD -->
+      <div class="hero-nordash-card">
+        <div class="hero-nordash-glow"></div>
+        <div class="hero-nordash-border"></div>
+        <div class="hero-nordash-content">
+          <div class="hero-nordash-top">
+            <span class="live-dot"></span>
+            <span class="hero-nordash-label" data-i18n="hero.nordash-label">Full-Stack Developer &amp; IT Manager</span>
+          </div>
+          <div class="hero-nordash-name">
+            NORDASH <span class="hero-nordash-muted">&mdash; Digital Agency</span>
+          </div>
+          <div class="hero-nordash-techs">
+            <span>Next.js</span>
+            <span>MongoDB</span>
+            <span>Vercel</span>
+          </div>
+        </div>
       </div>
     </div>
 
@@ -209,12 +254,12 @@
 <!-- VELOCITY SCROLL -->
 <div class="velocity-section">
   <div class="velocity-track track1" id="track1">
-    <span>IT Developer</span><span>UEF Kuopio</span><span>Web Development</span><span>Network Support</span><span>Harvard Aspire</span><span>ESN Savo</span><span>Truck Dispatcher</span><span>Finland <svg viewBox="0 0 18 11" width="18" height="11" xmlns="http://www.w3.org/2000/svg" style="vertical-align:middle"><rect width="18" height="11" fill="#fff"/><rect x="5" y="0" width="3" height="11" fill="#003580"/><rect x="0" y="4" width="18" height="3" fill="#003580"/></svg></span>
-    <span>IT Developer</span><span>UEF Kuopio</span><span>Web Development</span><span>Network Support</span><span>Harvard Aspire</span><span>ESN Savo</span><span>Truck Dispatcher</span><span>Finland <svg viewBox="0 0 18 11" width="18" height="11" xmlns="http://www.w3.org/2000/svg" style="vertical-align:middle"><rect width="18" height="11" fill="#fff"/><rect x="5" y="0" width="3" height="11" fill="#003580"/><rect x="0" y="4" width="18" height="3" fill="#003580"/></svg></span>
+    <span>NORDASH</span><span>Full-Stack Developer</span><span>IT Developer</span><span>UEF Kuopio</span><span>Web Development</span><span>Network Support</span><span>Harvard Aspire</span><span>ESN Savo</span><span>Truck Dispatcher</span><span>Finland <svg viewBox="0 0 18 11" width="18" height="11" xmlns="http://www.w3.org/2000/svg" style="vertical-align:middle"><rect width="18" height="11" fill="#fff"/><rect x="5" y="0" width="3" height="11" fill="#003580"/><rect x="0" y="4" width="18" height="3" fill="#003580"/></svg></span>
+    <span>NORDASH</span><span>Full-Stack Developer</span><span>IT Developer</span><span>UEF Kuopio</span><span>Web Development</span><span>Network Support</span><span>Harvard Aspire</span><span>ESN Savo</span><span>Truck Dispatcher</span><span>Finland <svg viewBox="0 0 18 11" width="18" height="11" xmlns="http://www.w3.org/2000/svg" style="vertical-align:middle"><rect width="18" height="11" fill="#fff"/><rect x="5" y="0" width="3" height="11" fill="#003580"/><rect x="0" y="4" width="18" height="3" fill="#003580"/></svg></span>
   </div>
   <div class="velocity-track track2" id="track2">
-    <span>DEVSiNC</span><span>Bahria University</span><span>Hameed Latif Hospital</span><span>Pioneer Enterprises</span><span>CDA Lahore</span><span>Data Handling</span><span>Problem Solving</span><span>Networking</span>
-    <span>DEVSiNC</span><span>Bahria University</span><span>Hameed Latif Hospital</span><span>Pioneer Enterprises</span><span>CDA Lahore</span><span>Data Handling</span><span>Problem Solving</span><span>Networking</span>
+    <span>NORDASH</span><span>DEVSiNC</span><span>Bahria University</span><span>Hameed Latif Hospital</span><span>Pioneer Enterprises</span><span>CDA Lahore</span><span>Data Handling</span><span>Problem Solving</span><span>Networking</span>
+    <span>NORDASH</span><span>DEVSiNC</span><span>Bahria University</span><span>Hameed Latif Hospital</span><span>Pioneer Enterprises</span><span>CDA Lahore</span><span>Data Handling</span><span>Problem Solving</span><span>Networking</span>
   </div>
 </div>
 
@@ -228,6 +273,7 @@
   <div class="about-grid">
     <div class="about-text reveal-left" data-delay="1">
       <p data-i18n="about.p1">I'm <strong>Muneeb Ahmed Butt</strong>, an IT student at the <strong>University of Eastern Finland</strong> (Kuopio), currently also working as an <strong>IT Developer at DEVSiNC</strong> remotely. My journey spans web development, network support, logistics, and community work across Pakistan and Finland.</p>
+      <p data-i18n="about.nordash">Since 2025 I build and manage <strong>NORDASH</strong>, a startup digital agency platform, working as its Full-Stack Developer &amp; IT Manager.</p>
       <p data-i18n="about.p2">I completed the <strong>2024 Aspire Leaders Program at Harvard Business School</strong>, a global leadership program focused on critical thinking, communication, and social impact — 30 hours of coursework with an international community.</p>
       <p data-i18n="about.p3">I'm also an active member of the <strong>Erasmus Student Network (ESN Savo)</strong>, supporting international student communities in Finland.</p>
       <div class="about-badges">
@@ -242,7 +288,7 @@
     </div>
     <div class="info-cards reveal-right" data-delay="2">
       <div class="info-card"><div class="info-icon">&#127891;</div><div><h4 data-i18n="about.info.studying">Currently Studying</h4><p data-i18n="about.info.studying-desc">B.Sc. IT — University of Eastern Finland, Kuopio</p></div></div>
-      <div class="info-card"><div class="info-icon">&#128188;</div><div><h4 data-i18n="about.info.working">Currently Working</h4><p data-i18n="about.info.working-desc">IT Developer at DEVSiNC (Remote) — July 2025–present</p></div></div>
+      <div class="info-card"><div class="info-icon">&#128188;</div><div><h4 data-i18n="about.info.working">Currently Working</h4><p data-i18n="about.info.working-desc">Full-Stack Developer &amp; IT Manager at NORDASH &middot; IT Developer at DEVSiNC (Remote)</p></div></div>
       <div class="info-card"><div class="info-icon">&#128205;</div><div><h4 data-i18n="about.info.location">Location</h4><p data-i18n="about.info.location-desc">Kuopio, Finland</p></div></div>
       <div class="info-card"><div class="info-icon">&#127758;</div><div><h4 data-i18n="about.info.languages">Languages</h4><p data-i18n="about.info.languages-desc">English · Finnish (learning) · Urdu</p></div></div>
       <div class="info-card"><div class="info-icon">&#128663;</div><div><h4 data-i18n="about.info.driving">Driver's License</h4><p data-i18n="about.info.driving-desc">Category B (passenger car)</p></div></div>
@@ -297,6 +343,27 @@
     <div class="exp-card reveal" data-delay="1">
       <div class="exp-card-bar"></div><div class="exp-glow"></div>
       <div class="exp-header">
+        <div class="exp-role">Full-Stack Developer &amp; IT Manager</div>
+        <div class="exp-date">2025 — Present</div>
+      </div>
+      <div class="exp-company">NORDASH (startup) &middot; Kuopio, Finland / Remote</div>
+      <ul class="exp-bullets">
+        <li>Built the full NORDASH platform end-to-end: Next.js 16 + React 19 frontend, MongoDB backend, CRM dashboard, lead management and job application system</li>
+        <li>Manage all IT operations: deployment pipeline, hosting, performance, security and integrations</li>
+        <li>Drive the agency&rsquo;s web presence, branding, content and client communication</li>
+      </ul>
+      <div class="exp-tags">
+        <span class="exp-tag">Full-Stack</span>
+        <span class="exp-tag">Next.js</span>
+        <span class="exp-tag">React</span>
+        <span class="exp-tag">MongoDB</span>
+        <span class="exp-tag">IT Management</span>
+      </div>
+    </div>
+
+    <div class="exp-card reveal" data-delay="2">
+      <div class="exp-card-bar"></div><div class="exp-glow"></div>
+      <div class="exp-header">
         <div class="exp-role" data-i18n="exp1.role">IT Developer</div>
         <div class="exp-date">July 2025 — Present</div>
       </div>
@@ -315,11 +382,11 @@
       </div>
     </div>
 
-    <div class="exp-card reveal" data-delay="2">
+    <div class="exp-card reveal" data-delay="3">
       <div class="exp-card-bar"></div><div class="exp-glow"></div>
       <div class="exp-header">
         <div class="exp-role" data-i18n="exp2.role">Network System Specialist (Intern)</div>
-        <div class="exp-date">March — Sept 2025</div>
+        <div class="exp-date">March — July 2025</div>
       </div>
       <div class="exp-company" data-i18n="exp2.company">Hameed Latif Hospital &middot; Lahore, Pakistan</div>
       <ul class="exp-bullets">
@@ -336,7 +403,7 @@
       </div>
     </div>
 
-    <div class="exp-card reveal" data-delay="3">
+    <div class="exp-card reveal" data-delay="4">
       <div class="exp-card-bar"></div><div class="exp-glow"></div>
       <div class="exp-header">
         <div class="exp-role" data-i18n="exp3.role">Executive Committee Member</div>
@@ -357,11 +424,11 @@
       </div>
     </div>
 
-    <div class="exp-card reveal" data-delay="4">
+    <div class="exp-card reveal" data-delay="5">
       <div class="exp-card-bar"></div><div class="exp-glow"></div>
       <div class="exp-header">
         <div class="exp-role" data-i18n="exp4.role">Truck Dispatcher</div>
-        <div class="exp-date">April 2023 — Feb 2024</div>
+        <div class="exp-date">April 2023 — Feb 2025</div>
       </div>
       <div class="exp-company" data-i18n="exp4.company">Pioneer Enterprises &middot; Remote, United States</div>
       <ul class="exp-bullets">
@@ -378,7 +445,7 @@
       </div>
     </div>
 
-    <div class="exp-card reveal" data-delay="5">
+    <div class="exp-card reveal" data-delay="6">
       <div class="exp-card-bar"></div><div class="exp-glow"></div>
       <div class="exp-header">
         <div class="exp-role" data-i18n="exp5.role">Data Entry Specialist</div>
@@ -395,6 +462,123 @@
         <span class="exp-tag" data-i18n="exp5.tag2">Data Entry</span>
         <span class="exp-tag" data-i18n="exp5.tag3">Inventory</span>
         <span class="exp-tag" data-i18n="exp5.tag4">Reporting</span>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- STARTUP & PROJECTS -->
+<section id="projects" class="section">
+  <div class="floating-shape fs1"></div>
+  <div class="floating-shape fs3"></div>
+  <div class="section-label reveal" data-i18n="projects.label">Startup &amp; Projects</div>
+  <h2 class="section-title reveal" data-delay="1" data-i18n="projects.title">What I'm Building</h2>
+  <p class="section-sub reveal" data-delay="2" data-i18n="projects.sub">A startup platform and hands-on projects — designed, built, deployed and managed by me.</p>
+
+  <div class="projects-list">
+
+    <!-- NORDASH — Featured -->
+    <div class="project-featured reveal" data-delay="1">
+      <div class="project-featured-glow"></div>
+      <div class="project-featured-top">
+        <div class="project-featured-badge">
+          <span class="live-dot"></span>
+          STARTUP &middot; LIVE
+        </div>
+        <div class="project-featured-role">Full-Stack Developer &amp; IT Manager &middot; 2025 — Present</div>
+      </div>
+      <div class="project-featured-body">
+        <div class="project-featured-content">
+          <h3 class="project-featured-title">NORDASH — Digital Agency</h3>
+          <p class="project-featured-desc">NORDASH is a startup digital agency offering modern web development and digital services with a Nordic-meets-South-Asian design identity. I built the entire platform end-to-end and manage it daily as Full-Stack Developer &amp; IT Manager — architecture, code, deployment, content and client communication.</p>
+          <ul class="project-featured-bullets">
+            <li>CRM dashboard for client &amp; lead management</li>
+            <li>Job application system</li>
+            <li>Portfolio gallery</li>
+            <li>Authentication &amp; email integration (Resend)</li>
+            <li>Auto-deploy pipeline on Vercel</li>
+          </ul>
+          <div class="project-techs">
+            <span class="project-tech">Next.js 16</span>
+            <span class="project-tech">React 19</span>
+            <span class="project-tech">TailwindCSS</span>
+            <span class="project-tech">MongoDB Atlas</span>
+            <span class="project-tech">Framer Motion</span>
+            <span class="project-tech">Resend</span>
+            <span class="project-tech">Vercel</span>
+          </div>
+          <a class="project-btn" href="https://nordash.vercel.app" target="_blank" rel="noopener noreferrer">
+            Visit NORDASH &rarr;
+          </a>
+        </div>
+        <div class="project-featured-visual">
+          <div class="mock-browser">
+            <div class="mock-browser-bar">
+              <span class="mock-dot"></span>
+              <span class="mock-dot"></span>
+              <span class="mock-dot"></span>
+              <span class="mock-url">nordash.vercel.app</span>
+            </div>
+            <div class="mock-browser-body">
+              <div class="mock-wordmark">
+                <span class="mock-nord">NORDASH</span>
+                <span class="mock-tagline">Digital Agency</span>
+              </div>
+              <div class="mock-preview-grid">
+                <div class="mock-block mock-block-lg"></div>
+                <div class="mock-block mock-block-sm"></div>
+                <div class="mock-block mock-block-sm"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- BubbaCoin -->
+    <div class="project-card reveal" data-delay="2">
+      <div class="project-card-bar"></div>
+      <div class="project-card-body">
+        <div class="project-card-icon">
+          <svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 6v12M9 9h6M9 15h6"/></svg>
+        </div>
+        <h3 class="project-card-title">BubbaCoin (BUBBA) — ERC-20 Blockchain Token</h3>
+        <p class="project-card-desc">Custom ERC-20 token designed and deployed from scratch on the Ethereum Sepolia Testnet. 1,000,000 BUBBA minted at deployment — publicly verifiable on Etherscan. Course project for IBC2026 at UEF.</p>
+        <div class="project-techs">
+          <span class="project-tech">Solidity 0.8.20</span>
+          <span class="project-tech">Hardhat</span>
+          <span class="project-tech">ethers.js</span>
+          <span class="project-tech">Infura</span>
+          <span class="project-tech">MetaMask</span>
+        </div>
+        <a class="project-btn project-btn-sm" href="https://sepolia.etherscan.io/address/0x5917bF690cc17E33322257Cd7079fD427b42679a" target="_blank" rel="noopener noreferrer">
+          View on Etherscan &rarr;
+        </a>
+      </div>
+    </div>
+
+    <!-- Portfolio Website -->
+    <div class="project-card reveal" data-delay="3">
+      <div class="project-card-bar"></div>
+      <div class="project-card-body">
+        <div class="project-card-icon">
+          <svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
+        </div>
+        <h3 class="project-card-title">This Portfolio Website</h3>
+        <p class="project-card-desc">The site you're looking at — designed and hand-coded by me with interactive 3D elements and motion design.</p>
+        <div class="project-techs">
+          <span class="project-tech">HTML/CSS</span>
+          <span class="project-tech">JavaScript</span>
+          <span class="project-tech">Three.js-style Canvas</span>
+          <span class="project-tech">Custom Physics</span>
+          <span class="project-tech">Vercel</span>
+        </div>
+        <a class="project-btn project-btn-sm" href="https://github.com/muneeb10305896-rgb" target="_blank" rel="noopener noreferrer">
+          View GitHub &rarr;
+        </a>
       </div>
     </div>
 
@@ -425,7 +609,7 @@
       <div class="skill-cat" data-i18n="skills.card2.cat">Development</div>
       <div class="skill-name" data-i18n="skills.card2.name">Web &amp; Tools</div>
       <div class="skill-items">
-        <span class="skill-pill" data-i18n="skills.pill.web-dev">Web Development</span><span class="skill-pill" data-i18n="skills.pill.git-github">Git &amp; GitHub</span><span class="skill-pill" data-i18n="skills.pill.vscode">VS Code</span><span class="skill-pill" data-i18n="skills.pill.html-css">HTML/CSS</span>
+        <span class="skill-pill" data-i18n="skills.pill.web-dev">Web Development</span><span class="skill-pill" data-i18n="skills.pill.git-github">Git &amp; GitHub</span><span class="skill-pill" data-i18n="skills.pill.vscode">VS Code</span><span class="skill-pill" data-i18n="skills.pill.html-css">HTML/CSS</span><span class="skill-pill">React</span><span class="skill-pill">Next.js</span><span class="skill-pill">MongoDB</span><span class="skill-pill">TailwindCSS</span>
       </div>
     </div>
     <div class="skill-card reveal-scale" data-delay="3">
@@ -500,6 +684,10 @@
     <div class="sbar-item">
       <div class="sbar-header"><span class="sbar-name" data-i18n="skills.prof.web-dev">Web Development (HTML/CSS)</span><span class="sbar-pct">72%</span></div>
       <div class="sbar-track"><div class="sbar-fill" data-width="72"></div></div>
+    </div>
+    <div class="sbar-item">
+      <div class="sbar-header"><span class="sbar-name">Full-Stack Development (React/Next.js)</span><span class="sbar-pct">78%</span></div>
+      <div class="sbar-track"><div class="sbar-fill" data-width="78"></div></div>
     </div>
     <div class="sbar-item">
       <div class="sbar-header"><span class="sbar-name" data-i18n="skills.prof.react-java">React &amp; Java Programming</span><span class="sbar-pct">70%</span></div>

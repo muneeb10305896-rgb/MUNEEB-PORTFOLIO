@@ -22,6 +22,7 @@ const translations = {
   en: {
     'nav.about': 'About',
     'nav.experience': 'Experience',
+    'nav.projects': 'Projects',
     'nav.skills': 'Skills',
     'nav.education': 'Education',
     'nav.contact': 'Contact',
@@ -35,12 +36,18 @@ const translations = {
     'hero.roles': 'Roles held',
     'hero.studying': 'Currently studying',
     'hero.erasmus': 'Erasmus Network',
+    'hero.tag-nordash': 'Building NORDASH — Live',
+    'hero.nordash-cta': 'Visit NORDASH',
+    'hero.nordash-label': 'Full-Stack Developer & IT Manager',
     'about.label': 'About Me',
     'about.title': 'My Introduction',
     'about.sub': 'From Lahore to Kuopio — my journey in tech spans two continents and keeps growing.',
     'exp.label': 'Experience',
     'exp.title': 'My Career So Far',
     'exp.sub': 'Building digital products, contributing to open culture, and learning every day.',
+    'projects.label': 'Startup &amp; Projects',
+    'projects.title': "What I'm Building",
+    'projects.sub': 'A startup platform and hands-on projects &mdash; designed, built, deployed and managed by me.',
     'skills.label': 'Skills',
     'skills.title': 'Tech Stack',
     'skills.sub': 'Tools and technologies I work with across the stack.',
@@ -78,6 +85,7 @@ const translations = {
     'hero.id-title': 'IT Student & Developer',
     'hero.id-status': '● Available',
     'about.p1': 'I\'m <strong>Muneeb Ahmed Butt</strong>, an IT student at the <strong>University of Eastern Finland</strong> (Kuopio), currently also working as an <strong>IT Developer at DEVSiNC</strong> remotely. My journey spans web development, network support, logistics, and community work across Pakistan and Finland.',
+    'about.nordash': 'Since 2025 I build and manage <strong>NORDASH</strong>, a startup digital agency platform, working as its Full-Stack Developer &amp; IT Manager.',
     'about.p2': 'I completed the <strong>2024 Aspire Leaders Program at Harvard Business School</strong>, a global leadership program focused on critical thinking, communication, and social impact — 30 hours of coursework with an international community.',
     'about.p3': 'I\'m also an active member of the <strong>Erasmus Student Network (ESN Savo)</strong>, supporting international student communities in Finland.',
     'about.badge.it-dev': 'IT Developer',
@@ -239,6 +247,7 @@ const translations = {
   fi: {
     'nav.about': 'Tietoja',
     'nav.experience': 'Kokemus',
+    'nav.projects': 'Projektit',
     'nav.skills': 'Taidot',
     'nav.education': 'Koulutus',
     'nav.contact': 'Yhteys',
@@ -252,12 +261,18 @@ const translations = {
     'hero.roles': 'Tehtävissä',
     'hero.studying': 'Opiskelee',
     'hero.erasmus': 'Erasmus-verkosto',
+    'hero.tag-nordash': 'Rakennan NORDASHia — Live',
+    'hero.nordash-cta': 'Vieraile NORDASHissa',
+    'hero.nordash-label': 'Full-Stack-kehittäjä & IT-päällikkö',
     'about.label': 'Tietoja minusta',
     'about.title': 'Esittely',
     'about.sub': 'Lahdesta Kuopioon — matkani teknologian parissa ulottuu kahdelle mantereelle ja jatkuu edelleen.',
     'exp.label': 'Kokemus',
     'exp.title': 'Urani tähän asti',
     'exp.sub': 'Rakennan digitaalisia tuotteita, osallistun avoimeen kulttuuriin ja opin joka päivä.',
+    'projects.label': 'Käynnistys &amp; Projektit',
+    'projects.title': 'Mitä rakennan',
+    'projects.sub': 'Alustaprojekti ja käytännön projektit &mdash; suunniteltu, rakennettu, julkaistu ja hallinnoitu minun toimestani.',
     'skills.label': 'Taidot',
     'skills.title': 'Teknologiapino',
     'skills.sub': 'Työkalut ja teknologiat, joita käytän eri osa-alueilla.',
@@ -295,6 +310,7 @@ const translations = {
     'hero.id-title': 'IT-opiskelija & -kehittäjä',
     'hero.id-status': '● Saatavilla',
     'about.p1': 'Olen <strong>Muneeb Ahmed Butt</strong>, IT-opiskelija <strong>Itä-Suomen yliopistossa</strong> (Kuopio), ja työskentelen tällä hetkellä etänä <strong>IT-kehittäjänä DEVSiNCillä</strong>. Matkani kattaa verkkokehitystä, verkko-tukea, logistiikkaa ja yhteisötyötä Pakistanissa ja Suomessa.',
+    'about.nordash': 'Vuodesta 2025 olen rakentanut ja hallinnoinut <strong>NORDASHia</strong>, startup-digitaalitoimistoa, toimien sen Full-Stack-kehittäjänä &amp; IT-päällikkönä.',
     'about.p2': 'Suoritin <strong>vuoden 2024 Aspire Leaders -ohjelman Harvard Business Schoolissa</strong>, maailmanlaajuisen johtajuusohjelman, joka keskittyi kriittiseen ajatteluun, viestintään ja yhteiskunnalliseen vaikuttamiseen — 30 tuntia kurssityötä kansainvälisessä yhteisössä.',
     'about.p3': 'Olen myös aktiivinen jäsen <strong>Erasmus Student Networkissa (ESN Savo)</strong>, tukemassa kansainvälisiä opiskelijayhteisöjä Suomessa.',
     'about.badge.it-dev': 'IT-kehittäjä',
@@ -684,7 +700,7 @@ function tickParticles() {
 /* —— TYPEWRITER (setTimeout-based — reliable across all browsers) —— */
 const twPhrases = [
   'IT Student at UEF, Finland',
-  'IT Developer at DEVSiNC',
+  'Full-Stack Developer & IT Manager at NORDASH',
   'Harvard Aspire 2024 Alumni',
   'ESN Savo Board Member',
   'Web Developer & Problem Solver'
@@ -787,6 +803,17 @@ document.querySelectorAll('.hero-stats [data-count]').forEach(el => {
     ents.forEach(en => { if (en.isIntersecting) animateCounter(el); });
   }, { threshold: 0.5 });
   heroObs.observe(el);
+});
+// Force-fire counters on load in case the observer doesn't trigger immediately
+window.addEventListener('load', () => {
+  setTimeout(() => {
+    document.querySelectorAll('.hero-stats [data-count]').forEach(el => {
+      const rect = el.getBoundingClientRect();
+      if (rect.top < window.innerHeight && rect.bottom > 0) {
+        animateCounter(el);
+      }
+    });
+  }, 300);
 });
 
 /* —— DRAGGABLE LANYARD —— */

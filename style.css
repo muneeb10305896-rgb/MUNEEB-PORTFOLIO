@@ -432,6 +432,7 @@ h1 {
   position: absolute; left: 50%; top: 200px; z-index: 5;
   width: 250px; height: 360px;
   will-change: transform; transform-origin: 50% -40px;
+  touch-action: none; -webkit-touch-callout: none; user-select: none;
 }
 .id-clip-bar {
   position: absolute; top: -12px; left: 50%; transform: translateX(-50%);

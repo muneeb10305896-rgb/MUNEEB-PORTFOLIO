@@ -908,7 +908,6 @@ let tickLanyard = () => {};
   layer.appendChild(card);
   card.style.position      = 'absolute';  // same positioning context as canvas
   card.style.pointerEvents = 'auto';
-  card.style.touchAction   = 'auto'; /* allow vertical scroll by default — blocked only during drag */
   card.style.zIndex        = '1';         // above canvas (default 0) within the layer
 
   /* ---- physics constants ---- */
@@ -977,13 +976,12 @@ let tickLanyard = () => {};
 
   card.addEventListener('pointerdown', e => {
     dragging = true; last.pinned = true;
-    card.style.touchAction = 'none'; /* block scroll only while dragging */
     card.setPointerCapture(e.pointerId);
     const p = pointerXY(e); dragX = p.x; dragY = p.y;
     e.preventDefault();
   });
 
-  window.addEventListener('pointermove', e => {
+  card.addEventListener('pointermove', e => {
     if (!dragging) return;
     const p = pointerXY(e);
     dragX = Math.max(60, Math.min(window.innerWidth  - 60, p.x));
@@ -991,7 +989,7 @@ let tickLanyard = () => {};
   });
 
   function endDrag() {
-    if (dragging) { dragging = false; last.pinned = false; card.style.touchAction = 'auto'; }
+    if (dragging) { dragging = false; last.pinned = false; }
   }
   window.addEventListener('pointerup',     endDrag);
   window.addEventListener('pointercancel', endDrag);

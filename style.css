@@ -318,7 +318,7 @@ h1 {
 }
 @keyframes gradShift { 0%,100% { background-position:0% 50%; } 50% { background-position:100% 50%; } }
 
-.typewriter-wrap { font-size: 1.12rem; color: var(--muted); margin-bottom: 2.2rem; font-weight: 300; min-height: 2rem; }
+.typewriter-wrap { font-size: 1.12rem; color: var(--muted); margin-bottom: 2.2rem; font-weight: 300; min-height: 2rem; white-space: nowrap; overflow: hidden; }
 .typewriter-text { color: var(--accent2); }
 .tw-cursor { display: inline-block; width: 2px; height: 1.1em; background: var(--accent); margin-left: 2px; vertical-align: middle; animation: blink .8s step-end infinite; }
 @keyframes blink { 50% { opacity: 0; } }

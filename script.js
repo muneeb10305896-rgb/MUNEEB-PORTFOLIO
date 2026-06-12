@@ -352,11 +352,11 @@ function tickParticles() {
 
 /* —— TYPEWRITER —— */
 const twPhrases = [
-  'IT Student at UEF, Finland 🇫🇮',
+  'Student at UEF 🇫🇮',
   'IT Developer at DEVSiNC',
-  'Harvard Aspire 2024 Alumni',
+  'Harvard Aspire 2024',
   'ESN Savo Board Member',
-  'Web Developer & Problem Solver'
+  'Web Developer'
 ];
 let twIdx = 0, twPos = 0, twDir = 1, twLast = performance.now();
 const twSpeed = 55, twPause = 1500;

@@ -596,7 +596,7 @@ function hidePreloader() {
   const pre = document.getElementById('preloader');
   if (pre) pre.classList.add('done');
 }
-window.addEventListener('load', () => setTimeout(hidePreloader, REDUCED_MOTION ? 0 : 1400));
+window.addEventListener('load', () => setTimeout(hidePreloader, REDUCED_MOTION ? 0 : 900));
 // failsafe: never trap the user behind the preloader if a resource hangs
 setTimeout(hidePreloader, 4000);
 
@@ -637,6 +637,14 @@ const sections       = document.querySelectorAll('section[id]');
 const navLinks       = document.querySelectorAll('.nav-link');
 const sectionDots    = document.querySelectorAll('.section-dot');
 
+/* cache section offsets to avoid layout thrashing on scroll */
+let sectionOffsets = [];
+function buildSectionOffsets() {
+  sectionOffsets = Array.from(sections).map(sec => ({ id: sec.getAttribute('id'), top: sec.offsetTop - 180 }));
+}
+buildSectionOffsets();
+window.addEventListener('resize', buildSectionOffsets, { passive: true });
+
 window.addEventListener('scroll', () => {
   const scrollTop = window.scrollY;
   const docHeight = Math.max(1, document.documentElement.scrollHeight - window.innerHeight);
@@ -645,9 +653,9 @@ window.addEventListener('scroll', () => {
   backToTop.classList.toggle('show', scrollTop > 600);
 
   let current = '';
-  sections.forEach(sec => {
-    if (scrollTop >= sec.offsetTop - 180) current = sec.getAttribute('id');
-  });
+  for (let i = 0; i < sectionOffsets.length; i++) {
+    if (scrollTop >= sectionOffsets[i].top) current = sectionOffsets[i].id;
+  }
   navLinks.forEach(link => link.classList.toggle('active', link.getAttribute('href') === '#' + current));
   sectionDots.forEach(dot => dot.classList.toggle('active', dot.dataset.section === current));
 }, { passive: true });
@@ -681,7 +689,7 @@ document.addEventListener('click', e => {
 const pCanvas  = document.getElementById('particle-canvas');
 const pCtx     = pCanvas ? pCanvas.getContext('2d') : null;
 const mobileMQ = window.matchMedia('(max-width: 700px)');
-let CONNECT_DIST = mobileMQ.matches ? 0 : 130; // skip O(n²) connection lines on mobile
+let CONNECT_DIST = mobileMQ.matches ? 0 : 90; // skip O(n²) connection lines on mobile
 
 function makeParticle() {
   return {
@@ -693,23 +701,31 @@ function makeParticle() {
     o: Math.random() * 0.5 + 0.1
   };
 }
-const particles = Array.from({ length: mobileMQ.matches ? 40 : 90 }, makeParticle);
+const particles = Array.from({ length: mobileMQ.matches ? 30 : 50 }, makeParticle);
 
 function resizeParticles() {
   if (!pCanvas) return;
   pCanvas.width = window.innerWidth; pCanvas.height = window.innerHeight;
   // adapt density + line cost when crossing the mobile breakpoint (rotation, window resize)
   const small = mobileMQ.matches;
-  CONNECT_DIST = small ? 0 : 130;
-  const target = small ? 40 : 90;
+  CONNECT_DIST = small ? 0 : 90;
+  const target = small ? 30 : 50;
   while (particles.length > target) particles.pop();
   while (particles.length < target) particles.push(makeParticle());
 }
 resizeParticles();
 window.addEventListener('resize', resizeParticles, { passive: true });
 
+/* Adaptive frame-skip: skip expensive O(n²) particle connections when idle */
+let lastInteraction = Date.now();
+window.addEventListener('scroll', () => { lastInteraction = Date.now(); }, { passive: true });
+window.addEventListener('pointermove', () => { lastInteraction = Date.now(); }, { passive: true });
+
+let skipConnections = false;
 function tickParticles() {
   if (!pCtx || !pCanvas) return;
+  /* Skip O(n²) connection lines when idle for 2s — particles still drift */
+  skipConnections = Date.now() - lastInteraction > 2000;
   pCtx.clearRect(0, 0, pCanvas.width, pCanvas.height);
   for (const p of particles) {
     p.x += p.vx; p.y += p.vy;
@@ -720,7 +736,7 @@ function tickParticles() {
     pCtx.fillStyle = `rgba(${particleRGB},${p.o})`;
     pCtx.fill();
   }
-  if (CONNECT_DIST > 0) {
+  if (CONNECT_DIST > 0 && !skipConnections) {
     for (let i = 0; i < particles.length; i++) {
       for (let j = i + 1; j < particles.length; j++) {
         const dx = particles[i].x - particles[j].x;
@@ -792,8 +808,16 @@ setTimeout(measureTracks, 100);
 window.addEventListener('load', measureTracks);
 window.addEventListener('resize', measureTracks, { passive: true });
 
+let velIdleFrames = 0;
 function tickVelocity() {
   const speed = 3.0 + Math.abs(scrollVel) * 0.18;
+  /* When scroll has settled for 30 frames, use a minimal idle speed once/sec to save CPU */
+  if (Math.abs(scrollVel) < 0.05) {
+    velIdleFrames++;
+    if (velIdleFrames > 30) { scrollVel = 0; return; }
+  } else {
+    velIdleFrames = 0;
+  }
   if (half1 > 0 && track1) {
     t1pos -= speed;
     if (t1pos <= -half1) t1pos += half1;
@@ -884,7 +908,7 @@ let tickLanyard = () => {};
   card.style.zIndex        = '1';         // above canvas (default 0) within the layer
 
   /* ---- physics constants ---- */
-  const SEGMENTS = 18, SEG_LEN = 9, GRAVITY = 0.75, FRICTION = 0.96, STIFFNESS = 40;
+  const SEGMENTS = 14, SEG_LEN = 12, GRAVITY = 0.65, FRICTION = 0.94, STIFFNESS = 10;
   let anchorX = 0, anchorY = 0;
   const points = [];
   for (let i = 0; i < SEGMENTS; i++) points.push({ x: 0, y: 0, ox: 0, oy: 0, pinned: i === 0 });
@@ -1068,11 +1092,18 @@ window.addEventListener('mousemove', e => { mouseGX = e.clientX; mouseGY = e.cli
 window.addEventListener('mouseout',  e => { if (!e.relatedTarget) { mouseGX = -99999; mouseGY = -99999; } });
 
 const springCards = [];
+/* Track visibility for spring cards to skip off-screen getBoundingClientRect */
+const springCardVisibility = new WeakMap();
+const springVisibilityObserver = new IntersectionObserver(entries => {
+  for (const e of entries) springCardVisibility.set(e.target, e.isIntersecting);
+}, { rootMargin: '200px 0px' });
+
 function registerCards(selector, cfg) {
   if (!FINE_POINTER) return;
   document.querySelectorAll(selector).forEach(el => {
     el.style.transformStyle = 'preserve-3d';
-    el.style.willChange     = 'transform, box-shadow';
+    springCardVisibility.set(el, false);
+    springVisibilityObserver.observe(el);
     springCards.push({
       el, cfg,
       mx:0, my:0, rx:0, ry:0, sc:1, gz:0,
@@ -1100,27 +1131,29 @@ function tickSpring() {
   if (!FINE_POINTER) return; // no mouse → no magnetic effect, save the work
   const vh = window.innerHeight;
   for (const c of springCards) {
+    /* skip off-screen cards — no getBoundingClientRect call needed */
+    if (!springCardVisibility.get(c.el)) {
+      if (!c.idle) { c.idle = true; c.el.style.transform = ''; c.el.style.boxShadow = ''; }
+      c.mx=c.my=c.rx=c.ry=c.gz=c.glow=c.vmx=c.vmy=c.vrx=c.vry=c.vgz=c.vglow=c.tmx=c.tmy=c.trx=c.try_=c.tgz=c.tglow=0;c.sc=c.tsc=1;c.vsc=0;
+      continue;
+    }
     const r = c.el.getBoundingClientRect();
-    if (r.bottom < -120 || r.top > vh + 120) {
-      c.tmx = c.tmy = c.trx = c.try_ = c.tgz = c.tglow = 0; c.tsc = 1;
+    const cx = r.left + r.width  / 2 - c.mx;
+    const cy = r.top  + r.height / 2 - c.my;
+    const dx = mouseGX - cx, dy = mouseGY - cy;
+    const dist = Math.hypot(dx, dy);
+    if (dist < c.cfg.radius) {
+      const f    = 1 - dist / c.cfg.radius;
+      const ease = f * f * (3 - 2 * f);
+      c.tmx  = clampV(dx * c.cfg.pull, c.cfg.maxPull) * ease;
+      c.tmy  = clampV(dy * c.cfg.pull, c.cfg.maxPull) * ease;
+      c.try_ = (dx  / (r.width  / 2)) * c.cfg.tilt * ease;
+      c.trx  = (-dy / (r.height / 2)) * c.cfg.tilt * ease;
+      c.tsc  = 1 + (c.cfg.lift - 1) * ease;
+      c.tgz  = c.cfg.depth * ease;
+      c.tglow = ease;
     } else {
-      const cx = r.left + r.width  / 2 - c.mx;
-      const cy = r.top  + r.height / 2 - c.my;
-      const dx = mouseGX - cx, dy = mouseGY - cy;
-      const dist = Math.hypot(dx, dy);
-      if (dist < c.cfg.radius) {
-        const f    = 1 - dist / c.cfg.radius;
-        const ease = f * f * (3 - 2 * f);
-        c.tmx  = clampV(dx * c.cfg.pull, c.cfg.maxPull) * ease;
-        c.tmy  = clampV(dy * c.cfg.pull, c.cfg.maxPull) * ease;
-        c.try_ = (dx  / (r.width  / 2)) * c.cfg.tilt * ease;
-        c.trx  = (-dy / (r.height / 2)) * c.cfg.tilt * ease;
-        c.tsc  = 1 + (c.cfg.lift - 1) * ease;
-        c.tgz  = c.cfg.depth * ease;
-        c.tglow = ease;
-      } else {
-        c.tmx = c.tmy = c.trx = c.try_ = c.tgz = c.tglow = 0; c.tsc = 1;
-      }
+      c.tmx = c.tmy = c.trx = c.try_ = c.tgz = c.tglow = 0; c.tsc = 1;
     }
     [c.mx,   c.vmx]   = stepSpring(c.mx,   c.vmx,   c.tmx);
     [c.my,   c.vmy]   = stepSpring(c.my,   c.vmy,   c.tmy);

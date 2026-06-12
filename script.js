@@ -130,6 +130,111 @@ const translations = {
     'cv.meta.size': '202 KB',
     'cv.meta.updated': 'Updated June 2026',
     'footer.copyright': '© 2026 Muneeb Ahmed Butt. All rights reserved.',
+    'page.title': 'Muneeb Ahmed Butt — Portfolio',
+    'hero.sr-text': 'IT Student at UEF Finland, IT Developer at DEVSiNC, Harvard Aspire 2024 Alumni, ESN Savo member, web developer and problem solver.',
+    'form.sending': 'Sending…',
+    'form.success': '✓ Message sent! I\'ll get back to you as soon as possible.',
+    'form.error': '✗ Something went wrong. Please email me directly at muneeb10305896@gmail.com',
+    'footer.text-full': 'Designed &amp; built by <span>Muneeb Ahmed Butt</span> &middot; University of Eastern Finland &middot; Kuopio <svg viewBox="0 0 18 11" width="18" height="11" xmlns="http://www.w3.org/2000/svg" style="vertical-align:middle"><rect width="18" height="11" fill="#fff"/><rect x="5" y="0" width="3" height="11" fill="#003580"/><rect x="0" y="4" width="18" height="3" fill="#003580"/></svg>',
+    /* -- experience bullets -- */
+    'exp1.b1': 'Managed and updated company websites, ensuring functionality and content accuracy',
+    'exp1.b2': 'Assisted in developing customer-required websites based on specifications',
+    'exp1.b3': 'Worked on multiple web projects, supporting design, updates, and maintenance',
+    'exp1.b4': 'Collaborated with team members using development tools and version control',
+    'exp2.b1': 'Assisted in IT and network system setup and maintenance',
+    'exp2.b2': 'Provided technical support to hospital staff and doctors',
+    'exp2.b3': 'Helped manage patient record systems and troubleshoot issues',
+    'exp2.b4': 'Monitored system performance and ensured data security and uptime',
+    'exp3.b1': 'Maintained and organized NGO records, reports, and documentation accurately',
+    'exp3.b2': 'Managed data related to community projects, volunteers, and activities',
+    'exp3.b3': 'Coordinated planning, communication, and execution of development initiatives',
+    'exp3.b4': 'Worked with stakeholders to track progress and outcomes of programs',
+    'exp4.b1': 'Managed dispatch operations using DAT Load Board and RingCentral',
+    'exp4.b2': 'Updated digital records, load statuses, and documentation accurately',
+    'exp4.b3': 'Coordinated with drivers and brokers via online systems',
+    'exp4.b4': 'Resolved operational issues using digital tools',
+    'exp5.b1': 'Managed sales and inventory data using IPOS system',
+    'exp5.b2': 'Ensured data accuracy and maintained daily and monthly reports',
+    'exp5.b3': 'Supported store operations through organized data management',
+    /* -- experience tags -- */
+    'exp1.tag1': 'Web Development',
+    'exp1.tag2': 'Git',
+    'exp1.tag3': 'Version Control',
+    'exp1.tag4': 'IT Projects',
+    'exp2.tag1': 'Network Support',
+    'exp2.tag2': 'IT Troubleshooting',
+    'exp2.tag3': 'Hardware',
+    'exp2.tag4': 'Data Security',
+    'exp3.tag1': 'Leadership',
+    'exp3.tag2': 'Project Coordination',
+    'exp3.tag3': 'Data Management',
+    'exp3.tag4': 'NGO',
+    'exp4.tag1': 'DAT Load Board',
+    'exp4.tag2': 'RingCentral',
+    'exp4.tag3': 'Dispatching',
+    'exp4.tag4': 'Logistics',
+    'exp5.tag1': 'IPOS',
+    'exp5.tag2': 'Data Entry',
+    'exp5.tag3': 'Inventory',
+    'exp5.tag4': 'Reporting',
+    /* -- skill card cats + names -- */
+    'skills.card1.cat': 'IT &amp; Systems',
+    'skills.card1.name': 'Core IT Skills',
+    'skills.card2.cat': 'Development',
+    'skills.card2.name': 'Web &amp; Tools',
+    'skills.card3.cat': 'Data &amp; Office',
+    'skills.card3.name': 'Productivity',
+    'skills.card4.cat': 'Logistics',
+    'skills.card4.name': 'Operations',
+    'skills.card5.cat': 'Soft Skills',
+    'skills.card5.name': 'Professional',
+    'skills.card6.cat': 'Learning',
+    'skills.card6.name': 'In Progress',
+    'skills.card7.cat': 'Marketing',
+    'skills.card7.name': 'Digital Marketing',
+    'skills.card8.cat': 'IT Security',
+    'skills.card8.name': 'Cybersecurity',
+    /* -- skill pills -- */
+    'skills.pill.it-operations': 'IT Operations',
+    'skills.pill.it-support': 'IT Support',
+    'skills.pill.troubleshooting': 'Troubleshooting',
+    'skills.pill.networking': 'Networking',
+    'skills.pill.hardware-software': 'Hardware &amp; Software',
+    'skills.pill.web-dev': 'Web Development',
+    'skills.pill.git-github': 'Git &amp; GitHub',
+    'skills.pill.vscode': 'VS Code',
+    'skills.pill.html-css': 'HTML/CSS',
+    'skills.pill.word': 'Microsoft Word',
+    'skills.pill.excel': 'Microsoft Excel',
+    'skills.pill.data-entry': 'Data Entry',
+    'skills.pill.ipos': 'IPOS',
+    'skills.pill.reporting': 'Reporting',
+    'skills.pill.dat-board': 'DAT Load Board',
+    'skills.pill.ringcentral': 'RingCentral',
+    'skills.pill.dispatching': 'Dispatching',
+    'skills.pill.documentation': 'Documentation',
+    'skills.pill.problem-solving': 'Problem Solving',
+    'skills.pill.problem-analysis': 'Problem Analysis',
+    'skills.pill.teamwork': 'Team Work',
+    'skills.pill.communication': 'Communication',
+    'skills.pill.python': 'Python',
+    'skills.pill.r-prog': 'R Programming',
+    'skills.pill.databases': 'Databases',
+    'skills.pill.react': 'React',
+    'skills.pill.social-media': 'Social Media',
+    'skills.pill.content-creation': 'Content Creation',
+    'skills.pill.seo': 'SEO Basics',
+    'skills.pill.canva': 'Canva',
+    'skills.pill.branding': 'Branding',
+    'skills.pill.data-security': 'Data Security',
+    'skills.pill.access-control': 'Access Control',
+    'skills.pill.network-security': 'Network Security',
+    'skills.pill.system-monitoring': 'System Monitoring',
+    /* -- certification descriptions -- */
+    'cert1.desc': 'Verified skills assessment covering Python fundamentals: scalar types, operators, control flow, strings, collections, iteration, modularity, classes, and exception handling.',
+    'cert2.desc': 'Verified skills assessment covering JavaScript fundamentals: functions, currying, hoisting, scope, inheritance, events, and error handling.',
+    'cert3.desc': 'Foundational AI literacy: core AI concepts, machine learning basics, AI ethics, and practical applications of artificial intelligence in business and society.',
+    'cert4.desc': 'Global leadership and personal development program focused on critical thinking, communication, self-confidence, and social impact. Completed 30 hours of coursework within an international learning community. Mode: Online.',
   },
   fi: {
     'nav.about': 'Tietoja',
@@ -242,6 +347,111 @@ const translations = {
     'cv.meta.size': '202 kt',
     'cv.meta.updated': 'Päivitetty kesäkuu 2026',
     'footer.copyright': '© 2026 Muneeb Ahmed Butt. Kaikki oikeudet pidätetään.',
+    'page.title': 'Muneeb Ahmed Butt — Portfoliosivu',
+    'hero.sr-text': 'IT-opiskelija Itä-Suomen yliopistossa, IT-kehittäjä DEVSiNCillä, Harvard Aspire 2024 -alumni, ESN Savon jäsen, verkkokehittäjä ja ongelmanratkaisija.',
+    'form.sending': 'Lähetetään…',
+    'form.success': '✓ Viesti lähetetty! Palaan asiaan mahdollisimman pian.',
+    'form.error': '✗ Jotain meni pieleen. Lähetä sähköpostia osoitteeseen muneeb10305896@gmail.com',
+    'footer.text-full': 'Suunnitellut &amp; toteuttanut <span>Muneeb Ahmed Butt</span> &middot; Itä-Suomen yliopisto &middot; Kuopio <svg viewBox="0 0 18 11" width="18" height="11" xmlns="http://www.w3.org/2000/svg" style="vertical-align:middle"><rect width="18" height="11" fill="#fff"/><rect x="5" y="0" width="3" height="11" fill="#003580"/><rect x="0" y="4" width="18" height="3" fill="#003580"/></svg>',
+    /* -- experience bullets -- */
+    'exp1.b1': 'Hallinnoin ja päivitin yrityksen verkkosivuja varmistaen toimivuuden ja sisällön oikeellisuuden',
+    'exp1.b2': 'Avustin asiakkaiden vaatimien verkkosivujen kehittämisessä määrittelyjen mukaisesti',
+    'exp1.b3': 'Työskentelin useissa verkkoprojekteissa tukien suunnittelua, päivityksiä ja ylläpitoa',
+    'exp1.b4': 'Tein yhteistyötä tiimin jäsenten kanssa käyttäen kehitystyökaluja ja versiohallintaa',
+    'exp2.b1': 'Avustin IT- ja verkkoympäristöjen asennuksessa ja ylläpidossa',
+    'exp2.b2': 'Tarjosin teknistä tukea sairaalan henkilökunnalle ja lääkäreille',
+    'exp2.b3': 'Avustin potilastietojärjestelmien hallinnassa ja ongelmien ratkaisussa',
+    'exp2.b4': 'Seurasin järjestelmän suorituskykyä ja varmistin tietoturvan ja käytettävyyden',
+    'exp3.b1': 'Ylläpidin ja järjestelin kansalaisjärjestön asiakirjoja, raportteja ja dokumentaatiota',
+    'exp3.b2': 'Hallinnoin yhteisöprojekteihin, vapaaehtoisiin ja toimintaan liittyvää tietoa',
+    'exp3.b3': 'Koordinoin suunnittelua, viestintää ja kehityshankkeiden toteutusta',
+    'exp3.b4': 'Työskentelin sidosryhmien kanssa seuraten ohjelmien edistymistä ja tuloksia',
+    'exp4.b1': 'Hallinnoin lähetystoimintaa käyttäen DAT Load Board- ja RingCentral-järjestelmiä',
+    'exp4.b2': 'Päivitin digitaalisia tietoja, kuormatilanteita ja dokumentaatiota tarkasti',
+    'exp4.b3': 'Koordinoin kuljettajien ja välittäjien kanssa verkkopohjaisten järjestelmien avulla',
+    'exp4.b4': 'Ratkaisin toiminnallisia ongelmia digitaalisia työkaluja käyttäen',
+    'exp5.b1': 'Hallinnoin myynti- ja varastotietoja IPOS-järjestelmällä',
+    'exp5.b2': 'Varmistin tietojen tarkkuuden ja ylläpidin päivittäisiä ja kuukausittaisia raportteja',
+    'exp5.b3': 'Tuoin myymälän toimintaa järjestelmällisen tiedonhallinnan avulla',
+    /* -- experience tags -- */
+    'exp1.tag1': 'Verkkokehitys',
+    'exp1.tag2': 'Git',
+    'exp1.tag3': 'Versiohallinta',
+    'exp1.tag4': 'IT-projektit',
+    'exp2.tag1': 'Verkkotuki',
+    'exp2.tag2': 'IT-ongelmanratkaisu',
+    'exp2.tag3': 'Laitteisto',
+    'exp2.tag4': 'Tietoturva',
+    'exp3.tag1': 'Johtajuus',
+    'exp3.tag2': 'Projektikoordinointi',
+    'exp3.tag3': 'Tiedonhallinta',
+    'exp3.tag4': 'Kansalaisjärjestö',
+    'exp4.tag1': 'DAT Load Board',
+    'exp4.tag2': 'RingCentral',
+    'exp4.tag3': 'Lähetystoiminta',
+    'exp4.tag4': 'Logistiikka',
+    'exp5.tag1': 'IPOS',
+    'exp5.tag2': 'Tietojen syöttö',
+    'exp5.tag3': 'Varastonhallinta',
+    'exp5.tag4': 'Raportointi',
+    /* -- skill card cats + names -- */
+    'skills.card1.cat': 'IT &amp; Järjestelmät',
+    'skills.card1.name': 'Keskeiset IT-taidot',
+    'skills.card2.cat': 'Kehitys',
+    'skills.card2.name': 'Web &amp; Työkalut',
+    'skills.card3.cat': 'Tieto &amp; Toimisto',
+    'skills.card3.name': 'Tuottavuus',
+    'skills.card4.cat': 'Logistiikka',
+    'skills.card4.name': 'Toiminnot',
+    'skills.card5.cat': 'Pehmeät taidot',
+    'skills.card5.name': 'Ammattilainen',
+    'skills.card6.cat': 'Oppiminen',
+    'skills.card6.name': 'Kesken',
+    'skills.card7.cat': 'Markkinointi',
+    'skills.card7.name': 'Digitaalinen markkinointi',
+    'skills.card8.cat': 'IT-turvallisuus',
+    'skills.card8.name': 'Kyberturvallisuus',
+    /* -- skill pills -- */
+    'skills.pill.it-operations': 'IT-toiminnot',
+    'skills.pill.it-support': 'IT-tuki',
+    'skills.pill.troubleshooting': 'Vianmääritys',
+    'skills.pill.networking': 'Verkkotekniikka',
+    'skills.pill.hardware-software': 'Laitteisto &amp; Ohjelmisto',
+    'skills.pill.web-dev': 'Verkkokehitys',
+    'skills.pill.git-github': 'Git &amp; GitHub',
+    'skills.pill.vscode': 'VS Code',
+    'skills.pill.html-css': 'HTML/CSS',
+    'skills.pill.word': 'Microsoft Word',
+    'skills.pill.excel': 'Microsoft Excel',
+    'skills.pill.data-entry': 'Tietojen syöttö',
+    'skills.pill.ipos': 'IPOS',
+    'skills.pill.reporting': 'Raportointi',
+    'skills.pill.dat-board': 'DAT Load Board',
+    'skills.pill.ringcentral': 'RingCentral',
+    'skills.pill.dispatching': 'Lähetystoiminta',
+    'skills.pill.documentation': 'Dokumentointi',
+    'skills.pill.problem-solving': 'Ongelmanratkaisu',
+    'skills.pill.problem-analysis': 'Ongelman analyysi',
+    'skills.pill.teamwork': 'Tiimityö',
+    'skills.pill.communication': 'Viestintä',
+    'skills.pill.python': 'Python',
+    'skills.pill.r-prog': 'R-ohjelmointi',
+    'skills.pill.databases': 'Tietokannat',
+    'skills.pill.react': 'React',
+    'skills.pill.social-media': 'Sosiaalinen media',
+    'skills.pill.content-creation': 'Sisällöntuotanto',
+    'skills.pill.seo': 'SEO-perusteet',
+    'skills.pill.canva': 'Canva',
+    'skills.pill.branding': 'Brändäys',
+    'skills.pill.data-security': 'Tietoturva',
+    'skills.pill.access-control': 'Pääsynhallinta',
+    'skills.pill.network-security': 'Verkkoturvallisuus',
+    'skills.pill.system-monitoring': 'Järjestelmän valvonta',
+    /* -- certification descriptions -- */
+    'cert1.desc': 'Varmennettu taitojen arviointi, joka kattaa Pythonin perusteet: skalaarityypit, operaattorit, ohjausvuot, merkkijonot, kokoelmat, iterointi, modulaarisuus, luokat ja poikkeustenkäsittely.',
+    'cert2.desc': 'Varmennettu taitojen arviointi, joka kattaa JavaScriptin perusteet: funktiot, currying, nosto, näkyvyysalueet, periytyminen, tapahtumat ja virheidenkäsittely.',
+    'cert3.desc': 'Perustason tekoälylukutaito: keskeiset tekoälykonseptit, koneoppimisen perusteet, tekoälyn etiikka ja tekoälyn käytännön sovellukset liiketoiminnassa ja yhteiskunnassa.',
+    'cert4.desc': 'Maailmanlaajuinen johtajuus- ja henkilökohtainen kehitysohjelma, joka keskittyi kriittiseen ajatteluun, viestintään, itseluottamukseen ja yhteiskunnalliseen vaikuttamiseen. Suoritit 30 tuntia kurssityötä kansainvälisessä oppimisyhteisössä. Tila: Verkossa.',
   }
 };
 
@@ -268,6 +478,11 @@ function applyLanguage(lang) {
       if (fallback !== undefined) el.placeholder = fallback;
     }
   });
+  // translate page title
+  if (t['page.title']) document.title = t['page.title'];
+  // translate sr-only text
+  const srEl = document.querySelector('.sr-only');
+  if (srEl && t['hero.sr-text']) srEl.textContent = t['hero.sr-text'];
   // update lang toggle button text
   const langBtn = document.getElementById('langToggle');
   if (langBtn) langBtn.textContent = lang === 'fi' ? 'EN' : 'FI';
@@ -333,7 +548,7 @@ const ring   = document.getElementById('cursor-ring');
 let mouseX = 0, mouseY = 0, ringX = 0, ringY = 0;
 let cHalf = 6, rHalf = 18; // half-sizes for centring each element
 
-if (FINE_POINTER) {
+if (FINE_POINTER && cursor && ring) {
   document.addEventListener('mousemove', e => {
     mouseX = e.clientX; mouseY = e.clientY;
     cursor.style.transform = `translate(${mouseX - cHalf}px,${mouseY - cHalf}px)`;
@@ -406,7 +621,7 @@ document.addEventListener('click', e => {
 
 /* —— PARTICLE CANVAS —— */
 const pCanvas  = document.getElementById('particle-canvas');
-const pCtx     = pCanvas.getContext('2d');
+const pCtx     = pCanvas ? pCanvas.getContext('2d') : null;
 const mobileMQ = window.matchMedia('(max-width: 700px)');
 let CONNECT_DIST = mobileMQ.matches ? 0 : 130; // skip O(n²) connection lines on mobile
 
@@ -423,6 +638,7 @@ function makeParticle() {
 const particles = Array.from({ length: mobileMQ.matches ? 40 : 90 }, makeParticle);
 
 function resizeParticles() {
+  if (!pCanvas) return;
   pCanvas.width = window.innerWidth; pCanvas.height = window.innerHeight;
   // adapt density + line cost when crossing the mobile breakpoint (rotation, window resize)
   const small = mobileMQ.matches;
@@ -435,6 +651,7 @@ resizeParticles();
 window.addEventListener('resize', resizeParticles, { passive: true });
 
 function tickParticles() {
+  if (!pCtx || !pCanvas) return;
   pCtx.clearRect(0, 0, pCanvas.width, pCanvas.height);
   for (const p of particles) {
     p.x += p.vx; p.y += p.vy;
@@ -910,8 +1127,10 @@ if (contactForm) {
       return;
     }
     const btnText = cfSubmit.querySelector('.cf-btn-text');
+    const curLang = (document.documentElement.getAttribute('lang') || 'en').slice(0,2);
+    const t = translations[curLang] || translations.en;
     cfSubmit.disabled = true; cfSubmit.classList.add('loading');
-    btnText.textContent = 'Sending…';
+    btnText.textContent = t['form.sending'] || 'Sending…';
     cfStatus.className = 'cf-status'; cfStatus.textContent = '';
     try {
       const res = await fetch(contactForm.action, {
@@ -922,17 +1141,17 @@ if (contactForm) {
       if (res.ok) {
         contactForm.reset();
         cfStatus.className = 'cf-status success';
-        cfStatus.textContent = '✓ Message sent! I\'ll get back to you as soon as possible.';
+        cfStatus.textContent = t['form.success'] || '✓ Message sent! I\'ll get back to you as soon as possible.';
       } else {
         const data = await res.json().catch(() => ({}));
         throw new Error(data.error || 'Server error');
       }
     } catch {
       cfStatus.className = 'cf-status error';
-      cfStatus.textContent = '✗ Something went wrong. Please email me directly at muneeb10305896@gmail.com';
+      cfStatus.textContent = t['form.error'] || '✗ Something went wrong. Please email me directly at muneeb10305896@gmail.com';
     }
     cfSubmit.disabled = false; cfSubmit.classList.remove('loading');
-    btnText.textContent = 'Send Message';
+    btnText.textContent = t['form.send'] || 'Send Message';
   });
 }
 
@@ -941,6 +1160,7 @@ if (contactForm) {
    of 5 separate loops fighting each other
    ============================================ */
 function tickCursorRing() {
+  if (!ring) return;
   ringX += (mouseX - ringX) * 0.15;
   ringY += (mouseY - ringY) * 0.15;
   ring.style.transform = `translate(${ringX - rHalf}px,${ringY - rHalf}px)`;

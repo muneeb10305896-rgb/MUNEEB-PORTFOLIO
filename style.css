@@ -65,14 +65,13 @@ body::before {
     radial-gradient(35% 35% at 80% 30%, rgba(79,195,247,.16), transparent 60%),
     radial-gradient(45% 45% at 60% 80%, rgba(255,107,157,.14), transparent 60%),
     radial-gradient(30% 30% at 15% 75%, rgba(124,109,250,.14), transparent 60%);
-  filter: blur(25px); /* 40→25: still gauzy, half the GPU cost */
+  filter: blur(12px); /* reduced from 25px — heavy GPU cost on low-end */
   will-change: transform;
-  animation: auroraDrift 45s ease-in-out infinite alternate;
+  animation: auroraDrift 60s ease-in-out infinite alternate;
 }
 @keyframes auroraDrift {
-  0%   { transform: translate3d(0,0,0) scale(1) rotate(0deg); }
-  50%  { transform: translate3d(3%, -2%, 0) scale(1.12) rotate(4deg); }
-  100% { transform: translate3d(-3%, 3%, 0) scale(1.05) rotate(-4deg); }
+  0%   { transform: translate3d(0,0,0) scale(1); }
+  100% { transform: translate3d(0,0,0) scale(1.03); }
 }
 
 body::after {
@@ -266,7 +265,7 @@ body::after {
   padding: 6rem 2.5rem 4rem; position: relative; z-index: 1; overflow: hidden;
 }
 .hero-bg { position: absolute; inset: 0; pointer-events: none; }
-.blob { position: absolute; border-radius: 50%; filter: blur(30px); opacity: .18; }
+.blob { position: absolute; border-radius: 50%; opacity: .12; will-change: transform; }
 .blob1 { width: 700px; height: 700px; background: radial-gradient(circle,#7c6dfa,transparent); top: -200px; right: -200px; animation: blobFloat1 8s ease-in-out infinite; }
 .blob2 { width: 600px; height: 600px; background: radial-gradient(circle,#4fc3f7,transparent); bottom: -150px; left: -150px; animation: blobFloat2 10s ease-in-out infinite; }
 .blob3 { width: 400px; height: 400px; background: radial-gradient(circle,#ff6b9d,transparent); top: 40%; left: 40%; animation: blobFloat3 12s ease-in-out infinite; }
@@ -512,9 +511,9 @@ h1 {
 .track2 { margin-top: .5rem; color: rgba(79,195,247,.18); }
 
 /* —— SECTIONS —— */
-.section { padding: 5.5rem 2.5rem; max-width: 1100px; margin: 0 auto; position: relative; z-index: 1; overflow: hidden; content-visibility: auto; contain-intrinsic-size: 600px; }
-/* below-fold sections: skip rendering off-screen for faster initial paint */
-#experience, #projects, #skills, #education, #contact { content-visibility: auto; contain-intrinsic-size: 800px; }
+.section { padding: 5.5rem 2.5rem; max-width: 1100px; margin: 0 auto; position: relative; z-index: 1; overflow: hidden; }
+/* below-fold sections: content-visibility skips off-screen rendering for faster initial paint */
+#experience, #projects, #skills, #education, #contact { content-visibility: auto; contain-intrinsic-size: 4000px; }
 #contact { padding-bottom: 2.5rem; }
 .section-label {
   font-size: .75rem; letter-spacing: .14em; text-transform: uppercase;

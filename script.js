@@ -689,27 +689,27 @@ document.addEventListener('click', e => {
 const pCanvas  = document.getElementById('particle-canvas');
 const pCtx     = pCanvas ? pCanvas.getContext('2d') : null;
 const mobileMQ = window.matchMedia('(max-width: 700px)');
-let CONNECT_DIST = mobileMQ.matches ? 0 : 50; // skip O(n²) connection lines on mobile
+let CONNECT_DIST = mobileMQ.matches ? 0 : 35; // skip O(n²) connection lines on mobile
 
 function makeParticle() {
   return {
     x: Math.random() * window.innerWidth,
     y: Math.random() * window.innerHeight,
-    r: Math.random() * 1.5 + 0.3,
-    vx: (Math.random() - 0.5) * 0.3,
-    vy: (Math.random() - 0.5) * 0.3,
+    r: Math.random() * 0.8 + 0.2,
+    vx: (Math.random() - 0.5) * 0.15,
+    vy: (Math.random() - 0.5) * 0.15,
     o: Math.random() * 0.5 + 0.1
   };
 }
-const particles = Array.from({ length: mobileMQ.matches ? 15 : 20 }, makeParticle);
+const particles = Array.from({ length: mobileMQ.matches ? 6 : 10 }, makeParticle);
 
 function resizeParticles() {
   if (!pCanvas) return;
   pCanvas.width = window.innerWidth; pCanvas.height = window.innerHeight;
   // adapt density + line cost when crossing the mobile breakpoint (rotation, window resize)
   const small = mobileMQ.matches;
-  CONNECT_DIST = small ? 0 : 50;
-  const target = small ? 15 : 20;
+  CONNECT_DIST = small ? 0 : 35;
+  const target = small ? 6 : 10;
   while (particles.length > target) particles.pop();
   while (particles.length < target) particles.push(makeParticle());
 }
@@ -818,7 +818,7 @@ function tickVelocity() {
   /* When scroll has settled for 30 frames, use a minimal idle speed once/sec to save CPU */
   if (Math.abs(scrollVel) < 0.05) {
     velIdleFrames++;
-    if (velIdleFrames > 30) { scrollVel = 0; return; }
+    if (velIdleFrames > 15) { scrollVel = 0; return; }
   } else {
     velIdleFrames = 0;
   }
@@ -911,7 +911,7 @@ let tickLanyard = () => {};
   card.style.zIndex        = '1';         // above canvas (default 0) within the layer
 
   /* ---- physics constants ---- */
-  const SEGMENTS = 10, SEG_LEN = 14, GRAVITY = 0.65, FRICTION = 0.94, STIFFNESS = 6;
+  const SEGMENTS = 6, SEG_LEN = 18, GRAVITY = 0.65, FRICTION = 0.94, STIFFNESS = 3;
   let anchorX = 0, anchorY = 0;
   const points = [];
   for (let i = 0; i < SEGMENTS; i++) points.push({ x: 0, y: 0, ox: 0, oy: 0, pinned: i === 0 });
@@ -1045,7 +1045,7 @@ let tickLanyard = () => {};
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     ctx.lineJoin = 'round'; ctx.lineCap = 'round';
 
-    ctx.strokeStyle = ropeGrad; ctx.lineWidth = 7;
+    ctx.strokeStyle = ropeGrad; ctx.lineWidth = 5;
     ctx.beginPath();
     ctx.moveTo(points[0].x, points[0].y);
     for (let i = 1; i < SEGMENTS; i++) ctx.lineTo(points[i].x, points[i].y);
@@ -1282,14 +1282,16 @@ document.addEventListener('visibilitychange', () => {
   if (!rafPaused) requestAnimationFrame(masterTick);
 });
 
+let frameCount = 0;
 function masterTick() {
   if (rafPaused) return;
+  frameCount++;
   if (FINE_POINTER) tickCursorRing();
   if (!REDUCED_MOTION) {
-    tickParticles();
+    if (frameCount % 2 === 0) tickParticles();
   }
-  tickVelocity();   // always run — CSS display:none handles reduced-motion users
-  tickLanyard();
+  tickVelocity();
+  if (frameCount & 1) tickLanyard();
   tickSpring();
   requestAnimationFrame(masterTick);
 }

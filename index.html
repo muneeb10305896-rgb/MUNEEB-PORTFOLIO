@@ -245,10 +245,6 @@
   </div>
 
   <!-- SCROLL DOWN INDICATOR -->
-  <a href="#about" class="scroll-down" aria-label="Scroll down">
-    <span class="scroll-mouse"><span class="scroll-wheel"></span></span>
-    <span class="scroll-text" data-i18n="scroll">Scroll</span>
-  </a>
 </section>
 
 <!-- VELOCITY SCROLL -->
@@ -313,7 +309,7 @@
       <div class="cv-banner-name">Muneeb Ahmed Butt</div>
       <div class="cv-banner-meta">
         <span class="cv-meta-pill" data-i18n="cv.meta.pdf">PDF</span>
-        <span class="cv-meta-pill" data-i18n="cv.meta.size">202 KB</span>
+        <span class="cv-meta-pill" data-i18n="cv.meta.size">100 KB</span>
         <span class="cv-meta-pill" data-i18n="cv.meta.updated">Updated June 2026</span>
       </div>
     </div>
@@ -343,21 +339,21 @@
     <div class="exp-card reveal" data-delay="1">
       <div class="exp-card-bar"></div><div class="exp-glow"></div>
       <div class="exp-header">
-        <div class="exp-role">Full-Stack Developer &amp; IT Manager</div>
+        <div class="exp-role" data-i18n="exp0.role">Full-Stack Developer &amp; IT Manager</div>
         <div class="exp-date">2025 — Present</div>
       </div>
-      <div class="exp-company">NORDASH (startup) &middot; Kuopio, Finland / Remote</div>
+      <div class="exp-company" data-i18n="exp0.company">NORDASH (startup) &middot; Kuopio, Finland / Remote</div>
       <ul class="exp-bullets">
-        <li>Built the full NORDASH platform end-to-end: Next.js 16 + React 19 frontend, MongoDB backend, CRM dashboard, lead management and job application system</li>
-        <li>Manage all IT operations: deployment pipeline, hosting, performance, security and integrations</li>
-        <li>Drive the agency&rsquo;s web presence, branding, content and client communication</li>
+        <li data-i18n="exp0.b1">Built the full NORDASH platform end-to-end: Next.js 16 + React 19 frontend, MongoDB backend, CRM dashboard, lead management and job application system</li>
+        <li data-i18n="exp0.b2">Manage all IT operations: deployment pipeline, hosting, performance, security and integrations</li>
+        <li data-i18n="exp0.b3">Drive the agency&rsquo;s web presence, branding, content and client communication</li>
       </ul>
       <div class="exp-tags">
         <span class="exp-tag">Full-Stack</span>
         <span class="exp-tag">Next.js</span>
         <span class="exp-tag">React</span>
         <span class="exp-tag">MongoDB</span>
-        <span class="exp-tag">IT Management</span>
+        <span class="exp-tag" data-i18n="exp0.tag5">IT Management</span>
       </div>
     </div>
 
@@ -486,20 +482,20 @@
       <div class="project-featured-top">
         <div class="project-featured-badge">
           <span class="live-dot"></span>
-          STARTUP &middot; LIVE
+          <span data-i18n="projects.badge">STARTUP &middot; LIVE</span>
         </div>
-        <div class="project-featured-role">Full-Stack Developer &amp; IT Manager &middot; 2025 — Present</div>
+        <div class="project-featured-role" data-i18n="projects.role">Full-Stack Developer &amp; IT Manager &middot; 2025 — Present</div>
       </div>
       <div class="project-featured-body">
         <div class="project-featured-content">
-          <h3 class="project-featured-title">NORDASH — Digital Agency</h3>
-          <p class="project-featured-desc">NORDASH is a startup digital agency offering modern web development and digital services with a Nordic-meets-South-Asian design identity. I built the entire platform end-to-end and manage it daily as Full-Stack Developer &amp; IT Manager — architecture, code, deployment, content and client communication.</p>
+          <h3 class="project-featured-title" data-i18n="projects.nordash.title">NORDASH — Digital Agency</h3>
+          <p class="project-featured-desc" data-i18n="projects.nordash.desc">NORDASH is a startup digital agency offering modern web development and digital services with a Nordic-meets-South-Asian design identity. I built the entire platform end-to-end and manage it daily as Full-Stack Developer &amp; IT Manager — architecture, code, deployment, content and client communication.</p>
           <ul class="project-featured-bullets">
-            <li>CRM dashboard for client &amp; lead management</li>
-            <li>Job application system</li>
-            <li>Portfolio gallery</li>
-            <li>Authentication &amp; email integration (Resend)</li>
-            <li>Auto-deploy pipeline on Vercel</li>
+            <li data-i18n="projects.nordash.b1">CRM dashboard for client &amp; lead management</li>
+            <li data-i18n="projects.nordash.b2">Job application system</li>
+            <li data-i18n="projects.nordash.b3">Portfolio gallery</li>
+            <li data-i18n="projects.nordash.b4">Authentication &amp; email integration (Resend)</li>
+            <li data-i18n="projects.nordash.b5">Auto-deploy pipeline on Vercel</li>
           </ul>
           <div class="project-techs">
             <span class="project-tech">Next.js 16</span>
@@ -510,7 +506,7 @@
             <span class="project-tech">Resend</span>
             <span class="project-tech">Vercel</span>
           </div>
-          <a class="project-btn" href="https://nordash.vercel.app" target="_blank" rel="noopener noreferrer">
+          <a class="project-btn" href="https://nordash.vercel.app" target="_blank" rel="noopener noreferrer" data-i18n="projects.visit">
             Visit NORDASH &rarr;
           </a>
         </div>
@@ -522,15 +518,13 @@
               <span class="mock-dot"></span>
               <span class="mock-url">nordash.vercel.app</span>
             </div>
-            <div class="mock-browser-body">
+            <div class="mock-browser-body mock-live">
               <div class="mock-wordmark">
                 <span class="mock-nord">NORDASH</span>
                 <span class="mock-tagline">Digital Agency</span>
               </div>
-              <div class="mock-preview-grid">
-                <div class="mock-block mock-block-lg"></div>
-                <div class="mock-block mock-block-sm"></div>
-                <div class="mock-block mock-block-sm"></div>
+              <div class="mock-iframe-wrap">
+                <iframe id="nordashFrame" src="https://nordash.vercel.app" title="NORDASH — live site preview" loading="lazy" tabindex="-1" scrolling="no" referrerpolicy="no-referrer" aria-hidden="true"></iframe>
               </div>
             </div>
           </div>
@@ -545,8 +539,8 @@
         <div class="project-card-icon">
           <svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 6v12M9 9h6M9 15h6"/></svg>
         </div>
-        <h3 class="project-card-title">BubbaCoin (BUBBA) — ERC-20 Blockchain Token</h3>
-        <p class="project-card-desc">Custom ERC-20 token designed and deployed from scratch on the Ethereum Sepolia Testnet. 1,000,000 BUBBA minted at deployment — publicly verifiable on Etherscan. Course project for IBC2026 at UEF.</p>
+        <h3 class="project-card-title" data-i18n="projects.bubba.title">BubbaCoin (BUBBA) — ERC-20 Blockchain Token</h3>
+        <p class="project-card-desc" data-i18n="projects.bubba.desc">Custom ERC-20 token designed and deployed from scratch on the Ethereum Sepolia Testnet. 1,000,000 BUBBA minted at deployment — publicly verifiable on Etherscan. Course project for IBC2026 at UEF.</p>
         <div class="project-techs">
           <span class="project-tech">Solidity 0.8.20</span>
           <span class="project-tech">Hardhat</span>
@@ -554,7 +548,7 @@
           <span class="project-tech">Infura</span>
           <span class="project-tech">MetaMask</span>
         </div>
-        <a class="project-btn project-btn-sm" href="https://sepolia.etherscan.io/address/0x5917bF690cc17E33322257Cd7079fD427b42679a" target="_blank" rel="noopener noreferrer">
+        <a class="project-btn" href="https://sepolia.etherscan.io/address/0x5917bF690cc17E33322257Cd7079fD427b42679a" target="_blank" rel="noopener noreferrer" data-i18n="projects.etherscan">
           View on Etherscan &rarr;
         </a>
       </div>
@@ -567,8 +561,8 @@
         <div class="project-card-icon">
           <svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
         </div>
-        <h3 class="project-card-title">This Portfolio Website</h3>
-        <p class="project-card-desc">The site you're looking at — designed and hand-coded by me with interactive 3D elements and motion design.</p>
+        <h3 class="project-card-title" data-i18n="projects.site.title">This Portfolio Website</h3>
+        <p class="project-card-desc" data-i18n="projects.site.desc">The site you're looking at — designed and hand-coded by me with interactive 3D elements and motion design.</p>
         <div class="project-techs">
           <span class="project-tech">HTML/CSS</span>
           <span class="project-tech">JavaScript</span>
@@ -576,7 +570,7 @@
           <span class="project-tech">Custom Physics</span>
           <span class="project-tech">Vercel</span>
         </div>
-        <a class="project-btn project-btn-sm" href="https://github.com/muneeb10305896-rgb" target="_blank" rel="noopener noreferrer">
+        <a class="project-btn" href="https://github.com/muneeb10305896-rgb" target="_blank" rel="noopener noreferrer" data-i18n="projects.github">
           View GitHub &rarr;
         </a>
       </div>
@@ -689,9 +683,6 @@
       <div class="sbar-header"><span class="sbar-name">Full-Stack Development (React/Next.js)</span><span class="sbar-pct">78%</span></div>
       <div class="sbar-track"><div class="sbar-fill" data-width="78"></div></div>
     </div>
-    <div class="sbar-item">
-      <div class="sbar-header"><span class="sbar-name" data-i18n="skills.prof.react-java">React &amp; Java Programming</span><span class="sbar-pct">70%</span></div>
-      <div class="sbar-track"><div class="sbar-fill" data-width="70"></div></div>
     </div>
     <div class="sbar-item">
       <div class="sbar-header"><span class="sbar-name" data-i18n="skills.prof.git">Git &amp; Version Control</span><span class="sbar-pct">68%</span></div>

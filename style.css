@@ -1733,9 +1733,8 @@ html[data-theme="light"] #particle-canvas { opacity: .5; }
 
 /* —— REDUCED MOTION —— */
 @media (prefers-reduced-motion: reduce) {
-  *, *::before, *::after { animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important; }
   html { scroll-behavior: auto; }
-  #particle-canvas, .velocity-section, .lanyard-hint { display: none !important; }
+  #particle-canvas, .lanyard-hint { display: none !important; }
 }
 
 /* —— PRINT —— */
@@ -1796,4 +1795,16 @@ html[data-theme="light"] #particle-canvas { opacity: .5; }
 
   #experience, #skills { page-break-before: always; }
   a { color: #111; text-decoration: none; }
+}
+
+/* -- NORDASH live preview iframe -- */
+.mock-browser-body.mock-live { position: relative; padding: 0; overflow: hidden; }
+.mock-browser-body.mock-live .mock-wordmark {
+  position: absolute; inset: 0; z-index: 0;
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+}
+.mock-iframe-wrap { position: relative; z-index: 1; width: 100%; overflow: hidden; min-height: 180px; }
+#nordashFrame {
+  width: 1280px; height: 820px; border: 0; display: block;
+  transform-origin: 0 0; pointer-events: none; background: transparent;
 }

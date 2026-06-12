@@ -48,6 +48,28 @@ const translations = {
     'projects.label': 'Startup &amp; Projects',
     'projects.title': "What I'm Building",
     'projects.sub': 'A startup platform and hands-on projects &mdash; designed, built, deployed and managed by me.',
+    'projects.badge': 'STARTUP &middot; LIVE',
+    'projects.role': 'Full-Stack Developer &amp; IT Manager &middot; 2025 — Present',
+    'projects.nordash.title': 'NORDASH — Digital Agency',
+    'projects.nordash.desc': 'NORDASH is a startup digital agency offering modern web development and digital services with a Nordic-meets-South-Asian design identity. I built the entire platform end-to-end and manage it daily as Full-Stack Developer &amp; IT Manager — architecture, code, deployment, content and client communication.',
+    'projects.nordash.b1': 'CRM dashboard for client &amp; lead management',
+    'projects.nordash.b2': 'Job application system',
+    'projects.nordash.b3': 'Portfolio gallery',
+    'projects.nordash.b4': 'Authentication &amp; email integration (Resend)',
+    'projects.nordash.b5': 'Auto-deploy pipeline on Vercel',
+    'projects.visit': 'Visit NORDASH &rarr;',
+    'projects.bubba.title': 'BubbaCoin (BUBBA) — ERC-20 Blockchain Token',
+    'projects.bubba.desc': 'Custom ERC-20 token designed and deployed from scratch on the Ethereum Sepolia Testnet. 1,000,000 BUBBA minted at deployment — publicly verifiable on Etherscan. Course project for IBC2026 at UEF.',
+    'projects.etherscan': 'View on Etherscan &rarr;',
+    'projects.site.title': 'This Portfolio Website',
+    'projects.site.desc': 'The site you&rsquo;re looking at — designed and hand-coded by me with interactive 3D elements and motion design.',
+    'projects.github': 'View GitHub &rarr;',
+    'exp0.role': 'Full-Stack Developer &amp; IT Manager',
+    'exp0.company': 'NORDASH (startup) &middot; Kuopio, Finland / Remote',
+    'exp0.b1': 'Built the full NORDASH platform end-to-end: Next.js 16 + React 19 frontend, MongoDB backend, CRM dashboard, lead management and job application system',
+    'exp0.b2': 'Manage all IT operations: deployment pipeline, hosting, performance, security and integrations',
+    'exp0.b3': 'Drive the agency&rsquo;s web presence, branding, content and client communication',
+    'exp0.tag5': 'IT Management',
     'skills.label': 'Skills',
     'skills.title': 'Tech Stack',
     'skills.sub': 'Tools and technologies I work with across the stack.',
@@ -120,7 +142,6 @@ const translations = {
     'skills.prof.problem-solving': 'Problem Solving & Analysis',
     'skills.prof.it-support': 'IT Support & Networking',
     'skills.prof.web-dev': 'Web Development (HTML/CSS)',
-    'skills.prof.react-java': 'React & Java Programming',
     'skills.prof.git': 'Git & Version Control',
     'skills.prof.python-r': 'Python & R Programming',
     'edu.degree1': 'Bachelor\'s Degree in Information Technology',
@@ -135,7 +156,7 @@ const translations = {
     'contact.instagram': 'Instagram',
     'contact.phone': 'Phone',
     'cv.meta.pdf': 'PDF',
-    'cv.meta.size': '202 KB',
+    'cv.meta.size': '100 KB',
     'cv.meta.updated': 'Updated June 2026',
     'footer.copyright': '© 2026 Muneeb Ahmed Butt. All rights reserved.',
     'page.title': 'Muneeb Ahmed Butt — Portfolio',
@@ -273,6 +294,28 @@ const translations = {
     'projects.label': 'Käynnistys &amp; Projektit',
     'projects.title': 'Mitä rakennan',
     'projects.sub': 'Alustaprojekti ja käytännön projektit &mdash; suunniteltu, rakennettu, julkaistu ja hallinnoitu minun toimestani.',
+    'projects.badge': 'STARTUP &middot; LIVE',
+    'projects.role': 'Full-Stack-kehittäjä &amp; IT-päällikkö &middot; 2025 — nykyhetki',
+    'projects.nordash.title': 'NORDASH — Digitaalinen toimisto',
+    'projects.nordash.desc': 'NORDASH on startup-digitoimisto, joka tarjoaa modernia web-kehitystä ja digitaalisia palveluita pohjoismaisen ja eteläaasialaisen designin yhdistelmällä. Rakensin koko alustan alusta loppuun ja hallinnoin sitä päivittäin Full-Stack-kehittäjänä ja IT-päällikkönä — arkkitehtuuri, koodi, julkaisut, sisältö ja asiakasviestintä.',
+    'projects.nordash.b1': 'CRM-hallintapaneeli asiakkaiden ja liidien hallintaan',
+    'projects.nordash.b2': 'Työnhakujärjestelmä',
+    'projects.nordash.b3': 'Portfoliogalleria',
+    'projects.nordash.b4': 'Autentikointi ja sähköposti-integraatio (Resend)',
+    'projects.nordash.b5': 'Automaattinen julkaisuputki Vercelissä',
+    'projects.visit': 'Vieraile NORDASHissa &rarr;',
+    'projects.bubba.title': 'BubbaCoin (BUBBA) — ERC-20-lohkoketjutoken',
+    'projects.bubba.desc': 'Räätälöity ERC-20-token, suunniteltu ja julkaistu alusta asti Ethereum Sepolia -testiverkkoon. 1 000 000 BUBBAa lyöty julkaisussa — julkisesti todennettavissa Etherscanissa. Kurssiprojekti (IBC2026) UEF:ssa.',
+    'projects.etherscan': 'Katso Etherscanissa &rarr;',
+    'projects.site.title': 'Tämä portfoliosivusto',
+    'projects.site.desc': 'Sivusto, jota katselet — itse suunniteltu ja käsin koodattu, interaktiivisilla 3D-elementeillä ja liikesuunnittelulla.',
+    'projects.github': 'Katso GitHub &rarr;',
+    'exp0.role': 'Full-Stack-kehittäjä &amp; IT-päällikkö',
+    'exp0.company': 'NORDASH (startup) &middot; Kuopio, Suomi / Etänä',
+    'exp0.b1': 'Rakensin koko NORDASH-alustan alusta loppuun: Next.js 16 + React 19 -frontend, MongoDB-backend, CRM-hallintapaneeli, liidien hallinta ja työnhakujärjestelmä',
+    'exp0.b2': 'Hallinnoin kaikkia IT-toimintoja: julkaisuputki, hosting, suorituskyky, tietoturva ja integraatiot',
+    'exp0.b3': 'Vastaan toimiston verkkonäkyvyydestä, brändistä, sisällöstä ja asiakasviestinnästä',
+    'exp0.tag5': 'IT-hallinta',
     'skills.label': 'Taidot',
     'skills.title': 'Teknologiapino',
     'skills.sub': 'Työkalut ja teknologiat, joita käytän eri osa-alueilla.',
@@ -345,7 +388,6 @@ const translations = {
     'skills.prof.problem-solving': 'Ongelmanratkaisu & -analyysi',
     'skills.prof.it-support': 'IT-tuki & -verkot',
     'skills.prof.web-dev': 'Verkkokehitys (HTML/CSS)',
-    'skills.prof.react-java': 'React & Java-ohjelmointi',
     'skills.prof.git': 'Git & versiohallinta',
     'skills.prof.python-r': 'Python & R-ohjelmointi',
     'edu.degree1': 'Tietotekniikan kandidaatin tutkinto',
@@ -709,7 +751,7 @@ let twIdx = 0, twPos = 0, twDir = 1;
 const twSpeed = 55, twPause = 1500;
 const twEl = document.getElementById('typewriter');
 
-if (!REDUCED_MOTION && twEl) {
+if (twEl) {
   (function twTick() {
     const p = twPhrases[twIdx];
     twPos += twDir;
@@ -730,8 +772,6 @@ if (!REDUCED_MOTION && twEl) {
     twEl.textContent = p.slice(0, twPos);
     setTimeout(twTick, twSpeed);
   })();
-} else if (twEl) {
-  twEl.textContent = twPhrases[0];
 }
 
 /* —— VELOCITY SCROLL —— */
@@ -1211,3 +1251,22 @@ function masterTick() {
   requestAnimationFrame(masterTick);
 }
 requestAnimationFrame(masterTick);
+
+
+/* —— NORDASH LIVE PREVIEW SCALER —— */
+(function () {
+  const frame = document.getElementById('nordashFrame');
+  const wrap = document.querySelector('.mock-iframe-wrap');
+  if (!frame || !wrap) return;
+  function scaleNordash() {
+    const w = wrap.clientWidth;
+    if (!w) return;
+    const s = w / 1280;
+    frame.style.transform = 'scale(' + s + ')';
+    wrap.style.height = Math.round(820 * s) + 'px';
+  }
+  window.addEventListener('resize', scaleNordash, { passive: true });
+  window.addEventListener('load', scaleNordash);
+  setTimeout(scaleNordash, 60);
+  setTimeout(scaleNordash, 600);
+})();

@@ -1693,7 +1693,11 @@ html[data-theme="light"] #particle-canvas { opacity: .5; }
   .cv-banner-actions { width: 100%; }
   .cv-view-btn, .cv-download-btn { flex: 1; justify-content: center; }
   .cv-banner-name { white-space: normal; }
-  .btn-cv { width: 100%; justify-content: center; }
+  .hero-btns { flex-direction: column; }
+  .hero-btns .btn-primary,
+  .hero-btns .btn-outline,
+  .hero-btns .btn-cv,
+  .hero-btns .btn-nordash-hero { width: 100%; justify-content: center; text-align: center; }
   .cf-row { grid-template-columns: 1fr; }
   .skills-bars { grid-template-columns: 1fr; gap: .9rem; }
   .section-dots { display: none; }
@@ -1703,7 +1707,6 @@ html[data-theme="light"] #particle-canvas { opacity: .5; }
   .project-featured { padding: 1.4rem; }
   .project-card-body { padding: 1.2rem 1.3rem 1.4rem; }
   .projects-list { gap: 1.8rem; }
-  .btn-nordash-hero { width: 100%; justify-content: center; }
 }
 
 
@@ -1724,7 +1727,10 @@ html[data-theme="light"] #particle-canvas { opacity: .5; }
   .project-featured-top { flex-direction: column; align-items: flex-start; }
   .project-card-body { padding: 1rem 1.1rem 1.2rem; }
   .hero-nordash-card { padding: 1rem 1.1rem; }
-  .btn-nordash-hero { padding: .65rem 1.2rem; font-size: .88rem; }
+  .hero-btns .btn-primary,
+  .hero-btns .btn-outline,
+  .hero-btns .btn-cv,
+  .hero-btns .btn-nordash-hero { padding: .65rem 1.2rem; font-size: .88rem; }
 }
 
 /* —— LANDSCAPE PHONES (short viewports) —— */

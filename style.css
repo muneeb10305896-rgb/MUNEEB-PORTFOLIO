@@ -1042,7 +1042,7 @@ footer::before {
   transition: transform .25s, box-shadow .25s;
   background: linear-gradient(135deg, #4f46e5, #7c3aed, #06b6d4);
   background-size: 200% 200%;
-  animation: ctaGrad 4s ease infinite;
+  /* PERF: static — animating background-position repainted the button every frame */
   box-shadow: 0 4px 24px rgba(124,109,250,.35), 0 0 40px rgba(124,109,250,.15);
 }
 @keyframes ctaGrad {
@@ -1671,7 +1671,7 @@ html[data-theme="light"] #particle-canvas { opacity: .5; }
   .mobile-menu { top: 62px; }
 }
 
-@media (max-width: 700px) {
+@media (max-width: 768px) {
   .about-grid, .contact-grid { grid-template-columns: 1fr; }
   nav { padding: .9rem 1.2rem; }
   .section { padding: 3.5rem 1.2rem; }
@@ -1693,11 +1693,16 @@ html[data-theme="light"] #particle-canvas { opacity: .5; }
   .cv-banner-actions { width: 100%; }
   .cv-view-btn, .cv-download-btn { flex: 1; justify-content: center; }
   .cv-banner-name { white-space: normal; }
-  .hero-btns { flex-direction: column; align-items: flex-start; }
+  /* every CTA = identical full-width block, one per line, no wrap glitches */
+  .hero-btns { flex-direction: column; align-items: stretch; flex-wrap: nowrap; gap: .8rem; max-width: 340px; }
   .hero-btns .btn-primary,
   .hero-btns .btn-outline,
   .hero-btns .btn-cv,
-  .hero-btns .btn-nordash-hero { min-width: 200px; justify-content: center; }
+  .hero-btns .btn-nordash-hero {
+    display: flex; width: 100%; min-width: 0; box-sizing: border-box;
+    justify-content: center; align-items: center; text-align: center;
+    padding: .78rem 1rem; font-size: .95rem;
+  }
   .cf-row { grid-template-columns: 1fr; }
   .skills-bars { grid-template-columns: 1fr; gap: .9rem; }
   .section-dots { display: none; }
@@ -1727,10 +1732,11 @@ html[data-theme="light"] #particle-canvas { opacity: .5; }
   .project-featured-top { flex-direction: column; align-items: flex-start; }
   .project-card-body { padding: 1rem 1.1rem 1.2rem; }
   .hero-nordash-card { padding: 1rem 1.1rem; }
+  .hero-btns { max-width: none; }
   .hero-btns .btn-primary,
   .hero-btns .btn-outline,
   .hero-btns .btn-cv,
-  .hero-btns .btn-nordash-hero { padding: .65rem 1.2rem; font-size: .88rem; }
+  .hero-btns .btn-nordash-hero { padding: .7rem 1rem; font-size: .9rem; }
 }
 
 /* —— LANDSCAPE PHONES (short viewports) —— */

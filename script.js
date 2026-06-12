@@ -978,6 +978,7 @@ let tickLanyard = () => {};
   card.addEventListener('pointerdown', e => {
     dragging = true; last.pinned = true;
     card.style.touchAction = 'none'; /* block scroll only while dragging */
+    card.setPointerCapture(e.pointerId);
     const p = pointerXY(e); dragX = p.x; dragY = p.y;
     e.preventDefault();
   });

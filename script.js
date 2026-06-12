@@ -689,7 +689,7 @@ document.addEventListener('click', e => {
 const pCanvas  = document.getElementById('particle-canvas');
 const pCtx     = pCanvas ? pCanvas.getContext('2d') : null;
 const mobileMQ = window.matchMedia('(max-width: 700px)');
-let CONNECT_DIST = mobileMQ.matches ? 0 : 70; // skip O(n²) connection lines on mobile
+let CONNECT_DIST = mobileMQ.matches ? 0 : 50; // skip O(n²) connection lines on mobile
 
 function makeParticle() {
   return {
@@ -701,15 +701,15 @@ function makeParticle() {
     o: Math.random() * 0.5 + 0.1
   };
 }
-const particles = Array.from({ length: mobileMQ.matches ? 20 : 30 }, makeParticle);
+const particles = Array.from({ length: mobileMQ.matches ? 15 : 20 }, makeParticle);
 
 function resizeParticles() {
   if (!pCanvas) return;
   pCanvas.width = window.innerWidth; pCanvas.height = window.innerHeight;
   // adapt density + line cost when crossing the mobile breakpoint (rotation, window resize)
   const small = mobileMQ.matches;
-  CONNECT_DIST = small ? 0 : 70;
-  const target = small ? 20 : 30;
+  CONNECT_DIST = small ? 0 : 50;
+  const target = small ? 15 : 20;
   while (particles.length > target) particles.pop();
   while (particles.length < target) particles.push(makeParticle());
 }
@@ -911,7 +911,7 @@ let tickLanyard = () => {};
   card.style.zIndex        = '1';         // above canvas (default 0) within the layer
 
   /* ---- physics constants ---- */
-  const SEGMENTS = 14, SEG_LEN = 12, GRAVITY = 0.65, FRICTION = 0.94, STIFFNESS = 10;
+  const SEGMENTS = 10, SEG_LEN = 14, GRAVITY = 0.65, FRICTION = 0.94, STIFFNESS = 6;
   let anchorX = 0, anchorY = 0;
   const points = [];
   for (let i = 0; i < SEGMENTS; i++) points.push({ x: 0, y: 0, ox: 0, oy: 0, pinned: i === 0 });
@@ -1198,12 +1198,19 @@ function tickSpring() {
 
 /* —— PARALLAX FLOATING SHAPES ON SCROLL —— */
 const floatShapes = document.querySelectorAll('.floating-shape');
+let floatPending = false, floatY = 0;
 window.addEventListener('scroll', () => {
-  const y = window.scrollY;
-  floatShapes.forEach((s, i) => {
-    const depth = (i % 3 + 1) * 0.12;
-    s.style.transform = `translateY(${y * depth}px) rotate(${y * 0.04 * (i + 1)}deg)`;
-  });
+  floatY = window.scrollY;
+  if (!floatPending) {
+    floatPending = true;
+    requestAnimationFrame(() => {
+      floatPending = false;
+      floatShapes.forEach((s, i) => {
+        const depth = (i % 3 + 1) * 0.12;
+        s.style.transform = `translateY(${floatY * depth}px) rotate(${floatY * 0.04 * (i + 1)}deg)`;
+      });
+    });
+  }
 }, { passive: true });
 
 /* —— SKILL BARS —— */

@@ -741,7 +741,7 @@ function tickParticles() {
 
 /* —— TYPEWRITER (setTimeout-based — reliable across all browsers) —— */
 const twPhrases = [
-  'IT Student at UEF, Finland',
+  'IT Student at UEF 🇫🇮',
   'Full-Stack Developer & IT Manager at NORDASH',
   'Harvard Aspire 2024 Alumni',
   'ESN Savo Board Member',

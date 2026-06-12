@@ -648,7 +648,7 @@ window.addEventListener('resize', buildSectionOffsets, { passive: true });
 window.addEventListener('scroll', () => {
   const scrollTop = window.scrollY;
   const docHeight = Math.max(1, document.documentElement.scrollHeight - window.innerHeight);
-  scrollProgress.style.width = (scrollTop / docHeight * 100) + '%';
+  scrollProgress.style.transform = 'scaleX(' + Math.min(1, scrollTop / docHeight) + ')';
   nav.classList.toggle('scrolled', scrollTop > 60);
   backToTop.classList.toggle('show', scrollTop > 600);
 
@@ -689,7 +689,7 @@ document.addEventListener('click', e => {
 const pCanvas  = document.getElementById('particle-canvas');
 const pCtx     = pCanvas ? pCanvas.getContext('2d') : null;
 const mobileMQ = window.matchMedia('(max-width: 700px)');
-let CONNECT_DIST = mobileMQ.matches ? 0 : 90; // skip O(n²) connection lines on mobile
+let CONNECT_DIST = mobileMQ.matches ? 0 : 70; // skip O(n²) connection lines on mobile
 
 function makeParticle() {
   return {
@@ -701,15 +701,15 @@ function makeParticle() {
     o: Math.random() * 0.5 + 0.1
   };
 }
-const particles = Array.from({ length: mobileMQ.matches ? 30 : 50 }, makeParticle);
+const particles = Array.from({ length: mobileMQ.matches ? 20 : 30 }, makeParticle);
 
 function resizeParticles() {
   if (!pCanvas) return;
   pCanvas.width = window.innerWidth; pCanvas.height = window.innerHeight;
   // adapt density + line cost when crossing the mobile breakpoint (rotation, window resize)
   const small = mobileMQ.matches;
-  CONNECT_DIST = small ? 0 : 90;
-  const target = small ? 30 : 50;
+  CONNECT_DIST = small ? 0 : 70;
+  const target = small ? 20 : 30;
   while (particles.length > target) particles.pop();
   while (particles.length < target) particles.push(makeParticle());
 }
@@ -727,15 +727,19 @@ function tickParticles() {
   /* Skip O(n²) connection lines when idle for 2s — particles still drift */
   skipConnections = Date.now() - lastInteraction > 2000;
   pCtx.clearRect(0, 0, pCanvas.width, pCanvas.height);
-  for (const p of particles) {
+  /* Batch all particles into one Path2D — much fewer GPU draw calls */
+  const dotPath = new Path2D();
+  const sorted = particles;
+  for (let i = 0; i < sorted.length; i++) {
+    const p = sorted[i];
     p.x += p.vx; p.y += p.vy;
     if (p.x < 0) p.x = pCanvas.width;  else if (p.x > pCanvas.width)  p.x = 0;
     if (p.y < 0) p.y = pCanvas.height; else if (p.y > pCanvas.height) p.y = 0;
-    pCtx.beginPath();
-    pCtx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
-    pCtx.fillStyle = `rgba(${particleRGB},${p.o})`;
-    pCtx.fill();
+    dotPath.moveTo(p.x + p.r, p.y);
+    dotPath.arc(p.x, p.y, p.r, 0, Math.PI * 2);
   }
+  pCtx.fillStyle = `rgba(${particleRGB},0.35)`;
+  pCtx.fill(dotPath);
   if (CONNECT_DIST > 0 && !skipConnections) {
     for (let i = 0; i < particles.length; i++) {
       for (let j = i + 1; j < particles.length; j++) {

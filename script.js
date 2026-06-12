@@ -609,6 +609,7 @@ let cHalf = 6, rHalf = 18; // half-sizes for centring each element
 if (FINE_POINTER && cursor && ring) {
   document.addEventListener('mousemove', e => {
     mouseX = e.clientX; mouseY = e.clientY;
+    if (PERF_LITE) return; /* custom cursor hidden in lite mode */
     cursor.style.transform = `translate(${mouseX - cHalf}px,${mouseY - cHalf}px)`;
   }, { passive: true });
 
@@ -645,9 +646,20 @@ function buildSectionOffsets() {
 buildSectionOffsets();
 window.addEventListener('resize', buildSectionOffsets, { passive: true });
 
-window.addEventListener('scroll', () => {
+/* rAF-throttled: scroll can fire several times per frame — do the DOM
+   work at most once per frame, and cache docHeight (reading scrollHeight
+   inside the handler forced a layout every event) */
+let docHeight = 1, scrollRafPending = false;
+function measureDocHeight() {
+  docHeight = Math.max(1, document.documentElement.scrollHeight - window.innerHeight);
+}
+window.addEventListener('load', measureDocHeight);
+window.addEventListener('resize', measureDocHeight, { passive: true });
+setTimeout(measureDocHeight, 1500); /* after fonts/images settle */
+
+function onScrollFrame() {
+  scrollRafPending = false;
   const scrollTop = window.scrollY;
-  const docHeight = Math.max(1, document.documentElement.scrollHeight - window.innerHeight);
   scrollProgress.style.transform = 'scaleX(' + Math.min(1, scrollTop / docHeight) + ')';
   nav.classList.toggle('scrolled', scrollTop > 60);
   backToTop.classList.toggle('show', scrollTop > 600);
@@ -658,7 +670,14 @@ window.addEventListener('scroll', () => {
   }
   navLinks.forEach(link => link.classList.toggle('active', link.getAttribute('href') === '#' + current));
   sectionDots.forEach(dot => dot.classList.toggle('active', dot.dataset.section === current));
+}
+window.addEventListener('scroll', () => {
+  if (!scrollRafPending) {
+    scrollRafPending = true;
+    requestAnimationFrame(onScrollFrame);
+  }
 }, { passive: true });
+onScrollFrame(); /* set correct initial state */
 
 backToTop.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
 
@@ -693,23 +712,29 @@ let CONNECT_DIST = mobileMQ.matches ? 0 : 35; // skip O(n²) connection lines on
 
 function makeParticle() {
   return {
-    x: Math.random() * window.innerWidth,
-    y: Math.random() * window.innerHeight,
+    x: Math.random() * (pCanvas ? pCanvas.width  : window.innerWidth),
+    y: Math.random() * (pCanvas ? pCanvas.height : window.innerHeight),
     r: Math.random() * 0.8 + 0.2,
     vx: (Math.random() - 0.5) * 0.15,
     vy: (Math.random() - 0.5) * 0.15,
     o: Math.random() * 0.5 + 0.1
   };
 }
-const particles = Array.from({ length: mobileMQ.matches ? 6 : 10 }, makeParticle);
+const particles = Array.from({ length: mobileMQ.matches ? 5 : 8 }, makeParticle);
 
+/* PERF: render the particle layer at 2/3 resolution and let the GPU stretch
+   it — soft dots/lines look identical, the iGPU fills ~55% fewer pixels */
+const P_SCALE = 0.66;
 function resizeParticles() {
   if (!pCanvas) return;
-  pCanvas.width = window.innerWidth; pCanvas.height = window.innerHeight;
+  pCanvas.width  = Math.ceil(window.innerWidth  * P_SCALE);
+  pCanvas.height = Math.ceil(window.innerHeight * P_SCALE);
+  pCanvas.style.width  = '100%';
+  pCanvas.style.height = '100%';
   // adapt density + line cost when crossing the mobile breakpoint (rotation, window resize)
   const small = mobileMQ.matches;
-  CONNECT_DIST = small ? 0 : 35;
-  const target = small ? 6 : 10;
+  CONNECT_DIST = small ? 0 : 35 * P_SCALE;
+  const target = small ? 5 : 8;
   while (particles.length > target) particles.pop();
   while (particles.length < target) particles.push(makeParticle());
 }
@@ -718,8 +743,13 @@ window.addEventListener('resize', resizeParticles, { passive: true });
 
 /* Adaptive frame-skip: skip expensive O(n²) particle connections when idle */
 let lastInteraction = Date.now();
-window.addEventListener('scroll', () => { lastInteraction = Date.now(); }, { passive: true });
-window.addEventListener('pointermove', () => { lastInteraction = Date.now(); }, { passive: true });
+const bumpActivity = () => { lastInteraction = Date.now(); };
+window.addEventListener('scroll',      bumpActivity, { passive: true });
+window.addEventListener('pointermove', bumpActivity, { passive: true });
+window.addEventListener('pointerdown', bumpActivity, { passive: true });
+window.addEventListener('touchstart',  bumpActivity, { passive: true });
+window.addEventListener('keydown',     bumpActivity, { passive: true });
+window.addEventListener('wheel',       bumpActivity, { passive: true });
 
 let skipConnections = false;
 function tickParticles() {
@@ -907,8 +937,16 @@ let tickLanyard = () => {};
 
   layer.appendChild(card);
   card.style.position      = 'absolute';  // same positioning context as canvas
+  card.style.left          = '0px';       // pinned — moved via transform only
+  card.style.top           = '0px';
+  card.style.willChange    = 'transform';
   card.style.pointerEvents = 'auto';
   card.style.zIndex        = '1';         // above canvas (default 0) within the layer
+
+  /* place the card with a composited transform (never left/top = layout) */
+  function placeCard(rot = 0) {
+    card.style.transform = `translate3d(${last.x}px,${last.y}px,0) translate(-50%,0) rotate(${rot}rad)`;
+  }
 
   /* ---- physics constants ---- */
   const SEGMENTS = 6, SEG_LEN = 18, GRAVITY = 0.65, FRICTION = 0.94, STIFFNESS = 3;
@@ -929,8 +967,7 @@ let tickLanyard = () => {};
     }
   }
   resetToAnchor();
-  card.style.left = last.x + 'px';
-  card.style.top  = last.y + 'px';
+  placeCard();
   // subtle fade-in so the card doesn't flash in (it's no longer inside the animated stage)
   card.style.opacity = '0';
   requestAnimationFrame(() => {
@@ -963,8 +1000,7 @@ let tickLanyard = () => {};
     if (last.x < -300 || last.x > window.innerWidth + 300 ||
         last.y < -300 || last.y > window.innerHeight + 300) {
       resetToAnchor();
-      card.style.left = last.x + 'px';
-      card.style.top  = last.y + 'px';
+      placeCard();
     }
   }, { passive: true });
 
@@ -996,24 +1032,51 @@ let tickLanyard = () => {};
 
   card.addEventListener('dblclick', () => {
     resetToAnchor();
-    card.style.left = last.x + 'px';
-    card.style.top  = last.y + 'px';
+    placeCard();
+    lanyardSettled = false;
   });
 
   /* ---- physics tick ---- */
   let layerHidden = false;
-  tickLanyard = function() {
+  let lanyardSettled = false, prevAX = -1, prevAY = -1;
+
+  /* PERF: cache the stage's page position once instead of calling
+     getBoundingClientRect() (a forced layout read) every single frame */
+  let stagePageTop = 0, stagePageCX = 0, stageH = 0;
+  function measureStage() {
     const sr = stage.getBoundingClientRect();
+    stagePageTop = sr.top + window.scrollY;
+    stagePageCX  = sr.left + sr.width / 2;
+    stageH       = sr.height;
+    lanyardSettled = false;
+  }
+  measureStage();
+  window.addEventListener('load', measureStage);
+  window.addEventListener('resize', measureStage, { passive: true });
+  setTimeout(measureStage, 1200); /* re-measure after fonts settle */
+
+  /* PERF: only clear the small rectangle the rope actually occupies,
+     not the entire fullscreen canvas, and only repaint when moving */
+  let dirtyX = 0, dirtyY = 0, dirtyW = 0, dirtyH = 0;
+
+  tickLanyard = function() {
+    const stageTop    = stagePageTop - window.scrollY;
+    const stageBottom = stageTop + stageH;
 
     // skip all physics + rendering once the hero stage is well offscreen
-    if (sr.bottom < -250 || sr.top > window.innerHeight + 250) {
+    if (stageBottom < -250 || stageTop > window.innerHeight + 250) {
       if (!layerHidden) { layer.style.visibility = 'hidden'; layerHidden = true; }
       return;
     }
     if (layerHidden) { layer.style.visibility = 'visible'; layerHidden = false; }
 
-    anchorX = sr.left + sr.width / 2;
-    anchorY = sr.top;
+    anchorX = stagePageCX;
+    anchorY = stageTop;
+
+    /* rope at rest + anchor unchanged → nothing to simulate or repaint */
+    if (lanyardSettled && !dragging &&
+        Math.abs(anchorX - prevAX) < 0.5 && Math.abs(anchorY - prevAY) < 0.5) return;
+    prevAX = anchorX; prevAY = anchorY;
 
     // Verlet integration
     for (const p of points) {
@@ -1041,8 +1104,22 @@ let tickLanyard = () => {};
       if (dragging) { last.x = dragX; last.y = dragY; }
     }
 
-    // render rope
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    /* measure remaining motion — below threshold means visually static */
+    let energy = 0;
+    for (const p of points) energy += Math.abs(p.x - p.ox) + Math.abs(p.y - p.oy);
+    lanyardSettled = !dragging && energy < 0.6;
+
+    // render rope — clear only last frame's dirty region, then this frame's
+    let minX = anchorX, maxX = anchorX, minY = anchorY, maxY = anchorY;
+    for (const p of points) {
+      if (p.x < minX) minX = p.x; if (p.x > maxX) maxX = p.x;
+      if (p.y < minY) minY = p.y; if (p.y > maxY) maxY = p.y;
+    }
+    const M = 26; /* line width + anchor dot + AA margin */
+    if (dirtyW) ctx.clearRect(dirtyX, dirtyY, dirtyW, dirtyH);
+    dirtyX = minX - M; dirtyY = minY - M;
+    dirtyW = (maxX - minX) + M * 2; dirtyH = (maxY - minY) + M * 2;
+    ctx.clearRect(dirtyX, dirtyY, dirtyW, dirtyH);
     ctx.lineJoin = 'round'; ctx.lineCap = 'round';
 
     ctx.strokeStyle = ropeGrad; ctx.lineWidth = 5;
@@ -1060,19 +1137,17 @@ let tickLanyard = () => {};
     ctx.fillStyle = '#9b8df8';
     ctx.beginPath(); ctx.arc(anchorX, anchorY + 2, 5, 0, Math.PI * 2); ctx.fill();
 
-    // position card — viewport coords because the layer is position:fixed inset:0
+    // position card — transform ONLY (left/top would force layout every frame)
     const sl = points[SEGMENTS - 2];
     const angle = Math.atan2(last.y - sl.y, last.x - sl.x) - Math.PI / 2;
-    card.style.left      = last.x + 'px';
-    card.style.top       = last.y + 'px';
-    card.style.transform = `translate(-50%,0) rotate(${angle}rad)`;
+    card.style.transform = `translate3d(${last.x}px,${last.y}px,0) translate(-50%,0) rotate(${angle}rad)`;
     if (holo) holo.style.transform = `rotate(${angle * 30}deg)`;
   };
 
   // initial swing-in
   if (!REDUCED_MOTION) {
     setTimeout(() => {
-      if (Math.abs(last.x - anchorX) < 10) last.x += 80;
+      if (Math.abs(last.x - anchorX) < 10) { last.x += 80; lanyardSettled = false; }
     }, 1600);
   }
 })();
@@ -1130,8 +1205,12 @@ function stepSpring(pos, vel, target) {
   return [pos + vel, vel];
 }
 
+let springAllIdle = false;
 function tickSpring() {
   if (!FINE_POINTER) return; // no mouse → no magnetic effect, save the work
+  /* mouse hasn't moved & every card is at rest → skip everything */
+  if (springAllIdle && Date.now() - lastInteraction > 2500) return;
+  let anyActive = false;
   const vh = window.innerHeight;
   for (const c of springCards) {
     /* skip off-screen cards — no getBoundingClientRect call needed */
@@ -1177,23 +1256,44 @@ function tickSpring() {
         c.idle = true;
         c.el.style.transform = '';
         c.el.style.boxShadow = '';
+        c.sKey = '';
       }
       continue;
     }
     c.idle = false;
 
+    /* converged onto a steady hover pose → the transform we'd write is
+       identical to last frame's; skip both DOM writes entirely */
+    const converged =
+      Math.abs(c.mx - c.tmx) < .05 && Math.abs(c.my - c.tmy) < .05 &&
+      Math.abs(c.rx - c.trx) < .05 && Math.abs(c.ry - c.try_) < .05 &&
+      (Math.abs(c.vmx) + Math.abs(c.vmy) + Math.abs(c.vrx) + Math.abs(c.vry)) < .03;
+    if (converged) continue;
+    anyActive = true;
+
     c.el.style.transform =
       `perspective(820px) translate3d(${c.mx.toFixed(2)}px,${c.my.toFixed(2)}px,${c.gz.toFixed(2)}px) ` +
       `rotateX(${c.rx.toFixed(2)}deg) rotateY(${c.ry.toFixed(2)}deg) scale(${c.sc.toFixed(3)})`;
-    if (c.glow > 0.003) {
+
+    /* box-shadow is a PAINT (expensive) — never animate it in lite mode,
+       and elsewhere only rewrite it when the quantized value actually changed */
+    if (PERF_LITE) {
+      if (c.sKey !== 'off') { c.sKey = 'off'; c.el.style.boxShadow = ''; }
+    } else if (c.glow > 0.003) {
       const g = c.glow;
-      c.el.style.boxShadow =
-        `${(-c.ry * 1.6).toFixed(1)}px ${(c.rx * 1.6 + 14 * g).toFixed(1)}px ${(40 * g).toFixed(0)}px rgba(124,109,250,${(0.38 * g).toFixed(3)}),` +
-        `0 0 0 1px rgba(124,109,250,${(0.4 * g).toFixed(3)})`;
-    } else {
+      const sKey = ((g * 40) | 0) + ',' + ((c.rx * 3) | 0) + ',' + ((c.ry * 3) | 0);
+      if (sKey !== c.sKey) {
+        c.sKey = sKey;
+        c.el.style.boxShadow =
+          `${(-c.ry * 1.6).toFixed(1)}px ${(c.rx * 1.6 + 14 * g).toFixed(1)}px ${(40 * g).toFixed(0)}px rgba(124,109,250,${(0.38 * g).toFixed(3)}),` +
+          `0 0 0 1px rgba(124,109,250,${(0.4 * g).toFixed(3)})`;
+      }
+    } else if (c.sKey !== '') {
+      c.sKey = '';
       c.el.style.boxShadow = '';
     }
   }
+  springAllIdle = !anyActive;
 }
 
 /* —— PARALLAX FLOATING SHAPES ON SCROLL —— */
@@ -1205,6 +1305,7 @@ window.addEventListener('scroll', () => {
     floatPending = true;
     requestAnimationFrame(() => {
       floatPending = false;
+      if (PERF_LITE) return; /* shapes are static in lite mode */
       floatShapes.forEach((s, i) => {
         const depth = (i % 3 + 1) * 0.12;
         s.style.transform = `translateY(${floatY * depth}px) rotate(${floatY * 0.04 * (i + 1)}deg)`;
@@ -1265,14 +1366,51 @@ if (contactForm) {
   });
 }
 
+/* —— MAP: auto-load shortly before it scrolls into view ——
+   Costs nothing at page load; by the time the user reaches the
+   contact section the map is already there. Click still works
+   as a fallback if the observer never fires. */
+(function initMap() {
+  const wrap = document.getElementById('mapWrap');
+  if (!wrap) return;
+  const iframe = wrap.querySelector('iframe');
+  const ph     = document.getElementById('mapPlaceholder');
+  const MAP_SRC = 'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d234215.5!2d27.6785574!3d62.8965859!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x4684b08aaffec4f3%3A0xe7b6f77d9edff6c0!2sKuopio%2C%20Finland!5e0!3m2!1sen!2sfi!4v1';
+  let started = false;
+  function loadMap() {
+    if (started || !iframe) return;
+    started = true;
+    iframe.addEventListener('load', () => {
+      iframe.style.display = 'block';
+      if (ph) ph.style.display = 'none';
+    }, { once: true });
+    iframe.src = MAP_SRC;
+  }
+  if (ph) {
+    ph.addEventListener('click', loadMap);
+    ph.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') loadMap(); });
+  }
+  if ('IntersectionObserver' in window) {
+    const mapObs = new IntersectionObserver(entries => {
+      entries.forEach(en => { if (en.isIntersecting) { loadMap(); mapObs.disconnect(); } });
+    }, { rootMargin: '1200px 0px' }); /* start fetching ~1 screen+ before arrival */
+    mapObs.observe(wrap);
+  } else {
+    window.addEventListener('load', () => setTimeout(loadMap, 2500), { once: true });
+  }
+})();
+
 /* ============================================
    MASTER ANIMATION LOOP — single rAF instead
    of 5 separate loops fighting each other
    ============================================ */
 function tickCursorRing() {
   if (!ring) return;
-  ringX += (mouseX - ringX) * 0.15;
-  ringY += (mouseY - ringY) * 0.15;
+  const dx = mouseX - ringX, dy = mouseY - ringY;
+  /* converged → no DOM write needed this frame */
+  if (dx * dx + dy * dy < 0.09) return;
+  ringX += dx * 0.15;
+  ringY += dy * 0.15;
   ring.style.transform = `translate(${ringX - rHalf}px,${ringY - rHalf}px)`;
 }
 
@@ -1282,16 +1420,82 @@ document.addEventListener('visibilitychange', () => {
   if (!rafPaused) requestAnimationFrame(masterTick);
 });
 
+/* ============================================
+   ADAPTIVE PERF-LITE — measure real frame times
+   for ~1.5s after load; if this machine can't
+   hold a decent framerate, strip decorative
+   animations automatically (CSS .perf-lite)
+   ============================================ */
+let PERF_LITE = false;
+/* lite mode persists: if this machine struggled before, start light immediately */
+try {
+  if (localStorage.getItem('perfLite') === '1') {
+    PERF_LITE = true;
+    document.documentElement.classList.add('perf-lite');
+  }
+} catch (e) {}
+(function probePerformance() {
+  if (REDUCED_MOTION || PERF_LITE) return;
+  let frames = 0, start = 0;
+  function probe(ts) {
+    if (!start) start = ts;
+    frames++;
+    if (ts - start < 1500) { requestAnimationFrame(probe); return; }
+    const avg = (ts - start) / frames;
+    /* > ~24ms/frame means the machine is dropping well below 60fps under load */
+    if (avg > 24 || (navigator.deviceMemory && navigator.deviceMemory <= 4)) {
+      enableLite();
+    }
+  }
+  if (document.readyState === 'complete') requestAnimationFrame(probe);
+  else window.addEventListener('load', () => requestAnimationFrame(probe), { once: true });
+})();
+
+function enableLite() {
+  if (PERF_LITE) return;
+  PERF_LITE = true;
+  document.documentElement.classList.add('perf-lite');
+  try { localStorage.setItem('perfLite', '1'); } catch (e) {}
+}
+
 let frameCount = 0;
+/* rolling frame-time watchdog — if frames get slow at ANY point, go lite */
+let ftLast = 0, ftAcc = 0, ftN = 0;
+
 function masterTick() {
   if (rafPaused) return;
   frameCount++;
-  if (FINE_POINTER) tickCursorRing();
-  if (!REDUCED_MOTION) {
-    if (frameCount % 2 === 0) tickParticles();
+
+  /* PAGE IDLE → drop the whole loop to a ~5fps heartbeat.
+     CPU/GPU go to near-zero; first scroll/mouse-move snaps it back to 60. */
+  if (Date.now() - lastInteraction > 3500) {
+    ftLast = 0;
+    setTimeout(() => { if (!rafPaused) requestAnimationFrame(masterTick); }, 200);
+    return;
+  }
+
+  /* watchdog: 90-frame rolling average above ~24ms → machine is struggling */
+  if (!PERF_LITE) {
+    const t = performance.now();
+    if (ftLast) {
+      const d = t - ftLast;
+      if (d < 200) {
+        ftAcc += d; ftN++;
+        if (ftN >= 90) {
+          if (ftAcc / ftN > 24) enableLite();
+          ftAcc = 0; ftN = 0;
+        }
+      }
+    }
+    ftLast = t;
+  }
+
+  if (FINE_POINTER && !PERF_LITE) tickCursorRing();
+  if (!REDUCED_MOTION && !PERF_LITE) {
+    if (frameCount % 3 === 0) tickParticles(); /* drift needs only ~20fps */
   }
   tickVelocity();
-  if (frameCount & 1) tickLanyard();
+  tickLanyard();   /* EVERY frame — half-rate made dragging feel choppy */
   tickSpring();
   requestAnimationFrame(masterTick);
 }

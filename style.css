@@ -65,9 +65,8 @@ body::before {
     radial-gradient(35% 35% at 80% 30%, rgba(79,195,247,.16), transparent 60%),
     radial-gradient(45% 45% at 60% 80%, rgba(255,107,157,.14), transparent 60%),
     radial-gradient(30% 30% at 15% 75%, rgba(124,109,250,.14), transparent 60%);
-  filter: blur(12px); /* reduced from 25px — heavy GPU cost on low-end */
-  will-change: transform;
-  animation: auroraDrift 60s ease-in-out infinite alternate;
+  /* PERF: fully static — painted once, then free. The old 60s drift kept a
+     fullscreen composited layer alive on the GPU for zero visible benefit. */
 }
 @keyframes auroraDrift {
   0%   { transform: translate3d(0,0,0) scale(1); }
@@ -265,10 +264,10 @@ body::after {
   padding: 6rem 2.5rem 4rem; position: relative; z-index: 1; overflow: hidden;
 }
 .hero-bg { position: absolute; inset: 0; pointer-events: none; }
-.blob { position: absolute; border-radius: 50%; opacity: .12; will-change: transform; }
-.blob1 { width: 700px; height: 700px; background: radial-gradient(circle,#7c6dfa,transparent); top: -200px; right: -200px; animation: blobFloat1 8s ease-in-out infinite; }
-.blob2 { width: 600px; height: 600px; background: radial-gradient(circle,#4fc3f7,transparent); bottom: -150px; left: -150px; animation: blobFloat2 10s ease-in-out infinite; }
-.blob3 { width: 400px; height: 400px; background: radial-gradient(circle,#ff6b9d,transparent); top: 40%; left: 40%; animation: blobFloat3 12s ease-in-out infinite; }
+.blob { position: absolute; border-radius: 50%; opacity: .12; /* static — was 3 large GPU layers compositing every frame */ }
+.blob1 { width: 700px; height: 700px; background: radial-gradient(circle,#7c6dfa,transparent); top: -200px; right: -200px; }
+.blob2 { width: 600px; height: 600px; background: radial-gradient(circle,#4fc3f7,transparent); bottom: -150px; left: -150px; }
+.blob3 { width: 400px; height: 400px; background: radial-gradient(circle,#ff6b9d,transparent); top: 40%; left: 40%; }
 @keyframes blobFloat1 { 0%,100% { transform: translate(0,0) scale(1); } 50% { transform: translate(-30px,30px) scale(1.05); } }
 @keyframes blobFloat2 { 0%,100% { transform: translate(0,0) scale(1); } 50% { transform: translate(40px,-20px) scale(1.08); } }
 @keyframes blobFloat3 { 0%,100% { transform: translate(0,0) scale(1); } 50% { transform: translate(-20px,40px) scale(0.95); } }
@@ -297,7 +296,7 @@ body::after {
 }
 .tag-dot { width: 7px; height: 7px; border-radius: 50%; background: var(--accent); animation: pulse 2s infinite; }
 @keyframes tagPop { from { opacity:0; transform:translateY(10px) scale(.95); } to { opacity:1; transform:none; } }
-@keyframes pulse { 0%,100% { opacity:1; box-shadow:0 0 0 0 rgba(124,109,250,.4); } 50% { opacity:.6; box-shadow:0 0 0 6px rgba(124,109,250,0); } }
+@keyframes pulse { 0%,100% { opacity:1; } 50% { opacity:.45; } }
 
 h1 {
   font-family: 'Syne', sans-serif;
@@ -314,7 +313,7 @@ h1 {
   background: linear-gradient(135deg, var(--accent) 0%, var(--accent2) 50%, var(--accent3) 100%);
   -webkit-background-clip: text; -webkit-text-fill-color: transparent;
   background-clip: text; background-size: 200% 200%;
-  animation: gradShift 4s ease infinite;
+  /* PERF: static gradient — animating background-position repaints the text every frame */
 }
 @keyframes gradShift { 0%,100% { background-position:0% 50%; } 50% { background-position:100% 50%; } }
 
@@ -511,7 +510,13 @@ h1 {
 .track2 { margin-top: .5rem; color: rgba(79,195,247,.18); }
 
 /* —— SECTIONS —— */
-.section { padding: 5.5rem 2.5rem; max-width: 1100px; margin: 0 auto; position: relative; z-index: 1; overflow: hidden; }
+.section {
+  padding: 5.5rem 2.5rem; max-width: 1100px; margin: 0 auto; position: relative; z-index: 1; overflow: hidden;
+  /* PERF: browser completely skips layout/paint of offscreen sections —
+     this also pauses every infinite gradient/conic animation inside them */
+  content-visibility: auto;
+  contain-intrinsic-size: auto 900px;
+}
 /* below-fold sections: content-visibility skips off-screen rendering for faster initial paint */
 #experience, #projects, #skills, #education, #contact { content-visibility: auto; contain-intrinsic-size: 4000px; }
 #contact { padding-bottom: 2.5rem; }
@@ -718,7 +723,10 @@ h1 {
 }
 
 /* —— SKILLS —— */
-.skills-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(210px,1fr)); gap: 1.2rem; }
+/* 8 cards → exactly 4 columns × 2 rows on desktop */
+.skills-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1.2rem; }
+@media (max-width: 1023px) { .skills-grid { grid-template-columns: repeat(2, 1fr); } }
+@media (max-width: 560px)  { .skills-grid { grid-template-columns: 1fr; } }
 .skill-card {
   background: var(--card); border: 1px solid var(--border);
   border-radius: var(--radius); padding: 1.4rem;
@@ -1049,7 +1057,7 @@ footer::before {
   z-index: -1;
   border-radius: 12px;
   background: conic-gradient(from var(--angle, 0deg), #7c6dfa, #4fc3f7, #ff6b9d, #7c6dfa);
-  animation: ctaBorderSpin 3s linear infinite;
+  /* PERF: animating a conic gradient repaints every frame — spin on hover only */
   -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
   mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
   -webkit-mask-composite: xor;
@@ -1059,6 +1067,7 @@ footer::before {
 @keyframes ctaBorderSpin {
   to { --angle: 360deg; }
 }
+.btn-nordash-hero:hover::before { animation: ctaBorderSpin 3s linear infinite; }
 @property --angle {
   syntax: '<angle>';
   initial-value: 0deg;
@@ -1072,12 +1081,12 @@ footer::before {
   width: 40%;
   height: 200%;
   background: linear-gradient(90deg, transparent, rgba(255,255,255,.15), transparent);
-  transform: rotate(25deg);
+  transform: rotate(25deg) translateX(0);
   animation: shimmerSweep 3s ease-in-out infinite;
 }
 @keyframes shimmerSweep {
-  0%   { left: -60%; }
-  100% { left: 150%; }
+  0%   { transform: rotate(25deg) translateX(0); }
+  100% { transform: rotate(25deg) translateX(540%); }
 }
 .btn-nordash-hero:hover {
   transform: translateY(-3px);
@@ -1128,8 +1137,9 @@ footer::before {
   mask-composite: exclude;
   pointer-events: none;
   transition: opacity .3s;
-  animation: cardAngleSpin 5s linear infinite;
+  /* PERF: spin on hover only — continuous conic repaint hurt low-end GPUs */
 }
+.hero-nordash-card:hover .hero-nordash-border { animation: cardAngleSpin 5s linear infinite; }
 @keyframes cardAngleSpin {
   to { --card-angle: 360deg; }
 }
@@ -1813,3 +1823,37 @@ html[data-theme="light"] #particle-canvas { opacity: .5; }
 .nordash-preview {
   display: block; width: 100%; height: auto; border-radius: 0 0 8px 8px;
 }
+
+/* ============================================================
+   PERF-LITE MODE — added automatically by script.js when the
+   first seconds of runtime show slow frames (low-end laptops).
+   Kills every purely-decorative continuous animation while
+   keeping the design, colours and layout 100% identical.
+   ============================================================ */
+.perf-lite body::before { animation: none; }
+.perf-lite .blob,
+.perf-lite .floating-shape { animation: none; }
+.perf-lite .tag-dot { animation: none; }
+.perf-lite .grad { animation: none; background-position: 0% 50%; }
+.perf-lite .btn-nordash-hero::before { animation: none; }   /* conic border spin */
+.perf-lite .btn-nordash-hero::after  { animation: none; opacity: 0; } /* shimmer */
+.perf-lite .hero-nordash-border { animation: none; }        /* card conic spin */
+.perf-lite #backToTop.show::after { animation: none; opacity: .5; }
+.perf-lite #particle-canvas { display: none; }
+.perf-lite .scroll-indicator .scroll-wheel,
+.perf-lite [class*="scroll-hint"] { animation: none; }
+/* hover lift stays, but drop the expensive large glow shadows in lite mode */
+.perf-lite .skill-card:hover,
+.perf-lite .exp-card:hover,
+.perf-lite .edu-card:hover,
+.perf-lite .cert-card:hover { box-shadow: 0 6px 18px rgba(0,0,0,.3); }
+
+/* perf-lite round 2: give back the instant native OS cursor — a JS-driven
+   custom cursor always trails by a frame and feels "laggy" on weak machines */
+.perf-lite body, .perf-lite * { cursor: auto !important; }
+.perf-lite a, .perf-lite button, .perf-lite [role="button"],
+.perf-lite .badge, .perf-lite .skill-pill, .perf-lite .contact-link,
+.perf-lite .id-card { cursor: pointer !important; }
+.perf-lite #cursor, .perf-lite #cursor-ring { display: none !important; }
+/* lite: cheaper grids + no hero grid mask repaint cost */
+.perf-lite body::after { opacity: .3; }

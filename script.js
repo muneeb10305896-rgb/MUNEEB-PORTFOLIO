@@ -559,10 +559,8 @@ if (langToggleBtn) {
 }
 // apply saved language on load, default English
 (function initLang() {
-  // check URL query param first (?lang=fi) — enables hreflang links
-  const urlLang = new URLSearchParams(window.location.search).get('lang');
-  const saved = urlLang || (() => { try { return localStorage.getItem('lang'); } catch (e) { return null; } })() || 'en';
-  if (saved && ['en','fi'].includes(saved)) applyLanguage(saved);
+  const saved = (() => { try { return localStorage.getItem('lang'); } catch (e) { return null; } })() || 'en';
+  applyLanguage(saved);
 })();
 
 /* —— THEME TOGGLE —— */
@@ -1298,6 +1296,24 @@ function tickSpring() {
   springAllIdle = !anyActive;
 }
 
+/* —— PARALLAX FLOATING SHAPES ON SCROLL —— */
+const floatShapes = document.querySelectorAll('.floating-shape');
+let floatPending = false, floatY = 0;
+window.addEventListener('scroll', () => {
+  floatY = window.scrollY;
+  if (!floatPending) {
+    floatPending = true;
+    requestAnimationFrame(() => {
+      floatPending = false;
+      if (PERF_LITE) return; /* shapes are static in lite mode */
+      floatShapes.forEach((s, i) => {
+        const depth = (i % 3 + 1) * 0.12;
+        s.style.transform = `translateY(${floatY * depth}px) rotate(${floatY * 0.04 * (i + 1)}deg)`;
+      });
+    });
+  }
+}, { passive: true });
+
 /* —— SKILL BARS —— */
 const sbarObserver = new IntersectionObserver(entries => {
   entries.forEach(e => {
@@ -1489,3 +1505,22 @@ function masterTick() {
   requestAnimationFrame(masterTick);
 }
 requestAnimationFrame(masterTick);
+
+
+/* —— NORDASH LIVE PREVIEW SCALER —— */
+(function () {
+  const frame = document.getElementById('nordashFrame');
+  const wrap = document.querySelector('.mock-iframe-wrap');
+  if (!frame || !wrap) return;
+  function scaleNordash() {
+    const w = wrap.clientWidth;
+    if (!w) return;
+    const s = w / 1280;
+    frame.style.transform = 'scale(' + s + ')';
+    wrap.style.height = Math.round(820 * s) + 'px';
+  }
+  window.addEventListener('resize', scaleNordash, { passive: true });
+  window.addEventListener('load', scaleNordash);
+  setTimeout(scaleNordash, 60);
+  setTimeout(scaleNordash, 600);
+})();

@@ -658,6 +658,10 @@ function measureDocHeight() {
 window.addEventListener('load', measureDocHeight);
 window.addEventListener('resize', measureDocHeight, { passive: true });
 setTimeout(measureDocHeight, 1500); /* after fonts/images settle */
+/* ResizeObserver catches dynamic content (map iframe, images) expanding the page */
+if ('ResizeObserver' in window) {
+  new ResizeObserver(measureDocHeight).observe(document.documentElement);
+}
 
 function onScrollFrame() {
   scrollRafPending = false;
@@ -1378,7 +1382,8 @@ if (contactForm) {
   const iframe = wrap.querySelector('iframe');
   const ph     = document.getElementById('mapPlaceholder');
   const phText = document.getElementById('mapPlaceholderText');
-  const MAP_SRC = 'https://www.openstreetmap.org/export/embed.html?bbox=27.0%2C62.6%2C28.3%2C63.2&layer=mapnik&marker=62.8965859%2C27.6785574';
+  const MAP_SRC = 'https://maps.google.com/maps?q=Kuopio,Finland&z=13&output=embed';
+  const MAP_LINK = 'https://www.google.com/maps/place/Kuopio,+Finland';
   let started = false;
   function loadMap() {
     if (started || !iframe) return;
@@ -1391,7 +1396,15 @@ if (contactForm) {
     if (ph) ph.style.display = 'none';
     iframe.addEventListener('load', () => {
       if (phText) phText.textContent = '';
+      /* Re-measure page height now that iframe has rendered — keeps
+         the scroll-progress bar accurate on desktop */
+      measureDocHeight();
     }, { once: true });
+    /* Clicking the map opens Kuopio in Google Maps */
+    iframe.style.cursor = 'pointer';
+    iframe.addEventListener('click', () => {
+      window.open(MAP_LINK, '_blank', 'noopener,noreferrer');
+    });
   }
   if (ph) {
     ph.addEventListener('click', loadMap);

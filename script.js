@@ -1,12 +1,12 @@
 /* ============================================
-   MUNEEB AHMED BUTT — PORTFOLIO JAVASCRIPT
+   MUNEEB AHMED BUTT &mdash; PORTFOLIO JAVASCRIPT
    ============================================ */
 
-/* —— CAPABILITY FLAGS —— */
+/* &mdash;&mdash; CAPABILITY FLAGS &mdash;&mdash; */
 const FINE_POINTER   = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
 const REDUCED_MOTION = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-/* —— THEME (initial value is set by the inline head script to avoid FOUC) —— */
+/* &mdash;&mdash; THEME (initial value is set by the inline head script to avoid FOUC) &mdash;&mdash; */
 const themeMetaTag = document.querySelector('meta[name="theme-color"]');
 let particleRGB = '124,109,250';
 
@@ -17,7 +17,7 @@ function syncThemeExtras() {
 }
 syncThemeExtras();
 
-/* —— TRANSLATIONS (EN / FI) —— */
+/* &mdash;&mdash; TRANSLATIONS (EN / FI) &mdash;&mdash; */
 const translations = {
   en: {
     'nav.about': 'About',
@@ -36,12 +36,12 @@ const translations = {
     'hero.roles': 'Roles held',
     'hero.studying': 'Currently studying',
     'hero.erasmus': 'Erasmus Network',
-    'hero.tag-nordash': 'Building NORDASH — Live',
+    'hero.tag-nordash': 'Building NORDASH &mdash; Live',
     'hero.nordash-cta': 'Visit NORDASH',
     'hero.nordash-label': 'Full-Stack Developer & IT Manager',
     'about.label': 'About Me',
     'about.title': 'My Introduction',
-    'about.sub': 'From Lahore to Kuopio — my journey in tech spans two continents and keeps growing.',
+    'about.sub': 'From Lahore to Kuopio &mdash; my journey in tech spans two continents and keeps growing.',
     'exp.label': 'Experience',
     'exp.title': 'My Career So Far',
     'exp.sub': 'Building digital products, contributing to open culture, and learning every day.',
@@ -49,20 +49,20 @@ const translations = {
     'projects.title': "What I'm Building",
     'projects.sub': 'A startup platform and hands-on projects &mdash; designed, built, deployed and managed by me.',
     'projects.badge': 'STARTUP &middot; LIVE',
-    'projects.role': 'Full-Stack Developer &amp; IT Manager &middot; 2025 — Present',
-    'projects.nordash.title': 'NORDASH — Digital Agency',
-    'projects.nordash.desc': 'NORDASH is a startup digital agency offering modern web development and digital services with a Nordic-meets-South-Asian design identity. I built the entire platform end-to-end and manage it daily as Full-Stack Developer &amp; IT Manager — architecture, code, deployment, content and client communication.',
+    'projects.role': 'Full-Stack Developer &amp; IT Manager &middot; 2025 &mdash; Present',
+    'projects.nordash.title': 'NORDASH &mdash; Digital Agency',
+    'projects.nordash.desc': 'NORDASH is a startup digital agency offering modern web development and digital services with a Nordic-meets-South-Asian design identity. I built the entire platform end-to-end and manage it daily as Full-Stack Developer &amp; IT Manager &mdash; architecture, code, deployment, content and client communication.',
     'projects.nordash.b1': 'CRM dashboard for client &amp; lead management',
     'projects.nordash.b2': 'Job application system',
     'projects.nordash.b3': 'Portfolio gallery',
     'projects.nordash.b4': 'Authentication &amp; email integration (Resend)',
     'projects.nordash.b5': 'Auto-deploy pipeline on Vercel',
     'projects.visit': 'Visit NORDASH &rarr;',
-    'projects.bubba.title': 'BubbaCoin (BUBBA) — ERC-20 Blockchain Token',
-    'projects.bubba.desc': 'Custom ERC-20 token designed and deployed from scratch on the Ethereum Sepolia Testnet. 1,000,000 BUBBA minted at deployment — publicly verifiable on Etherscan. Course project for IBC2026 at UEF.',
+    'projects.bubba.title': 'BubbaCoin (BUBBA) &mdash; ERC-20 Blockchain Token',
+    'projects.bubba.desc': 'Custom ERC-20 token designed and deployed from scratch on the Ethereum Sepolia Testnet. 1,000,000 BUBBA minted at deployment &mdash; publicly verifiable on Etherscan. Course project for IBC2026 at UEF.',
     'projects.etherscan': 'View on Etherscan &rarr;',
     'projects.site.title': 'This Portfolio Website',
-    'projects.site.desc': 'The site you&rsquo;re looking at — designed and hand-coded by me with interactive 3D elements and motion design.',
+    'projects.site.desc': 'The site you&rsquo;re looking at &mdash; designed and hand-coded by me with interactive 3D elements and motion design.',
     'projects.github': 'View GitHub &rarr;',
     'exp0.role': 'Full-Stack Developer &amp; IT Manager',
     'exp0.company': 'NORDASH (startup) &middot; Kuopio, Finland / Remote',
@@ -93,8 +93,8 @@ const translations = {
     'form.send': 'Send Message',
     'form.ph-name': 'Your full name',
     'form.ph-email': 'your@email.com',
-    'form.ph-subject': 'Job opportunity, collaboration, hello…',
-    'form.ph-message': 'Tell me more about the opportunity or project…',
+    'form.ph-subject': 'Job opportunity, collaboration, hello&hellip;',
+    'form.ph-message': 'Tell me more about the opportunity or project&hellip;',
     'scroll': 'Scroll',
     'lanyard.hint': 'Drag me & let go',
     'cert.verify': 'Verify credential',
@@ -103,12 +103,12 @@ const translations = {
     'cv.download': 'Download',
     'footer.text': 'Designed & built by Muneeb Ahmed Butt',
     'hero.skip': 'Skip to content',
-    'hero.id-org': 'Portfolio · UEF Kuopio',
+    'hero.id-org': 'Portfolio &middot; UEF Kuopio',
     'hero.id-title': 'IT Student & Developer',
-    'hero.id-status': '● Available',
+    'hero.id-status': '&#9679; Available',
     'about.p1': 'I\'m <strong>Muneeb Ahmed Butt</strong>, an IT student at the <strong>University of Eastern Finland</strong> (Kuopio), currently also working as an <strong>IT Developer at DEVSiNC</strong> remotely. My journey spans web development, network support, logistics, and community work across Pakistan and Finland.',
     'about.nordash': 'Since 2025 I build and manage <strong>NORDASH</strong>, a startup digital agency platform, working as its Full-Stack Developer &amp; IT Manager.',
-    'about.p2': 'I completed the <strong>2024 Aspire Leaders Program at Harvard Business School</strong>, a global leadership program focused on critical thinking, communication, and social impact — 30 hours of coursework with an international community.',
+    'about.p2': 'I completed the <strong>2024 Aspire Leaders Program at Harvard Business School</strong>, a global leadership program focused on critical thinking, communication, and social impact &mdash; 30 hours of coursework with an international community.',
     'about.p3': 'I\'m also an active member of the <strong>Erasmus Student Network (ESN Savo)</strong>, supporting international student communities in Finland.',
     'about.badge.it-dev': 'IT Developer',
     'about.badge.web': 'Web Projects',
@@ -118,25 +118,25 @@ const translations = {
     'about.badge.harvard': 'Harvard Aspire Alumni',
     'about.badge.license': 'Category B License',
     'about.info.studying': 'Currently Studying',
-    'about.info.studying-desc': 'B.Sc. IT — University of Eastern Finland, Kuopio',
+    'about.info.studying-desc': 'B.Sc. IT &mdash; University of Eastern Finland, Kuopio',
     'about.info.working': 'Currently Working',
-    'about.info.working-desc': 'IT Developer at DEVSiNC (Remote) — July 2025–April 2026',
+    'about.info.working-desc': 'IT Developer at DEVSiNC (Remote) &mdash; July 2025&ndash;April 2026',
     'about.info.location': 'Location',
     'about.info.location-desc': 'Kuopio, Finland',
     'about.info.languages': 'Languages',
-    'about.info.languages-desc': 'English · Finnish (learning) · Urdu',
+    'about.info.languages-desc': 'English &middot; Finnish (learning) &middot; Urdu',
     'about.info.driving': 'Driver\'s License',
     'about.info.driving-desc': 'Category B (passenger car)',
     'exp1.role': 'IT Developer',
-    'exp1.company': 'DEVSiNC · Remote, Lahore',
+    'exp1.company': 'DEVSiNC &middot; Remote, Lahore',
     'exp2.role': 'Network System Specialist (Intern)',
-    'exp2.company': 'Hameed Latif Hospital · Lahore, Pakistan',
+    'exp2.company': 'Hameed Latif Hospital &middot; Lahore, Pakistan',
     'exp3.role': 'Executive Committee Member',
-    'exp3.company': 'Chanan Development Association (CDA) · Lahore, Pakistan',
+    'exp3.company': 'Chanan Development Association (CDA) &middot; Lahore, Pakistan',
     'exp4.role': 'Truck Dispatcher',
-    'exp4.company': 'Pioneer Enterprises · Remote, United States',
+    'exp4.company': 'Pioneer Enterprises &middot; Remote, United States',
     'exp5.role': 'Data Entry Specialist',
-    'exp5.company': 'Onestop Grocery Store · Lahore, Pakistan',
+    'exp5.company': 'Onestop Grocery Store &middot; Lahore, Pakistan',
     'skills.prof.ms-office': 'Microsoft Office Suite',
     'skills.prof.data-entry': 'Data Entry & Management',
     'skills.prof.problem-solving': 'Problem Solving & Analysis',
@@ -146,24 +146,24 @@ const translations = {
     'skills.prof.python-r': 'Python & R Programming',
     'edu.degree1': 'Bachelor\'s Degree in Information Technology',
     'edu.school1': 'University of Eastern Finland (UEF)',
-    'edu.meta1': 'September 2025 — Present · Kuopio, Finland',
+    'edu.meta1': 'September 2025 &mdash; Present &middot; Kuopio, Finland',
     'edu.degree2': 'Bachelor of Technology in Computer Science',
     'edu.school2': 'Bahria University',
-    'edu.meta2': '2023 — 2025 · Lahore, Pakistan',
-    'edu.degree3': 'Intermediate — ICS (Computer Science)',
+    'edu.meta2': '2023 &mdash; 2025 &middot; Lahore, Pakistan',
+    'edu.degree3': 'Intermediate &mdash; ICS (Computer Science)',
     'edu.school3': 'KIPS Education System',
-    'edu.meta3': '2021 — 2023 · Lahore, Pakistan',
+    'edu.meta3': '2021 &mdash; 2023 &middot; Lahore, Pakistan',
     'contact.instagram': 'Instagram',
     'contact.phone': 'Phone',
     'cv.meta.pdf': 'PDF',
     'cv.meta.size': '100 KB',
     'cv.meta.updated': 'Updated June 2026',
-    'footer.copyright': '© 2026 Muneeb Ahmed Butt. All rights reserved.',
-    'page.title': 'Muneeb Ahmed Butt — Portfolio',
+    'footer.copyright': '&copy; 2026 Muneeb Ahmed Butt. All rights reserved.',
+    'page.title': 'Muneeb Ahmed Butt &mdash; Portfolio',
     'hero.sr-text': 'IT Student at UEF Finland, IT Developer at DEVSiNC, Harvard Aspire 2024 Alumni, ESN Savo member, web developer and problem solver.',
-    'form.sending': 'Sending…',
-    'form.success': '✓ Message sent! I\'ll get back to you as soon as possible.',
-    'form.error': '✗ Something went wrong. Please email me directly at muneeb10305896@gmail.com',
+    'form.sending': 'Sending&hellip;',
+    'form.success': '&#10003; Message sent! I\'ll get back to you as soon as possible.',
+    'form.error': '&#10007; Something went wrong. Please email me directly at muneeb10305896@gmail.com',
     'footer.text-full': 'Designed &amp; built by <span>Muneeb Ahmed Butt</span> &middot; University of Eastern Finland &middot; Kuopio <svg viewBox="0 0 18 11" width="18" height="11" xmlns="http://www.w3.org/2000/svg" style="vertical-align:middle"><rect width="18" height="11" fill="#fff"/><rect x="5" y="0" width="3" height="11" fill="#003580"/><rect x="0" y="4" width="18" height="3" fill="#003580"/></svg>',
     /* -- experience bullets -- */
     'exp1.b1': 'Managed and updated company websites, ensuring functionality and content accuracy',
@@ -273,164 +273,164 @@ const translations = {
     'nav.education': 'Koulutus',
     'nav.contact': 'Yhteys',
     'nav.cv': 'CV',
-    'nav.hire-me': 'Ota yhteyttä',
-    'hero.tag': 'Avoin työmahdollisuuksille Suomessa',
+    'nav.hire-me': 'Ota yhteytt&auml;',
+    'hero.tag': 'Avoin ty&ouml;mahdollisuuksille Suomessa',
     'hero.hi': 'Hei, olen',
     'hero.view-exp': 'Katso kokemus',
-    'hero.get-in-touch': 'Ota yhteyttä',
+    'hero.get-in-touch': 'Ota yhteytt&auml;',
     'hero.dl-cv': 'Lataa CV',
-    'hero.roles': 'Tehtävissä',
+    'hero.roles': 'Teht&auml;viss&auml;',
     'hero.studying': 'Opiskelee',
     'hero.erasmus': 'Erasmus-verkosto',
-    'hero.tag-nordash': 'Rakennan NORDASHia — Live',
+    'hero.tag-nordash': 'Rakennan NORDASHia &mdash; Live',
     'hero.nordash-cta': 'Vieraile NORDASHissa',
-    'hero.nordash-label': 'Full-Stack-kehittäjä & IT-päällikkö',
+    'hero.nordash-label': 'Full-Stack-kehitt&auml;j&auml; & IT-p&auml;&auml;llikk&ouml;',
     'about.label': 'Tietoja minusta',
     'about.title': 'Esittely',
-    'about.sub': 'Lahdesta Kuopioon — matkani teknologian parissa ulottuu kahdelle mantereelle ja jatkuu edelleen.',
+    'about.sub': 'Lahdesta Kuopioon &mdash; matkani teknologian parissa ulottuu kahdelle mantereelle ja jatkuu edelleen.',
     'exp.label': 'Kokemus',
-    'exp.title': 'Urani tähän asti',
-    'exp.sub': 'Rakennan digitaalisia tuotteita, osallistun avoimeen kulttuuriin ja opin joka päivä.',
-    'projects.label': 'Käynnistys &amp; Projektit',
-    'projects.title': 'Mitä rakennan',
-    'projects.sub': 'Alustaprojekti ja käytännön projektit &mdash; suunniteltu, rakennettu, julkaistu ja hallinnoitu minun toimestani.',
+    'exp.title': 'Urani t&auml;h&auml;n asti',
+    'exp.sub': 'Rakennan digitaalisia tuotteita, osallistun avoimeen kulttuuriin ja opin joka p&auml;iv&auml;.',
+    'projects.label': 'K&auml;ynnistys &amp; Projektit',
+    'projects.title': 'Mit&auml; rakennan',
+    'projects.sub': 'Alustaprojekti ja k&auml;yt&auml;nn&ouml;n projektit &mdash; suunniteltu, rakennettu, julkaistu ja hallinnoitu minun toimestani.',
     'projects.badge': 'STARTUP &middot; LIVE',
-    'projects.role': 'Full-Stack-kehittäjä &amp; IT-päällikkö &middot; 2025 — nykyhetki',
-    'projects.nordash.title': 'NORDASH — Digitaalinen toimisto',
-    'projects.nordash.desc': 'NORDASH on startup-digitoimisto, joka tarjoaa modernia web-kehitystä ja digitaalisia palveluita pohjoismaisen ja eteläaasialaisen designin yhdistelmällä. Rakensin koko alustan alusta loppuun ja hallinnoin sitä päivittäin Full-Stack-kehittäjänä ja IT-päällikkönä — arkkitehtuuri, koodi, julkaisut, sisältö ja asiakasviestintä.',
+    'projects.role': 'Full-Stack-kehitt&auml;j&auml; &amp; IT-p&auml;&auml;llikk&ouml; &middot; 2025 &mdash; nykyhetki',
+    'projects.nordash.title': 'NORDASH &mdash; Digitaalinen toimisto',
+    'projects.nordash.desc': 'NORDASH on startup-digitoimisto, joka tarjoaa modernia web-kehityst&auml; ja digitaalisia palveluita pohjoismaisen ja etel&auml;aasialaisen designin yhdistelm&auml;ll&auml;. Rakensin koko alustan alusta loppuun ja hallinnoin sit&auml; p&auml;ivitt&auml;in Full-Stack-kehitt&auml;j&auml;n&auml; ja IT-p&auml;&auml;llikk&ouml;n&auml; &mdash; arkkitehtuuri, koodi, julkaisut, sis&auml;lt&ouml; ja asiakasviestint&auml;.',
     'projects.nordash.b1': 'CRM-hallintapaneeli asiakkaiden ja liidien hallintaan',
-    'projects.nordash.b2': 'Työnhakujärjestelmä',
+    'projects.nordash.b2': 'Ty&ouml;nhakuj&auml;rjestelm&auml;',
     'projects.nordash.b3': 'Portfoliogalleria',
-    'projects.nordash.b4': 'Autentikointi ja sähköposti-integraatio (Resend)',
-    'projects.nordash.b5': 'Automaattinen julkaisuputki Vercelissä',
+    'projects.nordash.b4': 'Autentikointi ja s&auml;hk&ouml;posti-integraatio (Resend)',
+    'projects.nordash.b5': 'Automaattinen julkaisuputki Verceliss&auml;',
     'projects.visit': 'Vieraile NORDASHissa &rarr;',
-    'projects.bubba.title': 'BubbaCoin (BUBBA) — ERC-20-lohkoketjutoken',
-    'projects.bubba.desc': 'Räätälöity ERC-20-token, suunniteltu ja julkaistu alusta asti Ethereum Sepolia -testiverkkoon. 1 000 000 BUBBAa lyöty julkaisussa — julkisesti todennettavissa Etherscanissa. Kurssiprojekti (IBC2026) UEF:ssa.',
+    'projects.bubba.title': 'BubbaCoin (BUBBA) &mdash; ERC-20-lohkoketjutoken',
+    'projects.bubba.desc': 'R&auml;&auml;t&auml;l&ouml;ity ERC-20-token, suunniteltu ja julkaistu alusta asti Ethereum Sepolia -testiverkkoon. 1 000 000 BUBBAa ly&ouml;ty julkaisussa &mdash; julkisesti todennettavissa Etherscanissa. Kurssiprojekti (IBC2026) UEF:ssa.',
     'projects.etherscan': 'Katso Etherscanissa &rarr;',
-    'projects.site.title': 'Tämä portfoliosivusto',
-    'projects.site.desc': 'Sivusto, jota katselet — itse suunniteltu ja käsin koodattu, interaktiivisilla 3D-elementeillä ja liikesuunnittelulla.',
+    'projects.site.title': 'T&auml;m&auml; portfoliosivusto',
+    'projects.site.desc': 'Sivusto, jota katselet &mdash; itse suunniteltu ja k&auml;sin koodattu, interaktiivisilla 3D-elementeill&auml; ja liikesuunnittelulla.',
     'projects.github': 'Katso GitHub &rarr;',
-    'exp0.role': 'Full-Stack-kehittäjä &amp; IT-päällikkö',
-    'exp0.company': 'NORDASH (startup) &middot; Kuopio, Suomi / Etänä',
-    'exp0.b1': 'Rakensin koko NORDASH-alustan alusta loppuun: Next.js 16 + React 19 -frontend, MongoDB-backend, CRM-hallintapaneeli, liidien hallinta ja työnhakujärjestelmä',
+    'exp0.role': 'Full-Stack-kehitt&auml;j&auml; &amp; IT-p&auml;&auml;llikk&ouml;',
+    'exp0.company': 'NORDASH (startup) &middot; Kuopio, Suomi / Et&auml;n&auml;',
+    'exp0.b1': 'Rakensin koko NORDASH-alustan alusta loppuun: Next.js 16 + React 19 -frontend, MongoDB-backend, CRM-hallintapaneeli, liidien hallinta ja ty&ouml;nhakuj&auml;rjestelm&auml;',
     'exp0.b2': 'Hallinnoin kaikkia IT-toimintoja: julkaisuputki, hosting, suorituskyky, tietoturva ja integraatiot',
-    'exp0.b3': 'Vastaan toimiston verkkonäkyvyydestä, brändistä, sisällöstä ja asiakasviestinnästä',
+    'exp0.b3': 'Vastaan toimiston verkkon&auml;kyvyydest&auml;, br&auml;ndist&auml;, sis&auml;ll&ouml;st&auml; ja asiakasviestinn&auml;st&auml;',
     'exp0.tag5': 'IT-hallinta',
     'skills.label': 'Taidot',
     'skills.title': 'Teknologiapino',
-    'skills.sub': 'Työkalut ja teknologiat, joita käytän eri osa-alueilla.',
+    'skills.sub': 'Ty&ouml;kalut ja teknologiat, joita k&auml;yt&auml;n eri osa-alueilla.',
     'skills.prof-label': 'Keskeiset taidot',
-    'skills.prof-sub': 'Taitotasot perustuvat tosielämän kokemukseen eri tehtävistä.',
+    'skills.prof-sub': 'Taitotasot perustuvat tosiel&auml;m&auml;n kokemukseen eri teht&auml;vist&auml;.',
     'edu.label': 'Koulutus',
     'edu.title': 'Akateeminen tausta',
     'edu.sub': 'Muodollinen koulutus, joka on muovannut polkuani.',
     'edu.certs': 'Sertifikaatit',
     'contact.label': 'Yhteys',
-    'contact.title': 'Otetaan yhteyttä',
-    'contact.sub': 'Avoin IT-tehtäville, freelance-projekteille ja merkitykselliselle yhteistyölle Suomessa ja muualla.',
-    'contact.email': 'Sähköposti',
+    'contact.title': 'Otetaan yhteytt&auml;',
+    'contact.sub': 'Avoin IT-teht&auml;ville, freelance-projekteille ja merkitykselliselle yhteisty&ouml;lle Suomessa ja muualla.',
+    'contact.email': 'S&auml;hk&ouml;posti',
     'contact.linkedin': 'LinkedIn',
     'contact.github': 'GitHub',
     'contact.location': 'Sijainti',
     'form.name': 'Nimesi',
-    'form.email': 'Sähköpostisi',
+    'form.email': 'S&auml;hk&ouml;postisi',
     'form.subject': 'Aihe',
     'form.message': 'Viestisi',
-    'form.send': 'Lähetä viesti',
+    'form.send': 'L&auml;het&auml; viesti',
     'form.ph-name': 'Koko nimesi',
-    'form.ph-email': 'sähköpostisi@osoite.fi',
-    'form.ph-subject': 'Työtilaisuus, yhteistyö, tervehdys…',
-    'form.ph-message': 'Kerro lisää mahdollisuudesta tai projektista…',
+    'form.ph-email': 's&auml;hk&ouml;postisi@osoite.fi',
+    'form.ph-subject': 'Ty&ouml;tilaisuus, yhteisty&ouml;, tervehdys&hellip;',
+    'form.ph-message': 'Kerro lis&auml;&auml; mahdollisuudesta tai projektista&hellip;',
     'scroll': 'Selaa',
-    'lanyard.hint': 'Vedä ja päästä',
+    'lanyard.hint': 'Ved&auml; ja p&auml;&auml;st&auml;',
     'cert.verify': 'Todista',
     'cert.view': 'Katso todistus',
     'cv.preview': 'Esikatsele',
     'cv.download': 'Lataa',
     'footer.text': 'Suunnitellut ja toteuttanut Muneeb Ahmed Butt',
-    'hero.skip': 'Siirry sisältöön',
-    'hero.id-org': 'Portfolio · UEF Kuopio',
-    'hero.id-title': 'IT-opiskelija & -kehittäjä',
-    'hero.id-status': '● Saatavilla',
-    'about.p1': 'Olen <strong>Muneeb Ahmed Butt</strong>, IT-opiskelija <strong>Itä-Suomen yliopistossa</strong> (Kuopio), ja työskentelen tällä hetkellä etänä <strong>IT-kehittäjänä DEVSiNCillä</strong>. Matkani kattaa verkkokehitystä, verkko-tukea, logistiikkaa ja yhteisötyötä Pakistanissa ja Suomessa.',
-    'about.nordash': 'Vuodesta 2025 olen rakentanut ja hallinnoinut <strong>NORDASHia</strong>, startup-digitaalitoimistoa, toimien sen Full-Stack-kehittäjänä &amp; IT-päällikkönä.',
-    'about.p2': 'Suoritin <strong>vuoden 2024 Aspire Leaders -ohjelman Harvard Business Schoolissa</strong>, maailmanlaajuisen johtajuusohjelman, joka keskittyi kriittiseen ajatteluun, viestintään ja yhteiskunnalliseen vaikuttamiseen — 30 tuntia kurssityötä kansainvälisessä yhteisössä.',
-    'about.p3': 'Olen myös aktiivinen jäsen <strong>Erasmus Student Networkissa (ESN Savo)</strong>, tukemassa kansainvälisiä opiskelijayhteisöjä Suomessa.',
-    'about.badge.it-dev': 'IT-kehittäjä',
+    'hero.skip': 'Siirry sis&auml;lt&ouml;&ouml;n',
+    'hero.id-org': 'Portfolio &middot; UEF Kuopio',
+    'hero.id-title': 'IT-opiskelija & -kehitt&auml;j&auml;',
+    'hero.id-status': '&#9679; Saatavilla',
+    'about.p1': 'Olen <strong>Muneeb Ahmed Butt</strong>, IT-opiskelija <strong>It&auml;-Suomen yliopistossa</strong> (Kuopio), ja ty&ouml;skentelen t&auml;ll&auml; hetkell&auml; et&auml;n&auml; <strong>IT-kehitt&auml;j&auml;n&auml; DEVSiNCill&auml;</strong>. Matkani kattaa verkkokehityst&auml;, verkko-tukea, logistiikkaa ja yhteis&ouml;ty&ouml;t&auml; Pakistanissa ja Suomessa.',
+    'about.nordash': 'Vuodesta 2025 olen rakentanut ja hallinnoinut <strong>NORDASHia</strong>, startup-digitaalitoimistoa, toimien sen Full-Stack-kehitt&auml;j&auml;n&auml; &amp; IT-p&auml;&auml;llikk&ouml;n&auml;.',
+    'about.p2': 'Suoritin <strong>vuoden 2024 Aspire Leaders -ohjelman Harvard Business Schoolissa</strong>, maailmanlaajuisen johtajuusohjelman, joka keskittyi kriittiseen ajatteluun, viestint&auml;&auml;n ja yhteiskunnalliseen vaikuttamiseen &mdash; 30 tuntia kurssity&ouml;t&auml; kansainv&auml;lisess&auml; yhteis&ouml;ss&auml;.',
+    'about.p3': 'Olen my&ouml;s aktiivinen j&auml;sen <strong>Erasmus Student Networkissa (ESN Savo)</strong>, tukemassa kansainv&auml;lisi&auml; opiskelijayhteis&ouml;j&auml; Suomessa.',
+    'about.badge.it-dev': 'IT-kehitt&auml;j&auml;',
     'about.badge.web': 'Verkkoprojektit',
     'about.badge.networking': 'Verkkotekniikka',
-    'about.badge.data': 'Datan käsittely',
-    'about.badge.esn': 'ESN-jäsen',
+    'about.badge.data': 'Datan k&auml;sittely',
+    'about.badge.esn': 'ESN-j&auml;sen',
     'about.badge.harvard': 'Harvard Aspire -alumni',
     'about.badge.license': 'B-luokan ajokortti',
     'about.info.studying': 'Opiskelee',
-    'about.info.studying-desc': 'B.Sc. IT — Itä-Suomen yliopisto, Kuopio',
-    'about.info.working': 'Työskentelee',
-    'about.info.working-desc': 'IT-kehittäjä DEVSiNCillä (etä) — heinäkuu 2025–huhtikuu 2026',
+    'about.info.studying-desc': 'B.Sc. IT &mdash; It&auml;-Suomen yliopisto, Kuopio',
+    'about.info.working': 'Ty&ouml;skentelee',
+    'about.info.working-desc': 'IT-kehitt&auml;j&auml; DEVSiNCill&auml; (et&auml;) &mdash; hein&auml;kuu 2025&ndash;huhtikuu 2026',
     'about.info.location': 'Sijainti',
     'about.info.location-desc': 'Kuopio, Suomi',
     'about.info.languages': 'Kielet',
-    'about.info.languages-desc': 'Englanti · Suomi (opiskelu) · Urdu',
+    'about.info.languages-desc': 'Englanti &middot; Suomi (opiskelu) &middot; Urdu',
     'about.info.driving': 'Ajokortti',
-    'about.info.driving-desc': 'B-luokka (henkilöauto)',
-    'exp1.role': 'IT-kehittäjä',
-    'exp1.company': 'DEVSiNC · Etä, Lahore',
-    'exp2.role': 'Verkkojärjestelmäasiantuntija (harjoittelija)',
-    'exp2.company': 'Hameed Latif -sairaala · Lahore, Pakistan',
-    'exp3.role': 'Toimeenpanevan komitean jäsen',
-    'exp3.company': 'Chanan Development Association (CDA) · Lahore, Pakistan',
-    'exp4.role': 'Kuorma-auton lähettäjä',
-    'exp4.company': 'Pioneer Enterprises · Etä, Yhdysvallat',
-    'exp5.role': 'Tietojen syöttämisen asiantuntija',
-    'exp5.company': 'Onestop Grocery Store · Lahore, Pakistan',
+    'about.info.driving-desc': 'B-luokka (henkil&ouml;auto)',
+    'exp1.role': 'IT-kehitt&auml;j&auml;',
+    'exp1.company': 'DEVSiNC &middot; Et&auml;, Lahore',
+    'exp2.role': 'Verkkoj&auml;rjestelm&auml;asiantuntija (harjoittelija)',
+    'exp2.company': 'Hameed Latif -sairaala &middot; Lahore, Pakistan',
+    'exp3.role': 'Toimeenpanevan komitean j&auml;sen',
+    'exp3.company': 'Chanan Development Association (CDA) &middot; Lahore, Pakistan',
+    'exp4.role': 'Kuorma-auton l&auml;hett&auml;j&auml;',
+    'exp4.company': 'Pioneer Enterprises &middot; Et&auml;, Yhdysvallat',
+    'exp5.role': 'Tietojen sy&ouml;tt&auml;misen asiantuntija',
+    'exp5.company': 'Onestop Grocery Store &middot; Lahore, Pakistan',
     'skills.prof.ms-office': 'Microsoft Office -paketti',
-    'skills.prof.data-entry': 'Tietojen syöttö & -hallinta',
+    'skills.prof.data-entry': 'Tietojen sy&ouml;tt&ouml; & -hallinta',
     'skills.prof.problem-solving': 'Ongelmanratkaisu & -analyysi',
     'skills.prof.it-support': 'IT-tuki & -verkot',
     'skills.prof.web-dev': 'Verkkokehitys (HTML/CSS)',
     'skills.prof.git': 'Git & versiohallinta',
     'skills.prof.python-r': 'Python & R-ohjelmointi',
     'edu.degree1': 'Tietotekniikan kandidaatin tutkinto',
-    'edu.school1': 'Itä-Suomen yliopisto (UEF)',
-    'edu.meta1': 'Syyskuu 2025 — Nykyhetki · Kuopio, Suomi',
+    'edu.school1': 'It&auml;-Suomen yliopisto (UEF)',
+    'edu.meta1': 'Syyskuu 2025 &mdash; Nykyhetki &middot; Kuopio, Suomi',
     'edu.degree2': 'Tietotekniikan tekniikan kandidaatti',
     'edu.school2': 'Bahrian yliopisto',
-    'edu.meta2': '2023 — 2025 · Lahore, Pakistan',
-    'edu.degree3': 'Lukio — ICS (Tietojenkäsittelytiede)',
-    'edu.school3': 'KIPS-koulutusjärjestelmä',
-    'edu.meta3': '2021 — 2023 · Lahore, Pakistan',
+    'edu.meta2': '2023 &mdash; 2025 &middot; Lahore, Pakistan',
+    'edu.degree3': 'Lukio &mdash; ICS (Tietojenk&auml;sittelytiede)',
+    'edu.school3': 'KIPS-koulutusj&auml;rjestelm&auml;',
+    'edu.meta3': '2021 &mdash; 2023 &middot; Lahore, Pakistan',
     'contact.instagram': 'Instagram',
     'contact.phone': 'Puhelin',
     'cv.meta.pdf': 'PDF',
     'cv.meta.size': '202 kt',
-    'cv.meta.updated': 'Päivitetty kesäkuu 2026',
-    'footer.copyright': '© 2026 Muneeb Ahmed Butt. Kaikki oikeudet pidätetään.',
-    'page.title': 'Muneeb Ahmed Butt — Portfoliosivu',
-    'hero.sr-text': 'IT-opiskelija Itä-Suomen yliopistossa, IT-kehittäjä DEVSiNCillä, Harvard Aspire 2024 -alumni, ESN Savon jäsen, verkkokehittäjä ja ongelmanratkaisija.',
-    'form.sending': 'Lähetetään…',
-    'form.success': '✓ Viesti lähetetty! Palaan asiaan mahdollisimman pian.',
-    'form.error': '✗ Jotain meni pieleen. Lähetä sähköpostia osoitteeseen muneeb10305896@gmail.com',
-    'footer.text-full': 'Suunnitellut &amp; toteuttanut <span>Muneeb Ahmed Butt</span> &middot; Itä-Suomen yliopisto &middot; Kuopio <svg viewBox="0 0 18 11" width="18" height="11" xmlns="http://www.w3.org/2000/svg" style="vertical-align:middle"><rect width="18" height="11" fill="#fff"/><rect x="5" y="0" width="3" height="11" fill="#003580"/><rect x="0" y="4" width="18" height="3" fill="#003580"/></svg>',
+    'cv.meta.updated': 'P&auml;ivitetty kes&auml;kuu 2026',
+    'footer.copyright': '&copy; 2026 Muneeb Ahmed Butt. Kaikki oikeudet pid&auml;tet&auml;&auml;n.',
+    'page.title': 'Muneeb Ahmed Butt &mdash; Portfoliosivu',
+    'hero.sr-text': 'IT-opiskelija It&auml;-Suomen yliopistossa, IT-kehitt&auml;j&auml; DEVSiNCill&auml;, Harvard Aspire 2024 -alumni, ESN Savon j&auml;sen, verkkokehitt&auml;j&auml; ja ongelmanratkaisija.',
+    'form.sending': 'L&auml;hetet&auml;&auml;n&hellip;',
+    'form.success': '&#10003; Viesti l&auml;hetetty! Palaan asiaan mahdollisimman pian.',
+    'form.error': '&#10007; Jotain meni pieleen. L&auml;het&auml; s&auml;hk&ouml;postia osoitteeseen muneeb10305896@gmail.com',
+    'footer.text-full': 'Suunnitellut &amp; toteuttanut <span>Muneeb Ahmed Butt</span> &middot; It&auml;-Suomen yliopisto &middot; Kuopio <svg viewBox="0 0 18 11" width="18" height="11" xmlns="http://www.w3.org/2000/svg" style="vertical-align:middle"><rect width="18" height="11" fill="#fff"/><rect x="5" y="0" width="3" height="11" fill="#003580"/><rect x="0" y="4" width="18" height="3" fill="#003580"/></svg>',
     /* -- experience bullets -- */
-    'exp1.b1': 'Hallinnoin ja päivitin yrityksen verkkosivuja varmistaen toimivuuden ja sisällön oikeellisuuden',
-    'exp1.b2': 'Avustin asiakkaiden vaatimien verkkosivujen kehittämisessä määrittelyjen mukaisesti',
-    'exp1.b3': 'Työskentelin useissa verkkoprojekteissa tukien suunnittelua, päivityksiä ja ylläpitoa',
-    'exp1.b4': 'Tein yhteistyötä tiimin jäsenten kanssa käyttäen kehitystyökaluja ja versiohallintaa',
-    'exp2.b1': 'Avustin IT- ja verkkoympäristöjen asennuksessa ja ylläpidossa',
-    'exp2.b2': 'Tarjosin teknistä tukea sairaalan henkilökunnalle ja lääkäreille',
-    'exp2.b3': 'Avustin potilastietojärjestelmien hallinnassa ja ongelmien ratkaisussa',
-    'exp2.b4': 'Seurasin järjestelmän suorituskykyä ja varmistin tietoturvan ja käytettävyyden',
-    'exp3.b1': 'Ylläpidin ja järjestelin kansalaisjärjestön asiakirjoja, raportteja ja dokumentaatiota',
-    'exp3.b2': 'Hallinnoin yhteisöprojekteihin, vapaaehtoisiin ja toimintaan liittyvää tietoa',
-    'exp3.b3': 'Koordinoin suunnittelua, viestintää ja kehityshankkeiden toteutusta',
-    'exp3.b4': 'Työskentelin sidosryhmien kanssa seuraten ohjelmien edistymistä ja tuloksia',
-    'exp4.b1': 'Hallinnoin lähetystoimintaa käyttäen DAT Load Board- ja RingCentral-järjestelmiä',
-    'exp4.b2': 'Päivitin digitaalisia tietoja, kuormatilanteita ja dokumentaatiota tarkasti',
-    'exp4.b3': 'Koordinoin kuljettajien ja välittäjien kanssa verkkopohjaisten järjestelmien avulla',
-    'exp4.b4': 'Ratkaisin toiminnallisia ongelmia digitaalisia työkaluja käyttäen',
-    'exp5.b1': 'Hallinnoin myynti- ja varastotietoja IPOS-järjestelmällä',
-    'exp5.b2': 'Varmistin tietojen tarkkuuden ja ylläpidin päivittäisiä ja kuukausittaisia raportteja',
-    'exp5.b3': 'Tuoin myymälän toimintaa järjestelmällisen tiedonhallinnan avulla',
+    'exp1.b1': 'Hallinnoin ja p&auml;ivitin yrityksen verkkosivuja varmistaen toimivuuden ja sis&auml;ll&ouml;n oikeellisuuden',
+    'exp1.b2': 'Avustin asiakkaiden vaatimien verkkosivujen kehitt&auml;misess&auml; m&auml;&auml;rittelyjen mukaisesti',
+    'exp1.b3': 'Ty&ouml;skentelin useissa verkkoprojekteissa tukien suunnittelua, p&auml;ivityksi&auml; ja yll&auml;pitoa',
+    'exp1.b4': 'Tein yhteisty&ouml;t&auml; tiimin j&auml;senten kanssa k&auml;ytt&auml;en kehitysty&ouml;kaluja ja versiohallintaa',
+    'exp2.b1': 'Avustin IT- ja verkkoymp&auml;rist&ouml;jen asennuksessa ja yll&auml;pidossa',
+    'exp2.b2': 'Tarjosin teknist&auml; tukea sairaalan henkil&ouml;kunnalle ja l&auml;&auml;k&auml;reille',
+    'exp2.b3': 'Avustin potilastietoj&auml;rjestelmien hallinnassa ja ongelmien ratkaisussa',
+    'exp2.b4': 'Seurasin j&auml;rjestelm&auml;n suorituskyky&auml; ja varmistin tietoturvan ja k&auml;ytett&auml;vyyden',
+    'exp3.b1': 'Yll&auml;pidin ja j&auml;rjestelin kansalaisj&auml;rjest&ouml;n asiakirjoja, raportteja ja dokumentaatiota',
+    'exp3.b2': 'Hallinnoin yhteis&ouml;projekteihin, vapaaehtoisiin ja toimintaan liittyv&auml;&auml; tietoa',
+    'exp3.b3': 'Koordinoin suunnittelua, viestint&auml;&auml; ja kehityshankkeiden toteutusta',
+    'exp3.b4': 'Ty&ouml;skentelin sidosryhmien kanssa seuraten ohjelmien edistymist&auml; ja tuloksia',
+    'exp4.b1': 'Hallinnoin l&auml;hetystoimintaa k&auml;ytt&auml;en DAT Load Board- ja RingCentral-j&auml;rjestelmi&auml;',
+    'exp4.b2': 'P&auml;ivitin digitaalisia tietoja, kuormatilanteita ja dokumentaatiota tarkasti',
+    'exp4.b3': 'Koordinoin kuljettajien ja v&auml;litt&auml;jien kanssa verkkopohjaisten j&auml;rjestelmien avulla',
+    'exp4.b4': 'Ratkaisin toiminnallisia ongelmia digitaalisia ty&ouml;kaluja k&auml;ytt&auml;en',
+    'exp5.b1': 'Hallinnoin myynti- ja varastotietoja IPOS-j&auml;rjestelm&auml;ll&auml;',
+    'exp5.b2': 'Varmistin tietojen tarkkuuden ja yll&auml;pidin p&auml;ivitt&auml;isi&auml; ja kuukausittaisia raportteja',
+    'exp5.b3': 'Tuoin myym&auml;l&auml;n toimintaa j&auml;rjestelm&auml;llisen tiedonhallinnan avulla',
     /* -- experience tags -- */
     'exp1.tag1': 'Verkkokehitys',
     'exp1.tag2': 'Git',
@@ -443,25 +443,25 @@ const translations = {
     'exp3.tag1': 'Johtajuus',
     'exp3.tag2': 'Projektikoordinointi',
     'exp3.tag3': 'Tiedonhallinta',
-    'exp3.tag4': 'Kansalaisjärjestö',
+    'exp3.tag4': 'Kansalaisj&auml;rjest&ouml;',
     'exp4.tag1': 'DAT Load Board',
     'exp4.tag2': 'RingCentral',
-    'exp4.tag3': 'Lähetystoiminta',
+    'exp4.tag3': 'L&auml;hetystoiminta',
     'exp4.tag4': 'Logistiikka',
     'exp5.tag1': 'IPOS',
-    'exp5.tag2': 'Tietojen syöttö',
+    'exp5.tag2': 'Tietojen sy&ouml;tt&ouml;',
     'exp5.tag3': 'Varastonhallinta',
     'exp5.tag4': 'Raportointi',
     /* -- skill card cats + names -- */
-    'skills.card1.cat': 'IT &amp; Järjestelmät',
+    'skills.card1.cat': 'IT &amp; J&auml;rjestelm&auml;t',
     'skills.card1.name': 'Keskeiset IT-taidot',
     'skills.card2.cat': 'Kehitys',
-    'skills.card2.name': 'Web &amp; Työkalut',
+    'skills.card2.name': 'Web &amp; Ty&ouml;kalut',
     'skills.card3.cat': 'Tieto &amp; Toimisto',
     'skills.card3.name': 'Tuottavuus',
     'skills.card4.cat': 'Logistiikka',
     'skills.card4.name': 'Toiminnot',
-    'skills.card5.cat': 'Pehmeät taidot',
+    'skills.card5.cat': 'Pehme&auml;t taidot',
     'skills.card5.name': 'Ammattilainen',
     'skills.card6.cat': 'Oppiminen',
     'skills.card6.name': 'Kesken',
@@ -472,7 +472,7 @@ const translations = {
     /* -- skill pills -- */
     'skills.pill.it-operations': 'IT-toiminnot',
     'skills.pill.it-support': 'IT-tuki',
-    'skills.pill.troubleshooting': 'Vianmääritys',
+    'skills.pill.troubleshooting': 'Vianm&auml;&auml;ritys',
     'skills.pill.networking': 'Verkkotekniikka',
     'skills.pill.hardware-software': 'Laitteisto &amp; Ohjelmisto',
     'skills.pill.web-dev': 'Verkkokehitys',
@@ -481,35 +481,35 @@ const translations = {
     'skills.pill.html-css': 'HTML/CSS',
     'skills.pill.word': 'Microsoft Word',
     'skills.pill.excel': 'Microsoft Excel',
-    'skills.pill.data-entry': 'Tietojen syöttö',
+    'skills.pill.data-entry': 'Tietojen sy&ouml;tt&ouml;',
     'skills.pill.ipos': 'IPOS',
     'skills.pill.reporting': 'Raportointi',
     'skills.pill.dat-board': 'DAT Load Board',
     'skills.pill.ringcentral': 'RingCentral',
-    'skills.pill.dispatching': 'Lähetystoiminta',
+    'skills.pill.dispatching': 'L&auml;hetystoiminta',
     'skills.pill.documentation': 'Dokumentointi',
     'skills.pill.problem-solving': 'Ongelmanratkaisu',
     'skills.pill.problem-analysis': 'Ongelman analyysi',
-    'skills.pill.teamwork': 'Tiimityö',
-    'skills.pill.communication': 'Viestintä',
+    'skills.pill.teamwork': 'Tiimity&ouml;',
+    'skills.pill.communication': 'Viestint&auml;',
     'skills.pill.python': 'Python',
     'skills.pill.r-prog': 'R-ohjelmointi',
     'skills.pill.databases': 'Tietokannat',
     'skills.pill.react': 'React',
     'skills.pill.social-media': 'Sosiaalinen media',
-    'skills.pill.content-creation': 'Sisällöntuotanto',
+    'skills.pill.content-creation': 'Sis&auml;ll&ouml;ntuotanto',
     'skills.pill.seo': 'SEO-perusteet',
     'skills.pill.canva': 'Canva',
-    'skills.pill.branding': 'Brändäys',
+    'skills.pill.branding': 'Br&auml;nd&auml;ys',
     'skills.pill.data-security': 'Tietoturva',
-    'skills.pill.access-control': 'Pääsynhallinta',
+    'skills.pill.access-control': 'P&auml;&auml;synhallinta',
     'skills.pill.network-security': 'Verkkoturvallisuus',
-    'skills.pill.system-monitoring': 'Järjestelmän valvonta',
+    'skills.pill.system-monitoring': 'J&auml;rjestelm&auml;n valvonta',
     /* -- certification descriptions -- */
-    'cert1.desc': 'Varmennettu taitojen arviointi, joka kattaa Pythonin perusteet: skalaarityypit, operaattorit, ohjausvuot, merkkijonot, kokoelmat, iterointi, modulaarisuus, luokat ja poikkeustenkäsittely.',
-    'cert2.desc': 'Varmennettu taitojen arviointi, joka kattaa JavaScriptin perusteet: funktiot, currying, nosto, näkyvyysalueet, periytyminen, tapahtumat ja virheidenkäsittely.',
-    'cert3.desc': 'Perustason tekoälylukutaito: keskeiset tekoälykonseptit, koneoppimisen perusteet, tekoälyn etiikka ja tekoälyn käytännön sovellukset liiketoiminnassa ja yhteiskunnassa.',
-    'cert4.desc': 'Maailmanlaajuinen johtajuus- ja henkilökohtainen kehitysohjelma, joka keskittyi kriittiseen ajatteluun, viestintään, itseluottamukseen ja yhteiskunnalliseen vaikuttamiseen. Suoritit 30 tuntia kurssityötä kansainvälisessä oppimisyhteisössä. Tila: Verkossa.',
+    'cert1.desc': 'Varmennettu taitojen arviointi, joka kattaa Pythonin perusteet: skalaarityypit, operaattorit, ohjausvuot, merkkijonot, kokoelmat, iterointi, modulaarisuus, luokat ja poikkeustenk&auml;sittely.',
+    'cert2.desc': 'Varmennettu taitojen arviointi, joka kattaa JavaScriptin perusteet: funktiot, currying, nosto, n&auml;kyvyysalueet, periytyminen, tapahtumat ja virheidenk&auml;sittely.',
+    'cert3.desc': 'Perustason teko&auml;lylukutaito: keskeiset teko&auml;lykonseptit, koneoppimisen perusteet, teko&auml;lyn etiikka ja teko&auml;lyn k&auml;yt&auml;nn&ouml;n sovellukset liiketoiminnassa ja yhteiskunnassa.',
+    'cert4.desc': 'Maailmanlaajuinen johtajuus- ja henkil&ouml;kohtainen kehitysohjelma, joka keskittyi kriittiseen ajatteluun, viestint&auml;&auml;n, itseluottamukseen ja yhteiskunnalliseen vaikuttamiseen. Suoritit 30 tuntia kurssity&ouml;t&auml; kansainv&auml;lisess&auml; oppimisyhteis&ouml;ss&auml;. Tila: Verkossa.',
   }
 };
 
@@ -548,7 +548,7 @@ function applyLanguage(lang) {
   try { localStorage.setItem('lang', lang); } catch (e) {}
 }
 
-/* —— LANGUAGE TOGGLE —— */
+/* &mdash;&mdash; LANGUAGE TOGGLE &mdash;&mdash; */
 const langToggleBtn = document.getElementById('langToggle');
 if (langToggleBtn) {
   langToggleBtn.addEventListener('click', () => {
@@ -563,12 +563,12 @@ if (langToggleBtn) {
   applyLanguage(saved);
 })();
 
-/* —— THEME TOGGLE —— */
+/* &mdash;&mdash; THEME TOGGLE &mdash;&mdash; */
 const themeToggleBtn = document.getElementById('themeToggle');
 if (themeToggleBtn) {
   themeToggleBtn.addEventListener('click', () => {
     const next = document.documentElement.dataset.theme === 'light' ? 'dark' : 'light';
-    // View Transitions wipe — capture toggle button position for clip-path origin
+    // View Transitions wipe &mdash; capture toggle button position for clip-path origin
     const rect = themeToggleBtn.getBoundingClientRect();
     const x = Math.round(rect.left + rect.width  / 2);
     const y = Math.round(rect.top  + rect.height / 2);
@@ -591,7 +591,7 @@ if (themeToggleBtn) {
   });
 }
 
-/* —— PRELOADER —— */
+/* &mdash;&mdash; PRELOADER &mdash;&mdash; */
 function hidePreloader() {
   const pre = document.getElementById('preloader');
   if (pre) pre.classList.add('done');
@@ -600,7 +600,7 @@ window.addEventListener('load', () => setTimeout(hidePreloader, REDUCED_MOTION ?
 // failsafe: never trap the user behind the preloader if a resource hangs
 setTimeout(hidePreloader, 4000);
 
-/* —— CUSTOM CURSOR (transform-based — no layout reflow on mousemove) —— */
+/* &mdash;&mdash; CUSTOM CURSOR (transform-based &mdash; no layout reflow on mousemove) &mdash;&mdash; */
 const cursor = document.getElementById('cursor');
 const ring   = document.getElementById('cursor-ring');
 let mouseX = 0, mouseY = 0, ringX = 0, ringY = 0;
@@ -630,7 +630,7 @@ if (FINE_POINTER && cursor && ring) {
   });
 }
 
-/* —— SCROLL PROGRESS + NAV + BACK TO TOP + ACTIVE LINKS —— */
+/* &mdash;&mdash; SCROLL PROGRESS + NAV + BACK TO TOP + ACTIVE LINKS &mdash;&mdash; */
 const scrollProgress = document.getElementById('scroll-progress');
 const nav            = document.getElementById('main-nav');
 const backToTop      = document.getElementById('backToTop');
@@ -648,7 +648,7 @@ window.addEventListener('resize', buildSectionOffsets, { passive: true });
 window.addEventListener('load', () => { buildSectionOffsets(); requestAnimationFrame(() => onScrollFrame && onScrollFrame()); }, { passive: true });
 setTimeout(() => { buildSectionOffsets(); onScrollFrame && onScrollFrame(); }, 1500); /* rebuild after web fonts settle */
 
-/* rAF-throttled: scroll can fire several times per frame — do the DOM
+/* rAF-throttled: scroll can fire several times per frame &mdash; do the DOM
    work at most once per frame, and cache docHeight (reading scrollHeight
    inside the handler forced a layout every event) */
 let docHeight = 1, scrollRafPending = false;
@@ -687,7 +687,7 @@ onScrollFrame(); /* set correct initial state */
 
 backToTop.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
 
-/* —— MOBILE MENU —— */
+/* &mdash;&mdash; MOBILE MENU &mdash;&mdash; */
 const hamburger  = document.getElementById('navHamburger');
 const mobileMenu = document.getElementById('mobileMenu');
 hamburger.addEventListener('click', () => {
@@ -710,11 +710,11 @@ document.addEventListener('click', e => {
   }
 });
 
-/* —— PARTICLE CANVAS —— */
+/* &mdash;&mdash; PARTICLE CANVAS &mdash;&mdash; */
 const pCanvas  = document.getElementById('particle-canvas');
 const pCtx     = pCanvas ? pCanvas.getContext('2d') : null;
 const mobileMQ = window.matchMedia('(max-width: 700px)');
-let CONNECT_DIST = mobileMQ.matches ? 0 : 35; // skip O(n²) connection lines on mobile
+let CONNECT_DIST = mobileMQ.matches ? 0 : 35; // skip O(n&sup2;) connection lines on mobile
 
 function makeParticle() {
   return {
@@ -729,7 +729,7 @@ function makeParticle() {
 const particles = Array.from({ length: mobileMQ.matches ? 5 : 8 }, makeParticle);
 
 /* PERF: render the particle layer at 2/3 resolution and let the GPU stretch
-   it — soft dots/lines look identical, the iGPU fills ~55% fewer pixels */
+   it &mdash; soft dots/lines look identical, the iGPU fills ~55% fewer pixels */
 const P_SCALE = 0.66;
 function resizeParticles() {
   if (!pCanvas) return;
@@ -747,7 +747,7 @@ function resizeParticles() {
 resizeParticles();
 window.addEventListener('resize', resizeParticles, { passive: true });
 
-/* Adaptive frame-skip: skip expensive O(n²) particle connections when idle */
+/* Adaptive frame-skip: skip expensive O(n&sup2;) particle connections when idle */
 let lastInteraction = Date.now();
 const bumpActivity = () => { lastInteraction = Date.now(); };
 window.addEventListener('scroll',      bumpActivity, { passive: true });
@@ -760,10 +760,10 @@ window.addEventListener('wheel',       bumpActivity, { passive: true });
 let skipConnections = false;
 function tickParticles() {
   if (!pCtx || !pCanvas) return;
-  /* Skip O(n²) connection lines when idle for 2s — particles still drift */
+  /* Skip O(n&sup2;) connection lines when idle for 2s &mdash; particles still drift */
   skipConnections = Date.now() - lastInteraction > 2000;
   pCtx.clearRect(0, 0, pCanvas.width, pCanvas.height);
-  /* Batch all particles into one Path2D — much fewer GPU draw calls */
+  /* Batch all particles into one Path2D &mdash; much fewer GPU draw calls */
   const dotPath = new Path2D();
   const sorted = particles;
   for (let i = 0; i < sorted.length; i++) {
@@ -795,9 +795,9 @@ function tickParticles() {
   }
 }
 
-/* —— TYPEWRITER (setTimeout-based — reliable across all browsers) —— */
+/* &mdash;&mdash; TYPEWRITER (setTimeout-based &mdash; reliable across all browsers) &mdash;&mdash; */
 const twPhrases = [
-  'IT Student at UEF 🇫🇮',
+  'IT Student at UEF &#127467;&#127470;',
   'Full-Stack Developer & IT Manager at NORDASH',
   'Harvard Aspire 2024 Alumni',
   'ESN Savo Board Member',
@@ -830,7 +830,7 @@ if (twEl) {
   })();
 }
 
-/* —— VELOCITY SCROLL —— */
+/* &mdash;&mdash; VELOCITY SCROLL &mdash;&mdash; */
 let scrollVel = 0, lastScrollY = 0;
 window.addEventListener('scroll', () => {
   scrollVel = window.scrollY - lastScrollY;
@@ -871,7 +871,7 @@ function tickVelocity() {
   scrollVel *= 0.92;
 }
 
-/* —— SCROLL REVEAL + COUNTER —— */
+/* &mdash;&mdash; SCROLL REVEAL + COUNTER &mdash;&mdash; */
 const revealObserver = new IntersectionObserver(entries => {
   entries.forEach(e => {
     if (e.isIntersecting) {
@@ -920,7 +920,7 @@ window.addEventListener('load', () => {
   }, 300);
 });
 
-/* —— DRAGGABLE LANYARD —— */
+/* &mdash;&mdash; DRAGGABLE LANYARD &mdash;&mdash; */
 let tickLanyard = () => {};
 (function initLanyard() {
   const stage  = document.getElementById('lanyardStage');
@@ -943,7 +943,7 @@ let tickLanyard = () => {};
 
   layer.appendChild(card);
   card.style.position      = 'absolute';  // same positioning context as canvas
-  card.style.left          = '0px';       // pinned — moved via transform only
+  card.style.left          = '0px';       // pinned &mdash; moved via transform only
   card.style.top           = '0px';
   card.style.willChange    = 'transform';
   card.style.pointerEvents = 'auto';
@@ -1034,7 +1034,7 @@ let tickLanyard = () => {};
   }
   window.addEventListener('pointerup',     endDrag);
   window.addEventListener('pointercancel', endDrag);
-  window.addEventListener('blur',          endDrag);   // window loses focus → end drag
+  window.addEventListener('blur',          endDrag);   // window loses focus &rarr; end drag
 
   card.addEventListener('dblclick', () => {
     resetToAnchor();
@@ -1079,7 +1079,7 @@ let tickLanyard = () => {};
     anchorX = stagePageCX;
     anchorY = stageTop;
 
-    /* rope at rest + anchor unchanged → nothing to simulate or repaint */
+    /* rope at rest + anchor unchanged &rarr; nothing to simulate or repaint */
     if (lanyardSettled && !dragging &&
         Math.abs(anchorX - prevAX) < 0.5 && Math.abs(anchorY - prevAY) < 0.5) return;
     prevAX = anchorX; prevAY = anchorY;
@@ -1110,12 +1110,12 @@ let tickLanyard = () => {};
       if (dragging) { last.x = dragX; last.y = dragY; }
     }
 
-    /* measure remaining motion — below threshold means visually static */
+    /* measure remaining motion &mdash; below threshold means visually static */
     let energy = 0;
     for (const p of points) energy += Math.abs(p.x - p.ox) + Math.abs(p.y - p.oy);
     lanyardSettled = !dragging && energy < 0.6;
 
-    // render rope — clear only last frame's dirty region, then this frame's
+    // render rope &mdash; clear only last frame's dirty region, then this frame's
     let minX = anchorX, maxX = anchorX, minY = anchorY, maxY = anchorY;
     for (const p of points) {
       if (p.x < minX) minX = p.x; if (p.x > maxX) maxX = p.x;
@@ -1143,7 +1143,7 @@ let tickLanyard = () => {};
     ctx.fillStyle = '#9b8df8';
     ctx.beginPath(); ctx.arc(anchorX, anchorY + 2, 5, 0, Math.PI * 2); ctx.fill();
 
-    // position card — transform ONLY (left/top would force layout every frame)
+    // position card &mdash; transform ONLY (left/top would force layout every frame)
     const sl = points[SEGMENTS - 2];
     const angle = Math.atan2(last.y - sl.y, last.x - sl.x) - Math.PI / 2;
     card.style.transform = `translate3d(${last.x}px,${last.y}px,0) translate(-50%,0) rotate(${angle}rad)`;
@@ -1158,7 +1158,7 @@ let tickLanyard = () => {};
   }
 })();
 
-/* —— EXP CARD MOUSE GLOW —— */
+/* &mdash;&mdash; EXP CARD MOUSE GLOW &mdash;&mdash; */
 document.querySelectorAll('.exp-card').forEach(card => {
   card.addEventListener('mousemove', e => {
     const r    = card.getBoundingClientRect();
@@ -1170,7 +1170,7 @@ document.querySelectorAll('.exp-card').forEach(card => {
   });
 });
 
-/* —— MAGNETIC + 3D SPRING CARDS —— */
+/* &mdash;&mdash; MAGNETIC + 3D SPRING CARDS &mdash;&mdash; */
 let mouseGX = -99999, mouseGY = -99999;
 window.addEventListener('mousemove', e => { mouseGX = e.clientX; mouseGY = e.clientY; }, { passive: true });
 window.addEventListener('mouseout',  e => { if (!e.relatedTarget) { mouseGX = -99999; mouseGY = -99999; } });
@@ -1213,13 +1213,13 @@ function stepSpring(pos, vel, target) {
 
 let springAllIdle = false;
 function tickSpring() {
-  if (!FINE_POINTER) return; // no mouse → no magnetic effect, save the work
-  /* mouse hasn't moved & every card is at rest → skip everything */
+  if (!FINE_POINTER) return; // no mouse &rarr; no magnetic effect, save the work
+  /* mouse hasn't moved & every card is at rest &rarr; skip everything */
   if (springAllIdle && Date.now() - lastInteraction > 2500) return;
   let anyActive = false;
   const vh = window.innerHeight;
   for (const c of springCards) {
-    /* skip off-screen cards — no getBoundingClientRect call needed */
+    /* skip off-screen cards &mdash; no getBoundingClientRect call needed */
     if (!springCardVisibility.get(c.el)) {
       if (!c.idle) { c.idle = true; c.el.style.transform = ''; c.el.style.boxShadow = ''; }
       c.mx=c.my=c.rx=c.ry=c.gz=c.glow=c.vmx=c.vmy=c.vrx=c.vry=c.vgz=c.vglow=c.tmx=c.tmy=c.trx=c.try_=c.tgz=c.tglow=0;c.sc=c.tsc=1;c.vsc=0;
@@ -1268,7 +1268,7 @@ function tickSpring() {
     }
     c.idle = false;
 
-    /* converged onto a steady hover pose → the transform we'd write is
+    /* converged onto a steady hover pose &rarr; the transform we'd write is
        identical to last frame's; skip both DOM writes entirely */
     const converged =
       Math.abs(c.mx - c.tmx) < .05 && Math.abs(c.my - c.tmy) < .05 &&
@@ -1281,7 +1281,7 @@ function tickSpring() {
       `perspective(820px) translate3d(${c.mx.toFixed(2)}px,${c.my.toFixed(2)}px,${c.gz.toFixed(2)}px) ` +
       `rotateX(${c.rx.toFixed(2)}deg) rotateY(${c.ry.toFixed(2)}deg) scale(${c.sc.toFixed(3)})`;
 
-    /* box-shadow is a PAINT (expensive) — never animate it in lite mode,
+    /* box-shadow is a PAINT (expensive) &mdash; never animate it in lite mode,
        and elsewhere only rewrite it when the quantized value actually changed */
     if (PERF_LITE) {
       if (c.sKey !== 'off') { c.sKey = 'off'; c.el.style.boxShadow = ''; }
@@ -1302,7 +1302,7 @@ function tickSpring() {
   springAllIdle = !anyActive;
 }
 
-/* —— PARALLAX FLOATING SHAPES ON SCROLL —— */
+/* &mdash;&mdash; PARALLAX FLOATING SHAPES ON SCROLL &mdash;&mdash; */
 const floatShapes = document.querySelectorAll('.floating-shape');
 let floatPending = false, floatY = 0;
 window.addEventListener('scroll', () => {
@@ -1320,7 +1320,7 @@ window.addEventListener('scroll', () => {
   }
 }, { passive: true });
 
-/* —— SKILL BARS —— */
+/* &mdash;&mdash; SKILL BARS &mdash;&mdash; */
 const sbarObserver = new IntersectionObserver(entries => {
   entries.forEach(e => {
     if (e.isIntersecting) {
@@ -1331,14 +1331,14 @@ const sbarObserver = new IntersectionObserver(entries => {
 }, { threshold: 0.25 });
 document.querySelectorAll('.skills-bars').forEach(el => sbarObserver.observe(el));
 
-/* —— CONTACT FORM (Formspree) —— */
+/* &mdash;&mdash; CONTACT FORM (Formspree) &mdash;&mdash; */
 const contactForm = document.getElementById('contactForm');
 const cfStatus    = document.getElementById('cfStatus');
 const cfSubmit    = document.getElementById('cfSubmit');
 if (contactForm) {
   contactForm.addEventListener('submit', async e => {
     e.preventDefault();
-    // novalidate is set for custom styling — run native validation manually
+    // novalidate is set for custom styling &mdash; run native validation manually
     if (!contactForm.checkValidity()) {
       contactForm.reportValidity();
       return;
@@ -1347,7 +1347,7 @@ if (contactForm) {
     const curLang = (document.documentElement.getAttribute('lang') || 'en').slice(0,2);
     const t = translations[curLang] || translations.en;
     cfSubmit.disabled = true; cfSubmit.classList.add('loading');
-    btnText.textContent = t['form.sending'] || 'Sending…';
+    btnText.textContent = t['form.sending'] || 'Sending&hellip;';
     cfStatus.className = 'cf-status'; cfStatus.textContent = '';
     try {
       const res = await fetch(contactForm.action, {
@@ -1358,21 +1358,21 @@ if (contactForm) {
       if (res.ok) {
         contactForm.reset();
         cfStatus.className = 'cf-status success';
-        cfStatus.textContent = t['form.success'] || '✓ Message sent! I\'ll get back to you as soon as possible.';
+        cfStatus.textContent = t['form.success'] || '&#10003; Message sent! I\'ll get back to you as soon as possible.';
       } else {
         const data = await res.json().catch(() => ({}));
         throw new Error(data.error || 'Server error');
       }
     } catch {
       cfStatus.className = 'cf-status error';
-      cfStatus.textContent = t['form.error'] || '✗ Something went wrong. Please email me directly at muneeb10305896@gmail.com';
+      cfStatus.textContent = t['form.error'] || '&#10007; Something went wrong. Please email me directly at muneeb10305896@gmail.com';
     }
     cfSubmit.disabled = false; cfSubmit.classList.remove('loading');
     btnText.textContent = t['form.send'] || 'Send Message';
   });
 }
 
-/* —— MAP: auto-load shortly before it scrolls into view ——
+/* &mdash;&mdash; MAP: auto-load shortly before it scrolls into view &mdash;&mdash;
    Costs nothing at page load; by the time the user reaches the
    contact section the map is already there. Click still works
    as a fallback if the observer never fires. */
@@ -1389,14 +1389,14 @@ if (contactForm) {
     if (started || !iframe) return;
     started = true;
     iframe.src = MAP_SRC;
-    /* Show iframe immediately — don't wait for the load event,
+    /* Show iframe immediately &mdash; don't wait for the load event,
        since loading="lazy" + display:none can prevent it from firing.
        Once the iframe actually loads, hide the placeholder for polish. */
     iframe.style.display = 'block';
     if (ph) ph.style.display = 'none';
     iframe.addEventListener('load', () => {
       if (phText) phText.textContent = '';
-      /* Re-measure page height now that iframe has rendered — keeps
+      /* Re-measure page height now that iframe has rendered &mdash; keeps
          the scroll-progress bar accurate on desktop */
       measureDocHeight();
     }, { once: true });
@@ -1421,13 +1421,13 @@ if (contactForm) {
 })();
 
 /* ============================================
-   MASTER ANIMATION LOOP — single rAF instead
+   MASTER ANIMATION LOOP &mdash; single rAF instead
    of 5 separate loops fighting each other
    ============================================ */
 function tickCursorRing() {
   if (!ring) return;
   const dx = mouseX - ringX, dy = mouseY - ringY;
-  /* converged → no DOM write needed this frame */
+  /* converged &rarr; no DOM write needed this frame */
   if (dx * dx + dy * dy < 0.09) return;
   ringX += dx * 0.15;
   ringY += dy * 0.15;
@@ -1441,7 +1441,7 @@ document.addEventListener('visibilitychange', () => {
 });
 
 /* ============================================
-   ADAPTIVE PERF-LITE — measure real frame times
+   ADAPTIVE PERF-LITE &mdash; measure real frame times
    for ~1.5s after load; if this machine can't
    hold a decent framerate, strip decorative
    animations automatically (CSS .perf-lite)
@@ -1479,14 +1479,14 @@ function enableLite() {
 }
 
 let frameCount = 0;
-/* rolling frame-time watchdog — if frames get slow at ANY point, go lite */
+/* rolling frame-time watchdog &mdash; if frames get slow at ANY point, go lite */
 let ftLast = 0, ftAcc = 0, ftN = 0;
 
 function masterTick() {
   if (rafPaused) return;
   frameCount++;
 
-  /* PAGE IDLE → drop the whole loop to a ~5fps heartbeat.
+  /* PAGE IDLE &rarr; drop the whole loop to a ~5fps heartbeat.
      CPU/GPU go to near-zero; first scroll/mouse-move snaps it back to 60. */
   if (Date.now() - lastInteraction > 3500) {
     ftLast = 0;
@@ -1494,7 +1494,7 @@ function masterTick() {
     return;
   }
 
-  /* watchdog: 90-frame rolling average above ~24ms → machine is struggling */
+  /* watchdog: 90-frame rolling average above ~24ms &rarr; machine is struggling */
   if (!PERF_LITE) {
     const t = performance.now();
     if (ftLast) {
@@ -1515,14 +1515,14 @@ function masterTick() {
     if (frameCount % 3 === 0) tickParticles(); /* drift needs only ~20fps */
   }
   tickVelocity();
-  tickLanyard();   /* EVERY frame — half-rate made dragging feel choppy */
+  tickLanyard();   /* EVERY frame &mdash; half-rate made dragging feel choppy */
   tickSpring();
   requestAnimationFrame(masterTick);
 }
 requestAnimationFrame(masterTick);
 
 
-/* —— NORDASH LIVE PREVIEW SCALER —— */
+/* &mdash;&mdash; NORDASH LIVE PREVIEW SCALER &mdash;&mdash; */
 (function () {
   const frame = document.getElementById('nordashFrame');
   const wrap = document.querySelector('.mock-iframe-wrap');

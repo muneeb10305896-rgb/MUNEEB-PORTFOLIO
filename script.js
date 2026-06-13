@@ -120,7 +120,7 @@ const translations = {
     'about.info.studying': 'Currently Studying',
     'about.info.studying-desc': 'B.Sc. IT — University of Eastern Finland, Kuopio',
     'about.info.working': 'Currently Working',
-    'about.info.working-desc': 'IT Developer at DEVSiNC (Remote) — July 2025–present',
+    'about.info.working-desc': 'Full-Stack Developer &amp; IT Manager at NORDASH &middot; IT Developer at DEVSiNC (Remote)',
     'about.info.location': 'Location',
     'about.info.location-desc': 'Kuopio, Finland',
     'about.info.languages': 'Languages',
@@ -144,6 +144,7 @@ const translations = {
     'skills.prof.web-dev': 'Web Development (HTML/CSS)',
     'skills.prof.git': 'Git & Version Control',
     'skills.prof.python-r': 'Python & R Programming',
+    'skills.prof.fullstack': 'Full-Stack Development (React/Next.js)',
     'edu.degree1': 'Bachelor\'s Degree in Information Technology',
     'edu.school1': 'University of Eastern Finland (UEF)',
     'edu.meta1': 'September 2025 — Present · Kuopio, Finland',
@@ -366,7 +367,7 @@ const translations = {
     'about.info.studying': 'Opiskelee',
     'about.info.studying-desc': 'B.Sc. IT — Itä-Suomen yliopisto, Kuopio',
     'about.info.working': 'Työskentelee',
-    'about.info.working-desc': 'IT-kehittäjä DEVSiNCillä (etä) — heinäkuu 2025–nykyhetki',
+    'about.info.working-desc': 'Full-Stack-kehittäjä &amp; IT-päällikkö NORDASHilla &middot; IT-kehittäjä DEVSiNCillä (etä)',
     'about.info.location': 'Sijainti',
     'about.info.location-desc': 'Kuopio, Suomi',
     'about.info.languages': 'Kielet',
@@ -390,6 +391,7 @@ const translations = {
     'skills.prof.web-dev': 'Verkkokehitys (HTML/CSS)',
     'skills.prof.git': 'Git & versiohallinta',
     'skills.prof.python-r': 'Python & R-ohjelmointi',
+    'skills.prof.fullstack': 'Full-stack-kehitys (React/Next.js)',
     'edu.degree1': 'Tietotekniikan kandidaatin tutkinto',
     'edu.school1': 'Itä-Suomen yliopisto (UEF)',
     'edu.meta1': 'Syyskuu 2025 — Nykyhetki · Kuopio, Suomi',
@@ -679,6 +681,7 @@ window.addEventListener('scroll', () => {
     requestAnimationFrame(onScrollFrame);
   }
 }, { passive: true });
+measureDocHeight();
 onScrollFrame(); /* set correct initial state */
 
 backToTop.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));

@@ -1505,22 +1505,3 @@ function masterTick() {
   requestAnimationFrame(masterTick);
 }
 requestAnimationFrame(masterTick);
-
-
-/* —— NORDASH LIVE PREVIEW SCALER —— */
-(function () {
-  const frame = document.getElementById('nordashFrame');
-  const wrap = document.querySelector('.mock-iframe-wrap');
-  if (!frame || !wrap) return;
-  function scaleNordash() {
-    const w = wrap.clientWidth;
-    if (!w) return;
-    const s = w / 1280;
-    frame.style.transform = 'scale(' + s + ')';
-    wrap.style.height = Math.round(820 * s) + 'px';
-  }
-  window.addEventListener('resize', scaleNordash, { passive: true });
-  window.addEventListener('load', scaleNordash);
-  setTimeout(scaleNordash, 60);
-  setTimeout(scaleNordash, 600);
-})();

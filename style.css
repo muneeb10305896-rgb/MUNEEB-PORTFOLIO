@@ -468,9 +468,11 @@ h1 {
   width: 130px; height: 130px; border-radius: 50%; overflow: hidden;
   border: 2px solid rgba(124,109,250,.5);
   box-shadow: 0 0 22px rgba(124,109,250,.3);
+  aspect-ratio: 1;
+  clip-path: circle(50%);
 }
 .id-photo picture { display: block; width: 100%; height: 100%; }
-.id-photo img { width: 100%; height: 100%; object-fit: cover; -webkit-user-drag: none; user-select: none; }
+.id-photo img { width: 100%; height: 100%; object-fit: cover; object-position: center; aspect-ratio: 1; -webkit-user-drag: none; user-select: none; }
 .id-name { font-family: 'Syne', sans-serif; font-weight: 700; font-size: 1.25rem; color: #fff; margin-top: 18px; }
 .id-title { font-size: .85rem; color: var(--muted); margin-top: 4px; }
 .id-barcode {

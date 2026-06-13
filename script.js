@@ -161,9 +161,9 @@ const translations = {
     'footer.copyright': '&copy; 2026 Muneeb Ahmed Butt. All rights reserved.',
     'page.title': 'Muneeb Ahmed Butt &mdash; Portfolio',
     'hero.sr-text': 'IT Student at UEF Finland, IT Developer at DEVSiNC, Harvard Aspire 2024 Alumni, ESN Savo member, web developer and problem solver.',
-    'form.sending': 'Sending&hellip;',
-    'form.success': '&#10003; Message sent! I\'ll get back to you as soon as possible.',
-    'form.error': '&#10007; Something went wrong. Please email me directly at muneeb10305896@gmail.com',
+    'form.sending': 'Sending…',
+    'form.success': '✓ Message sent! I\'ll get back to you as soon as possible.',
+    'form.error': '✗ Something went wrong. Please email me directly at muneeb10305896@gmail.com',
     'footer.text-full': 'Designed &amp; built by <span>Muneeb Ahmed Butt</span> &middot; University of Eastern Finland &middot; Kuopio <svg viewBox="0 0 18 11" width="18" height="11" xmlns="http://www.w3.org/2000/svg" style="vertical-align:middle"><rect width="18" height="11" fill="#fff"/><rect x="5" y="0" width="3" height="11" fill="#003580"/><rect x="0" y="4" width="18" height="3" fill="#003580"/></svg>',
     /* -- experience bullets -- */
     'exp1.b1': 'Managed and updated company websites, ensuring functionality and content accuracy',
@@ -336,7 +336,7 @@ const translations = {
     'form.email': 'S&auml;hk&ouml;postisi',
     'form.subject': 'Aihe',
     'form.message': 'Viestisi',
-    'form.send': 'L&auml;het&auml; viesti',
+    'form.send': 'Lähetä viesti',
     'form.ph-name': 'Koko nimesi',
     'form.ph-email': 's&auml;hk&ouml;postisi@osoite.fi',
     'form.ph-subject': 'Ty&ouml;tilaisuus, yhteisty&ouml;, tervehdys&hellip;',
@@ -406,10 +406,10 @@ const translations = {
     'cv.meta.updated': 'P&auml;ivitetty kes&auml;kuu 2026',
     'footer.copyright': '&copy; 2026 Muneeb Ahmed Butt. Kaikki oikeudet pid&auml;tet&auml;&auml;n.',
     'page.title': 'Muneeb Ahmed Butt &mdash; Portfoliosivu',
-    'hero.sr-text': 'IT-opiskelija It&auml;-Suomen yliopistossa, IT-kehitt&auml;j&auml; DEVSiNCill&auml;, Harvard Aspire 2024 -alumni, ESN Savon j&auml;sen, verkkokehitt&auml;j&auml; ja ongelmanratkaisija.',
-    'form.sending': 'L&auml;hetet&auml;&auml;n&hellip;',
-    'form.success': '&#10003; Viesti l&auml;hetetty! Palaan asiaan mahdollisimman pian.',
-    'form.error': '&#10007; Jotain meni pieleen. L&auml;het&auml; s&auml;hk&ouml;postia osoitteeseen muneeb10305896@gmail.com',
+    'hero.sr-text': 'IT-opiskelija Itä-Suomen yliopistossa, IT-kehittäjä DEVSiNCillä, Harvard Aspire 2024 -alumni, ESN Savon jäsen, verkkokehittäjä ja ongelmanratkaisija.',
+    'form.sending': 'Lähetetään…',
+    'form.success': '✓ Viesti lähetetty! Palaan asiaan mahdollisimman pian.',
+    'form.error': '✗ Jotain meni pieleen. Lähetä sähköpostia osoitteeseen muneeb10305896@gmail.com',
     'footer.text-full': 'Suunnitellut &amp; toteuttanut <span>Muneeb Ahmed Butt</span> &middot; It&auml;-Suomen yliopisto &middot; Kuopio <svg viewBox="0 0 18 11" width="18" height="11" xmlns="http://www.w3.org/2000/svg" style="vertical-align:middle"><rect width="18" height="11" fill="#fff"/><rect x="5" y="0" width="3" height="11" fill="#003580"/><rect x="0" y="4" width="18" height="3" fill="#003580"/></svg>',
     /* -- experience bullets -- */
     'exp1.b1': 'Hallinnoin ja p&auml;ivitin yrityksen verkkosivuja varmistaen toimivuuden ja sis&auml;ll&ouml;n oikeellisuuden',
@@ -797,7 +797,7 @@ function tickParticles() {
 
 /* &mdash;&mdash; TYPEWRITER (setTimeout-based &mdash; reliable across all browsers) &mdash;&mdash; */
 const twPhrases = [
-  'IT Student at UEF &#127467;&#127470;',
+  'IT Student at UEF \uD83C\uDDEB\uD83C\uDDEE',
   'Full-Stack Developer & IT Manager at NORDASH',
   'Harvard Aspire 2024 Alumni',
   'ESN Savo Board Member',
@@ -809,12 +809,13 @@ const twEl = document.getElementById('typewriter');
 
 if (twEl) {
   (function twTick() {
-    const p = twPhrases[twIdx];
+    /* split into code points so multi-unit chars (e.g. flag emoji) stay whole */
+    const chars = Array.from(twPhrases[twIdx]);
     twPos += twDir;
 
-    if (twPos > p.length) {
-      twDir = -1; twPos = p.length;
-      twEl.textContent = p;
+    if (twPos > chars.length) {
+      twDir = -1; twPos = chars.length;
+      twEl.textContent = chars.join('');
       setTimeout(twTick, twPause);
       return;
     } else if (twPos < 0) {
@@ -825,7 +826,7 @@ if (twEl) {
       return;
     }
 
-    twEl.textContent = p.slice(0, twPos);
+    twEl.textContent = chars.slice(0, twPos).join('');
     setTimeout(twTick, twSpeed);
   })();
 }

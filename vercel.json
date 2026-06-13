@@ -5,12 +5,25 @@
       "headers": [{ "key": "Cache-Control", "value": "public, max-age=604800" }]
     },
     {
-      "source": "/(.*)\\.(js|css)",
-      "headers": [{ "key": "Cache-Control", "value": "public, max-age=86400" }]
+      "source": "/(.*)\\.js",
+      "headers": [
+        { "key": "Cache-Control", "value": "public, max-age=86400" },
+        { "key": "Content-Type", "value": "application/javascript; charset=utf-8" }
+      ]
+    },
+    {
+      "source": "/(.*)\\.css",
+      "headers": [
+        { "key": "Cache-Control", "value": "public, max-age=86400" },
+        { "key": "Content-Type", "value": "text/css; charset=utf-8" }
+      ]
     },
     {
       "source": "/index.html",
-      "headers": [{ "key": "Cache-Control", "value": "public, max-age=0, must-revalidate" }]
+      "headers": [
+        { "key": "Cache-Control", "value": "public, max-age=0, must-revalidate" },
+        { "key": "Content-Type", "value": "text/html; charset=utf-8" }
+      ]
     }
   ]
 }

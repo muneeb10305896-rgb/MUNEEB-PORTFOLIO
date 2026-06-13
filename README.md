@@ -174,5 +174,11 @@ Built by **Muneeb Ahmed Butt** · University of Eastern Finland · Kuopio 🇫�
 - CSS cache-busted to `?v=8`.
 
 ### June 2026 — v6 (Instagram in-app browser encoding fix)
-- **Garbage characters (â€", Â·, ðŸ‡«ðŸ‡®) in Instagram/Facebook in-app browsers**: the minified `script.min.js` was corrupted — it had been saved with wrong encoding, turning UTF-8 multi-byte sequences (Finnish ä/ö, em dash, middle dot, flag emoji) into Latin-1 garbage. Root cause: raw Unicode characters in JS string values that some in-app browsers misinterpret. Fixed by: (1) replacing every raw special character in `script.js` and `index.html` with safe HTML entities (`&mdash;`, `&middot;`, `&auml;`, `&ouml;`, `&rarr;`, `&hellip;`, `&ndash;`, etc.), (2) fully regenerating `script.min.js` from the clean source so no corrupted bytes remain. Result: zero non-ASCII characters in any served file — renders correctly in all browsers including Instagram, Facebook, and WeChat in-app browsers.
-- Script cache-busted to `?v=13`.
+- **Garbage characters (â€", Â·) and a broken flag in Instagram/Facebook in-app browsers**: root cause was a byte-level corruption in the minified `script.min.js` — it had been double-encoded, turning valid UTF-8 (Finnish ä/ö, em dash, middle dot, flag emoji) into mojibake. In-app browsers are stricter than Chrome/Safari and showed the raw garbage.
+- **Fix**:
+  1. Regenerated `script.min.js` cleanly from the UTF-8 source so no corrupted bytes remain.
+  2. Rewrote the typewriter to iterate by Unicode code point (`Array.from`) so the Finland flag emoji 🇫🇮 types as one whole glyph instead of a split surrogate pair, and uses the real emoji (via `\uD83C\uDDEB\uD83C\uDDEE` escape — pure ASCII in source, real flag at runtime).
+  3. Kept `data-i18n` (innerHTML) strings as HTML entities where appropriate, but reverted all `textContent`-bound strings (form status, screen-reader text) to real Unicode, since `textContent` shows entities literally.
+  4. Added explicit `Content-Type: …; charset=utf-8` headers in `vercel.json` for HTML/JS/CSS so every browser — including in-app ones — is told to decode as UTF-8.
+- All served files verified as clean, valid UTF-8 with zero mojibake.
+- Script cache-busted to `?v=14`.

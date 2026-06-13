@@ -645,8 +645,6 @@ function buildSectionOffsets() {
 }
 buildSectionOffsets();
 window.addEventListener('resize', buildSectionOffsets, { passive: true });
-window.addEventListener('load', () => { buildSectionOffsets(); requestAnimationFrame(() => onScrollFrame && onScrollFrame()); }, { passive: true });
-setTimeout(() => { buildSectionOffsets(); onScrollFrame && onScrollFrame(); }, 1500); /* rebuild after web fonts settle */
 
 /* rAF-throttled: scroll can fire several times per frame — do the DOM
    work at most once per frame, and cache docHeight (reading scrollHeight

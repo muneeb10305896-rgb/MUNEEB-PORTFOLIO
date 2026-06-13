@@ -875,14 +875,6 @@ html[data-theme="light"] .cert-verify:hover { background: rgba(14,122,168,.12); 
   border-color: rgba(124,109,250,.5); background: rgba(124,109,250,.04);
   box-shadow: 0 0 0 3px rgba(124,109,250,.1);
 }
-.cf-input:user-invalid,
-.cf-input:invalid:not(:placeholder-shown) {
-  border-color: rgba(255,107,157,.6);
-  box-shadow: 0 0 0 3px rgba(255,107,157,.08);
-}
-.cf-input:valid:not(:placeholder-shown) {
-  border-color: rgba(79,195,247,.4);
-}
 .cf-textarea { resize: vertical; min-height: 128px; line-height: 1.65; }
 .cf-submit {
   display: flex; align-items: center; justify-content: center; gap: .6rem;
@@ -1064,23 +1056,11 @@ footer::before {
   border-radius: 12px;
   background: conic-gradient(from var(--angle, 0deg), #7c6dfa, #4fc3f7, #ff6b9d, #7c6dfa);
   /* PERF: animating a conic gradient repaints every frame — spin on hover only */
-}
-/* mask-composite:exclude creates a border-only gradient border */
-@supports (mask-composite: exclude) {
-  .btn-nordash-hero::before {
-    -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-    mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-    -webkit-mask-composite: xor;
-    mask-composite: exclude;
-    padding: 2px;
-  }
-}
-/* Firefox/Safari fallback: show a simple border instead */
-@supports not (mask-composite: exclude) {
-  .btn-nordash-hero::before {
-    border: 2px solid transparent;
-    background-clip: padding-box;
-  }
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  padding: 2px;
 }
 @keyframes ctaBorderSpin {
   to { --angle: 360deg; }
@@ -1149,17 +1129,13 @@ footer::before {
   border-radius: var(--radius);
   padding: 1px;
   background: conic-gradient(from var(--card-angle, 0deg), rgba(124,109,250,.4), rgba(79,195,247,.3), rgba(255,107,157,.3), rgba(124,109,250,.4));
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
   pointer-events: none;
   transition: opacity .3s;
   /* PERF: spin on hover only — continuous conic repaint hurt low-end GPUs */
-}
-@supports (mask-composite: exclude) {
-  .hero-nordash-border {
-    -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-    mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-    -webkit-mask-composite: xor;
-    mask-composite: exclude;
-  }
 }
 .hero-nordash-card:hover .hero-nordash-border { animation: cardAngleSpin 5s linear infinite; }
 @keyframes cardAngleSpin {
@@ -1669,14 +1645,6 @@ html[data-theme="light"] .hero-nordash-border {
 html[data-theme="light"] .cf-input { background: #fbfaff; }
 html[data-theme="light"] .cf-input:focus { background: #fff; }
 html[data-theme="light"] .cf-input::placeholder { color: rgba(93,90,124,.55); }
-html[data-theme="light"] .cf-input:user-invalid,
-html[data-theme="light"] .cf-input:invalid:not(:placeholder-shown) {
-  border-color: rgba(255,107,157,.5);
-  box-shadow: 0 0 0 3px rgba(255,107,157,.06);
-}
-html[data-theme="light"] .cf-input:valid:not(:placeholder-shown) {
-  border-color: rgba(79,195,247,.35);
-}
 
 /* particles slightly deeper purple for contrast (used by JS via CSS var) */
 :root { --particle-rgb: 124,109,250; }

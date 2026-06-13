@@ -169,7 +169,6 @@ The HTML loads `script.min.js` — bump the version query string to bust cache:
 
 Built by **Muneeb Ahmed Butt** · University of Eastern Finland · Kuopio 🇫🇮
 
-### June 2026 — v4 (map + scroll bar fix)
-- **Map broken (double www bug)**: `script.min.js` had a corrupted URL `https://www.www.openstreetmap.org` — replaced entirely with Google Maps embed (`maps.google.com/maps?q=Kuopio,Finland`). Clicking the map opens Kuopio in Google Maps in a new tab.
-- **Scroll progress bar snapping on desktop**: bar was hitting 100% early because `docHeight` went stale after the map iframe loaded and expanded the page. Fixed with a `ResizeObserver` on the document root that keeps `docHeight` continuously accurate, plus an explicit `measureDocHeight()` call after the map iframe finishes loading.
-- Script cache-busted to `?v=12`.
+### June 2026 — v5 (mobile card photo fix)
+- **Profile photo showing as oval on mobile**: the `aspect-ratio: 1/1` property on `.id-photo` wasn't reliably enforcing equal dimensions inside a flex column on iOS Safari and some Android browsers. Replaced with explicit `width`, `height`, `min-width`, `min-height` (100×100px), and re-declared `border-radius: 50%`, `overflow: hidden` directly on the mobile rule — plus matching explicit sizes on the inner `picture` and `img` elements. Photo is now a perfect circle on all devices, matching desktop.
+- CSS cache-busted to `?v=8`.

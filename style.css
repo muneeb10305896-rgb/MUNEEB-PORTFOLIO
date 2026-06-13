@@ -1690,7 +1690,9 @@ html[data-theme="light"] #particle-canvas { opacity: .5; }
   .scroll-down { display: none; }
   .lanyard-stage { height: 400px; max-width: 280px; }
   .id-card { width: 200px; height: 290px; }
-  .id-photo { width: 100px; aspect-ratio: 1 / 1; }
+  .id-photo { width: 100px; height: 100px; min-width: 100px; min-height: 100px; border-radius: 50%; overflow: hidden; flex-shrink: 0; }
+  .id-photo picture { width: 100px; height: 100px; border-radius: 50%; overflow: hidden; }
+  .id-photo img { width: 100px; height: 100px; border-radius: 50%; object-fit: cover; object-position: center; }
   .id-name { font-size: 1rem; }
   .id-title { font-size: .75rem; }
   .id-barcode { height: 24px; }
@@ -1744,6 +1746,9 @@ html[data-theme="light"] #particle-canvas { opacity: .5; }
   .hero-btns .btn-outline,
   .hero-btns .btn-cv,
   .hero-btns .btn-nordash-hero { padding: .7rem 1rem; font-size: .9rem; }
+  .id-photo { width: 84px; height: 84px; min-width: 84px; min-height: 84px; }
+  .id-photo picture { width: 84px; height: 84px; }
+  .id-photo img { width: 84px; height: 84px; }
 }
 
 /* —— LANDSCAPE PHONES (short viewports) —— */

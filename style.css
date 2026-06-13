@@ -379,24 +379,6 @@ h1 {
 }
 .stat-label { font-size: .8rem; color: var(--muted); margin-top: .1rem; }
 
-/* —— SCROLL DOWN INDICATOR —— */
-.scroll-down {
-  position: absolute; bottom: 1.5rem; left: 50%; transform: translateX(-50%);
-  display: flex; flex-direction: column; align-items: center; gap: .5rem;
-  text-decoration: none; color: var(--muted); z-index: 3;
-  animation: fadeUp .8s ease 1.2s both;
-}
-.scroll-mouse {
-  width: 22px; height: 36px; border: 2px solid var(--muted);
-  border-radius: 12px; display: flex; justify-content: center; padding-top: 6px;
-}
-.scroll-wheel {
-  width: 3px; height: 7px; background: var(--accent); border-radius: 2px;
-  animation: scrollWheel 1.5s ease-in-out infinite;
-}
-@keyframes scrollWheel { 0% { opacity:1; transform:translateY(0); } 100% { opacity:0; transform:translateY(10px); } }
-.scroll-text { font-size: .7rem; letter-spacing: .12em; text-transform: uppercase; }
-
 /* ============================================
    DRAGGABLE LANYARD ID CARD
    ============================================ */
@@ -584,6 +566,12 @@ h1 {
   color: var(--accent); padding: .28rem .8rem; border-radius: 100px; font-size: .8rem;
   transition: all .35s cubic-bezier(.34,1.56,.64,1); cursor: default;
 }
+.badge:focus-visible {
+  background: rgba(124,109,250,.28); border-color: var(--accent);
+  transform: translateY(-5px) scale(1.12) rotate(-2deg);
+  box-shadow: 0 8px 22px rgba(124,109,250,.4); color: #fff;
+  outline: 2px solid var(--accent2); outline-offset: 3px;
+}
 .badge:hover {
   background: rgba(124,109,250,.28); border-color: var(--accent);
   transform: translateY(-5px) scale(1.12) rotate(-2deg);
@@ -717,6 +705,11 @@ h1 {
   color: var(--accent2); padding: .18rem .62rem; border-radius: 6px; font-size: .75rem;
   transition: all .3s cubic-bezier(.34,1.56,.64,1);
 }
+.exp-tag:focus-visible {
+  background: rgba(79,195,247,.28); border-color: var(--accent2); color: #fff;
+  transform: translateY(-4px) scale(1.1); box-shadow: 0 6px 16px rgba(79,195,247,.35);
+  outline: 2px solid var(--accent2); outline-offset: 3px;
+}
 .exp-tag:hover {
   background: rgba(79,195,247,.28); border-color: var(--accent2); color: #fff;
   transform: translateY(-4px) scale(1.1); box-shadow: 0 6px 16px rgba(79,195,247,.35);
@@ -747,6 +740,11 @@ h1 {
   background: rgba(255,255,255,.04); border: 1px solid rgba(255,255,255,.08);
   padding: .2rem .6rem; border-radius: 6px; font-size: .76rem; color: var(--muted);
   transition: all .3s cubic-bezier(.34,1.56,.64,1);
+}
+.skill-pill:focus-visible {
+  background: rgba(124,109,250,.25); border-color: var(--accent); color: #fff;
+  transform: translateY(-4px) scale(1.1); box-shadow: 0 6px 16px rgba(124,109,250,.35);
+  outline: 2px solid var(--accent2); outline-offset: 3px;
 }
 .skill-pill:hover {
   background: rgba(124,109,250,.25); border-color: var(--accent); color: #fff;
@@ -983,7 +981,7 @@ footer::before {
   position: fixed; bottom: 2rem; right: 2rem; z-index: 90;
   width: 46px; height: 46px; border-radius: 50%;
   background: linear-gradient(135deg, var(--accent), #9b8df8);
-  color: #fff; border: none; font-size: 1.2rem; cursor: none;
+  color: #fff; border: none; font-size: 1.2rem; cursor: pointer;
   box-shadow: 0 4px 20px rgba(124,109,250,.4);
   opacity: 0; visibility: hidden; transform: translateY(20px);
   transition: opacity .35s, visibility .35s, transform .35s cubic-bezier(.34,1.56,.64,1);
@@ -1768,7 +1766,18 @@ html[data-theme="light"] #particle-canvas { opacity: .5; }
 /* —— REDUCED MOTION —— */
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
-  #particle-canvas, .lanyard-hint { display: none !important; }
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+  /* Hide purely decorative animated elements — no purpose without motion */
+  #particle-canvas, .lanyard-hint, .lanyard-stage,
+  .velocity-section, .tw-cursor, .blob, .floating-shape,
+  .live-dot, .tag-dot, .hero-nordash-card,
+  #backToTop.show::after { display: none !important; }
+  /* Kill the preloader animation instantly — show content immediately */
+  #preloader { display: none !important; }
 }
 
 /* —— PRINT —— */

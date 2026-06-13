@@ -559,8 +559,10 @@ if (langToggleBtn) {
 }
 // apply saved language on load, default English
 (function initLang() {
-  const saved = (() => { try { return localStorage.getItem('lang'); } catch (e) { return null; } })() || 'en';
-  applyLanguage(saved);
+  // check URL query param first (?lang=fi) — enables hreflang links
+  const urlLang = new URLSearchParams(window.location.search).get('lang');
+  const saved = urlLang || (() => { try { return localStorage.getItem('lang'); } catch (e) { return null; } })() || 'en';
+  if (saved && ['en','fi'].includes(saved)) applyLanguage(saved);
 })();
 
 /* —— THEME TOGGLE —— */
@@ -1295,24 +1297,6 @@ function tickSpring() {
   }
   springAllIdle = !anyActive;
 }
-
-/* —— PARALLAX FLOATING SHAPES ON SCROLL —— */
-const floatShapes = document.querySelectorAll('.floating-shape');
-let floatPending = false, floatY = 0;
-window.addEventListener('scroll', () => {
-  floatY = window.scrollY;
-  if (!floatPending) {
-    floatPending = true;
-    requestAnimationFrame(() => {
-      floatPending = false;
-      if (PERF_LITE) return; /* shapes are static in lite mode */
-      floatShapes.forEach((s, i) => {
-        const depth = (i % 3 + 1) * 0.12;
-        s.style.transform = `translateY(${floatY * depth}px) rotate(${floatY * 0.04 * (i + 1)}deg)`;
-      });
-    });
-  }
-}, { passive: true });
 
 /* —— SKILL BARS —— */
 const sbarObserver = new IntersectionObserver(entries => {

@@ -956,7 +956,7 @@ let tickLanyard = () => {};
   }
 
   /* ---- physics constants ---- */
-  const SEGMENTS = 6, SEG_LEN = 18, GRAVITY = 0.65, FRICTION = 0.94, STIFFNESS = 3;
+  const SEGMENTS = 5, SEG_LEN = 18, GRAVITY = 0.65, FRICTION = 0.94, STIFFNESS = 3;
   let anchorX = 0, anchorY = 0;
   const points = [];
   for (let i = 0; i < SEGMENTS; i++) points.push({ x: 0, y: 0, ox: 0, oy: 0, pinned: i === 0 });
@@ -1114,7 +1114,7 @@ let tickLanyard = () => {};
     /* measure remaining motion &mdash; below threshold means visually static */
     let energy = 0;
     for (const p of points) energy += Math.abs(p.x - p.ox) + Math.abs(p.y - p.oy);
-    lanyardSettled = !dragging && energy < 0.6;
+    lanyardSettled = !dragging && energy < 1.2;
 
     // render rope &mdash; clear only last frame's dirty region, then this frame's
     let minX = anchorX, maxX = anchorX, minY = anchorY, maxY = anchorY;
@@ -1517,7 +1517,7 @@ function masterTick() {
   }
   tickVelocity();
   tickLanyard();   /* EVERY frame &mdash; half-rate made dragging feel choppy */
-  tickSpring();
+  if (frameCount % 2 === 0) tickSpring();  /* 30fps indistinguishable from 60fps for magnetic hover */
   requestAnimationFrame(masterTick);
 }
 requestAnimationFrame(masterTick);

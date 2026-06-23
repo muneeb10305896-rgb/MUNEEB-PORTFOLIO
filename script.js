@@ -27,6 +27,8 @@ const translations = {
     'nav.education': 'Education',
     'nav.contact': 'Contact',
     'nav.cv': 'CV',
+    'nav.resume': 'Resume',
+    'cv.resume': 'Web Resume',
     'nav.hire-me': 'Hire Me',
     'hero.tag': 'Open to opportunities in Finland',
     'hero.hi': "Hi, I'm",
@@ -273,6 +275,8 @@ const translations = {
     'nav.education': 'Koulutus',
     'nav.contact': 'Yhteys',
     'nav.cv': 'CV',
+    'nav.resume': 'Ansioluettelo',
+    'cv.resume': 'Web-ansioluettelo',
     'nav.hire-me': 'Ota yhteytt&auml;',
     'hero.tag': 'Avoin ty&ouml;mahdollisuuksille Suomessa',
     'hero.hi': 'Hei, olen',
@@ -1107,6 +1111,29 @@ let tickLanyard = () => {};
     resetToAnchor();
     placeCard();
     lanyardSettled = false;
+  });
+
+  /* &mdash;&mdash; KEYBOARD ALTERNATIVE for lanyard card &mdash;&mdash;
+     Arrow keys nudge the card so keyboard users can interact. */
+  let kbdNudgeX = 0, kbdNudgeY = 0;
+  function updateCardKeyboardNudge() {
+    if (kbdNudgeX === 0 && kbdNudgeY === 0) return;
+    dragX = Math.max(60, Math.min(window.innerWidth  - 60, anchorX + kbdNudgeX));
+    dragY = Math.max(60, Math.min(window.innerHeight - 30, anchorY + 80 + kbdNudgeY));
+    last.pinned = true;
+    // release after one tick so physics takes over (pull-back effect)
+    setTimeout(() => { if (!dragging) last.pinned = false; }, 200);
+  }
+  card.setAttribute('tabindex', '0');
+  card.setAttribute('role', 'button');
+  card.setAttribute('aria-label', 'Draggable ID card. Use arrow keys to nudge it.');
+  card.addEventListener('keydown', e => {
+    const step = 30;
+    if      (e.key === 'ArrowLeft')  { e.preventDefault(); kbdNudgeX -= step; updateCardKeyboardNudge(); }
+    else if (e.key === 'ArrowRight') { e.preventDefault(); kbdNudgeX += step; updateCardKeyboardNudge(); }
+    else if (e.key === 'ArrowUp')    { e.preventDefault(); kbdNudgeY -= step; updateCardKeyboardNudge(); }
+    else if (e.key === 'ArrowDown')  { e.preventDefault(); kbdNudgeY += step; updateCardKeyboardNudge(); }
+    else if (e.key === 'Home')       { e.preventDefault(); kbdNudgeX = 0; kbdNudgeY = 0; resetToAnchor(); placeCard(); lanyardSettled = false; }
   });
 
   /* ---- physics tick ---- */

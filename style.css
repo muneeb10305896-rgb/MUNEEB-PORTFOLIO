@@ -52,9 +52,13 @@ body {
 }
 .skip-link:focus { top: 12px; }
 a:focus-visible, button:focus-visible, input:focus-visible, textarea:focus-visible, [tabindex]:focus-visible {
-  outline: 2px solid var(--accent2);
-  outline-offset: 3px;
-  border-radius: 4px;
+  outline: 3px solid var(--accent2);
+  outline-offset: 4px;
+  border-radius: 6px;
+}
+/* thicker WCAG 2.2 focus — also add a subtle background glow so it works on all surfaces */
+a:focus-visible, button:focus-visible {
+  box-shadow: 0 0 0 4px rgba(79,195,247,.15);
 }
 
 /* —— SITE-WIDE 3D ANIMATED BACKGROUND —— */
@@ -190,7 +194,9 @@ body::after {
 
 .nav-hamburger {
   display: none; flex-direction: column; gap: 5px;
-  background: none; border: none; cursor: pointer; padding: 4px;
+  background: none; border: none; cursor: pointer; padding: 10px;
+  min-width: 44px; min-height: 44px;
+  align-items: center; justify-content: center;
 }
 .nav-hamburger span {
   display: block; width: 22px; height: 2px;
@@ -216,7 +222,7 @@ body::after {
 }
 /* increase invisible hit-target from 8px → ~28px so the dots aren't frustrating to click */
 .section-dot::after {
-  content: ''; position: absolute; inset: -10px; border-radius: 50%;
+  content: ''; position: absolute; inset: -18px; border-radius: 50%;
 }
 .section-dot::before {
   content: attr(aria-label); position: absolute; right: 18px; top: 50%;
@@ -602,10 +608,14 @@ h1 {
 }
 .info-cards { display: flex; flex-direction: column; gap: .85rem; }
 .info-card {
+  container-type: inline-size;
   background: var(--card); border: 1px solid var(--border);
   border-radius: var(--radius); padding: 1.1rem 1.3rem;
   display: flex; align-items: flex-start; gap: .9rem;
   transition: border-color .25s, transform .25s; position: relative; overflow: hidden;
+}
+@container (max-width: 280px) {
+  .info-card { flex-direction: column; align-items: center; text-align: center; }
 }
 .info-card::before {
   content: ''; position: absolute; left: 0; top: 0; bottom: 0;
@@ -693,10 +703,15 @@ h1 {
 /* —— EXPERIENCE —— */
 .exp-list { display: flex; flex-direction: column; gap: 1.2rem; }
 .exp-card {
+  container-type: inline-size;
   background: var(--card); border: 1px solid var(--border);
   border-radius: var(--radius); padding: 1.6rem 1.8rem;
   position: relative; overflow: hidden;
   transition: border-color .3s, transform .3s, box-shadow .3s;
+}
+@container (max-width: 400px) {
+  .exp-header { flex-direction: column; gap: .4rem; }
+  .exp-date { align-self: flex-start; }
 }
 .exp-card-bar {
   position: absolute; top: 0; left: 0; bottom: 0; width: 3px;
@@ -739,9 +754,15 @@ h1 {
 @media (max-width: 1023px) { .skills-grid { grid-template-columns: repeat(2, 1fr); } }
 @media (max-width: 560px)  { .skills-grid { grid-template-columns: 1fr; } }
 .skill-card {
+  container-type: inline-size;
   background: var(--card); border: 1px solid var(--border);
   border-radius: var(--radius); padding: 1.4rem;
   transition: border-color .3s; cursor: default;
+}
+/* container query: stack skill items in columns when the card is narrow */
+@container (max-width: 220px) {
+  .skill-items { flex-direction: column; gap: .3rem; }
+  .skill-pill { text-align: center; }
 }
 .skill-card:hover { border-color: rgba(124,109,250,.4); }
 .skill-icon {
@@ -767,9 +788,13 @@ h1 {
 /* —— EDUCATION —— */
 .edu-list { display: flex; flex-direction: column; gap: 1rem; }
 .edu-card {
+  container-type: inline-size;
   background: var(--card); border: 1px solid var(--border); border-radius: var(--radius);
   padding: 1.5rem 1.7rem; display: flex; gap: 1.3rem; align-items: flex-start;
   transition: all .3s; position: relative; overflow: hidden;
+}
+@container (max-width: 320px) {
+  .edu-card { flex-direction: column; align-items: center; text-align: center; }
 }
 .edu-card::after {
   content: ''; position: absolute; inset: 0;
@@ -1434,6 +1459,7 @@ footer::before {
 
 /* -- Standard Project Cards -- */
 .project-card {
+  container-type: inline-size;
   position: relative;
   background: var(--card);
   border: 1px solid var(--border);

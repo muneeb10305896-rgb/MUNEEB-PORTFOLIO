@@ -214,6 +214,10 @@ body::after {
   background: rgba(124,109,250,.18); border: 1.5px solid rgba(124,109,250,.28);
   transition: all .4s cubic-bezier(.34,1.56,.64,1); text-decoration: none; display: block;
 }
+/* increase invisible hit-target from 8px → ~28px so the dots aren't frustrating to click */
+.section-dot::after {
+  content: ''; position: absolute; inset: -10px; border-radius: 50%;
+}
 .section-dot::before {
   content: attr(aria-label); position: absolute; right: 18px; top: 50%;
   transform: translateY(-50%) translateX(4px);
@@ -990,7 +994,7 @@ footer::before {
   position: fixed; bottom: 2rem; right: 2rem; z-index: 90;
   width: 46px; height: 46px; border-radius: 50%;
   background: linear-gradient(135deg, var(--accent), #9b8df8);
-  color: #fff; border: none; font-size: 1.2rem; cursor: none;
+  color: #fff; border: none; font-size: 1.2rem; cursor: pointer;
   box-shadow: 0 4px 20px rgba(124,109,250,.4);
   opacity: 0; visibility: hidden; transform: translateY(20px);
   transition: opacity .35s, visibility .35s, transform .35s cubic-bezier(.34,1.56,.64,1);

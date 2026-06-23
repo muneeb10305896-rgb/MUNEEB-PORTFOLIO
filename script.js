@@ -120,7 +120,7 @@ const translations = {
     'about.info.studying': 'Currently Studying',
     'about.info.studying-desc': 'B.Sc. IT &mdash; University of Eastern Finland, Kuopio',
     'about.info.working': 'Currently Working',
-    'about.info.working-desc': 'IT Developer at DEVSiNC (Remote) &mdash; July 2025&ndash;April 2026',
+    'about.info.working-desc': 'Full-Stack Developer &amp; IT Manager at NORDASH &middot; IT Developer at DEVSiNC (Remote)',
     'about.info.location': 'Location',
     'about.info.location-desc': 'Kuopio, Finland',
     'about.info.languages': 'Languages',
@@ -366,7 +366,7 @@ const translations = {
     'about.info.studying': 'Opiskelee',
     'about.info.studying-desc': 'B.Sc. IT &mdash; It&auml;-Suomen yliopisto, Kuopio',
     'about.info.working': 'Ty&ouml;skentelee',
-    'about.info.working-desc': 'IT-kehitt&auml;j&auml; DEVSiNCill&auml; (et&auml;) &mdash; hein&auml;kuu 2025&ndash;huhtikuu 2026',
+    'about.info.working-desc': 'Full-Stack-kehitt&auml;j&auml; &amp; IT-p&auml;&auml;llikk&ouml; NORDASHissa &middot; IT-kehitt&auml;j&auml; DEVSiNCill&auml; (et&auml;)',
     'about.info.location': 'Sijainti',
     'about.info.location-desc': 'Kuopio, Suomi',
     'about.info.languages': 'Kielet',
@@ -641,12 +641,23 @@ const sectionDots    = document.querySelectorAll('.section-dot');
 /* cache section offsets to avoid layout thrashing on scroll */
 let sectionOffsets = [];
 function buildSectionOffsets() {
-  sectionOffsets = Array.from(sections).map(sec => ({ id: sec.getAttribute('id'), top: sec.offsetTop - 180 }));
+  /* NAV_OFFSET = nav height (~60px scrolled) + a small trigger zone (~40px) */
+  const NAV_OFFSET = 100;
+  sectionOffsets = Array.from(sections).map(sec => ({ id: sec.getAttribute('id'), top: sec.offsetTop - NAV_OFFSET }));
 }
 buildSectionOffsets();
 window.addEventListener('resize', buildSectionOffsets, { passive: true });
 window.addEventListener('load', () => { buildSectionOffsets(); requestAnimationFrame(() => onScrollFrame && onScrollFrame()); }, { passive: true });
 setTimeout(() => { buildSectionOffsets(); onScrollFrame && onScrollFrame(); }, 1500); /* rebuild after web fonts settle */
+/* rebuild offsets each time the user scrolls past a section — content-visibility:auto
+   means offscreen sections report approximate offsetTop until they're laid out */
+let offsetRebuildPending = false;
+window.addEventListener('scroll', () => {
+  if (!offsetRebuildPending) {
+    offsetRebuildPending = true;
+    requestAnimationFrame(() => { offsetRebuildPending = false; buildSectionOffsets(); });
+  }
+}, { passive: true });
 
 /* rAF-throttled: scroll can fire several times per frame &mdash; do the DOM
    work at most once per frame, and cache docHeight (reading scrollHeight
@@ -686,6 +697,61 @@ window.addEventListener('scroll', () => {
 onScrollFrame(); /* set correct initial state */
 
 backToTop.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
+
+/* &mdash;&mdash; SECTION DOT CLICK HANDLER (JS scroll with proper offset) &mdash;&mdash;
+   Native anchor scroll (#href) uses approximate scroll-padding and can land
+   in the wrong spot when content-visibility:auto sections haven't rendered yet.
+   This handler resolves the actual position before scrolling. */
+document.querySelectorAll('.section-dot').forEach(dot => {
+  dot.addEventListener('click', e => {
+    const targetId = dot.getAttribute('href').substring(1);
+    const target = document.getElementById(targetId);
+    if (!target) return;
+    e.preventDefault();
+
+    /* Immediately update active visual state (no waiting for scroll event) */
+    sectionDots.forEach(d => d.classList.toggle('active', d === dot));
+    navLinks.forEach(link => link.classList.toggle('active', link.getAttribute('href') === '#' + targetId));
+    /* Update the URL hash so sharing / back-button work correctly */
+    if (history.replaceState) history.replaceState(null, '', '#' + targetId);
+
+    /* Force the browser to resolve the real layout position even when the
+       section has content-visibility:auto and hasn't been painted yet.
+       Setting visible, reading a layout property, then restoring triggers
+       a synchronous layout that resolves all approximate sizes. */
+    const savedCV = target.style.contentVisibility;
+    target.style.contentVisibility = 'visible';
+    const top = target.getBoundingClientRect().top + window.scrollY;
+    target.style.contentVisibility = savedCV;
+
+    /* Don't scroll if the section is already at the top of the viewport —
+       clicking its dot would bounce the page up by the nav offset for no reason */
+    const scrolledToTop = Math.abs(window.scrollY - (top - 80)) < 10;
+    if (!scrolledToTop) {
+      window.scrollTo({ top: top - 80, behavior: 'smooth' });
+    }
+  });
+});
+
+/* &mdash;&mdash; FIX MOBILE MENU ANCHOR SCROLL &mdash;&mdash;
+   Same content-visibility position fix as section dots above. The inline
+   onclick="closeMobileMenu()" fires first (our listener runs after it).
+   We prevent the native anchor scroll and use the same JS approach. */
+document.querySelectorAll('.mobile-menu a[href^="#"]').forEach(link => {
+  link.addEventListener('click', e => {
+    const targetId = link.getAttribute('href').substring(1);
+    const target = document.getElementById(targetId);
+    if (!target) return;
+    e.preventDefault();
+
+    const savedCV = target.style.contentVisibility;
+    target.style.contentVisibility = 'visible';
+    const top = target.getBoundingClientRect().top + window.scrollY;
+    target.style.contentVisibility = savedCV;
+
+    window.scrollTo({ top: top - 80, behavior: 'smooth' });
+  });
+});
 
 /* &mdash;&mdash; MOBILE MENU &mdash;&mdash; */
 const hamburger  = document.getElementById('navHamburger');
@@ -1523,20 +1589,4 @@ function masterTick() {
 requestAnimationFrame(masterTick);
 
 
-/* &mdash;&mdash; NORDASH LIVE PREVIEW SCALER &mdash;&mdash; */
-(function () {
-  const frame = document.getElementById('nordashFrame');
-  const wrap = document.querySelector('.mock-iframe-wrap');
-  if (!frame || !wrap) return;
-  function scaleNordash() {
-    const w = wrap.clientWidth;
-    if (!w) return;
-    const s = w / 1280;
-    frame.style.transform = 'scale(' + s + ')';
-    wrap.style.height = Math.round(820 * s) + 'px';
-  }
-  window.addEventListener('resize', scaleNordash, { passive: true });
-  window.addEventListener('load', scaleNordash);
-  setTimeout(scaleNordash, 60);
-  setTimeout(scaleNordash, 600);
-})();
+/* (dead code removed) nordashFrame iframe was never in the DOM — the preview uses an <img> instead */

@@ -95,12 +95,14 @@
 }
 </script>
 <link rel="preload" as="image" href="assets/muneeb.webp" type="image/webp" fetchpriority="high">
+<link rel="preload" href="assets/fonts/DMSans-normal-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="assets/fonts/Syne-latin.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="dns-prefetch" href="https://formspree.io">
 <link rel="dns-prefetch" href="https://www.google.com">
 <link rel="stylesheet" href="assets/fonts/fonts.css">
-<link rel="stylesheet" href="style.min.css?v=10">
+<link rel="stylesheet" href="style.min.css?v=12">
 <!-- Privacy-first analytics — GDPR compliant, no cookie banner needed. Replace data-domain with your actual domain. -->
-<script defer data-domain="muneeb-ahmed-butt.vercel.app" src="https://plausible.io/js/script.js"></script>
+<script defer data-domain="muneeb-ahmed-butt.vercel.app" src="https://plausible.io/js/script.js" integrity="sha384-zT1ce5bjM8JKtp1jP2OrIdAJbEUfNIUJ9FxzvMHDFBHmIU+cHYwXVs1xBoRORibS" crossorigin="anonymous"></script>
 </head>
 <body>
 
@@ -144,6 +146,12 @@
     <svg class="icon-moon" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
   </button>
   <div class="nav-right">
+  <div class="color-themes">
+    <button class="color-theme-btn purple active" data-accent="purple" aria-label="Purple theme" title="Purple"></button>
+    <button class="color-theme-btn teal" data-accent="teal" aria-label="Teal theme" title="Teal"></button>
+    <button class="color-theme-btn rose" data-accent="rose" aria-label="Rose theme" title="Rose"></button>
+    <button class="color-theme-btn amber" data-accent="amber" aria-label="Amber theme" title="Amber"></button>
+  </div>
   <button class="lang-toggle" id="langToggle" aria-label="Switch language" title="Switch language">EN</button>
   <a class="nav-cta" href="mailto:muneeb10305896@gmail.com" data-i18n="nav.hire-me">Hire Me</a>
   <button class="nav-hamburger" id="navHamburger" aria-label="Toggle menu" aria-expanded="false" aria-controls="mobileMenu">
@@ -199,6 +207,12 @@
         <div class="hero-tag hero-tag-nordash">
           <span class="live-dot"></span>
           <span data-i18n="hero.tag-nordash">Building NORDASH &mdash; Live</span>
+        </div>
+        <div class="live-clock-wrap">
+          <span class="live-clock" id="liveClock" aria-label="Current time in Kuopio, Finland">
+            <span class="clock-dot"></span>
+            <span id="clockDisplay">--:--</span>
+          </span>
         </div>
       </div>
       <h1>
@@ -901,7 +915,8 @@
         </div>
         <div class="cf-field">
           <label class="cf-label" for="cf-message" data-i18n="form.message">Message</label>
-          <textarea class="cf-input cf-textarea" id="cf-message" name="message" placeholder="Tell me more about the opportunity or project&hellip;" required data-i18n-placeholder="form.ph-message"></textarea>
+          <textarea class="cf-input cf-textarea" id="cf-message" name="message" placeholder="Tell me more about the opportunity or project&hellip;" required maxlength="2000" data-i18n-placeholder="form.ph-message"></textarea>
+          <div class="cf-charcount" id="cfCharCount"><span id="cfCharCountVal">0</span>/2000</div>
         </div>
         <button class="cf-submit" type="submit" id="cfSubmit">
           <span class="cf-btn-text" data-i18n="form.send">Send Message</span>
@@ -947,6 +962,27 @@
 <!-- BACK TO TOP -->
 <button id="backToTop" aria-label="Back to top">&#8593;</button>
 
-<script src="script.min.js?v=15" defer></script>
+<!-- KEYBOARD SHORTCUTS OVERLAY -->
+<div class="kbd-overlay" id="kbdOverlay" role="dialog" aria-label="Keyboard shortcuts">
+  <div class="kbd-overlay-inner">
+    <h3>Keyboard Shortcuts</h3>
+    <p class="kbd-sub">Press <kbd>?</kbd> to toggle this overlay</p>
+    <div class="kbd-grid">
+      <div class="kbd-row"><span>Scroll to About</span> <kbd>A</kbd></div>
+      <div class="kbd-row"><span>Scroll to Experience</span> <kbd>E</kbd></div>
+      <div class="kbd-row"><span>Scroll to Projects</span> <kbd>P</kbd></div>
+      <div class="kbd-row"><span>Scroll to Skills</span> <kbd>S</kbd></div>
+      <div class="kbd-row"><span>Scroll to Education</span> <kbd>Shift</kbd>+<kbd>E</kbd></div>
+      <div class="kbd-row"><span>Scroll to Contact</span> <kbd>C</kbd></div>
+      <div class="kbd-row"><span>Open Resume</span> <kbd>R</kbd></div>
+      <div class="kbd-row"><span>Toggle theme</span> <kbd>T</kbd></div>
+      <div class="kbd-row"><span>Toggle language</span> <kbd>L</kbd></div>
+      <div class="kbd-row"><span>Back to top</span> <kbd>Home</kbd> or <kbd>0</kbd></div>
+    </div>
+    <span class="kbd-dismiss">Press <kbd>Esc</kbd> or <kbd>?</kbd> to close</span>
+  </div>
+</div>
+
+<script src="script.min.js?v=17" defer></script>
 </body>
 </html>

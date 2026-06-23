@@ -1,0 +1,25 @@
+{
+  "name": "muneeb-portfolio",
+  "version": "1.0.0",
+  "description": "**Live:** [muneeb-ahmed-butt.vercel.app](https://muneeb-ahmed-butt.vercel.app)",
+  "main": "script.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/muneeb10305896-rgb/MUNEEB-PORTFOLIO.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/muneeb10305896-rgb/MUNEEB-PORTFOLIO/issues"
+  },
+  "homepage": "https://github.com/muneeb10305896-rgb/MUNEEB-PORTFOLIO#readme",
+  "devDependencies": {
+    "csso-cli": "^4.0.2",
+    "terser": "^5.48.0"
+  }
+}

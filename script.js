@@ -945,22 +945,51 @@ function tickVelocity() {
 }
 
 /* &mdash;&mdash; SCROLL REVEAL + COUNTER &mdash;&mdash; */
-const revealObserver = new IntersectionObserver(entries => {
-  entries.forEach(e => {
-    if (e.isIntersecting) {
-      e.target.classList.add('visible');
-      e.target.classList.remove('from-top', 'from-bottom');
-      e.target.querySelectorAll('[data-count]').forEach(animateCounter);
-      if (e.target.hasAttribute('data-count')) animateCounter(e.target);
-    } else {
-      e.target.classList.remove('visible');
-      const aboveViewport = e.boundingClientRect.top < 0;
-      e.target.classList.toggle('from-top', aboveViewport);
-      e.target.classList.toggle('from-bottom', !aboveViewport);
-    }
-  });
-}, { threshold: 0.12, rootMargin: '-5% 0px -5% 0px' });
-document.querySelectorAll('.reveal, .reveal-left, .reveal-right, .reveal-scale').forEach(el => revealObserver.observe(el));
+const REVEAL_SEL = '.reveal, .reveal-left, .reveal-right, .reveal-scale';
+const revealEls = document.querySelectorAll(REVEAL_SEL);
+
+function fireReveal(el) {
+  el.classList.add('visible');
+  el.classList.remove('from-top', 'from-bottom');
+  el.querySelectorAll('[data-count]').forEach(animateCounter);
+  if (el.hasAttribute('data-count')) animateCounter(el);
+}
+
+/* Reduced motion, or no IntersectionObserver support: reveal everything
+   immediately so no element can ever be stranded in its blurred start state. */
+if (REDUCED_MOTION || !('IntersectionObserver' in window)) {
+  revealEls.forEach(fireReveal);
+} else {
+  /* Reveal ONCE, then stop observing. Two reasons:
+     1. Fixes the stranded-blur bug — elements that start pre-transformed
+        (reveal-right = translateX(70px), reveal-scale = scale(.82)) used to
+        sit below the old 0.12 ratio threshold and never received `.visible`,
+        so they stayed blurred forever. threshold:0 fires on any sliver of
+        overlap, so a shifted/shrunk box always reveals.
+     2. Fixes the lag — the old code RE-blurred elements on every scroll-out,
+        re-animating filter:blur() + 3D transforms continuously. Animating
+        filter:blur() is extremely GPU-heavy; doing it once per element
+        removes the main source of jank. */
+  const revealObserver = new IntersectionObserver((entries, obs) => {
+    entries.forEach(e => {
+      if (!e.isIntersecting) return;
+      fireReveal(e.target);
+      obs.unobserve(e.target);
+    });
+  }, { threshold: 0, rootMargin: '0px 0px -8% 0px' });
+  revealEls.forEach(el => revealObserver.observe(el));
+
+  /* Belt-and-suspenders: after load, force-reveal anything already in or near
+     the viewport in case the observer's first callback is delayed by layout. */
+  window.addEventListener('load', () => setTimeout(() => {
+    const vh = window.innerHeight || document.documentElement.clientHeight;
+    revealEls.forEach(el => {
+      if (el.classList.contains('visible')) return;
+      const r = el.getBoundingClientRect();
+      if (r.top < vh + 120 && r.bottom > -120) { fireReveal(el); revealObserver.unobserve(el); }
+    });
+  }, 250), { once: true });
+}
 
 function animateCounter(el) {
   if (el.dataset.done) return;
@@ -1254,17 +1283,7 @@ let tickLanyard = () => {};
   }
 })();
 
-/* &mdash;&mdash; EXP CARD MOUSE GLOW &mdash;&mdash; */
-document.querySelectorAll('.exp-card').forEach(card => {
-  card.addEventListener('mousemove', e => {
-    const r    = card.getBoundingClientRect();
-    const glow = card.querySelector('.exp-glow');
-    if (glow) {
-      glow.style.setProperty('--mx', ((e.clientX - r.left) / r.width  * 100) + '%');
-      glow.style.setProperty('--my', ((e.clientY - r.top)  / r.height * 100) + '%');
-    }
-  });
-});
+/* &mdash;&mdash; EXP CARD MOUSE GLOW — centered, no per-frame getBoundingClientRect &mdash;&mdash; */
 
 /* &mdash;&mdash; MAGNETIC + 3D SPRING CARDS &mdash;&mdash; */
 let mouseGX = -99999, mouseGY = -99999;
@@ -1517,6 +1536,133 @@ if (contactForm) {
 })();
 
 /* ============================================
+   15. LIVE CLOCK — Kuopio, Finland
+   ============================================ */
+(function initClock() {
+  const display = document.getElementById('clockDisplay');
+  if (!display) return;
+  function tickClock() {
+    const now = new Date();
+    const h = String(now.getHours()).padStart(2, '0');
+    const m = String(now.getMinutes()).padStart(2, '0');
+    display.textContent = h + ':' + m;
+  }
+  tickClock();
+  setInterval(tickClock, 30000);
+})();
+
+/* ============================================
+   16. COLOR THEME SWITCHER
+   ============================================ */
+(function initColorThemes() {
+  const saved = (function() { try { return localStorage.getItem('accent'); } catch(e) { return null; } })();
+  if (saved) document.documentElement.setAttribute('data-accent', saved);
+  const btns = document.querySelectorAll('.color-theme-btn');
+  btns.forEach(function(btn) {
+    const accent = btn.dataset.accent;
+    if (saved === accent) {
+      btns.forEach(function(b) { b.classList.remove('active'); });
+      btn.classList.add('active');
+    }
+    btn.addEventListener('click', function() {
+      btns.forEach(function(b) { b.classList.remove('active'); });
+      btn.classList.add('active');
+      document.documentElement.setAttribute('data-accent', accent);
+      try { localStorage.setItem('accent', accent); } catch(e) {}
+    });
+  });
+})();
+
+/* 2. SHINY HOVER GLOW — removed per-card mousemove listeners (too expensive).
+       Glow now centers on card via CSS ::after with left:50%/top:50%. */
+
+/* ============================================
+   17. KEYBOARD SHORTCUTS
+   ============================================ */
+(function initKbd() {
+  var overlay = document.getElementById('kbdOverlay');
+  if (!overlay) return;
+  var sectionKeys = {
+    'a': 'about', 'e': 'experience', 'p': 'projects',
+    's': 'skills', 'c': 'contact'
+  };
+  document.addEventListener('keydown', function(e) {
+    if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA') return;
+    var key = e.key.toLowerCase();
+    if ((e.shiftKey && key === '/') || key === '?' || key === 'escape') {
+      e.preventDefault();
+      overlay.classList.toggle('open');
+      return;
+    }
+    if (overlay.classList.contains('open')) return;
+    if (sectionKeys[key]) {
+      e.preventDefault();
+      var target = document.getElementById(sectionKeys[key]);
+      if (target) {
+        var savedCV = target.style.contentVisibility;
+        target.style.contentVisibility = 'visible';
+        var top = target.getBoundingClientRect().top + window.scrollY;
+        target.style.contentVisibility = savedCV;
+        window.scrollTo({ top: top - 80, behavior: 'smooth' });
+      }
+      return;
+    }
+    if (key === 'r') { e.preventDefault(); window.open('resume.html', '_blank'); return; }
+    if (key === 't') { e.preventDefault(); themeToggleBtn && themeToggleBtn.click(); return; }
+    if (key === 'l') { e.preventDefault(); langToggleBtn && langToggleBtn.click(); return; }
+    if (key === '0' || key === 'home') { e.preventDefault(); window.scrollTo({ top: 0, behavior: 'smooth' }); return; }
+    if (key === 'e' && e.shiftKey) {
+      e.preventDefault();
+      var eduTarget = document.getElementById('education');
+      if (eduTarget) {
+        eduTarget.style.contentVisibility = 'visible';
+        var eduTop = eduTarget.getBoundingClientRect().top + window.scrollY;
+        window.scrollTo({ top: eduTop - 80, behavior: 'smooth' });
+      }
+    }
+  });
+  overlay.addEventListener('click', function(e) { if (e.target === overlay) overlay.classList.remove('open'); });
+})();
+
+/* ============================================
+   18. CONTACT FORM ENHANCEMENTS
+   ============================================ */
+(function initFormEnhancements() {
+  var textarea = document.getElementById('cf-message');
+  var charCount = document.getElementById('cfCharCountVal');
+  if (textarea && charCount) {
+    textarea.addEventListener('input', function() {
+      var len = textarea.value.length;
+      charCount.textContent = len;
+      charCount.parentElement.classList.toggle('warn', len > 1800);
+    });
+  }
+  var statusEl2 = document.getElementById('cfStatus');
+  if (statusEl2) {
+    var confettiObs = new MutationObserver(function() {
+      if (statusEl2.classList.contains('success')) {
+        burstConfetti(statusEl2);
+      }
+    });
+    confettiObs.observe(statusEl2, { attributes: true, attributeFilter: ['class'] });
+  }
+  function burstConfetti(container) {
+    var colors = ['#7c6dfa', '#4fc3f7', '#ff6b9d', '#22c55e', '#fbbf24'];
+    for (var i = 0; i < 24; i++) {
+      var piece = document.createElement('span');
+      piece.className = 'confetti-piece';
+      piece.style.left = (Math.random() * 80 + 10) + '%';
+      piece.style.top = '0';
+      piece.style.background = colors[i % colors.length];
+      piece.style.animationDelay = (Math.random() * 0.5) + 's';
+      piece.style.animationDuration = (0.8 + Math.random() * 0.6) + 's';
+      container.appendChild(piece);
+      (function(p) { setTimeout(function() { p.remove(); }, 2000); })(piece);
+    }
+  }
+})();
+
+/* ============================================
    MASTER ANIMATION LOOP &mdash; single rAF instead
    of 5 separate loops fighting each other
    ============================================ */
@@ -1622,6 +1768,3 @@ function masterTick() {
   requestAnimationFrame(masterTick);
 }
 requestAnimationFrame(masterTick);
-
-
-/* (dead code removed) nordashFrame iframe was never in the DOM — the preview uses an <img> instead */

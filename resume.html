@@ -27,6 +27,8 @@
   } catch(e) { document.documentElement.dataset.theme = 'dark'; }
 })();
 </script>
+<link rel="preload" href="assets/fonts/DMSans-normal-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="assets/fonts/Syne-latin.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="stylesheet" href="assets/fonts/fonts.css">
 <style>
 /* ============================================
@@ -55,6 +57,11 @@ html[data-theme="light"] {
   --card:    #ffffff;
   --border:  rgba(94,82,221,0.18);
 }
+
+/* Accent color themes */
+html[data-accent="teal"] { --accent: #0ec8b0; --accent2: #6ee7b7; --accent3: #34d399; --border: rgba(14,200,176,0.15); }
+html[data-accent="rose"] { --accent: #f472b6; --accent2: #fb7185; --accent3: #f43f5e; --border: rgba(244,114,182,0.15); }
+html[data-accent="amber"] { --accent: #fbbf24; --accent2: #f59e0b; --accent3: #d97706; --border: rgba(251,191,36,0.15); }
 
 html { font-size: 16px; scroll-behavior: smooth; }
 body {
@@ -437,6 +444,37 @@ html[data-theme="light"] .theme-toggle .moon { display: block; }
   background: rgba(124,109,250,.08);
 }
 
+/* ---- SKELETON LOADING SCREEN ---- */
+#resumeSkeleton {
+  position: fixed; inset: 0; z-index: 9999;
+  background: var(--bg);
+  display: flex; flex-direction: column;
+  align-items: center; justify-content: center;
+  transition: opacity .5s ease, visibility .5s ease;
+}
+#resumeSkeleton.done { opacity: 0; visibility: hidden; pointer-events: none; }
+.skel-inner { width: 90%; max-width: 700px; display: flex; flex-direction: column; gap: 1.2rem; }
+.skel-block {
+  height: 20px; border-radius: 8px;
+  background: linear-gradient(90deg, rgba(124,109,250,.06) 25%, rgba(124,109,250,.15) 50%, rgba(124,109,250,.06) 75%);
+  background-size: 200% 100%;
+  animation: skelShimmer 1.5s ease-in-out infinite;
+}
+.skel-block.h { height: 32px; width: 60%; }
+.skel-block.sm { height: 14px; width: 40%; }
+.skel-block.card { height: 80px; border-radius: var(--radius); }
+.skel-block.half { width: 48%; display: inline-block; }
+.skel-block.full { width: 100%; }
+.skel-row { display: flex; gap: 1rem; }
+@keyframes skelShimmer {
+  0%   { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
+}
+html[data-theme="light"] .skel-block {
+  background: linear-gradient(90deg, rgba(94,82,221,.05) 25%, rgba(94,82,221,.12) 50%, rgba(94,82,221,.05) 75%);
+  background-size: 200% 100%;
+}
+
 /* ---- PRINT ---- */
 @media print {
   @page { margin: 0.6in 0.7in; }
@@ -476,6 +514,18 @@ html[data-theme="light"] .theme-toggle .moon { display: block; }
   a { color: #111; text-decoration: none; }
 }
 
+/* ---- VIEW TRANSITIONS ---- */
+::view-transition-old(root) { animation: none; mix-blend-mode: normal; }
+::view-transition-new(root) {
+  animation: wipe-reveal 500ms ease-out forwards;
+  mix-blend-mode: normal;
+  clip-path: circle(0% at 50% 50%);
+}
+@keyframes wipe-reveal {
+  from { clip-path: circle(0% at 50% 50%); }
+  to   { clip-path: circle(150% at 50% 50%); }
+}
+
 /* ---- RESPONSIVE ---- */
 @media (max-width: 768px) {
   .resume { padding: 1.5rem 1.2rem; }
@@ -488,6 +538,25 @@ html[data-theme="light"] .theme-toggle .moon { display: block; }
 </style>
 </head>
 <body>
+
+<!-- SKELETON LOADING SCREEN -->
+<div id="resumeSkeleton">
+  <div class="skel-inner">
+    <div class="skel-block h"></div>
+    <div class="skel-block sm"></div>
+    <div class="skel-row">
+      <div class="skel-block half"></div>
+      <div class="skel-block half"></div>
+    </div>
+    <div class="skel-block card"></div>
+    <div class="skel-block card"></div>
+    <div class="skel-block card"></div>
+    <div class="skel-row">
+      <div class="skel-block half card" style="height:60px"></div>
+      <div class="skel-block half card" style="height:60px"></div>
+    </div>
+  </div>
+</div>
 
 <div class="resume">
 
@@ -832,6 +901,7 @@ html[data-theme="light"] .theme-toggle .moon { display: block; }
   <svg class="sun" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"/></svg>
   <svg class="moon" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
 </button>
+<p style="position:fixed;bottom:1.5rem;left:1.5rem;z-index:100;color:var(--muted);font-size:.7rem;letter-spacing:.03em;background:var(--card);padding:.3rem .7rem;border-radius:6px;border:1px solid var(--border);">Press <kbd style="background:rgba(255,255,255,.08);border:1px solid rgba(124,109,250,.2);border-radius:3px;padding:.05rem .4rem;font-family:inherit;font-size:.7rem;font-weight:600;">?</kbd> for shortcuts</p>
 
 <script>
 /* ---- RESUME TRANSLATIONS (EN / FI) ---- */
@@ -959,10 +1029,89 @@ const themeBtn = document.getElementById('themeToggle');
 if (themeBtn) {
   themeBtn.addEventListener('click', () => {
     const next = document.documentElement.dataset.theme === 'light' ? 'dark' : 'light';
-    document.documentElement.dataset.theme = next;
+    if (document.startViewTransition) {
+      document.startViewTransition(() => {
+        document.documentElement.dataset.theme = next;
+      });
+    } else {
+      document.documentElement.dataset.theme = next;
+    }
     try { localStorage.setItem('theme', next); } catch (e) {}
   });
 }
+
+/* ---- SKELETON HIDE ---- */
+(function() {
+  var skel = document.getElementById('resumeSkeleton');
+  if (skel) {
+    window.addEventListener('load', function() {
+      setTimeout(function() { skel.classList.add('done'); }, 400);
+    });
+    setTimeout(function() { skel.classList.add('done'); }, 3000);
+  }
+})();
+
+/* ---- COLOR THEME (sync with main page) ---- */
+(function() {
+  var saved = (function() { try { return localStorage.getItem('accent'); } catch(e) { return null; } })();
+  if (saved) document.documentElement.setAttribute('data-accent', saved);
+})();
+
+/* ---- KEYBOARD SHORTCUTS HINT ---- */
+(function() {
+  document.addEventListener('keydown', function(e) {
+    if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA') return;
+    var key = e.key.toLowerCase();
+    if (key === 't') {
+      e.preventDefault();
+      var btn = document.getElementById('themeToggle');
+      if (btn) btn.click();
+    }
+    if (key === 'l') {
+      e.preventDefault();
+      var langBtn = document.getElementById('resumeLangToggle');
+      if (langBtn) langBtn.click();
+    }
+  });
+})();
+</script>
+
+<!-- KEYBOARD SHORTCUTS OVERLAY -->
+<div class="kbd-overlay" id="resumeKbdOverlay" style="position:fixed;inset:0;z-index:10001;background:rgba(7,7,15,.88);backdrop-filter:blur(8px);display:flex;align-items:center;justify-content:center;opacity:0;visibility:hidden;transition:opacity .3s,visibility .3s;">
+  <div style="max-width:420px;width:90%;padding:2rem;">
+    <h3 style="font-family:'Syne',sans-serif;font-size:1.2rem;font-weight:700;margin-bottom:.25rem;">Keyboard Shortcuts</h3>
+    <p style="color:var(--muted);font-size:.82rem;margin-bottom:1.5rem;">Press <kbd style="background:rgba(255,255,255,.08);border:1px solid rgba(124,109,250,.2);border-radius:3px;padding:.05rem.4rem;font-family:inherit;font-size:.78rem;font-weight:600;">?</kbd> to toggle</p>
+    <div style="display:flex;flex-direction:column;gap:.6rem;">
+      <div style="display:flex;align-items:center;justify-content:space-between;padding:.5rem .75rem;background:rgba(124,109,250,.06);border:1px solid rgba(124,109,250,.1);border-radius:8px;font-size:.85rem;"><span>Download PDF</span> <kbd style="background:rgba(255,255,255,.08);border:1px solid rgba(124,109,250,.2);border-radius:3px;padding:.15rem.5rem;font-family:inherit;font-size:.78rem;font-weight:600;min-width:24px;text-align:center;">P</kbd></div>
+      <div style="display:flex;align-items:center;justify-content:space-between;padding:.5rem .75rem;background:rgba(124,109,250,.06);border:1px solid rgba(124,109,250,.1);border-radius:8px;font-size:.85rem;"><span>Toggle theme</span> <kbd style="background:rgba(255,255,255,.08);border:1px solid rgba(124,109,250,.2);border-radius:3px;padding:.15rem.5rem;font-family:inherit;font-size:.78rem;font-weight:600;min-width:24px;text-align:center;">T</kbd></div>
+      <div style="display:flex;align-items:center;justify-content:space-between;padding:.5rem .75rem;background:rgba(124,109,250,.06);border:1px solid rgba(124,109,250,.1);border-radius:8px;font-size:.85rem;"><span>Toggle language</span> <kbd style="background:rgba(255,255,255,.08);border:1px solid rgba(124,109,250,.2);border-radius:3px;padding:.15rem.5rem;font-family:inherit;font-size:.78rem;font-weight:600;min-width:24px;text-align:center;">L</kbd></div>
+      <div style="display:flex;align-items:center;justify-content:space-between;padding:.5rem .75rem;background:rgba(124,109,250,.06);border:1px solid rgba(124,109,250,.1);border-radius:8px;font-size:.85rem;"><span>Back to Portfolio</span> <kbd style="background:rgba(255,255,255,.08);border:1px solid rgba(124,109,250,.2);border-radius:3px;padding:.15rem.5rem;font-family:inherit;font-size:.78rem;font-weight:600;min-width:24px;text-align:center;">B</kbd></div>
+    </div>
+    <p style="margin-top:1.2rem;text-align:center;color:var(--muted);font-size:.78rem;">Press <kbd style="background:rgba(255,255,255,.08);border:1px solid rgba(124,109,250,.2);border-radius:3px;padding:.05rem.4rem;font-family:inherit;font-size:.7rem;font-weight:600;">Esc</kbd> to close</p>
+  </div>
+</div>
+
+<script>
+/* Resume keyboard shortcuts */
+(function() {
+  var overlay = document.getElementById('resumeKbdOverlay');
+  if (!overlay) return;
+  document.addEventListener('keydown', function(e) {
+    if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA') return;
+    var key = e.key.toLowerCase();
+    if ((e.shiftKey && key === '/') || key === '?' || key === 'escape') {
+      e.preventDefault();
+      overlay.style.opacity = overlay.style.opacity === '1' ? '0' : '1';
+      overlay.style.visibility = overlay.style.visibility === 'visible' ? 'hidden' : 'visible';
+      return;
+    }
+    if (overlay.style.visibility === 'visible') return;
+    if (key === 'p') { e.preventDefault(); document.querySelector('.btn-pdf') && document.querySelector('.btn-pdf').click(); }
+    if (key === 't') { e.preventDefault(); var tb = document.getElementById('themeToggle'); if (tb) tb.click(); }
+    if (key === 'l') { e.preventDefault(); var lb = document.getElementById('resumeLangToggle'); if (lb) lb.click(); }
+    if (key === 'b') { e.preventDefault(); window.location.href = '/'; }
+  });
+})();
 </script>
 
 </body>

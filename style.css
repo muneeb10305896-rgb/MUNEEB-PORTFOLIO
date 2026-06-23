@@ -554,7 +554,7 @@ h1 {
 
 /* —— SCROLL REVEAL —— */
 .reveal, .reveal-left, .reveal-right, .reveal-scale {
-  opacity: 0; filter: blur(6px);
+  opacity: 0; filter: blur(4px);
   transition: opacity .75s cubic-bezier(.16,1,.3,1),
               transform .95s cubic-bezier(.34,1.3,.4,1),
               filter .6s ease;
@@ -1709,8 +1709,10 @@ html[data-theme="light"] #particle-canvas { opacity: .5; }
   .nav-hamburger { display: flex; }
   .theme-toggle { width: 34px; height: 34px; }
   .lang-toggle  { width: 34px; height: 34px; margin-left: .4rem; }
+  .color-themes { display: none; }
   .nav-hamburger { margin-left: .4rem; }
   .mobile-menu { top: 62px; }
+  .live-clock-wrap { display: none; }
 }
 
 @media (max-width: 768px) {
@@ -1907,6 +1909,293 @@ html[data-theme="light"] #particle-canvas { opacity: .5; }
 .perf-lite .edu-card:hover,
 .perf-lite .cert-card:hover { box-shadow: 0 6px 18px rgba(0,0,0,.3); }
 
+/* Low-power machines: reveal without the GPU-expensive blur + 3D perspective.
+   Plain 2D translate/scale is composited cheaply and keeps the page smooth. */
+.perf-lite .reveal,
+.perf-lite .reveal-left,
+.perf-lite .reveal-right,
+.perf-lite .reveal-scale {
+  filter: none;
+  transition: opacity .55s ease, transform .55s ease;
+}
+.perf-lite .reveal       { transform: translateY(28px); }
+.perf-lite .reveal-left  { transform: translateX(-28px); }
+.perf-lite .reveal-right { transform: translateX(28px); }
+.perf-lite .reveal-scale { transform: scale(.95); }
+.perf-lite .reveal.visible,
+.perf-lite .reveal-left.visible,
+.perf-lite .reveal-right.visible,
+.perf-lite .reveal-scale.visible { filter: none; transform: none; }
+
 /* cursor stays visible in perf-lite mode — it's too lightweight to drop */
 /* lite: cheaper grids + no hero grid mask repaint cost */
 .perf-lite body::after { opacity: .3; }
+
+/* ============================================================
+   1. CSS SCROLL-DRIVEN ANIMATIONS (Chrome 115+)
+   Replaces JS IntersectionObserver with native CSS when supported.
+   Perfect fallback: Firefox/Safari just skip these rules.
+   ============================================================ */
+@supports (animation-timeline: scroll()) {
+  /* Override the JS reveal base state — elements start visible */
+  .reveal, .reveal-left, .reveal-right, .reveal-scale {
+    opacity: 1; filter: blur(0); transform: none;
+  }
+  /* Section fade-up as it enters the viewport */
+  @keyframes sda-fade-up {
+    from { opacity: 0; transform: perspective(1000px) translateY(55px) scale(.96) rotateX(-6deg); filter: blur(6px); }
+    to   { opacity: 1; transform: none; filter: blur(0); }
+  }
+  @keyframes sda-fade-left {
+    from { opacity: 0; transform: perspective(1000px) translateX(-70px) rotateY(10deg) scale(.97); filter: blur(6px); }
+    to   { opacity: 1; transform: none; filter: blur(0); }
+  }
+  @keyframes sda-fade-right {
+    from { opacity: 0; transform: perspective(1000px) translateX(70px) rotateY(-10deg) scale(.97); filter: blur(6px); }
+    to   { opacity: 1; transform: none; filter: blur(0); }
+  }
+  @keyframes sda-scale {
+    from { opacity: 0; transform: perspective(1000px) scale(.82) rotate(-2deg); filter: blur(6px); }
+    to   { opacity: 1; transform: none; filter: blur(0); }
+  }
+  .reveal       { animation: sda-fade-up   linear both; animation-timeline: view(); animation-range: entry 5% entry 55%; }
+  .reveal-left  { animation: sda-fade-left linear both; animation-timeline: view(); animation-range: entry 5% entry 55%; }
+  .reveal-right { animation: sda-fade-right linear both; animation-timeline: view(); animation-range: entry 5% entry 55%; }
+  .reveal-scale { animation: sda-scale     linear both; animation-timeline: view(); animation-range: entry 5% entry 55%; }
+
+  /* Skill bar fill animation */
+  @keyframes sda-bar-fill { from { width: 0; } to { width: var(--sda-w); } }
+  .sbar-fill { animation: sda-bar-fill 1.3s cubic-bezier(.16,1,.3,1) both; animation-timeline: view(); animation-range: entry 5% entry 40%; }
+
+  /* Counter animation via CSS — falls back to JS version */
+  .hero-stats { animation: sda-fade-up linear both; animation-timeline: view(); animation-range: entry 10% entry 50%; }
+}
+
+/* ============================================================
+   2. SHINY HOVER GLOW ON CARDS — simpler centered glow, no mouse-tracking
+   ============================================================ */
+.exp-card::after, .project-card::after, .skill-card::after,
+.edu-card::after, .cert-card::after, .info-card::after {
+  content: ''; position: absolute;
+  left: 50%; top: 50%;
+  width: 100%; height: 100%;
+  background: radial-gradient(circle at center, rgba(124,109,250,.08), transparent 60%);
+  border-radius: 50%;
+  pointer-events: none; z-index: 1;
+  transform: translate(-50%, -50%) scale(0);
+  opacity: 0;
+  transition: opacity .3s, transform .3s;
+}
+.exp-card:hover::after, .project-card:hover::after, .skill-card:hover::after,
+.edu-card:hover::after, .cert-card:hover::after, .info-card:hover::after {
+  opacity: 1;
+  transform: translate(-50%, -50%) scale(3);
+}
+/* Contact-link uses ::after for the arrow, so glow via ::before */
+.contact-link::before {
+  content: ''; position: absolute;
+  left: 50%; top: 50%;
+  width: 100%; height: 100%;
+  background: radial-gradient(circle at center, rgba(124,109,250,.08), transparent 60%);
+  border-radius: 50%;
+  pointer-events: none; z-index: 1;
+  transform: translate(-50%, -50%) scale(0);
+  opacity: 0;
+  transition: opacity .3s, transform .3s;
+}
+.contact-link:hover::before { opacity: 1; transform: translate(-50%, -50%) scale(3); }
+/* Don't conflict with existing .exp-card glow mixin */
+.exp-card:hover .exp-glow { opacity: 1; }
+
+/* ============================================================
+   5. GRADIENT BORDER ON ALL CARD HOVER — static gradient, no spin
+   ============================================================ */
+.exp-card, .project-card, .skill-card, .edu-card, .cert-card {
+  position: relative;
+}
+.exp-card::before, .project-card::before, .skill-card::before,
+.edu-card::before {
+  content: ''; position: absolute; inset: -1px; border-radius: calc(var(--radius) + 2px);
+  z-index: -1;
+  background: conic-gradient(from 0deg, rgba(124,109,250,0), rgba(124,109,250,0.25), rgba(79,195,247,0.2), rgba(255,107,157,0.15), rgba(124,109,250,0));
+  opacity: 0;
+  transition: opacity .3s;
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  padding: 1px;
+  pointer-events: none;
+}
+/* cert-card already uses ::before — use box-shadow for gradient border */
+.exp-card:hover::before, .project-card:hover::before, .skill-card:hover::before,
+.edu-card:hover::before {
+  opacity: 1;
+}
+.cert-card:hover {
+  box-shadow: 0 0 0 1px var(--accent), 0 0 20px rgba(124,109,250,.15);
+  border-color: transparent;
+}
+
+/* ============================================================
+   15. LIVE CLOCK / STATUS BADGE
+   ============================================================ */
+.live-clock-wrap {
+  display: inline-flex; align-items: center; gap: .5rem;
+  margin-left: .5rem;
+  font-size: .78rem; color: var(--muted);
+}
+.live-clock {
+  display: inline-flex; align-items: center; gap: .38rem;
+  font-variant-numeric: tabular-nums;
+}
+.live-clock .clock-dot {
+  width: 5px; height: 5px; border-radius: 50%;
+  background: #22c55e;
+  animation: livePulse 2s ease-in-out infinite;
+}
+.hero-tags { align-items: center; }
+
+/* ============================================================
+   16. COLOR THEME SWITCHER
+   ============================================================ */
+.color-themes {
+  display: flex; align-items: center; gap: .35rem;
+  margin-left: .3rem;
+}
+.color-theme-btn {
+  width: 18px; height: 18px; border-radius: 50%;
+  border: 1.5px solid var(--border); cursor: pointer;
+  padding: 0; transition: all .25s;
+  position: relative;
+}
+.color-theme-btn:hover {
+  transform: scale(1.25);
+  box-shadow: 0 0 12px rgba(124,109,250,.3);
+}
+.color-theme-btn.active {
+  border-color: var(--text);
+  box-shadow: 0 0 0 2px var(--text);
+  transform: scale(1.15);
+}
+.color-theme-btn.purple { background: #7c6dfa; }
+.color-theme-btn.teal   { background: #0ec8b0; }
+.color-theme-btn.rose   { background: #f472b6; }
+.color-theme-btn.amber  { background: #fbbf24; }
+
+/* Color theme variants — applied via data-theme-accent on html */
+html[data-accent="teal"] {
+  --accent: #0ec8b0;
+  --accent2: #6ee7b7;
+  --accent3: #34d399;
+  --border: rgba(14,200,176,0.15);
+}
+html[data-accent="rose"] {
+  --accent: #f472b6;
+  --accent2: #fb7185;
+  --accent3: #f43f5e;
+  --border: rgba(244,114,182,0.15);
+}
+html[data-accent="amber"] {
+  --accent: #fbbf24;
+  --accent2: #f59e0b;
+  --accent3: #d97706;
+  --border: rgba(251,191,36,0.15);
+}
+
+/* ============================================================
+   17. KEYBOARD SHORTCUTS OVERLAY
+   ============================================================ */
+.kbd-overlay {
+  position: fixed; inset: 0; z-index: 10001;
+  background: rgba(7,7,15,.88);
+  backdrop-filter: blur(8px);
+  display: flex; align-items: center; justify-content: center;
+  opacity: 0; visibility: hidden;
+  transition: opacity .3s, visibility .3s;
+}
+.kbd-overlay.open { opacity: 1; visibility: visible; }
+.kbd-overlay-inner {
+  max-width: 460px; width: 90%;
+  padding: 2rem;
+}
+.kbd-overlay h3 {
+  font-family: 'Syne', sans-serif; font-size: 1.2rem; font-weight: 700;
+  margin-bottom: .25rem;
+}
+.kbd-overlay .kbd-sub {
+  color: var(--muted); font-size: .82rem; margin-bottom: 1.5rem;
+}
+.kbd-grid {
+  display: flex; flex-direction: column; gap: .6rem;
+}
+.kbd-row {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: .5rem .75rem;
+  background: rgba(124,109,250,.06);
+  border: 1px solid rgba(124,109,250,.1);
+  border-radius: 8px;
+  font-size: .85rem;
+}
+kbd {
+  display: inline-flex; align-items: center; gap: .25rem;
+  background: rgba(255,255,255,.08);
+  border: 1px solid rgba(124,109,250,.2);
+  border-radius: 4px;
+  padding: .15rem .5rem;
+  font-family: 'DM Sans', sans-serif;
+  font-size: .78rem;
+  font-weight: 600;
+  line-height: 1.4;
+  min-width: 24px;
+  justify-content: center;
+}
+.kbd-dismiss {
+  display: block; margin-top: 1.2rem;
+  text-align: center; color: var(--muted); font-size: .78rem;
+}
+
+/* ============================================================
+   18. CONTACT FORM ENHANCEMENTS
+   ============================================================ */
+.cf-charcount {
+  text-align: right; font-size: .72rem; color: var(--muted);
+  margin-top: .25rem; transition: color .2s;
+}
+.cf-charcount.warn { color: var(--accent3); }
+.cf-submit.sending .cf-btn-text { opacity: .7; }
+.cf-submit .typing-dots::after {
+  content: ''; display: inline-block;
+  animation: typingDots 1.2s steps(4) infinite;
+}
+@keyframes typingDots {
+  0%   { content: ''; }
+  25%  { content: '.'; }
+  50%  { content: '..'; }
+  75%  { content: '...'; }
+  100% { content: ''; }
+}
+
+/* Confetti burst on form success */
+@keyframes confetti-fall {
+  0%   { transform: translateY(0) rotate(0deg); opacity: 1; }
+  100% { transform: translateY(80px) rotate(720deg); opacity: 0; }
+}
+.confetti-piece {
+  position: absolute; width: 6px; height: 6px; border-radius: 2px;
+  animation: confetti-fall 1s ease-out forwards;
+  pointer-events: none;
+}
+.cf-status.success { position: relative; overflow: hidden; }
+
+/* ============================================================
+   PERF-LITE: Strip new decorative animations
+   ============================================================ */
+.perf-lite .exp-card::before,
+.perf-lite .project-card::before,
+.perf-lite .skill-card::before,
+.perf-lite .edu-card::before,
+.perf-lite .cert-card::before { opacity: 0 !important; }
+.perf-lite .exp-card::after, .perf-lite .project-card::after, .perf-lite .skill-card::after,
+.perf-lite .edu-card::after, .perf-lite .cert-card::after, .perf-lite .info-card::after,
+.perf-lite .contact-link::before { display: none; }

@@ -31,11 +31,11 @@ body {
   touch-action: manipulation;
 }
 
-/* Custom cursor only on devices with a real mouse — fixes stuck cursor dot on tablets/touch laptops */
-@media (hover: hover) and (pointer: fine) {
+/* Custom cursor — hidden on pure touch devices (phones/tablets) where it would stick */
+@media (hover: hover) {
   body { cursor: none; }
 }
-@media (hover: none), (pointer: coarse) {
+@media (hover: none) {
   #cursor, #cursor-ring { display: none; }
 }
 

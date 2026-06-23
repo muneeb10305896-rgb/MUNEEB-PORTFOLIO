@@ -362,6 +362,27 @@ section { margin-bottom: 2rem; }
 .cert-issuer { font-size: .8rem; color: var(--accent2); margin-bottom: .15rem; }
 .cert-desc   { font-size: .8rem; color: var(--muted); line-height: 1.6; }
 
+/* ---- CUSTOM CURSOR ---- */
+#cursor {
+  position: fixed; width: 12px; height: 12px;
+  background: var(--accent); border-radius: 50%;
+  pointer-events: none; z-index: 9999;
+  left: 0; top: 0; will-change: transform;
+  transition: width .2s, height .2s, background .2s;
+  mix-blend-mode: screen;
+}
+#cursor-ring {
+  position: fixed; width: 36px; height: 36px;
+  border: 1.5px solid rgba(124,109,250,.5); border-radius: 50%;
+  pointer-events: none; z-index: 9998;
+  left: 0; top: 0; will-change: transform;
+  transition: width .15s ease, height .15s ease, border-color .15s;
+}
+@media (hover: hover) { body { cursor: none; } }
+@media (hover: none) { #cursor, #cursor-ring { display: none; } }
+html[data-theme="light"] #cursor { mix-blend-mode: multiply; }
+@media print { #cursor, #cursor-ring { display: none !important; } }
+
 /* ---- THEME TOGGLE (floating) ---- */
 .theme-toggle {
   position: fixed;
@@ -797,6 +818,10 @@ html[data-theme="light"] .theme-toggle .moon { display: block; }
   </footer>
 </div>
 
+<!-- CUSTOM CURSOR -->
+<div id="cursor"></div>
+<div id="cursor-ring"></div>
+
 <!-- THEME TOGGLE -->
 <button class="theme-toggle" id="themeToggle" aria-label="Switch theme" title="Switch theme">
   <svg class="sun" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"/></svg>
@@ -884,6 +909,35 @@ if (resumeLangBtn) {
     applyResumeLang(next);
   });
 }
+
+/* ---- CUSTOM CURSOR ---- */
+(function(){
+  var isHover = window.matchMedia('(hover: hover)').matches;
+  if (!isHover) return;
+  var c = document.getElementById('cursor'), r = document.getElementById('cursor-ring');
+  if (!c || !r) return;
+  var mouseX = 0, mouseY = 0, cHalf = 6, rHalf = 18;
+  document.addEventListener('mousemove', function(e) {
+    mouseX = e.clientX; mouseY = e.clientY;
+    c.style.transform = 'translate(' + (mouseX - cHalf) + 'px,' + (mouseY - cHalf) + 'px)';
+    r.style.transform = 'translate(' + (mouseX - rHalf) + 'px,' + (mouseY - rHalf) + 'px)';
+  }, { passive: true });
+  var hoverables = 'a, button, .badge';
+  document.querySelectorAll(hoverables).forEach(function(el) {
+    el.addEventListener('mouseenter', function() {
+      c.style.width = '20px'; c.style.height = '20px'; cHalf = 10;
+      c.style.transform = 'translate(' + (mouseX - cHalf) + 'px,' + (mouseY - cHalf) + 'px)';
+      r.style.width = '50px'; r.style.height = '50px'; rHalf = 25;
+      r.style.borderColor = 'rgba(124,109,250,.8)';
+    });
+    el.addEventListener('mouseleave', function() {
+      c.style.width = '12px'; c.style.height = '12px'; cHalf = 6;
+      c.style.transform = 'translate(' + (mouseX - cHalf) + 'px,' + (mouseY - cHalf) + 'px)';
+      r.style.width = '36px'; r.style.height = '36px'; rHalf = 18;
+      r.style.borderColor = 'rgba(124,109,250,.5)';
+    });
+  });
+})();
 
 /* ---- THEME (same approach as portfolio) ---- */
 const themeBtn = document.getElementById('themeToggle');

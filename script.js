@@ -4,6 +4,7 @@
 
 /* &mdash;&mdash; CAPABILITY FLAGS &mdash;&mdash; */
 const FINE_POINTER   = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
+const HOVER_POINTER  = window.matchMedia('(hover: hover)').matches;
 const REDUCED_MOTION = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
 /* &mdash;&mdash; THEME (initial value is set by the inline head script to avoid FOUC) &mdash;&mdash; */
@@ -610,7 +611,7 @@ const ring   = document.getElementById('cursor-ring');
 let mouseX = 0, mouseY = 0, ringX = 0, ringY = 0;
 let cHalf = 6, rHalf = 18; // half-sizes for centring each element
 
-if (FINE_POINTER && cursor && ring) {
+if (HOVER_POINTER && cursor && ring) {
   document.addEventListener('mousemove', e => {
     mouseX = e.clientX; mouseY = e.clientY;
     if (PERF_LITE) return; /* custom cursor hidden in lite mode */

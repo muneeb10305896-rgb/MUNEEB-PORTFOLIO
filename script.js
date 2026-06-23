@@ -611,10 +611,9 @@ const ring   = document.getElementById('cursor-ring');
 let mouseX = 0, mouseY = 0, ringX = 0, ringY = 0;
 let cHalf = 7, rHalf = 20; // half-sizes for centring each element (cursor: 14px, ring: 40px)
 
-if (HOVER_POINTER && cursor && ring) {
+if (cursor && ring) {
   document.addEventListener('mousemove', e => {
     mouseX = e.clientX; mouseY = e.clientY;
-    if (PERF_LITE) return; /* custom cursor hidden in lite mode */
     cursor.style.transform = `translate(${mouseX - cHalf}px,${mouseY - cHalf}px)`;
   }, { passive: true });
 
@@ -1613,7 +1612,7 @@ function masterTick() {
     ftLast = t;
   }
 
-  if (!PERF_LITE) tickCursorRing();
+  tickCursorRing();
   if (!REDUCED_MOTION && !PERF_LITE) {
     if (frameCount % 3 === 0) tickParticles(); /* drift needs only ~20fps */
   }

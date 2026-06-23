@@ -609,7 +609,7 @@ setTimeout(hidePreloader, 4000);
 const cursor = document.getElementById('cursor');
 const ring   = document.getElementById('cursor-ring');
 let mouseX = 0, mouseY = 0, ringX = 0, ringY = 0;
-let cHalf = 6, rHalf = 18; // half-sizes for centring each element
+let cHalf = 7, rHalf = 20; // half-sizes for centring each element (cursor: 14px, ring: 40px)
 
 if (HOVER_POINTER && cursor && ring) {
   document.addEventListener('mousemove', e => {
@@ -621,16 +621,18 @@ if (HOVER_POINTER && cursor && ring) {
   const hoverables = 'a, button, .badge, .skill-pill, .exp-tag, .contact-link, .id-card';
   document.querySelectorAll(hoverables).forEach(el => {
     el.addEventListener('mouseenter', () => {
-      cursor.style.width = '20px'; cursor.style.height = '20px'; cHalf = 10;
+      cursor.style.width = '22px'; cursor.style.height = '22px'; cHalf = 11;
       cursor.style.transform = `translate(${mouseX - cHalf}px,${mouseY - cHalf}px)`;
-      ring.style.width = '50px'; ring.style.height = '50px'; rHalf = 25;
+      ring.style.width = '54px'; ring.style.height = '54px'; rHalf = 27;
       ring.style.borderColor = 'rgba(124,109,250,.8)';
+      ring.style.background = 'rgba(124,109,250,.12)';
     });
     el.addEventListener('mouseleave', () => {
-      cursor.style.width = '12px'; cursor.style.height = '12px'; cHalf = 6;
+      cursor.style.width = '14px'; cursor.style.height = '14px'; cHalf = 7;
       cursor.style.transform = `translate(${mouseX - cHalf}px,${mouseY - cHalf}px)`;
-      ring.style.width = '36px'; ring.style.height = '36px'; rHalf = 18;
-      ring.style.borderColor = 'rgba(124,109,250,.5)';
+      ring.style.width = '40px'; ring.style.height = '40px'; rHalf = 20;
+      ring.style.borderColor = 'rgba(124,109,250,.45)';
+      ring.style.background = '';
     });
   });
 }
@@ -1542,11 +1544,17 @@ document.addEventListener('visibilitychange', () => {
    animations automatically (CSS .perf-lite)
    ============================================ */
 let PERF_LITE = false;
-/* lite mode persists: if this machine struggled before, start light immediately */
+/* lite mode persists: if this machine struggled before, start light immediately.
+   But clear it on devices with hover (laptops/desktops) — the cursor should always
+   show on those even if a prior frame-time test was pessimistic. */
 try {
   if (localStorage.getItem('perfLite') === '1') {
-    PERF_LITE = true;
-    document.documentElement.classList.add('perf-lite');
+    if (HOVER_POINTER) {
+      localStorage.removeItem('perfLite');
+    } else {
+      PERF_LITE = true;
+      document.documentElement.classList.add('perf-lite');
+    }
   }
 } catch (e) {}
 (function probePerformance() {
@@ -1605,7 +1613,7 @@ function masterTick() {
     ftLast = t;
   }
 
-  if (FINE_POINTER && !PERF_LITE) tickCursorRing();
+  if (!PERF_LITE) tickCursorRing();
   if (!REDUCED_MOTION && !PERF_LITE) {
     if (frameCount % 3 === 0) tickParticles(); /* drift needs only ~20fps */
   }

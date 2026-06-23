@@ -1,0 +1,26 @@
+{
+  "name": "Muneeb Ahmed Butt — Full-Stack Developer & IT Manager",
+  "short_name": "Muneeb Portfolio",
+  "description": "Full-Stack Developer & IT Manager at NORDASH, IT Student at University of Eastern Finland",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#07070f",
+  "theme_color": "#07070f",
+  "orientation": "any",
+  "lang": "en",
+  "dir": "ltr",
+  "icons": [
+    {
+      "src": "/assets/favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    },
+    {
+      "src": "/assets/muneeb.jpg",
+      "sizes": "440x440",
+      "type": "image/jpeg",
+      "purpose": "maskable"
+    }
+  ]
+}

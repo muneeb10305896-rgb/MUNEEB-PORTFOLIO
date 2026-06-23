@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://muneeb10305896-rgb.github.io/MUNEEB-PORTFOLIO/sitemap.xml
+Sitemap: https://muneeb-ahmed-butt.vercel.app/sitemap.xml

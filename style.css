@@ -1907,12 +1907,6 @@ html[data-theme="light"] #particle-canvas { opacity: .5; }
 .perf-lite .edu-card:hover,
 .perf-lite .cert-card:hover { box-shadow: 0 6px 18px rgba(0,0,0,.3); }
 
-/* perf-lite round 2: give back the instant native OS cursor — a JS-driven
-   custom cursor always trails by a frame and feels "laggy" on weak machines */
-.perf-lite body, .perf-lite * { cursor: auto !important; }
-.perf-lite a, .perf-lite button, .perf-lite [role="button"],
-.perf-lite .badge, .perf-lite .skill-pill, .perf-lite .contact-link,
-.perf-lite .id-card { cursor: pointer !important; }
-.perf-lite #cursor, .perf-lite #cursor-ring { display: none !important; }
+/* cursor stays visible in perf-lite mode — it's too lightweight to drop */
 /* lite: cheaper grids + no hero grid mask repaint cost */
 .perf-lite body::after { opacity: .3; }

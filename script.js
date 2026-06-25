@@ -1487,11 +1487,7 @@ if (contactForm) {
   });
 }
 
-/* &mdash;&mdash; MAP: auto-load shortly before it scrolls into view &mdash;&mdash;
-   Costs nothing at page load; by the time the user reaches the
-   contact section the map is already there. Click still works
-   as a fallback if the observer never fires. */
-(function initMap() {
+function initMap() {
   const wrap = document.getElementById('mapWrap');
   if (!wrap) return;
   const iframe = wrap.querySelector('iframe');
@@ -1533,7 +1529,7 @@ if (contactForm) {
   } else {
     window.addEventListener('load', () => setTimeout(loadMap, 2500), { once: true });
   }
-})();
+}
 
 /* ============================================
    15. LIVE CLOCK — Kuopio, Finland

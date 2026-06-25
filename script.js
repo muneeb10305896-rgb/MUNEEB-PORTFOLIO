@@ -650,6 +650,8 @@ let sectionOffsets = [];
 function buildSectionOffsets() {
   /* SCROLL_OFFSET = nav height (~56px) + comfortable trigger (~34px) */
   const SCROLL_OFFSET = 90;
+  console.log('=== BUILDING SECTION OFFSETS ===');
+  console.log('Sections:', Array.from(sections).map(s => s.id + ':' + s.offsetTop));
   sectionOffsets = Array.from(sections).map(sec => {
     /* Force layout: content-visibility:auto returns approximate offsetTop
        until the section actually renders.  Toggle visible, read offsetTop,
@@ -659,8 +661,11 @@ function buildSectionOffsets() {
     if (needsToggle) sec.style.contentVisibility = 'visible';
     const top = sec.offsetTop - SCROLL_OFFSET;
     if (needsToggle) sec.style.contentVisibility = savedCV;
+    console.log('Section', sec.id, 'offsetTop:', sec.offsetTop, '→ top:', top);
     return { id: sec.getAttribute('id'), top };
   });
+  console.log('Section offsets:', sectionOffsets);
+  console.log('=== END BUILD ===');
 }
 buildSectionOffsets();
 window.addEventListener('resize', () => requestAnimationFrame(buildSectionOffsets), { passive: true });
@@ -685,6 +690,9 @@ if ('ResizeObserver' in window) {
 function onScrollFrame() {
   scrollRafPending = false;
   const scrollTop = window.scrollY;
+  console.log('=== SCROLL FRAME ===');
+  console.log('scrollTop:', scrollTop);
+  console.log('sectionOffsets:', sectionOffsets);
   scrollProgress.style.transform = 'scaleX(' + Math.min(1, scrollTop / docHeight) + ')';
   nav.classList.toggle('scrolled', scrollTop > 60);
   backToTop.classList.toggle('show', scrollTop > 600);
@@ -712,9 +720,14 @@ backToTop.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 's
    This handler resolves the actual position before scrolling. */
 document.querySelectorAll('.section-dot').forEach(dot => {
   dot.addEventListener('click', e => {
+    console.log('=== DOT CLICK ===');
     const targetId = dot.getAttribute('href').substring(1);
+    console.log('targetId:', targetId);
     const target = document.getElementById(targetId);
-    if (!target) return;
+    if (!target) {
+      console.log('Target not found');
+      return;
+    }
     e.preventDefault();
 
     /* Immediately update active visual state (no waiting for scroll event) */
@@ -731,11 +744,14 @@ document.querySelectorAll('.section-dot').forEach(dot => {
     target.style.contentVisibility = 'visible';
     const top = target.getBoundingClientRect().top + window.scrollY;
     target.style.contentVisibility = savedCV;
+    console.log('Target:', targetId, 'top:', top);
 
     /* Don't scroll if the section is already at the top of the viewport —
        clicking its dot would bounce the page up by the nav offset for no reason */
     const scrolledToTop = Math.abs(window.scrollY - (top - 90)) < 10;
+    console.log('scrolledToTop:', scrolledToTop, 'scrollY:', window.scrollY, 'targetTop:', top);
     if (!scrolledToTop) {
+      console.log('Scrolling to:', top - 90);
       window.scrollTo({ top: top - 90, behavior: 'smooth' });
     }
   });

@@ -54,6 +54,15 @@ Deployed on **Vercel** via GitHub integration. Every push to `main` auto-deploys
 
 ```bash
 # Clone
+```
+
+## 🔧 Security Updates
+
+- **Content Security Policy (CSP) Update**: Added `https://www.google.com/maps` and `https://maps.google.com` to the `frame-src` directive in `vercel.json` to allow Google Maps iframe to load.
+- **Map Fix**: Resolved the issue where the map was blocked with the message "This content is blocked. Contact the site owner to fix the issue."
+
+```bash
+# Clone
 git clone https://github.com/muneeb10305896-rgb/MUNEEB-PORTFOLIO.git
 cd MUNEEB-PORTFOLIO
 

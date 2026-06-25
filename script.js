@@ -644,26 +644,28 @@ const sections       = document.querySelectorAll('section[id]');
 const navLinks       = document.querySelectorAll('.nav-link');
 const sectionDots    = document.querySelectorAll('.section-dot');
 
-/* cache section offsets to avoid layout thrashing on scroll */
+/* cache section offsets — force-real layout so content-visibility:auto
+   sections report their REAL offsetTop, not the browser's estimate */
 let sectionOffsets = [];
 function buildSectionOffsets() {
-  /* NAV_OFFSET = nav height (~60px scrolled) + a small trigger zone (~40px) */
-  const NAV_OFFSET = 100;
-  sectionOffsets = Array.from(sections).map(sec => ({ id: sec.getAttribute('id'), top: sec.offsetTop - NAV_OFFSET }));
+  /* SCROLL_OFFSET = nav height (~56px) + comfortable trigger (~34px) */
+  const SCROLL_OFFSET = 90;
+  sectionOffsets = Array.from(sections).map(sec => {
+    /* Force layout: content-visibility:auto returns approximate offsetTop
+       until the section actually renders.  Toggle visible, read offsetTop,
+       restore — all within one synchronous frame so no flash occurs. */
+    const savedCV = sec.style.contentVisibility;
+    const needsToggle = savedCV !== 'visible' && savedCV !== '';
+    if (needsToggle) sec.style.contentVisibility = 'visible';
+    const top = sec.offsetTop - SCROLL_OFFSET;
+    if (needsToggle) sec.style.contentVisibility = savedCV;
+    return { id: sec.getAttribute('id'), top };
+  });
 }
 buildSectionOffsets();
-window.addEventListener('resize', buildSectionOffsets, { passive: true });
+window.addEventListener('resize', () => requestAnimationFrame(buildSectionOffsets), { passive: true });
 window.addEventListener('load', () => { buildSectionOffsets(); requestAnimationFrame(() => onScrollFrame && onScrollFrame()); }, { passive: true });
-setTimeout(() => { buildSectionOffsets(); onScrollFrame && onScrollFrame(); }, 1500); /* rebuild after web fonts settle */
-/* rebuild offsets each time the user scrolls past a section — content-visibility:auto
-   means offscreen sections report approximate offsetTop until they're laid out */
-let offsetRebuildPending = false;
-window.addEventListener('scroll', () => {
-  if (!offsetRebuildPending) {
-    offsetRebuildPending = true;
-    requestAnimationFrame(() => { offsetRebuildPending = false; buildSectionOffsets(); });
-  }
-}, { passive: true });
+setTimeout(() => { buildSectionOffsets(); onScrollFrame && onScrollFrame(); }, 1500);
 
 /* rAF-throttled: scroll can fire several times per frame &mdash; do the DOM
    work at most once per frame, and cache docHeight (reading scrollHeight
@@ -732,9 +734,9 @@ document.querySelectorAll('.section-dot').forEach(dot => {
 
     /* Don't scroll if the section is already at the top of the viewport —
        clicking its dot would bounce the page up by the nav offset for no reason */
-    const scrolledToTop = Math.abs(window.scrollY - (top - 80)) < 10;
+    const scrolledToTop = Math.abs(window.scrollY - (top - 90)) < 10;
     if (!scrolledToTop) {
-      window.scrollTo({ top: top - 80, behavior: 'smooth' });
+      window.scrollTo({ top: top - 90, behavior: 'smooth' });
     }
   });
 });
@@ -755,7 +757,7 @@ document.querySelectorAll('.mobile-menu a[href^="#"]').forEach(link => {
     const top = target.getBoundingClientRect().top + window.scrollY;
     target.style.contentVisibility = savedCV;
 
-    window.scrollTo({ top: top - 80, behavior: 'smooth' });
+    window.scrollTo({ top: top - 90, behavior: 'smooth' });
   });
 });
 

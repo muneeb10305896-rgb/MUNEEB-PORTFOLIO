@@ -5,6 +5,8 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title data-i18n="page.title">Muneeb Ahmed Butt &mdash; Full-Stack Developer &amp; IT Manager | Portfolio</title>
 <meta name="description" content="Muneeb Ahmed Butt &mdash; Full-Stack Developer &amp; IT Manager at NORDASH, IT student at University of Eastern Finland.">
+    <meta name="privacy-policy" content="https://muneeb-ahmed-butt.vercel.app/privacy-policy.html">
+    <meta name="cookie-policy" content="https://muneeb-ahmed-butt.vercel.app/cookie-policy.html">
 <meta name="theme-color" content="#07070f">
 <script>
 /* theme bootstrap &mdash; runs before CSS paints to avoid a flash of wrong theme */
@@ -102,11 +104,33 @@
 <link rel="stylesheet" href="assets/fonts/fonts.css">
 <link rel="stylesheet" href="style.min.css?v=12">
 <!-- Privacy-first analytics — GDPR compliant, no cookie banner needed. Replace data-domain with your actual domain. -->
+<div id="cookie-consent-banner" style="position:fixed;bottom:0;left:0;right:0;background:var(--card);border-top:1px solid var(--border);padding:1.5rem;z-index:1000;display:none;text-align:center;">
+    <p style="margin-bottom:1rem;">This website uses cookies to enhance your experience. By continuing to visit this site you agree to our use of cookies. <a href="/privacy-policy.html" style="color:var(--accent);">Privacy Policy</a></p>
+    <button id="accept-cookies" style="background:var(--accent);color:#fff;border:none;padding:.5rem 1rem;border-radius:5px;cursor:pointer;">Accept</button>
+</div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const banner = document.getElementById('cookie-consent-banner');
+        const acceptBtn = document.getElementById('accept-cookies');
+
+        // Check if user has already accepted cookies
+        if (!localStorage.getItem('cookiesAccepted')) {
+            banner.style.display = 'block';
+        }
+
+        acceptBtn.addEventListener('click', function() {
+            localStorage.setItem('cookiesAccepted', 'true');
+            banner.style.display = 'none';
+        });
+    });
+</script>
+
 <script defer data-domain="muneeb-ahmed-butt.vercel.app" src="https://plausible.io/js/script.js" integrity="sha384-zT1ce5bjM8JKtp1jP2OrIdAJbEUfNIUJ9FxzvMHDFBHmIU+cHYwXVs1xBoRORibS" crossorigin="anonymous"></script>
 </head>
 <body>
 
-<a class="skip-link" href="#hero" data-i18n="hero.skip">Skip to content</a>
+<a class="skip-link" href="#main-content" data-i18n="hero.skip">Skip to content</a>
 
 <!-- PRELOADER -->
 <div id="preloader">
@@ -154,7 +178,7 @@
   </div>
   <button class="lang-toggle" id="langToggle" aria-label="Switch language" title="Switch language">EN</button>
   <a class="nav-cta" href="mailto:muneeb10305896@gmail.com" data-i18n="nav.hire-me">Hire Me</a>
-  <button class="nav-hamburger" id="navHamburger" aria-label="Toggle menu" aria-expanded="false" aria-controls="mobileMenu">
+  <button class="nav-hamburger" id="navHamburger" aria-label="Toggle menu" aria-expanded="false" aria-controls="mobileMenu" aria-haspopup="true">
     <span></span><span></span><span></span>
   </button>
   </div>
@@ -220,7 +244,7 @@
         <span class="line-reveal"><span class="grad">Muneeb</span></span>
         <span class="line-reveal"><span>Ahmed Butt</span></span>
       </h1>
-      <div class="typewriter-wrap" aria-hidden="true">
+      <div class="typewriter-wrap" aria-hidden="true" role="status" aria-live="polite">
         <span class="typewriter-text" id="typewriter"></span><span class="tw-cursor"></span>
       </div>
       <p class="sr-only" data-i18n="hero.sr-text">Full-Stack Developer and IT Manager at NORDASH, IT Student at UEF Finland, IT Developer at DEVSiNC, Harvard Aspire 2024 Alumni, ESN Savo member, problem solver.</p>

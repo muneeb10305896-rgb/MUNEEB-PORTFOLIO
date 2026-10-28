@@ -176,7 +176,7 @@ The HTML loads `script.min.js` — bump the version query string to bust cache:
 
 ---
 
-Built by **Muneeb Ahmed Butt** · University of Eastern Finland · Kuopio 🇫🇮
+Built by **Muneeb Ahmed Butt** · University of Eastern Finland · Helsinki 🇫🇮
 
 ### June 2026 — v5 (mobile card photo fix)
 - **Profile photo showing as oval on mobile**: the `aspect-ratio: 1/1` property on `.id-photo` wasn't reliably enforcing equal dimensions inside a flex column on iOS Safari and some Android browsers. Replaced with explicit `width`, `height`, `min-width`, `min-height` (100×100px), and re-declared `border-radius: 50%`, `overflow: hidden` directly on the mobile rule — plus matching explicit sizes on the inner `picture` and `img` elements. Photo is now a perfect circle on all devices, matching desktop.

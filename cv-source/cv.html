@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<!-- Source for assets/Muneeb_Ahmed_Butt_CV.pdf — build with: node cv-source/build-cv.js -->
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Muneeb Ahmed Butt — CV</title>
+<style>
+  @page { size: A4; margin: 0; }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --navy: #162635;
+    --accent: #2e7fb5;
+    --rule: #3f6a8c;
+    --sub: #9fc3dd;
+    --text: #2b2b2b;
+    --muted: #666666;
+  }
+  html, body { width: 210mm; height: 297mm; }
+  body {
+    font-family: "Liberation Sans", Arial, Helvetica, sans-serif;
+    color: var(--text);
+    font-size: 8.4pt;
+    line-height: 1.28;
+    display: flex;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+  a { color: inherit; text-decoration: none; }
+
+  /* ---------- Sidebar ---------- */
+  .side {
+    width: 64mm;
+    min-height: 297mm;
+    background: var(--navy);
+    color: #fff;
+    padding: 7mm 6mm 5mm;
+  }
+  .photo {
+    display: block;
+    width: 30mm; height: 30mm;
+    margin: 0 auto 2.2mm;
+    border-radius: 50%;
+    border: 1.2mm solid var(--accent);
+    object-fit: cover;
+  }
+  .name { text-align: center; font-size: 13.5pt; font-weight: 700; }
+  .title { text-align: center; color: var(--sub); font-size: 8.8pt; margin: .6mm 0 1.5mm; }
+  .side h2 {
+    font-size: 9.6pt; font-weight: 700; letter-spacing: .4pt;
+    border-bottom: .5mm solid var(--rule);
+    padding-bottom: .6mm; margin: 2.6mm 0 1.2mm;
+  }
+  .side .label { font-weight: 700; margin-top: .7mm; }
+  .side .link { color: #4a9bd1; }
+  .side p, .side li { font-size: 8.2pt; }
+  .side ul { list-style: none; }
+  .side li { margin-bottom: .35mm; }
+  .side .cert { margin-bottom: .7mm; }
+  .side .cert b { display: block; }
+  .side .cert span { color: var(--sub); font-size: 7.5pt; }
+
+  /* ---------- Main ---------- */
+  .main { flex: 1; padding: 6.5mm 7mm 5mm 6.5mm; }
+  .main h2 {
+    color: var(--navy); font-size: 10.6pt; font-weight: 700; letter-spacing: .4pt;
+    border-bottom: .55mm solid var(--accent);
+    padding-bottom: .5mm; margin: 2.4mm 0 1.3mm;
+  }
+  .main h2:first-child { margin-top: 0; }
+  .about { text-align: justify; }
+  .job { margin-bottom: 1.3mm; }
+  .job h3 { font-size: 8.8pt; font-weight: 700; }
+  .org { color: var(--accent); font-weight: 700; }
+  .date { color: var(--muted); font-style: italic; font-weight: 400; }
+  .job ul { margin: .5mm 0 0 4mm; }
+  .job li { margin-bottom: 0; padding-left: .5mm; }
+  .tech { color: var(--muted); }
+</style>
+</head>
+<body>
+  <aside class="side">
+    <img class="photo" src="photo.jpg" alt="">
+    <div class="name">Muneeb Ahmed Butt</div>
+    <div class="title">IT Student &amp; Web Developer</div>
+
+    <h2>CONTACT</h2>
+    <p class="label">Phone</p><p>+358 41 7414677</p>
+    <p class="label">Email</p><p>muneeb10305896@gmail.com</p>
+    <p class="label">Location</p><p>Helsinki, Finland</p>
+    <p class="label">Portfolio</p><p><a class="link" href="https://muneeb-ahmed-butt.vercel.app">muneeb-ahmed-butt.vercel.app</a></p>
+    <p class="label">LinkedIn</p><p><a class="link" href="https://www.linkedin.com/in/muneebahmedbutt">linkedin.com/in/muneebahmedbutt</a></p>
+    <p class="label">GitHub</p><p><a class="link" href="https://github.com/muneeb10305896-rgb">github.com/muneeb10305896-rgb</a></p>
+
+    <h2>LANGUAGES</h2>
+    <ul>
+      <li>English — Full professional</li>
+      <li>Finnish — A2 (studying daily)</li>
+      <li>Urdu — Native</li>
+    </ul>
+
+    <h2>SKILLS</h2>
+    <ul>
+      <li>JavaScript / Python</li>
+      <li>React / Next.js / Tailwind CSS</li>
+      <li>Three.js / Framer Motion</li>
+      <li>Node.js / REST APIs</li>
+      <li>MongoDB / Databases</li>
+      <li>Solidity / Blockchain</li>
+      <li>Networking Fundamentals</li>
+      <li>IT Support &amp; Troubleshooting</li>
+      <li>Git / Version Control</li>
+      <li>Microsoft Office (Word, Excel)</li>
+    </ul>
+
+    <h2>EDUCATION</h2>
+    <p class="label">B.Sc. Information Technology</p>
+    <p>UEF, Finland — 2025–2028</p>
+    <p class="label">B.Tech Computer Science</p>
+    <p>Bahria University — 2023–2025</p>
+
+    <h2>CERTIFICATIONS</h2>
+    <div class="cert"><b>Aspire Leaders Program 2024</b><span>Aspire Institute · Harvard Business School</span></div>
+    <div class="cert"><b>HackerRank Python (Basic)</b><span>ID: d68eb9c153f7</span></div>
+    <div class="cert"><b>HackerRank JavaScript (Basic)</b><span>ID: 1b27c5657457</span></div>
+    <div class="cert"><b>IBM AI Literacy Badge</b><span>IBM / Credly</span></div>
+    <div class="cert"><b>Hygieniapassi</b><span>Finnish Food Hygiene Proficiency</span></div>
+
+    <h2>VOLUNTEERING</h2>
+    <ul>
+      <li>Slush 2026 — Volunteer</li>
+      <li>ESN Savo — Board Support Member</li>
+    </ul>
+
+    <h2>DRIVER'S LICENSE</h2>
+    <p>Category B (passenger car)</p>
+  </aside>
+
+  <main class="main">
+    <h2>ABOUT ME</h2>
+    <p class="about">IT student at the University of Eastern Finland and full-stack web developer based in Helsinki. I build fast, interactive websites with React, Next.js, Tailwind CSS and Three.js, and founded NORDASH, a digital agency delivering real projects for real clients. Hands-on background in remote web development and in hospital IT and network support, plus customer-facing work in Finland that sharpened my communication and teamwork. Looking for an IT or data traineeship where I can learn fast and contribute from day one.</p>
+
+    <h2>IT EXPERIENCE</h2>
+    <div class="job">
+      <h3>Founder &amp; Full-Stack Developer</h3>
+      <div><span class="org">NORDASH, Helsinki</span> <span class="date">| Jun 2026 – Present</span></div>
+      <ul>
+        <li>Founded a full-stack digital agency building modern, high-performance websites for small businesses and startups</li>
+        <li>Built the agency platform with Next.js, React, Tailwind CSS, Framer Motion and Three.js, with a MongoDB backend, CRM dashboard and lead management; deployed on Vercel</li>
+        <li>Wrote the product requirements document (PRD) defining services, structure and user flows</li>
+        <li>Own the full process from design and development to deployment and client communication</li>
+      </ul>
+    </div>
+    <div class="job">
+      <h3>IT Developer</h3>
+      <div><span class="org">DEVSiNC (Remote), Lahore</span> <span class="date">| Jul 2025 – Apr 2026</span></div>
+      <ul>
+        <li>Managed and updated company websites, ensuring functionality and content accuracy</li>
+        <li>Developed client websites to specification across design, updates and ongoing maintenance</li>
+        <li>Collaborated with team members using development tools and Git version control</li>
+      </ul>
+    </div>
+    <div class="job">
+      <h3>Network System Specialist (Intern)</h3>
+      <div><span class="org">Hameed Latif Hospital, Lahore</span> <span class="date">| Mar 2023 – Jun 2023</span></div>
+      <ul>
+        <li>Helped maintain the internal network doctors and staff use to access patient records and hospital systems</li>
+        <li>Supported troubleshooting, system configuration, connectivity issues and workstation setup, keeping daily IT operations reliable</li>
+      </ul>
+    </div>
+
+    <h2>OTHER EXPERIENCE</h2>
+    <div class="job">
+      <h3>Sandwich Artist</h3>
+      <div><span class="org">Subway (Sodexo), Aalto University, Espoo</span> <span class="date">| Aug 2026 – Present</span></div>
+      <ul>
+        <li>Operate the POS system, handle daily sales and manage stock levels, inventory checks and sales data entry</li>
+        <li>Deliver fast, friendly service in a high-volume campus environment, following Finnish food safety standards</li>
+      </ul>
+    </div>
+    <div class="job">
+      <h3>Student Tutor</h3>
+      <div><span class="org">University of Eastern Finland, School of Computing</span> <span class="date">| May 2026 – Oct 2026</span></div>
+      <ul>
+        <li>Compiled introductions from 12 tutors into the Smart Start Guide; set up WhatsApp and Telegram groups</li>
+        <li>Supported new international students with housing, arrival logistics, studies and student life</li>
+      </ul>
+    </div>
+    <div class="job">
+      <h3>Fundraising Representative</h3>
+      <div><span class="org">World Vision Finland &amp; Save the Children Finland</span> <span class="date">| Jul 2026 – Sep 2026</span></div>
+      <ul>
+        <li>Face-to-face fundraising in Helsinki; built trust quickly and signed up long-term monthly donors in a target-driven team</li>
+      </ul>
+    </div>
+    <div class="job">
+      <h3>Chairperson</h3>
+      <div><span class="org">Chanan Development Association (CDA), Pakistan</span> <span class="date">| Sep 2021 – Sep 2025</span></div>
+      <ul>
+        <li>Rose from Executive Committee member to Chairperson, leading events, projects and volunteer teams</li>
+        <li>Responsible for decision-making, team management and successful delivery of community programmes</li>
+      </ul>
+    </div>
+    <div class="job">
+      <h3>Truck Dispatcher</h3>
+      <div><span class="org">Pioneer Enterprises &amp; Acumen Enterprises (U.S. freight, remote)</span> <span class="date">| Jun 2023 – Aug 2025</span></div>
+      <ul>
+        <li>Managed daily freight operations with DAT Load Board and RingCentral: route planning, real-time driver tracking, rate confirmations and dispatch records</li>
+      </ul>
+    </div>
+    <div class="job">
+      <h3>Data Entry Specialist</h3>
+      <div><span class="org">Onestop Grocery Store, Lahore</span> <span class="date">| Jun 2022 – Feb 2023</span></div>
+      <ul>
+        <li>Recorded daily sales, inventory, pricing and stock data accurately in the IPOS system</li>
+      </ul>
+    </div>
+
+    <h2>PROJECTS</h2>
+    <div class="job">
+      <h3>BubbaCoin (BUBBA) — ERC-20 Blockchain Token <span class="date">| UEF course project, May 2026</span></h3>
+      <ul>
+        <li>Designed and deployed a custom ERC-20 token on Ethereum Sepolia; 1,000,000 BUBBA minted and publicly verifiable on Etherscan <span class="tech">(Solidity, Hardhat, ethers.js, MetaMask)</span></li>
+      </ul>
+    </div>
+    <div class="job">
+      <h3>Personal Portfolio <span class="date">| muneeb-ahmed-butt.vercel.app</span></h3>
+      <ul>
+        <li>Hand-coded, framework-free site with EN/FI translation, light/dark themes and canvas animations <span class="tech">(HTML, CSS, JavaScript)</span></li>
+      </ul>
+    </div>
+  </main>
+</body>
+</html>

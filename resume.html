@@ -30,6 +30,8 @@
 <link rel="preload" href="assets/fonts/DMSans-normal-latin.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="assets/fonts/Syne-latin.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="stylesheet" href="assets/fonts/fonts.css">
+<link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
+<link rel="apple-touch-icon" href="/assets/muneeb.jpg" sizes="440x440">
 <style>
 /* ============================================
    MUNEEB AHMED BUTT &mdash; INLINE WEB RESUME
@@ -230,6 +232,18 @@ section { margin-bottom: 2rem; }
   transition: border-color .2s;
 }
 .exp-item:hover { border-color: rgba(124,109,250,.35); }
+.edu-item, .cert-item, .skill-cat { transition: border-color .2s, transform .2s, box-shadow .2s; }
+.exp-item:hover, .edu-item:hover, .cert-item:hover, .skill-cat:hover {
+  border-color: rgba(124,109,250,.35);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(124,109,250,.12);
+}
+.exp-item { transition: border-color .2s, transform .2s, box-shadow .2s; }
+.skill-pill, .exp-tag { transition: border-color .2s, color .2s, background .2s; }
+.skill-pill:hover, .exp-tag:hover { border-color: rgba(124,109,250,.45); color: var(--text); background: rgba(124,109,250,.1); }
+@media (prefers-reduced-motion: reduce) {
+  .exp-item:hover, .edu-item:hover, .cert-item:hover, .skill-cat:hover { transform: none; }
+}
 .exp-header {
   display: flex;
   justify-content: space-between;
@@ -615,180 +629,180 @@ html[data-theme="light"] .skel-block {
 
     <div class="exp-item">
       <div class="exp-header">
-        <div class="exp-role">Founder &amp; Full-Stack Developer</div>
-        <div class="exp-date">June 2026 &mdash; Present</div>
+        <div class="exp-role" data-i18n="hero.nordash-label">Founder &amp; Full-Stack Developer</div>
+        <div class="exp-date" data-i18n="exp0.date">June 2026 &mdash; Present</div>
       </div>
-      <div class="exp-company">NORDASH (digital agency) &middot; Helsinki, Finland</div>
+      <div class="exp-company" data-i18n="exp0.company">NORDASH (digital agency) &middot; Helsinki, Finland</div>
       <ul class="exp-bullets">
-        <li>Founded a full-stack digital agency building modern, high-performance websites for small businesses and startups</li>
-        <li>Designed and developed the agency website with Next.js, Tailwind CSS, Framer Motion and Three.js, deployed on Vercel</li>
-        <li>Wrote the product requirements document (PRD) defining services, structure and user flows</li>
-        <li>Handle the full process from design and development to deployment and client communication</li>
+        <li data-i18n="exp0.b1">Founded a full-stack digital agency building modern, high-performance websites for small businesses and startups</li>
+        <li data-i18n="exp0.b2">Designed and developed the agency website with Next.js, Tailwind CSS, Framer Motion and Three.js, deployed on Vercel</li>
+        <li data-i18n="exp0.b3">Wrote the product requirements document (PRD) defining services, structure and user flows</li>
+        <li data-i18n="exp0.b4">Handle the full process from design and development to deployment and client communication</li>
       </ul>
       <div class="exp-tags">
         <span class="exp-tag">Next.js</span>
         <span class="exp-tag">Tailwind CSS</span>
         <span class="exp-tag">Three.js</span>
         <span class="exp-tag">Framer Motion</span>
-        <span class="exp-tag">Entrepreneurship</span>
+        <span class="exp-tag" data-i18n="exp0.tag5">Entrepreneurship</span>
       </div>
     </div>
 
     <div class="exp-item">
       <div class="exp-header">
-        <div class="exp-role">IT Developer</div>
-        <div class="exp-date">July 2025 &mdash; April 2026</div>
+        <div class="exp-role" data-i18n="exp1.role">IT Developer</div>
+        <div class="exp-date" data-i18n="exp1.date">July 2025 &mdash; April 2026</div>
       </div>
-      <div class="exp-company">DEVSiNC &middot; Remote, Lahore</div>
+      <div class="exp-company" data-i18n="exp1.company">DEVSiNC &middot; Remote, Lahore</div>
       <ul class="exp-bullets">
-        <li>Managed and updated company websites, ensuring functionality and content accuracy</li>
-        <li>Assisted in developing customer-required websites based on specifications</li>
-        <li>Worked on multiple web projects, supporting design, updates, and maintenance</li>
-        <li>Collaborated with team members using development tools and version control</li>
+        <li data-i18n="exp1.b1">Managed and updated company websites, ensuring functionality and content accuracy</li>
+        <li data-i18n="exp1.b2">Assisted in developing customer-required websites based on specifications</li>
+        <li data-i18n="exp1.b3">Worked on multiple web projects, supporting design, updates, and maintenance</li>
+        <li data-i18n="exp1.b4">Collaborated with team members using development tools and version control</li>
       </ul>
       <div class="exp-tags">
-        <span class="exp-tag">Web Development</span>
-        <span class="exp-tag">Git</span>
-        <span class="exp-tag">Version Control</span>
-        <span class="exp-tag">IT Projects</span>
+        <span class="exp-tag" data-i18n="exp1.tag1">Web Development</span>
+        <span class="exp-tag" data-i18n="exp1.tag2">Git</span>
+        <span class="exp-tag" data-i18n="exp1.tag3">Version Control</span>
+        <span class="exp-tag" data-i18n="exp1.tag4">IT Projects</span>
       </div>
     </div>
 
     <div class="exp-item">
       <div class="exp-header">
-        <div class="exp-role">Network System Specialist (Intern)</div>
-        <div class="exp-date">March &mdash; June 2023</div>
+        <div class="exp-role" data-i18n="exp2.role">Network System Specialist (Intern)</div>
+        <div class="exp-date" data-i18n="exp2.date">March &mdash; June 2023</div>
       </div>
-      <div class="exp-company">Hameed Latif Hospital &middot; Lahore, Pakistan</div>
+      <div class="exp-company" data-i18n="exp2.company">Hameed Latif Hospital &middot; Lahore, Pakistan</div>
       <ul class="exp-bullets">
-        <li>Helped manage and maintain the internal network doctors and staff use to access patient records and hospital systems</li>
-        <li>Supported network troubleshooting, system configuration and connectivity issues</li>
-        <li>Set up workstations and provided technical support to hospital staff</li>
-        <li>Helped ensure data availability, system reliability and smooth daily IT operations</li>
+        <li data-i18n="exp2.b1">Helped manage and maintain the internal network doctors and staff use to access patient records and hospital systems</li>
+        <li data-i18n="exp2.b2">Supported network troubleshooting, system configuration and connectivity issues</li>
+        <li data-i18n="exp2.b3">Set up workstations and provided technical support to hospital staff</li>
+        <li data-i18n="exp2.b4">Helped ensure data availability, system reliability and smooth daily IT operations</li>
       </ul>
       <div class="exp-tags">
-        <span class="exp-tag">Network Support</span>
-        <span class="exp-tag">IT Troubleshooting</span>
-        <span class="exp-tag">Hardware</span>
-        <span class="exp-tag">Data Security</span>
+        <span class="exp-tag" data-i18n="exp2.tag1">Network Support</span>
+        <span class="exp-tag" data-i18n="exp2.tag2">IT Troubleshooting</span>
+        <span class="exp-tag" data-i18n="exp2.tag3">Hardware</span>
+        <span class="exp-tag" data-i18n="exp2.tag4">Data Security</span>
       </div>
     </div>
 
     <div class="exp-item">
       <div class="exp-header">
-        <div class="exp-role">Sandwich Artist</div>
-        <div class="exp-date">Aug 2026 &mdash; Present</div>
+        <div class="exp-role" data-i18n="exp6.role">Sandwich Artist</div>
+        <div class="exp-date" data-i18n="exp6.date">Aug 2026 &mdash; Present</div>
       </div>
-      <div class="exp-company">Subway (Sodexo) &middot; Aalto University campus, Espoo</div>
+      <div class="exp-company" data-i18n="exp6.company">Subway (Sodexo) &middot; Aalto University campus, Espoo</div>
       <ul class="exp-bullets">
-        <li>Operate the POS system and handle daily sales transactions accurately</li>
-        <li>Manage stock levels, inventory checks and sales data entry</li>
-        <li>Deliver fast, friendly customer service in a high-volume campus environment</li>
-        <li>Follow Finnish food safety standards (Hygieniapassi certified)</li>
+        <li data-i18n="exp6.b1">Operate the POS system and handle daily sales transactions accurately</li>
+        <li data-i18n="exp6.b2">Manage stock levels, inventory checks and sales data entry</li>
+        <li data-i18n="exp6.b3">Deliver fast, friendly customer service in a high-volume campus environment</li>
+        <li data-i18n="exp6.b4">Follow Finnish food safety standards (Hygieniapassi certified)</li>
       </ul>
       <div class="exp-tags">
-        <span class="exp-tag">POS Systems</span>
-        <span class="exp-tag">Inventory</span>
-        <span class="exp-tag">Customer Service</span>
-        <span class="exp-tag">Hygieniapassi</span>
+        <span class="exp-tag" data-i18n="skills.pill.pos">POS Systems</span>
+        <span class="exp-tag" data-i18n="exp5.tag3">Inventory</span>
+        <span class="exp-tag" data-i18n="skills.pill.customer-service">Customer Service</span>
+        <span class="exp-tag" data-i18n="about.badge.hygiene">Hygieniapassi</span>
       </div>
     </div>
 
     <div class="exp-item">
       <div class="exp-header">
-        <div class="exp-role">Student Tutor</div>
-        <div class="exp-date">May &mdash; Oct 2026</div>
+        <div class="exp-role" data-i18n="exp7.role">Student Tutor</div>
+        <div class="exp-date" data-i18n="exp7.date">May &mdash; Oct 2026</div>
       </div>
-      <div class="exp-company">University of Eastern Finland &middot; School of Computing, Kuopio</div>
+      <div class="exp-company" data-i18n="exp7.company">University of Eastern Finland &middot; School of Computing, Kuopio</div>
       <ul class="exp-bullets">
-        <li>Tutored new international students in the Smart Start programme</li>
-        <li>Collected introductions and photos from 12 student tutors and compiled them into the Smart Start Guide</li>
-        <li>Set up and managed WhatsApp and Telegram groups for tutors and tutees</li>
-        <li>Supported students with housing, arrival logistics, studies and student life</li>
+        <li data-i18n="exp7.b1">Tutored new international students in the Smart Start programme</li>
+        <li data-i18n="exp7.b2">Collected introductions and photos from 12 student tutors and compiled them into the Smart Start Guide</li>
+        <li data-i18n="exp7.b3">Set up and managed WhatsApp and Telegram groups for tutors and tutees</li>
+        <li data-i18n="exp7.b4">Supported students with housing, arrival logistics, studies and student life</li>
       </ul>
       <div class="exp-tags">
-        <span class="exp-tag">Mentoring</span>
-        <span class="exp-tag">Coordination</span>
-        <span class="exp-tag">Communication</span>
-        <span class="exp-tag">International Students</span>
+        <span class="exp-tag" data-i18n="exp7.tag1">Mentoring</span>
+        <span class="exp-tag" data-i18n="exp7.tag2">Coordination</span>
+        <span class="exp-tag" data-i18n="exp8.tag3">Communication</span>
+        <span class="exp-tag" data-i18n="exp7.tag4">International Students</span>
       </div>
     </div>
 
     <div class="exp-item">
       <div class="exp-header">
-        <div class="exp-role">Fundraising Representative</div>
-        <div class="exp-date">July &mdash; Sept 2026</div>
+        <div class="exp-role" data-i18n="exp8.role">Fundraising Representative</div>
+        <div class="exp-date" data-i18n="exp8.date">July &mdash; Sept 2026</div>
       </div>
-      <div class="exp-company">World Vision Finland &amp; Save the Children Finland &middot; Helsinki</div>
+      <div class="exp-company" data-i18n="exp8.company">World Vision Finland &amp; Save the Children Finland &middot; Helsinki</div>
       <ul class="exp-bullets">
-        <li>Represented World Vision&rsquo;s child sponsorship programme and Save the Children&rsquo;s work for children&rsquo;s rights</li>
-        <li>Built trust quickly and turned conversations into long-term monthly donations</li>
-        <li>Managed my own schedule and results independently in a target-driven team</li>
+        <li data-i18n="exp8.b1">Represented World Vision&rsquo;s child sponsorship programme and Save the Children&rsquo;s work for children&rsquo;s rights</li>
+        <li data-i18n="exp8.b2">Built trust quickly and turned conversations into long-term monthly donations</li>
+        <li data-i18n="exp8.b3">Managed my own schedule and results independently in a target-driven team</li>
       </ul>
       <div class="exp-tags">
-        <span class="exp-tag">Face-to-Face Fundraising</span>
-        <span class="exp-tag">Public Engagement</span>
-        <span class="exp-tag">Communication</span>
-        <span class="exp-tag">Target-Driven</span>
+        <span class="exp-tag" data-i18n="exp8.tag1">Face-to-Face Fundraising</span>
+        <span class="exp-tag" data-i18n="exp8.tag2">Public Engagement</span>
+        <span class="exp-tag" data-i18n="exp8.tag3">Communication</span>
+        <span class="exp-tag" data-i18n="exp8.tag4">Target-Driven</span>
       </div>
     </div>
 
     <div class="exp-item">
       <div class="exp-header">
-        <div class="exp-role">Chairperson</div>
-        <div class="exp-date">Sept 2021 &mdash; Sept 2025</div>
+        <div class="exp-role" data-i18n="exp3.role">Chairperson</div>
+        <div class="exp-date" data-i18n="exp3.date">Sept 2021 &mdash; Sept 2025</div>
       </div>
-      <div class="exp-company">Chanan Development Association (CDA) &middot; Lahore, Pakistan</div>
+      <div class="exp-company" data-i18n="exp3.company">Chanan Development Association (CDA) &middot; Lahore, Pakistan</div>
       <ul class="exp-bullets">
-        <li>Started as an Executive Committee member and was selected as Chairperson to lead the association</li>
-        <li>Led the team in organizing events, managing projects and coordinating volunteers</li>
-        <li>Oversaw development activities and ensured successful execution of community programs</li>
-        <li>Responsible for decision-making, team management and problem-solving</li>
+        <li data-i18n="exp3.b1">Started as an Executive Committee member and was selected as Chairperson to lead the association</li>
+        <li data-i18n="exp3.b2">Led the team in organizing events, managing projects and coordinating volunteers</li>
+        <li data-i18n="exp3.b3">Oversaw development activities and ensured successful execution of community programs</li>
+        <li data-i18n="exp3.b4">Responsible for decision-making, team management and problem-solving</li>
       </ul>
       <div class="exp-tags">
-        <span class="exp-tag">Leadership</span>
-        <span class="exp-tag">Project Coordination</span>
-        <span class="exp-tag">Volunteer Management</span>
-        <span class="exp-tag">NGO</span>
+        <span class="exp-tag" data-i18n="exp3.tag1">Leadership</span>
+        <span class="exp-tag" data-i18n="exp3.tag2">Project Coordination</span>
+        <span class="exp-tag" data-i18n="exp3.tag3">Volunteer Management</span>
+        <span class="exp-tag" data-i18n="exp3.tag4">NGO</span>
       </div>
     </div>
 
     <div class="exp-item">
       <div class="exp-header">
-        <div class="exp-role">Truck Dispatcher</div>
-        <div class="exp-date">June 2023 &mdash; Aug 2025</div>
+        <div class="exp-role" data-i18n="exp4.role">Truck Dispatcher</div>
+        <div class="exp-date" data-i18n="exp4.date">June 2023 &mdash; Aug 2025</div>
       </div>
-      <div class="exp-company">Pioneer Enterprises &amp; Acumen Enterprises &middot; Remote, United States</div>
+      <div class="exp-company" data-i18n="exp4.company">Pioneer Enterprises &amp; Acumen Enterprises &middot; Remote, United States</div>
       <ul class="exp-bullets">
-        <li>Managed daily U.S. freight operations using DAT Load Board and RingCentral</li>
-        <li>Planned routes, tracked driver locations in real time and handled rate confirmations</li>
-        <li>Coordinated with drivers, brokers and customers to ensure on-time pickups and deliveries</li>
-        <li>Resolved delays and route changes and maintained accurate dispatch records</li>
+        <li data-i18n="exp4.b1">Managed daily U.S. freight operations using DAT Load Board and RingCentral</li>
+        <li data-i18n="exp4.b2">Planned routes, tracked driver locations in real time and handled rate confirmations</li>
+        <li data-i18n="exp4.b3">Coordinated with drivers, brokers and customers to ensure on-time pickups and deliveries</li>
+        <li data-i18n="exp4.b4">Resolved delays and route changes and maintained accurate dispatch records</li>
       </ul>
       <div class="exp-tags">
-        <span class="exp-tag">DAT Load Board</span>
-        <span class="exp-tag">RingCentral</span>
-        <span class="exp-tag">Dispatching</span>
-        <span class="exp-tag">Logistics</span>
+        <span class="exp-tag" data-i18n="exp4.tag1">DAT Load Board</span>
+        <span class="exp-tag" data-i18n="exp4.tag2">RingCentral</span>
+        <span class="exp-tag" data-i18n="exp4.tag3">Dispatching</span>
+        <span class="exp-tag" data-i18n="exp4.tag4">Logistics</span>
       </div>
     </div>
 
     <div class="exp-item">
       <div class="exp-header">
-        <div class="exp-role">Data Entry Specialist</div>
-        <div class="exp-date">June 2022 &mdash; Feb 2023</div>
+        <div class="exp-role" data-i18n="exp5.role">Data Entry Specialist</div>
+        <div class="exp-date" data-i18n="exp5.date">June 2022 &mdash; Feb 2023</div>
       </div>
-      <div class="exp-company">Onestop Grocery Store &middot; Lahore, Pakistan</div>
+      <div class="exp-company" data-i18n="exp5.company">Onestop Grocery Store &middot; Lahore, Pakistan</div>
       <ul class="exp-bullets">
-        <li>Managed sales and inventory data using IPOS system</li>
-        <li>Ensured data accuracy and maintained daily and monthly reports</li>
-        <li>Supported store operations through organized data management</li>
+        <li data-i18n="exp5.b1">Managed sales and inventory data using IPOS system</li>
+        <li data-i18n="exp5.b2">Ensured data accuracy and maintained daily and monthly reports</li>
+        <li data-i18n="exp5.b3">Supported store operations through organized data management</li>
       </ul>
       <div class="exp-tags">
-        <span class="exp-tag">IPOS</span>
-        <span class="exp-tag">Data Entry</span>
-        <span class="exp-tag">Inventory</span>
-        <span class="exp-tag">Reporting</span>
+        <span class="exp-tag" data-i18n="exp5.tag1">IPOS</span>
+        <span class="exp-tag" data-i18n="exp5.tag2">Data Entry</span>
+        <span class="exp-tag" data-i18n="exp5.tag3">Inventory</span>
+        <span class="exp-tag" data-i18n="exp5.tag4">Reporting</span>
       </div>
     </div>
   </section>
@@ -802,27 +816,27 @@ html[data-theme="light"] .skel-block {
         <svg viewBox="0 0 18 11" width="18" height="11" xmlns="http://www.w3.org/2000/svg" style="vertical-align:middle"><rect width="18" height="11" fill="#fff"/><rect x="5" y="0" width="3" height="11" fill="#003580"/><rect x="0" y="4" width="18" height="3" fill="#003580"/></svg>
       </div>
       <div>
-        <div class="edu-degree">Bachelor&rsquo;s Degree in Information Technology</div>
-        <div class="edu-school">University of Eastern Finland (UEF)</div>
-        <div class="edu-meta">September 2025 &mdash; July 2028 (expected)</div>
+        <div class="edu-degree" data-i18n="edu.degree1">Bachelor&rsquo;s Degree in Information Technology</div>
+        <div class="edu-school" data-i18n="edu.school1">University of Eastern Finland (UEF)</div>
+        <div class="edu-meta" data-i18n="edu.meta1">September 2025 &mdash; July 2028 (expected)</div>
       </div>
     </div>
 
     <div class="edu-item">
       <div class="edu-icon">&#127891;</div>
       <div>
-        <div class="edu-degree">Bachelor of Technology in Computer Science</div>
-        <div class="edu-school">Bahria University</div>
-        <div class="edu-meta">2023 &mdash; 2025 &middot; Lahore, Pakistan</div>
+        <div class="edu-degree" data-i18n="edu.degree2">Bachelor of Technology in Computer Science</div>
+        <div class="edu-school" data-i18n="edu.school2">Bahria University</div>
+        <div class="edu-meta" data-i18n="edu.meta2">2023 &mdash; 2025 &middot; Lahore, Pakistan</div>
       </div>
     </div>
 
     <div class="edu-item">
       <div class="edu-icon">&#128218;</div>
       <div>
-        <div class="edu-degree">Intermediate &mdash; ICS (Computer Science)</div>
-        <div class="edu-school">KIPS Education System</div>
-        <div class="edu-meta">2021 &mdash; 2023 &middot; Lahore, Pakistan</div>
+        <div class="edu-degree" data-i18n="edu.degree3">Intermediate &mdash; ICS (Computer Science)</div>
+        <div class="edu-school" data-i18n="edu.school3">KIPS Education System</div>
+        <div class="edu-meta" data-i18n="edu.meta3">2021 &mdash; 2023 &middot; Lahore, Pakistan</div>
       </div>
     </div>
   </section>
@@ -833,23 +847,23 @@ html[data-theme="light"] .skel-block {
 
     <div class="skills-grid">
       <div class="skill-cat">
-        <div class="skill-cat-name">IT &amp; Systems</div>
+        <div class="skill-cat-name" data-i18n="skills.card1.cat">IT &amp; Systems</div>
         <div class="skill-items">
-          <span class="skill-pill">IT Operations</span>
-          <span class="skill-pill">IT Support</span>
-          <span class="skill-pill">Troubleshooting</span>
-          <span class="skill-pill">Networking</span>
-          <span class="skill-pill">Hardware &amp; Software</span>
+          <span class="skill-pill" data-i18n="skills.pill.it-operations">IT Operations</span>
+          <span class="skill-pill" data-i18n="skills.pill.it-support">IT Support</span>
+          <span class="skill-pill" data-i18n="skills.pill.troubleshooting">Troubleshooting</span>
+          <span class="skill-pill" data-i18n="about.badge.networking">Networking</span>
+          <span class="skill-pill" data-i18n="skills.pill.hardware-software">Hardware &amp; Software</span>
         </div>
       </div>
       <div class="skill-cat">
-        <div class="skill-cat-name">Development</div>
+        <div class="skill-cat-name" data-i18n="skills.card2.cat">Development</div>
         <div class="skill-items">
-          <span class="skill-pill">Web Development</span>
-          <span class="skill-pill">Git &amp; GitHub</span>
-          <span class="skill-pill">VS Code</span>
-          <span class="skill-pill">HTML/CSS</span>
-          <span class="skill-pill">React</span>
+          <span class="skill-pill" data-i18n="exp1.tag1">Web Development</span>
+          <span class="skill-pill" data-i18n="skills.pill.git-github">Git &amp; GitHub</span>
+          <span class="skill-pill" data-i18n="skills.pill.vscode">VS Code</span>
+          <span class="skill-pill" data-i18n="skills.pill.html-css">HTML/CSS</span>
+          <span class="skill-pill" data-i18n="skills.pill.react">React</span>
           <span class="skill-pill">Next.js</span>
           <span class="skill-pill">MongoDB</span>
           <span class="skill-pill">TailwindCSS</span>
@@ -858,53 +872,53 @@ html[data-theme="light"] .skel-block {
         </div>
       </div>
       <div class="skill-cat">
-        <div class="skill-cat-name">Data &amp; Office</div>
+        <div class="skill-cat-name" data-i18n="skills.card3.cat">Data &amp; Office</div>
         <div class="skill-items">
-          <span class="skill-pill">Microsoft Word</span>
-          <span class="skill-pill">Microsoft Excel</span>
-          <span class="skill-pill">Data Entry</span>
-          <span class="skill-pill">IPOS</span>
-          <span class="skill-pill">POS Systems</span>
-          <span class="skill-pill">Reporting</span>
+          <span class="skill-pill" data-i18n="skills.pill.word">Microsoft Word</span>
+          <span class="skill-pill" data-i18n="skills.pill.excel">Microsoft Excel</span>
+          <span class="skill-pill" data-i18n="exp5.tag2">Data Entry</span>
+          <span class="skill-pill" data-i18n="exp5.tag1">IPOS</span>
+          <span class="skill-pill" data-i18n="skills.pill.pos">POS Systems</span>
+          <span class="skill-pill" data-i18n="exp5.tag4">Reporting</span>
         </div>
       </div>
       <div class="skill-cat">
-        <div class="skill-cat-name">Logistics</div>
+        <div class="skill-cat-name" data-i18n="exp4.tag4">Logistics</div>
         <div class="skill-items">
-          <span class="skill-pill">DAT Load Board</span>
-          <span class="skill-pill">RingCentral</span>
-          <span class="skill-pill">Dispatching</span>
-          <span class="skill-pill">Documentation</span>
+          <span class="skill-pill" data-i18n="exp4.tag1">DAT Load Board</span>
+          <span class="skill-pill" data-i18n="exp4.tag2">RingCentral</span>
+          <span class="skill-pill" data-i18n="exp4.tag3">Dispatching</span>
+          <span class="skill-pill" data-i18n="skills.pill.documentation">Documentation</span>
         </div>
       </div>
       <div class="skill-cat">
-        <div class="skill-cat-name">Soft Skills</div>
+        <div class="skill-cat-name" data-i18n="skills.card5.cat">Soft Skills</div>
         <div class="skill-items">
-          <span class="skill-pill">Problem Solving</span>
-          <span class="skill-pill">Problem Analysis</span>
-          <span class="skill-pill">Team Work</span>
-          <span class="skill-pill">Communication</span>
-          <span class="skill-pill">Customer Service</span>
-          <span class="skill-pill">Leadership</span>
+          <span class="skill-pill" data-i18n="vel.problem">Problem Solving</span>
+          <span class="skill-pill" data-i18n="skills.pill.problem-analysis">Problem Analysis</span>
+          <span class="skill-pill" data-i18n="skills.pill.teamwork">Team Work</span>
+          <span class="skill-pill" data-i18n="exp8.tag3">Communication</span>
+          <span class="skill-pill" data-i18n="skills.pill.customer-service">Customer Service</span>
+          <span class="skill-pill" data-i18n="exp3.tag1">Leadership</span>
         </div>
       </div>
       <div class="skill-cat">
-        <div class="skill-cat-name">Marketing</div>
+        <div class="skill-cat-name" data-i18n="skills.card7.cat">Marketing</div>
         <div class="skill-items">
-          <span class="skill-pill">Social Media</span>
-          <span class="skill-pill">Content Creation</span>
-          <span class="skill-pill">SEO Basics</span>
-          <span class="skill-pill">Canva</span>
-          <span class="skill-pill">Branding</span>
+          <span class="skill-pill" data-i18n="skills.pill.social-media">Social Media</span>
+          <span class="skill-pill" data-i18n="skills.pill.content-creation">Content Creation</span>
+          <span class="skill-pill" data-i18n="skills.pill.seo">SEO Basics</span>
+          <span class="skill-pill" data-i18n="skills.pill.canva">Canva</span>
+          <span class="skill-pill" data-i18n="skills.pill.branding">Branding</span>
         </div>
       </div>
       <div class="skill-cat">
-        <div class="skill-cat-name">IT Security</div>
+        <div class="skill-cat-name" data-i18n="skills.card8.cat">IT Security</div>
         <div class="skill-items">
-          <span class="skill-pill">Data Security</span>
-          <span class="skill-pill">Access Control</span>
-          <span class="skill-pill">Network Security</span>
-          <span class="skill-pill">System Monitoring</span>
+          <span class="skill-pill" data-i18n="exp2.tag4">Data Security</span>
+          <span class="skill-pill" data-i18n="skills.pill.access-control">Access Control</span>
+          <span class="skill-pill" data-i18n="skills.pill.network-security">Network Security</span>
+          <span class="skill-pill" data-i18n="skills.pill.system-monitoring">System Monitoring</span>
         </div>
       </div>
     </div>
@@ -917,44 +931,44 @@ html[data-theme="light"] .skel-block {
     <div class="cert-item">
       <div class="cert-icon">&#128013;</div>
       <div>
-        <div class="cert-name">Python (Basic)</div>
-        <div class="cert-issuer">HackerRank &middot; 2026 &middot; Credential ID: d68eb9c153f7</div>
-        <div class="cert-desc">Python fundamentals: scalar types, operators, control flow, strings, collections, iteration, modularity, classes, and exception handling.</div>
+        <div class="cert-name" data-i18n="cert1.title">Python (Basic)</div>
+        <div class="cert-issuer" data-i18n="cert1.issuer">HackerRank &middot; 2026 &middot; Credential ID: d68eb9c153f7</div>
+        <div class="cert-desc" data-i18n="cert1.desc">Verified skills assessment covering Python fundamentals: scalar types, operators, control flow, strings, collections, iteration, modularity, classes, and exception handling.</div>
       </div>
     </div>
 
     <div class="cert-item">
       <div class="cert-icon">&#9889;</div>
       <div>
-        <div class="cert-name">JavaScript (Basic)</div>
-        <div class="cert-issuer">HackerRank &middot; 2026 &middot; Credential ID: 1b27c5657457</div>
-        <div class="cert-desc">JavaScript fundamentals: functions, currying, hoisting, scope, inheritance, events, and error handling.</div>
+        <div class="cert-name" data-i18n="cert2.title">JavaScript (Basic)</div>
+        <div class="cert-issuer" data-i18n="cert2.issuer">HackerRank &middot; 2026 &middot; Credential ID: 1b27c5657457</div>
+        <div class="cert-desc" data-i18n="cert2.desc">Verified skills assessment covering JavaScript fundamentals: functions, currying, hoisting, scope, inheritance, events, and error handling.</div>
       </div>
     </div>
 
     <div class="cert-item">
       <div class="cert-icon">&#129302;</div>
       <div>
-        <div class="cert-name">Artificial Intelligence Literacy</div>
-        <div class="cert-issuer">IBM SkillsBuild &middot; 2026 &middot; Credly verified badge</div>
-        <div class="cert-desc">Foundational AI literacy: core AI concepts, machine learning basics, AI ethics, and practical applications.</div>
+        <div class="cert-name" data-i18n="cert3.title">Artificial Intelligence Literacy</div>
+        <div class="cert-issuer" data-i18n="cert3.issuer">IBM SkillsBuild &middot; 2026 &middot; Credly verified badge</div>
+        <div class="cert-desc" data-i18n="cert3.desc">Foundational AI literacy: core AI concepts, machine learning basics, AI ethics, and practical applications of artificial intelligence in business and society.</div>
       </div>
     </div>
 
     <div class="cert-item">
       <div class="cert-icon">&#127963;&#65039;</div>
       <div>
-        <div class="cert-name">2024 Aspire Leaders Program</div>
-        <div class="cert-issuer">Harvard Business School (HBS) &middot; Aspire Institute &middot; November 2024</div>
-        <div class="cert-desc">Global leadership and personal development program: critical thinking, communication, self-confidence, and social impact. 30 hours of coursework in an international learning community.</div>
+        <div class="cert-name" data-i18n="cert4.title">2024 Aspire Leaders Program</div>
+        <div class="cert-issuer" data-i18n="cert4.issuer">Harvard Business School (HBS) &middot; Aspire Institute &middot; November 2024</div>
+        <div class="cert-desc" data-i18n="cert4.desc">Global leadership and personal development program focused on critical thinking, communication, self-confidence, and social impact. Completed 30 hours of coursework within an international learning community. Mode: Online.</div>
       </div>
     </div>
     <div class="cert-item">
       <div class="cert-icon">&#127869;&#65039;</div>
       <div>
-        <div class="cert-name">Hygieniapassi &mdash; Food Hygiene Proficiency</div>
-        <div class="cert-issuer">Finnish Food Authority (Ruokavirasto) &middot; Finland</div>
-        <div class="cert-desc">Finnish food hygiene proficiency certificate for handling unpackaged, perishable food: food safety, hygiene practices and legislation.</div>
+        <div class="cert-name" data-i18n="cert5.title">Hygieniapassi &mdash; Food Hygiene Proficiency</div>
+        <div class="cert-issuer" data-i18n="cert5.issuer">Finnish Food Authority (Ruokavirasto) &middot; Finland</div>
+        <div class="cert-desc" data-i18n="cert5.desc">Finnish food hygiene proficiency certificate (Finnish Food Authority) required for handling unpackaged, perishable food. Covers food safety, hygiene practices and legislation.</div>
       </div>
     </div>
   </section>
@@ -974,12 +988,168 @@ html[data-theme="light"] .skel-block {
   <svg class="sun" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"/></svg>
   <svg class="moon" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
 </button>
-<p style="position:fixed;bottom:1.5rem;left:1.5rem;z-index:100;color:var(--muted);font-size:.7rem;letter-spacing:.03em;background:var(--card);padding:.3rem .7rem;border-radius:6px;border:1px solid var(--border);">Press <kbd style="background:rgba(255,255,255,.08);border:1px solid rgba(124,109,250,.2);border-radius:3px;padding:.05rem .4rem;font-family:inherit;font-size:.7rem;font-weight:600;">?</kbd> for shortcuts</p>
+<p style="position:fixed;bottom:1.5rem;left:1.5rem;z-index:100;color:var(--muted);font-size:.7rem;letter-spacing:.03em;background:var(--card);padding:.3rem .7rem;border-radius:6px;border:1px solid var(--border);" data-i18n="kbd.hint">Press <kbd style="background:rgba(255,255,255,.08);border:1px solid rgba(124,109,250,.2);border-radius:3px;padding:.05rem .4rem;font-family:inherit;font-size:.7rem;font-weight:600;">?</kbd> for shortcuts</p>
 
 <script>
 /* ---- RESUME TRANSLATIONS (EN / FI) ---- */
 const resumeTranslations = {
   en: {
+    "kbd.hint": "Press <kbd style=\"background:rgba(255,255,255,.08);border:1px solid rgba(124,109,250,.2);border-radius:3px;padding:.05rem .4rem;font-family:inherit;font-size:.7rem;font-weight:600;\">?</kbd> for shortcuts",
+    /* -- content (shared with portfolio) -- */
+    "hero.nordash-label": "Founder &amp; Full-Stack Developer",
+    "exp0.date": "June 2026 &mdash; Present",
+    "exp0.company": "NORDASH (digital agency) &middot; Helsinki, Finland",
+    "exp0.tag5": "Entrepreneurship",
+    "exp1.role": "IT Developer",
+    "exp1.date": "July 2025 &mdash; April 2026",
+    "exp1.company": "DEVSiNC &middot; Remote, Lahore",
+    "exp1.tag1": "Web Development",
+    "exp1.tag2": "Git",
+    "exp1.tag3": "Version Control",
+    "exp1.tag4": "IT Projects",
+    "exp2.role": "Network System Specialist (Intern)",
+    "exp2.date": "March &mdash; June 2023",
+    "exp2.company": "Hameed Latif Hospital &middot; Lahore, Pakistan",
+    "exp2.tag1": "Network Support",
+    "exp2.tag2": "IT Troubleshooting",
+    "exp2.tag3": "Hardware",
+    "exp2.tag4": "Data Security",
+    "exp6.role": "Sandwich Artist",
+    "exp6.date": "Aug 2026 &mdash; Present",
+    "exp6.company": "Subway (Sodexo) &middot; Aalto University campus, Espoo",
+    "skills.pill.pos": "POS Systems",
+    "exp5.tag3": "Inventory",
+    "skills.pill.customer-service": "Customer Service",
+    "about.badge.hygiene": "Hygieniapassi",
+    "exp7.role": "Student Tutor",
+    "exp7.date": "May &mdash; Oct 2026",
+    "exp7.company": "University of Eastern Finland &middot; School of Computing, Kuopio",
+    "exp7.tag1": "Mentoring",
+    "exp7.tag2": "Coordination",
+    "exp8.tag3": "Communication",
+    "exp7.tag4": "International Students",
+    "exp8.role": "Fundraising Representative",
+    "exp8.date": "July &mdash; Sept 2026",
+    "exp8.company": "World Vision Finland &amp; Save the Children Finland &middot; Helsinki",
+    "exp8.tag1": "Face-to-Face Fundraising",
+    "exp8.tag2": "Public Engagement",
+    "exp8.tag4": "Target-Driven",
+    "exp3.role": "Chairperson",
+    "exp3.date": "Sept 2021 &mdash; Sept 2025",
+    "exp3.company": "Chanan Development Association (CDA) &middot; Lahore, Pakistan",
+    "exp3.tag1": "Leadership",
+    "exp3.tag2": "Project Coordination",
+    "exp3.tag3": "Volunteer Management",
+    "exp3.tag4": "NGO",
+    "exp4.role": "Truck Dispatcher",
+    "exp4.date": "June 2023 &mdash; Aug 2025",
+    "exp4.company": "Pioneer Enterprises &amp; Acumen Enterprises &middot; Remote, United States",
+    "exp4.tag1": "DAT Load Board",
+    "exp4.tag2": "RingCentral",
+    "exp4.tag3": "Dispatching",
+    "exp4.tag4": "Logistics",
+    "exp5.role": "Data Entry Specialist",
+    "exp5.date": "June 2022 &mdash; Feb 2023",
+    "exp5.company": "Onestop Grocery Store &middot; Lahore, Pakistan",
+    "exp5.tag1": "IPOS",
+    "exp5.tag2": "Data Entry",
+    "exp5.tag4": "Reporting",
+    "edu.school1": "University of Eastern Finland (UEF)",
+    "edu.meta1": "September 2025 &mdash; July 2028 (expected)",
+    "edu.degree2": "Bachelor of Technology in Computer Science",
+    "edu.school2": "Bahria University",
+    "edu.meta2": "2023 &mdash; 2025 &middot; Lahore, Pakistan",
+    "edu.degree3": "Intermediate &mdash; ICS (Computer Science)",
+    "edu.school3": "KIPS Education System",
+    "edu.meta3": "2021 &mdash; 2023 &middot; Lahore, Pakistan",
+    "skills.card1.cat": "IT &amp; Systems",
+    "skills.pill.it-operations": "IT Operations",
+    "skills.pill.it-support": "IT Support",
+    "skills.pill.troubleshooting": "Troubleshooting",
+    "about.badge.networking": "Networking",
+    "skills.pill.hardware-software": "Hardware &amp; Software",
+    "skills.card2.cat": "Development",
+    "skills.pill.git-github": "Git &amp; GitHub",
+    "skills.pill.vscode": "VS Code",
+    "skills.pill.html-css": "HTML/CSS",
+    "skills.pill.react": "React",
+    "skills.card3.cat": "Data &amp; Office",
+    "skills.pill.word": "Microsoft Word",
+    "skills.pill.excel": "Microsoft Excel",
+    "skills.pill.documentation": "Documentation",
+    "skills.card5.cat": "Soft Skills",
+    "vel.problem": "Problem Solving",
+    "skills.pill.problem-analysis": "Problem Analysis",
+    "skills.pill.teamwork": "Team Work",
+    "skills.card7.cat": "Marketing",
+    "skills.pill.social-media": "Social Media",
+    "skills.pill.content-creation": "Content Creation",
+    "skills.pill.seo": "SEO Basics",
+    "skills.pill.canva": "Canva",
+    "skills.pill.branding": "Branding",
+    "skills.card8.cat": "IT Security",
+    "skills.pill.access-control": "Access Control",
+    "skills.pill.network-security": "Network Security",
+    "skills.pill.system-monitoring": "System Monitoring",
+    "exp0.b1": "Founded a full-stack digital agency building modern, high-performance websites for small businesses and startups",
+    "exp0.b2": "Designed and developed the agency website with Next.js, Tailwind CSS, Framer Motion and Three.js, deployed on Vercel",
+    "exp0.b3": "Wrote the product requirements document (PRD) defining services, structure and user flows",
+    "exp0.b4": "Handle the full process from design and development to deployment and client communication",
+    "exp1.b1": "Managed and updated company websites, ensuring functionality and content accuracy",
+    "exp1.b2": "Assisted in developing customer-required websites based on specifications",
+    "exp1.b3": "Worked on multiple web projects, supporting design, updates, and maintenance",
+    "exp1.b4": "Collaborated with team members using development tools and version control",
+    "exp2.b1": "Helped manage and maintain the internal network doctors and staff use to access patient records and hospital systems",
+    "exp2.b2": "Supported network troubleshooting, system configuration and connectivity issues",
+    "exp2.b3": "Set up workstations and provided technical support to hospital staff",
+    "exp2.b4": "Helped ensure data availability, system reliability and smooth daily IT operations",
+    "exp6.b1": "Operate the POS system and handle daily sales transactions accurately",
+    "exp6.b2": "Manage stock levels, inventory checks and sales data entry",
+    "exp6.b3": "Deliver fast, friendly customer service in a high-volume campus environment",
+    "exp6.b4": "Follow Finnish food safety standards (Hygieniapassi certified)",
+    "exp7.b1": "Tutored new international students in the Smart Start programme",
+    "exp7.b2": "Collected introductions and photos from 12 student tutors and compiled them into the Smart Start Guide",
+    "exp7.b3": "Set up and managed WhatsApp and Telegram groups for tutors and tutees",
+    "exp7.b4": "Supported students with housing, arrival logistics, studies and student life",
+    "exp8.b1": "Represented World Vision&rsquo;s child sponsorship programme and Save the Children&rsquo;s work for children&rsquo;s rights",
+    "exp8.b2": "Built trust quickly and turned conversations into long-term monthly donations",
+    "exp8.b3": "Managed my own schedule and results independently in a target-driven team",
+    "exp3.b1": "Started as an Executive Committee member and was selected as Chairperson to lead the association",
+    "exp3.b2": "Led the team in organizing events, managing projects and coordinating volunteers",
+    "exp3.b3": "Oversaw development activities and ensured successful execution of community programs",
+    "exp3.b4": "Responsible for decision-making, team management and problem-solving",
+    "exp4.b1": "Managed daily U.S. freight operations using DAT Load Board and RingCentral",
+    "exp4.b2": "Planned routes, tracked driver locations in real time and handled rate confirmations",
+    "exp4.b3": "Coordinated with drivers, brokers and customers to ensure on-time pickups and deliveries",
+    "exp4.b4": "Resolved delays and route changes and maintained accurate dispatch records",
+    "exp5.b1": "Managed sales and inventory data using IPOS system",
+    "exp5.b2": "Ensured data accuracy and maintained daily and monthly reports",
+    "exp5.b3": "Supported store operations through organized data management",
+    "edu.degree1": "Bachelor&rsquo;s Degree in Information Technology",
+    "cert1.title": "Python (Basic)",
+    "cert1.issuer": "HackerRank &middot; 2026 &middot; Credential ID: d68eb9c153f7",
+    "cert1.desc": "Verified skills assessment covering Python fundamentals: scalar types, operators, control flow, strings, collections, iteration, modularity, classes, and exception handling.",
+    "cert2.title": "JavaScript (Basic)",
+    "cert2.issuer": "HackerRank &middot; 2026 &middot; Credential ID: 1b27c5657457",
+    "cert2.desc": "Verified skills assessment covering JavaScript fundamentals: functions, currying, hoisting, scope, inheritance, events, and error handling.",
+    "cert3.title": "Artificial Intelligence Literacy",
+    "cert3.issuer": "IBM SkillsBuild &middot; 2026 &middot; Credly verified badge",
+    "cert3.desc": "Foundational AI literacy: core AI concepts, machine learning basics, AI ethics, and practical applications of artificial intelligence in business and society.",
+    "cert4.title": "2024 Aspire Leaders Program",
+    "cert4.issuer": "Harvard Business School (HBS) &middot; Aspire Institute &middot; November 2024",
+    "cert4.desc": "Global leadership and personal development program focused on critical thinking, communication, self-confidence, and social impact. Completed 30 hours of coursework within an international learning community. Mode: Online.",
+    "cert5.title": "Hygieniapassi &mdash; Food Hygiene Proficiency",
+    "cert5.issuer": "Finnish Food Authority (Ruokavirasto) &middot; Finland",
+    "cert5.desc": "Finnish food hygiene proficiency certificate (Finnish Food Authority) required for handling unpackaged, perishable food. Covers food safety, hygiene practices and legislation.",
+    "kbd.title": "Keyboard Shortcuts",
+    "kbd.pdf": "Download PDF",
+    "kbd.theme": "Toggle theme",
+    "kbd.lang": "Toggle language",
+    "kbd.back": "Back to Portfolio",
+    "kbd.line1": "Press <kbd style=\"background:rgba(255,255,255,.08);border:1px solid rgba(124,109,250,.2);border-radius:3px;padding:.05rem.4rem;font-family:inherit;font-size:.78rem;font-weight:600;\">?</kbd> to toggle",
+    "kbd.line2": "Press <kbd style=\"background:rgba(255,255,255,.08);border:1px solid rgba(124,109,250,.2);border-radius:3px;padding:.05rem.4rem;font-family:inherit;font-size:.7rem;font-weight:600;\">Esc</kbd> to close",
+    "cookie.text": "This website uses cookies to enhance your experience. By continuing to visit this site you agree to our use of cookies. <a href=\"/privacy-policy.html\" style=\"color:var(--accent);\">Privacy Policy</a>",
+    "cookie.accept": "Accept",
     'resume.title': 'Muneeb Ahmed Butt — Resume',
     'resume.title-text': 'IT Student &amp; Full-Stack Web Developer &middot; Founder of NORDASH',
     'resume.location': 'Helsinki, Finland &middot; Open to IT &amp; data traineeships',
@@ -996,6 +1166,162 @@ const resumeTranslations = {
     'resume.lang': 'Switch language',
   },
   fi: {
+    "kbd.hint": "Paina <kbd style=\"background:rgba(255,255,255,.08);border:1px solid rgba(124,109,250,.2);border-radius:3px;padding:.05rem .4rem;font-family:inherit;font-size:.7rem;font-weight:600;\">?</kbd> nähdäksesi pikanäppäimet",
+    /* -- content (shared with portfolio) -- */
+    "hero.nordash-label": "Perustaja &amp; Full-Stack-kehittäjä",
+    "exp0.date": "Kesäkuu 2026 &mdash; nykyhetki",
+    "exp0.company": "NORDASH (digitoimisto) &middot; Helsinki, Suomi",
+    "exp0.tag5": "Yrittäjyys",
+    "exp1.role": "IT-kehitt&auml;j&auml;",
+    "exp1.date": "Heinäkuu 2025 &mdash; huhtikuu 2026",
+    "exp1.company": "DEVSiNC &middot; Et&auml;, Lahore",
+    "exp1.tag1": "Verkkokehitys",
+    "exp1.tag2": "Git",
+    "exp1.tag3": "Versiohallinta",
+    "exp1.tag4": "IT-projektit",
+    "exp2.role": "Verkkoj&auml;rjestelm&auml;asiantuntija (harjoittelija)",
+    "exp2.date": "Maaliskuu &mdash; kesäkuu 2023",
+    "exp2.company": "Hameed Latif -sairaala &middot; Lahore, Pakistan",
+    "exp2.tag1": "Verkkotuki",
+    "exp2.tag2": "IT-ongelmanratkaisu",
+    "exp2.tag3": "Laitteisto",
+    "exp2.tag4": "Tietoturva",
+    "exp6.role": "Sandwich Artist",
+    "exp6.date": "Elokuu 2026 &mdash; nykyhetki",
+    "exp6.company": "Subway (Sodexo) &middot; Aalto-yliopiston kampus, Espoo",
+    "skills.pill.pos": "Kassajärjestelmät",
+    "exp5.tag3": "Varastonhallinta",
+    "skills.pill.customer-service": "Asiakaspalvelu",
+    "about.badge.hygiene": "Hygieniapassi",
+    "exp7.role": "Opiskelijatuutori",
+    "exp7.date": "Toukokuu &mdash; lokakuu 2026",
+    "exp7.company": "Itä-Suomen yliopisto &middot; Tietojenkäsittelytieteen laitos, Kuopio",
+    "exp7.tag1": "Mentorointi",
+    "exp7.tag2": "Koordinointi",
+    "exp8.tag3": "Viestintä",
+    "exp7.tag4": "Kansainväliset opiskelijat",
+    "exp8.role": "Varainhankkija",
+    "exp8.date": "Heinäkuu &mdash; syyskuu 2026",
+    "exp8.company": "World Vision Suomi &amp; Pelastakaa Lapset ry &middot; Helsinki",
+    "exp8.tag1": "Kasvokkain varainhankinta",
+    "exp8.tag2": "Asiakaskohtaaminen",
+    "exp8.tag4": "Tavoitteellisuus",
+    "exp3.role": "Puheenjohtaja",
+    "exp3.date": "Syyskuu 2021 &mdash; syyskuu 2025",
+    "exp3.company": "Chanan Development Association (CDA) &middot; Lahore, Pakistan",
+    "exp3.tag1": "Johtajuus",
+    "exp3.tag2": "Projektikoordinointi",
+    "exp3.tag3": "Vapaaehtoisten johtaminen",
+    "exp3.tag4": "Kansalaisjärjestö",
+    "exp4.role": "Kuorma-auton l&auml;hett&auml;j&auml;",
+    "exp4.date": "Kesäkuu 2023 &mdash; elokuu 2025",
+    "exp4.company": "Pioneer Enterprises &amp; Acumen Enterprises &middot; Etänä, Yhdysvallat",
+    "exp4.tag1": "DAT Load Board",
+    "exp4.tag2": "RingCentral",
+    "exp4.tag3": "L&auml;hetystoiminta",
+    "exp4.tag4": "Logistiikka",
+    "exp5.role": "Tietojen sy&ouml;tt&auml;misen asiantuntija",
+    "exp5.date": "Kesäkuu 2022 &mdash; helmikuu 2023",
+    "exp5.company": "Onestop Grocery Store &middot; Lahore, Pakistan",
+    "exp5.tag1": "IPOS",
+    "exp5.tag2": "Tietojen sy&ouml;tt&ouml;",
+    "exp5.tag4": "Raportointi",
+    "edu.school1": "It&auml;-Suomen yliopisto (UEF)",
+    "edu.meta1": "Syyskuu 2025 &mdash; heinäkuu 2028 (arvioitu)",
+    "edu.degree2": "Tietotekniikan tekniikan kandidaatti",
+    "edu.school2": "Bahrian yliopisto",
+    "edu.meta2": "2023 &mdash; 2025 &middot; Lahore, Pakistan",
+    "edu.degree3": "Lukio &mdash; ICS (Tietojenk&auml;sittelytiede)",
+    "edu.school3": "KIPS-koulutusj&auml;rjestelm&auml;",
+    "edu.meta3": "2021 &mdash; 2023 &middot; Lahore, Pakistan",
+    "skills.card1.cat": "IT &amp; J&auml;rjestelm&auml;t",
+    "skills.pill.it-operations": "IT-toiminnot",
+    "skills.pill.it-support": "IT-tuki",
+    "skills.pill.troubleshooting": "Vianm&auml;&auml;ritys",
+    "about.badge.networking": "Verkkotekniikka",
+    "skills.pill.hardware-software": "Laitteisto &amp; Ohjelmisto",
+    "skills.card2.cat": "Kehitys",
+    "skills.pill.git-github": "Git &amp; GitHub",
+    "skills.pill.vscode": "VS Code",
+    "skills.pill.html-css": "HTML/CSS",
+    "skills.pill.react": "React",
+    "skills.card3.cat": "Tieto &amp; Toimisto",
+    "skills.pill.word": "Microsoft Word",
+    "skills.pill.excel": "Microsoft Excel",
+    "skills.pill.documentation": "Dokumentointi",
+    "skills.card5.cat": "Pehme&auml;t taidot",
+    "vel.problem": "Ongelmanratkaisu",
+    "skills.pill.problem-analysis": "Ongelman analyysi",
+    "skills.pill.teamwork": "Tiimity&ouml;",
+    "skills.card7.cat": "Markkinointi",
+    "skills.pill.social-media": "Sosiaalinen media",
+    "skills.pill.content-creation": "Sis&auml;ll&ouml;ntuotanto",
+    "skills.pill.seo": "SEO-perusteet",
+    "skills.pill.canva": "Canva",
+    "skills.pill.branding": "Br&auml;nd&auml;ys",
+    "skills.card8.cat": "IT-turvallisuus",
+    "skills.pill.access-control": "P&auml;&auml;synhallinta",
+    "skills.pill.network-security": "Verkkoturvallisuus",
+    "skills.pill.system-monitoring": "J&auml;rjestelm&auml;n valvonta",
+    "exp0.b1": "Perustin full-stack-digitoimiston, joka rakentaa moderneja ja suorituskykyisiä verkkosivustoja pienyrityksille ja startupeille",
+    "exp0.b2": "Suunnittelin ja kehitin toimiston verkkosivuston Next.js:llä, Tailwind CSS:llä, Framer Motionilla ja Three.js:llä, julkaistu Vercelissä",
+    "exp0.b3": "Kirjoitin tuotevaatimusdokumentin (PRD), joka määrittelee palvelut, rakenteen ja käyttäjäpolut",
+    "exp0.b4": "Vastaan koko prosessista suunnittelusta ja kehityksestä julkaisuun ja asiakasviestintään",
+    "exp1.b1": "Hallinnoin ja p&auml;ivitin yrityksen verkkosivuja varmistaen toimivuuden ja sis&auml;ll&ouml;n oikeellisuuden",
+    "exp1.b2": "Avustin asiakkaiden vaatimien verkkosivujen kehitt&auml;misess&auml; m&auml;&auml;rittelyjen mukaisesti",
+    "exp1.b3": "Ty&ouml;skentelin useissa verkkoprojekteissa tukien suunnittelua, p&auml;ivityksi&auml; ja yll&auml;pitoa",
+    "exp1.b4": "Tein yhteisty&ouml;t&auml; tiimin j&auml;senten kanssa k&auml;ytt&auml;en kehitysty&ouml;kaluja ja versiohallintaa",
+    "exp2.b1": "Avustin sisäverkon hallinnassa ja ylläpidossa, jonka kautta lääkärit ja henkilökunta käyttävät potilastietoja ja sairaalan järjestelmiä",
+    "exp2.b2": "Tuin verkon vianmääritystä, järjestelmien konfigurointia ja yhteysongelmien ratkaisua",
+    "exp2.b3": "Asensin työasemia ja tarjosin teknistä tukea sairaalan henkilökunnalle",
+    "exp2.b4": "Varmistin tietojen saatavuuden, järjestelmien luotettavuuden ja sujuvan päivittäisen IT-toiminnan",
+    "exp6.b1": "Käytän kassajärjestelmää ja käsittelen päivittäiset myyntitapahtumat tarkasti",
+    "exp6.b2": "Hallinnoin varastotasoja, inventaarioita ja myyntitietojen kirjaamista",
+    "exp6.b3": "Tarjoan nopeaa ja ystävällistä asiakaspalvelua vilkkaassa kampusympäristössä",
+    "exp6.b4": "Noudatan suomalaisia elintarviketurvallisuusmääräyksiä (hygieniapassi)",
+    "exp7.b1": "Tuutoroin uusia kansainvälisiä opiskelijoita Smart Start -ohjelmassa",
+    "exp7.b2": "Kokosin 12 opiskelijatuutorin esittelyt ja kuvat Smart Start -oppaaseen",
+    "exp7.b3": "Perustin ja ylläpidin WhatsApp- ja Telegram-ryhmiä tuutoreille ja tuutoroitaville",
+    "exp7.b4": "Autoin opiskelijoita asumisessa, saapumisjärjestelyissä, opinnoissa ja opiskelijaelämässä",
+    "exp8.b1": "Edustin World Visionin kummilapsiohjelmaa ja Pelastakaa Lasten työtä lasten oikeuksien puolesta",
+    "exp8.b2": "Rakensin luottamusta nopeasti ja muutin keskustelut pitkäaikaisiksi kuukausilahjoituksiksi",
+    "exp8.b3": "Hallitsin aikatauluani ja tuloksiani itsenäisesti tavoitteellisessa tiimissä",
+    "exp3.b1": "Aloitin toimeenpanevan komitean jäsenenä, ja minut valittiin puheenjohtajaksi johtamaan yhdistystä",
+    "exp3.b2": "Johdin tiimiä tapahtumien järjestämisessä, projektien hallinnassa ja vapaaehtoisten koordinoinnissa",
+    "exp3.b3": "Valvoin kehityshankkeita ja varmistin yhteisöohjelmien onnistuneen toteutuksen",
+    "exp3.b4": "Vastasin päätöksenteosta, tiimin johtamisesta ja ongelmanratkaisusta",
+    "exp4.b1": "Hallinnoin päivittäisiä yhdysvaltalaisia rahtioperaatioita DAT Load Boardin ja RingCentralin avulla",
+    "exp4.b2": "Suunnittelin reittejä, seurasin kuljettajien sijaintia reaaliajassa ja käsittelin hintavahvistuksia",
+    "exp4.b3": "Koordinoin kuljettajien, välittäjien ja asiakkaiden kanssa ajallaan tapahtuvat noudot ja toimitukset",
+    "exp4.b4": "Ratkaisin viivästyksiä ja reittimuutoksia sekä ylläpidin tarkkoja lähetysrekistereitä",
+    "exp5.b1": "Hallinnoin myynti- ja varastotietoja IPOS-j&auml;rjestelm&auml;ll&auml;",
+    "exp5.b2": "Varmistin tietojen tarkkuuden ja yll&auml;pidin p&auml;ivitt&auml;isi&auml; ja kuukausittaisia raportteja",
+    "exp5.b3": "Tuoin myym&auml;l&auml;n toimintaa j&auml;rjestelm&auml;llisen tiedonhallinnan avulla",
+    "edu.degree1": "Tietotekniikan kandidaatin tutkinto",
+    "cert1.title": "Python (perustaso)",
+    "cert1.issuer": "HackerRank &middot; 2026 &middot; Tunniste: d68eb9c153f7",
+    "cert1.desc": "Varmennettu taitojen arviointi, joka kattaa Pythonin perusteet: skalaarityypit, operaattorit, ohjausvuot, merkkijonot, kokoelmat, iterointi, modulaarisuus, luokat ja poikkeustenk&auml;sittely.",
+    "cert2.title": "JavaScript (perustaso)",
+    "cert2.issuer": "HackerRank &middot; 2026 &middot; Tunniste: 1b27c5657457",
+    "cert2.desc": "Varmennettu taitojen arviointi, joka kattaa JavaScriptin perusteet: funktiot, currying, nosto, n&auml;kyvyysalueet, periytyminen, tapahtumat ja virheidenk&auml;sittely.",
+    "cert3.title": "Tekoälylukutaito",
+    "cert3.issuer": "IBM SkillsBuild &middot; 2026 &middot; Credlyn vahvistama merkki",
+    "cert3.desc": "Perustason teko&auml;lylukutaito: keskeiset teko&auml;lykonseptit, koneoppimisen perusteet, teko&auml;lyn etiikka ja teko&auml;lyn k&auml;yt&auml;nn&ouml;n sovellukset liiketoiminnassa ja yhteiskunnassa.",
+    "cert4.title": "Aspire Leaders -ohjelma 2024",
+    "cert4.issuer": "Harvard Business School (HBS) &middot; Aspire Institute &middot; marraskuu 2024",
+    "cert4.desc": "Maailmanlaajuinen johtajuus- ja henkil&ouml;kohtainen kehitysohjelma, joka keskittyi kriittiseen ajatteluun, viestint&auml;&auml;n, itseluottamukseen ja yhteiskunnalliseen vaikuttamiseen. Suoritit 30 tuntia kurssity&ouml;t&auml; kansainv&auml;lisess&auml; oppimisyhteis&ouml;ss&auml;. Tila: Verkossa.",
+    "cert5.title": "Hygieniapassi &mdash; hygieniaosaamistodistus",
+    "cert5.issuer": "Ruokavirasto &middot; Suomi",
+    "cert5.desc": "Ruokaviraston hygieniaosaamistodistus, jota vaaditaan pakkaamattomien helposti pilaantuvien elintarvikkeiden käsittelyssä. Kattaa elintarviketurvallisuuden, hygieniakäytännöt ja lainsäädännön.",
+    "kbd.title": "Pikanäppäimet",
+    "kbd.pdf": "Lataa PDF",
+    "kbd.theme": "Vaihda teema",
+    "kbd.lang": "Vaihda kieli",
+    "kbd.back": "Takaisin portfolioon",
+    "kbd.line1": "Paina <kbd style=\"background:rgba(255,255,255,.08);border:1px solid rgba(124,109,250,.2);border-radius:3px;padding:.05rem.4rem;font-family:inherit;font-size:.78rem;font-weight:600;\">?</kbd> avataksesi tai sulkeaksesi",
+    "kbd.line2": "Paina <kbd style=\"background:rgba(255,255,255,.08);border:1px solid rgba(124,109,250,.2);border-radius:3px;padding:.05rem.4rem;font-family:inherit;font-size:.7rem;font-weight:600;\">Esc</kbd> sulkeaksesi",
+    "cookie.text": "Tämä sivusto käyttää evästeitä käyttökokemuksen parantamiseksi. Jatkamalla sivuston käyttöä hyväksyt evästeiden käytön. <a href=\"/privacy-policy.html\" style=\"color:var(--accent);\">Tietosuojaseloste</a>",
+    "cookie.accept": "Hyväksy",
     'resume.title': 'Muneeb Ahmed Butt — Ansioluettelo',
     'resume.title-text': 'IT-opiskelija &amp; Full-Stack-verkkokehittäjä &middot; NORDASHin perustaja',
     'resume.location': 'Helsinki, Suomi · Avoin IT- ja data-alan harjoittelupaikoille',
@@ -1014,7 +1340,7 @@ const resumeTranslations = {
 };
 
 function getResumeLang() {
-  try { return localStorage.getItem('resume-lang') || 'en'; } catch (e) { return 'en'; }
+  try { return localStorage.getItem('lang') || localStorage.getItem('resume-lang') || 'en'; } catch (e) { return 'en'; }
 }
 
 function applyResumeLang(lang) {
@@ -1039,7 +1365,7 @@ function applyResumeLang(lang) {
     themeBtnEl.setAttribute('aria-label', t['resume.theme'] || 'Switch theme');
     themeBtnEl.setAttribute('title', t['resume.theme'] || 'Switch theme');
   }
-  try { localStorage.setItem('resume-lang', lang); } catch (e) {}
+  try { localStorage.setItem('resume-lang', lang); localStorage.setItem('lang', lang); } catch (e) {}
 }
 
 /* ---- INIT: Apply saved language on load ---- */
@@ -1128,11 +1454,12 @@ if (themeBtn) {
 (function() {
   const bannerHTML = `
     <div id="cookie-consent-banner" style="position:fixed;bottom:0;left:0;right:0;background:var(--card);border-top:1px solid var(--border);padding:1.5rem;z-index:1000;display:none;text-align:center;">
-      <p style="margin-bottom:1rem;">This website uses cookies to enhance your experience. By continuing to visit this site you agree to our use of cookies. <a href="/privacy-policy.html" style="color:var(--accent);">Privacy Policy</a></p>
-      <button id="accept-cookies" style="background:var(--accent);color:#fff;border:none;padding:.5rem 1rem;border-radius:5px;cursor:pointer;">Accept</button>
+      <p style="margin-bottom:1rem;" data-i18n="cookie.text">This website uses cookies to enhance your experience. By continuing to visit this site you agree to our use of cookies. <a href="/privacy-policy.html" style="color:var(--accent);">Privacy Policy</a></p>
+      <button id="accept-cookies" style="background:var(--accent);color:#fff;border:none;padding:.5rem 1rem;border-radius:5px;cursor:pointer;" data-i18n="cookie.accept">Accept</button>
     </div>`;
 
   document.body.insertAdjacentHTML('beforeend', bannerHTML);
+  applyResumeLang(getResumeLang());
 
   const banner = document.getElementById('cookie-consent-banner');
   const acceptBtn = document.getElementById('accept-cookies');
@@ -1174,12 +1501,13 @@ if (themeBtn) {
 
 /* ---- SCROLL REVEAL SYSTEM ---- */
 (function() {
+  const REDUCED_MOTION = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
   const REVEAL_SEL = ".header, .contact-bar, section, .exp-item, .edu-item, .cert-item, .skill-cat";
   const revealEls = document.querySelectorAll(REVEAL_SEL);
 
   function fireReveal(el) {
     // Apply staggered delays similar to the main page
-    const children = el.querySelectorAll('> *');
+    const children = Array.from(el.children);
     children.forEach((child, index) => {
       child.style.animationDelay = `${index * 0.05}s`;
       child.classList.add("visible");
@@ -1221,15 +1549,15 @@ if (themeBtn) {
 <!-- KEYBOARD SHORTCUTS OVERLAY -->
 <div class="kbd-overlay" id="resumeKbdOverlay" style="position:fixed;inset:0;z-index:10001;background:rgba(7,7,15,.88);backdrop-filter:blur(8px);display:flex;align-items:center;justify-content:center;opacity:0;visibility:hidden;transition:opacity .3s,visibility .3s;">
   <div style="max-width:420px;width:90%;padding:2rem;">
-    <h3 style="font-family:'Syne',sans-serif;font-size:1.2rem;font-weight:700;margin-bottom:.25rem;">Keyboard Shortcuts</h3>
-    <p style="color:var(--muted);font-size:.82rem;margin-bottom:1.5rem;">Press <kbd style="background:rgba(255,255,255,.08);border:1px solid rgba(124,109,250,.2);border-radius:3px;padding:.05rem.4rem;font-family:inherit;font-size:.78rem;font-weight:600;">?</kbd> to toggle</p>
+    <h3 style="font-family:'Syne',sans-serif;font-size:1.2rem;font-weight:700;margin-bottom:.25rem;"><span data-i18n="kbd.title">Keyboard Shortcuts</span></h3>
+    <p style="color:var(--muted);font-size:.82rem;margin-bottom:1.5rem;" data-i18n="kbd.line1">Press <kbd style="background:rgba(255,255,255,.08);border:1px solid rgba(124,109,250,.2);border-radius:3px;padding:.05rem.4rem;font-family:inherit;font-size:.78rem;font-weight:600;">?</kbd> to toggle</p>
     <div style="display:flex;flex-direction:column;gap:.6rem;">
-      <div style="display:flex;align-items:center;justify-content:space-between;padding:.5rem .75rem;background:rgba(124,109,250,.06);border:1px solid rgba(124,109,250,.1);border-radius:8px;font-size:.85rem;"><span>Download PDF</span> <kbd style="background:rgba(255,255,255,.08);border:1px solid rgba(124,109,250,.2);border-radius:3px;padding:.15rem.5rem;font-family:inherit;font-size:.78rem;font-weight:600;min-width:24px;text-align:center;">P</kbd></div>
-      <div style="display:flex;align-items:center;justify-content:space-between;padding:.5rem .75rem;background:rgba(124,109,250,.06);border:1px solid rgba(124,109,250,.1);border-radius:8px;font-size:.85rem;"><span>Toggle theme</span> <kbd style="background:rgba(255,255,255,.08);border:1px solid rgba(124,109,250,.2);border-radius:3px;padding:.15rem.5rem;font-family:inherit;font-size:.78rem;font-weight:600;min-width:24px;text-align:center;">T</kbd></div>
-      <div style="display:flex;align-items:center;justify-content:space-between;padding:.5rem .75rem;background:rgba(124,109,250,.06);border:1px solid rgba(124,109,250,.1);border-radius:8px;font-size:.85rem;"><span>Toggle language</span> <kbd style="background:rgba(255,255,255,.08);border:1px solid rgba(124,109,250,.2);border-radius:3px;padding:.15rem.5rem;font-family:inherit;font-size:.78rem;font-weight:600;min-width:24px;text-align:center;">L</kbd></div>
-      <div style="display:flex;align-items:center;justify-content:space-between;padding:.5rem .75rem;background:rgba(124,109,250,.06);border:1px solid rgba(124,109,250,.1);border-radius:8px;font-size:.85rem;"><span>Back to Portfolio</span> <kbd style="background:rgba(255,255,255,.08);border:1px solid rgba(124,109,250,.2);border-radius:3px;padding:.15rem.5rem;font-family:inherit;font-size:.78rem;font-weight:600;min-width:24px;text-align:center;">B</kbd></div>
+      <div style="display:flex;align-items:center;justify-content:space-between;padding:.5rem .75rem;background:rgba(124,109,250,.06);border:1px solid rgba(124,109,250,.1);border-radius:8px;font-size:.85rem;"><span data-i18n="kbd.pdf">Download PDF</span> <kbd style="background:rgba(255,255,255,.08);border:1px solid rgba(124,109,250,.2);border-radius:3px;padding:.15rem.5rem;font-family:inherit;font-size:.78rem;font-weight:600;min-width:24px;text-align:center;">P</kbd></div>
+      <div style="display:flex;align-items:center;justify-content:space-between;padding:.5rem .75rem;background:rgba(124,109,250,.06);border:1px solid rgba(124,109,250,.1);border-radius:8px;font-size:.85rem;"><span data-i18n="kbd.theme">Toggle theme</span> <kbd style="background:rgba(255,255,255,.08);border:1px solid rgba(124,109,250,.2);border-radius:3px;padding:.15rem.5rem;font-family:inherit;font-size:.78rem;font-weight:600;min-width:24px;text-align:center;">T</kbd></div>
+      <div style="display:flex;align-items:center;justify-content:space-between;padding:.5rem .75rem;background:rgba(124,109,250,.06);border:1px solid rgba(124,109,250,.1);border-radius:8px;font-size:.85rem;"><span data-i18n="kbd.lang">Toggle language</span> <kbd style="background:rgba(255,255,255,.08);border:1px solid rgba(124,109,250,.2);border-radius:3px;padding:.15rem.5rem;font-family:inherit;font-size:.78rem;font-weight:600;min-width:24px;text-align:center;">L</kbd></div>
+      <div style="display:flex;align-items:center;justify-content:space-between;padding:.5rem .75rem;background:rgba(124,109,250,.06);border:1px solid rgba(124,109,250,.1);border-radius:8px;font-size:.85rem;"><span data-i18n="kbd.back">Back to Portfolio</span> <kbd style="background:rgba(255,255,255,.08);border:1px solid rgba(124,109,250,.2);border-radius:3px;padding:.15rem.5rem;font-family:inherit;font-size:.78rem;font-weight:600;min-width:24px;text-align:center;">B</kbd></div>
     </div>
-    <p style="margin-top:1.2rem;text-align:center;color:var(--muted);font-size:.78rem;">Press <kbd style="background:rgba(255,255,255,.08);border:1px solid rgba(124,109,250,.2);border-radius:3px;padding:.05rem.4rem;font-family:inherit;font-size:.7rem;font-weight:600;">Esc</kbd> to close</p>
+    <p style="margin-top:1.2rem;text-align:center;color:var(--muted);font-size:.78rem;" data-i18n="kbd.line2">Press <kbd style="background:rgba(255,255,255,.08);border:1px solid rgba(124,109,250,.2);border-radius:3px;padding:.05rem.4rem;font-family:inherit;font-size:.7rem;font-weight:600;">Esc</kbd> to close</p>
   </div>
 </div>
 

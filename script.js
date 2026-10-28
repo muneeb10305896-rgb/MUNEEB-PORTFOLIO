@@ -209,6 +209,53 @@ const translations = {
     'exp5.tag2': 'Data Entry',
     'exp5.tag3': 'Inventory',
     'exp5.tag4': 'Reporting',
+    'skills.prof.fullstack': 'Full-Stack Development (React/Next.js)',
+    'exp0.date': 'June 2026 &mdash; Present',
+    'exp1.date': 'July 2025 &mdash; April 2026',
+    'exp2.date': 'March &mdash; June 2023',
+    'exp6.date': 'Aug 2026 &mdash; Present',
+    'exp7.date': 'May &mdash; Oct 2026',
+    'exp8.date': 'July &mdash; Sept 2026',
+    'exp3.date': 'Sept 2021 &mdash; Sept 2025',
+    'exp4.date': 'June 2023 &mdash; Aug 2025',
+    'exp5.date': 'June 2022 &mdash; Feb 2023',
+    'hero.startup': 'Startup built &amp; live',
+    'hero.nordash-muted': '&mdash; Digital Agency',
+    'projects.mock-tagline': 'Digital Agency',
+    'map.loading': 'Loading map&hellip;',
+    'map.label': '&#128205; Helsinki, Finland',
+    'cert1.title': 'Python (Basic)',
+    'cert1.issuer': 'HackerRank &middot; 2026 &middot; Credential ID: d68eb9c153f7',
+    'cert2.title': 'JavaScript (Basic)',
+    'cert2.issuer': 'HackerRank &middot; 2026 &middot; Credential ID: 1b27c5657457',
+    'cert3.title': 'Artificial Intelligence Literacy',
+    'cert3.issuer': 'IBM SkillsBuild &middot; 2026 &middot; Credly verified badge',
+    'cert4.title': '2024 Aspire Leaders Program',
+    'cert4.issuer': 'Harvard Business School (HBS) &middot; Aspire Institute &middot; November 2024',
+    'cert5.title': 'Hygieniapassi &mdash; Food Hygiene Proficiency',
+    'cert5.issuer': 'Finnish Food Authority (Ruokavirasto) &middot; Finland',
+    'vel.fullstack': 'Full-Stack Developer',
+    'vel.itdev': 'IT Developer',
+    'vel.webdev': 'Web Development',
+    'vel.network': 'Network Support',
+    'vel.data': 'Data Handling',
+    'vel.problem': 'Problem Solving',
+    'vel.networking': 'Networking',
+    'kbd.title': 'Keyboard Shortcuts',
+    'kbd.sub': 'Press <kbd>?</kbd> to toggle this overlay',
+    'kbd.about': 'Scroll to About',
+    'kbd.experience': 'Scroll to Experience',
+    'kbd.projects': 'Scroll to Projects',
+    'kbd.skills': 'Scroll to Skills',
+    'kbd.education': 'Scroll to Education',
+    'kbd.contact': 'Scroll to Contact',
+    'kbd.resume': 'Open Resume',
+    'kbd.theme': 'Toggle theme',
+    'kbd.lang': 'Toggle language',
+    'kbd.top': 'Back to top',
+    'kbd.dismiss': 'Press <kbd>Esc</kbd> or <kbd>?</kbd> to close',
+    'cookie.text': 'This website uses cookies to enhance your experience. By continuing to visit this site you agree to our use of cookies. <a href="/privacy-policy.html" style="color:var(--accent);">Privacy Policy</a>',
+    'cookie.accept': 'Accept',
     'skills.pill.pos': 'POS Systems',
     'skills.pill.customer-service': 'Customer Service',
     'skills.pill.leadership': 'Leadership',
@@ -493,6 +540,53 @@ const translations = {
     'exp5.tag2': 'Tietojen sy&ouml;tt&ouml;',
     'exp5.tag3': 'Varastonhallinta',
     'exp5.tag4': 'Raportointi',
+    'skills.prof.fullstack': 'Full-stack-kehitys (React/Next.js)',
+    'exp0.date': 'Kesäkuu 2026 &mdash; nykyhetki',
+    'exp1.date': 'Heinäkuu 2025 &mdash; huhtikuu 2026',
+    'exp2.date': 'Maaliskuu &mdash; kesäkuu 2023',
+    'exp6.date': 'Elokuu 2026 &mdash; nykyhetki',
+    'exp7.date': 'Toukokuu &mdash; lokakuu 2026',
+    'exp8.date': 'Heinäkuu &mdash; syyskuu 2026',
+    'exp3.date': 'Syyskuu 2021 &mdash; syyskuu 2025',
+    'exp4.date': 'Kesäkuu 2023 &mdash; elokuu 2025',
+    'exp5.date': 'Kesäkuu 2022 &mdash; helmikuu 2023',
+    'hero.startup': 'Startup rakennettu &amp; julkaistu',
+    'hero.nordash-muted': '&mdash; digitoimisto',
+    'projects.mock-tagline': 'Digitoimisto',
+    'map.loading': 'Ladataan karttaa&hellip;',
+    'map.label': '&#128205; Helsinki, Suomi',
+    'cert1.title': 'Python (perustaso)',
+    'cert1.issuer': 'HackerRank &middot; 2026 &middot; Tunniste: d68eb9c153f7',
+    'cert2.title': 'JavaScript (perustaso)',
+    'cert2.issuer': 'HackerRank &middot; 2026 &middot; Tunniste: 1b27c5657457',
+    'cert3.title': 'Tekoälylukutaito',
+    'cert3.issuer': 'IBM SkillsBuild &middot; 2026 &middot; Credlyn vahvistama merkki',
+    'cert4.title': 'Aspire Leaders -ohjelma 2024',
+    'cert4.issuer': 'Harvard Business School (HBS) &middot; Aspire Institute &middot; marraskuu 2024',
+    'cert5.title': 'Hygieniapassi &mdash; hygieniaosaamistodistus',
+    'cert5.issuer': 'Ruokavirasto &middot; Suomi',
+    'vel.fullstack': 'Full-Stack-kehittäjä',
+    'vel.itdev': 'IT-kehittäjä',
+    'vel.webdev': 'Verkkokehitys',
+    'vel.network': 'Verkkotuki',
+    'vel.data': 'Datan käsittely',
+    'vel.problem': 'Ongelmanratkaisu',
+    'vel.networking': 'Verkkotekniikka',
+    'kbd.title': 'Pikanäppäimet',
+    'kbd.sub': 'Avaa tai sulje tämä näkymä painamalla <kbd>?</kbd>',
+    'kbd.about': 'Siirry: Tietoja',
+    'kbd.experience': 'Siirry: Kokemus',
+    'kbd.projects': 'Siirry: Projektit',
+    'kbd.skills': 'Siirry: Taidot',
+    'kbd.education': 'Siirry: Koulutus',
+    'kbd.contact': 'Siirry: Yhteys',
+    'kbd.resume': 'Avaa ansioluettelo',
+    'kbd.theme': 'Vaihda teema',
+    'kbd.lang': 'Vaihda kieli',
+    'kbd.top': 'Takaisin ylös',
+    'kbd.dismiss': 'Sulje painamalla <kbd>Esc</kbd> tai <kbd>?</kbd>',
+    'cookie.text': 'Tämä sivusto käyttää evästeitä käyttökokemuksen parantamiseksi. Jatkamalla sivuston käyttöä hyväksyt evästeiden käytön. <a href="/privacy-policy.html" style="color:var(--accent);">Tietosuojaseloste</a>',
+    'cookie.accept': 'Hyväksy',
     'skills.pill.pos': 'Kassajärjestelmät',
     'skills.pill.customer-service': 'Asiakaspalvelu',
     'skills.pill.leadership': 'Johtajuus',
@@ -941,13 +1035,24 @@ function tickParticles() {
 }
 
 /* &mdash;&mdash; TYPEWRITER (setTimeout-based &mdash; reliable across all browsers) &mdash;&mdash; */
-const twPhrases = [
-  'IT Student at UEF \uD83C\uDDEB\uD83C\uDDEE',
-  'Founder of NORDASH',
-  'Full-Stack Web Developer',
-  'Harvard Aspire 2024 Alumni',
-  'Slush 2026 Volunteer'
-];
+const twPhrasesByLang = {
+  en: [
+    'IT Student at UEF \uD83C\uDDEB\uD83C\uDDEE',
+    'Founder of NORDASH',
+    'Full-Stack Web Developer',
+    'Harvard Aspire 2024 Alumni',
+    'Slush 2026 Volunteer'
+  ],
+  fi: [
+    'IT-opiskelija, UEF \uD83C\uDDEB\uD83C\uDDEE',
+    'NORDASHin perustaja',
+    'Full-stack-verkkokehitt\u00e4j\u00e4',
+    'Harvard Aspire 2024 -alumni',
+    'Slush 2026 -vapaaehtoinen'
+  ]
+};
+/* phrases follow the active page language (set by applyLanguage) */
+const twPhrases = () => twPhrasesByLang[document.documentElement.lang === 'fi' ? 'fi' : 'en'];
 let twIdx = 0, twPos = 0, twDir = 1;
 const twSpeed = 55, twPause = 1500;
 const twEl = document.getElementById('typewriter');
@@ -955,7 +1060,9 @@ const twEl = document.getElementById('typewriter');
 if (twEl) {
   (function twTick() {
     /* split into code points so multi-unit chars (e.g. flag emoji) stay whole */
-    const chars = Array.from(twPhrases[twIdx]);
+    const list = twPhrases();
+    twIdx %= list.length;
+    const chars = Array.from(list[twIdx]);
     twPos += twDir;
 
     if (twPos > chars.length) {
@@ -965,7 +1072,7 @@ if (twEl) {
       return;
     } else if (twPos < 0) {
       twDir = 1; twPos = 0;
-      twIdx = (twIdx + 1) % twPhrases.length;
+      twIdx = (twIdx + 1) % twPhrases().length;
       twEl.textContent = '';
       setTimeout(twTick, 250);
       return;

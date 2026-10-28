@@ -106,8 +106,8 @@
 <link rel="stylesheet" href="style.min.css?v=12">
 <!-- Privacy-first analytics — GDPR compliant, no cookie banner needed. Replace data-domain with your actual domain. -->
 <div id="cookie-consent-banner" style="position:fixed;bottom:0;left:0;right:0;background:var(--card);border-top:1px solid var(--border);padding:1.5rem;z-index:1000;display:none;text-align:center;">
-    <p style="margin-bottom:1rem;">This website uses cookies to enhance your experience. By continuing to visit this site you agree to our use of cookies. <a href="/privacy-policy.html" style="color:var(--accent);">Privacy Policy</a></p>
-    <button id="accept-cookies" style="background:var(--accent);color:#fff;border:none;padding:.5rem 1rem;border-radius:5px;cursor:pointer;">Accept</button>
+    <p style="margin-bottom:1rem;" data-i18n="cookie.text">This website uses cookies to enhance your experience. By continuing to visit this site you agree to our use of cookies. <a href="/privacy-policy.html" style="color:var(--accent);">Privacy Policy</a></p>
+    <button id="accept-cookies" style="background:var(--accent);color:#fff;border:none;padding:.5rem 1rem;border-radius:5px;cursor:pointer;" data-i18n="cookie.accept">Accept</button>
 </div>
 
 <script>
@@ -263,7 +263,7 @@
       </div>
       <div class="hero-stats">
         <div class="stat"><div class="stat-val" data-count="10" data-suffix="+">10+</div><div class="stat-label" data-i18n="hero.roles">Roles held</div></div>
-        <div class="stat"><div class="stat-val">1</div><div class="stat-label">Startup built &amp; live</div></div>
+        <div class="stat"><div class="stat-val">1</div><div data-i18n="hero.startup" class="stat-label">Startup built &amp; live</div></div>
         <div class="stat"><div class="stat-val">2024</div><div class="stat-label">Harvard Aspire</div></div>
         <div class="stat"><div class="stat-val">UEF</div><div class="stat-label" data-i18n="hero.studying">Currently studying</div></div>
         <div class="stat"><div class="stat-val">ESN</div><div class="stat-label" data-i18n="hero.erasmus">Erasmus Network</div></div>
@@ -279,7 +279,7 @@
             <span class="hero-nordash-label" data-i18n="hero.nordash-label">Founder &amp; Full-Stack Developer</span>
           </div>
           <div class="hero-nordash-name">
-            NORDASH <span class="hero-nordash-muted">&mdash; Digital Agency</span>
+            NORDASH <span data-i18n="hero.nordash-muted" class="hero-nordash-muted">&mdash; Digital Agency</span>
           </div>
           <div class="hero-nordash-techs">
             <span>Next.js</span>
@@ -328,12 +328,12 @@
 <!-- VELOCITY SCROLL -->
 <div class="velocity-section">
   <div class="velocity-track track1" id="track1">
-    <span>NORDASH</span><span>Full-Stack Developer</span><span>IT Developer</span><span>Helsinki</span><span>Web Development</span><span>Network Support</span><span>Harvard Aspire</span><span>ESN Savo</span><span>Slush 2026</span><span>Finland <svg viewBox="0 0 18 11" width="18" height="11" xmlns="http://www.w3.org/2000/svg" style="vertical-align:middle"><rect width="18" height="11" fill="#fff"/><rect x="5" y="0" width="3" height="11" fill="#003580"/><rect x="0" y="4" width="18" height="3" fill="#003580"/></svg></span>
-    <span>NORDASH</span><span>Full-Stack Developer</span><span>IT Developer</span><span>Helsinki</span><span>Web Development</span><span>Network Support</span><span>Harvard Aspire</span><span>ESN Savo</span><span>Slush 2026</span><span>Finland <svg viewBox="0 0 18 11" width="18" height="11" xmlns="http://www.w3.org/2000/svg" style="vertical-align:middle"><rect width="18" height="11" fill="#fff"/><rect x="5" y="0" width="3" height="11" fill="#003580"/><rect x="0" y="4" width="18" height="3" fill="#003580"/></svg></span>
+    <span>NORDASH</span><span data-i18n="vel.fullstack">Full-Stack Developer</span><span data-i18n="vel.itdev">IT Developer</span><span>Helsinki</span><span data-i18n="vel.webdev">Web Development</span><span data-i18n="vel.network">Network Support</span><span>Harvard Aspire</span><span>ESN Savo</span><span>Slush 2026</span><span>Finland <svg viewBox="0 0 18 11" width="18" height="11" xmlns="http://www.w3.org/2000/svg" style="vertical-align:middle"><rect width="18" height="11" fill="#fff"/><rect x="5" y="0" width="3" height="11" fill="#003580"/><rect x="0" y="4" width="18" height="3" fill="#003580"/></svg></span>
+    <span>NORDASH</span><span data-i18n="vel.fullstack">Full-Stack Developer</span><span data-i18n="vel.itdev">IT Developer</span><span>Helsinki</span><span data-i18n="vel.webdev">Web Development</span><span data-i18n="vel.network">Network Support</span><span>Harvard Aspire</span><span>ESN Savo</span><span>Slush 2026</span><span>Finland <svg viewBox="0 0 18 11" width="18" height="11" xmlns="http://www.w3.org/2000/svg" style="vertical-align:middle"><rect width="18" height="11" fill="#fff"/><rect x="5" y="0" width="3" height="11" fill="#003580"/><rect x="0" y="4" width="18" height="3" fill="#003580"/></svg></span>
   </div>
   <div class="velocity-track track2" id="track2">
-    <span>NORDASH</span><span>UEF</span><span>DEVSiNC</span><span>Bahria University</span><span>Hameed Latif Hospital</span><span>Subway &middot; Aalto University</span><span>World Vision</span><span>Save the Children</span><span>Pioneer Enterprises</span><span>Acumen Enterprises</span><span>CDA Lahore</span><span>Data Handling</span><span>Problem Solving</span><span>Networking</span>
-    <span>NORDASH</span><span>UEF</span><span>DEVSiNC</span><span>Bahria University</span><span>Hameed Latif Hospital</span><span>Subway &middot; Aalto University</span><span>World Vision</span><span>Save the Children</span><span>Pioneer Enterprises</span><span>Acumen Enterprises</span><span>CDA Lahore</span><span>Data Handling</span><span>Problem Solving</span><span>Networking</span>
+    <span>NORDASH</span><span>UEF</span><span>DEVSiNC</span><span>Bahria University</span><span>Hameed Latif Hospital</span><span>Subway &middot; Aalto University</span><span>World Vision</span><span>Save the Children</span><span>Pioneer Enterprises</span><span>Acumen Enterprises</span><span>CDA Lahore</span><span data-i18n="vel.data">Data Handling</span><span data-i18n="vel.problem">Problem Solving</span><span data-i18n="vel.networking">Networking</span>
+    <span>NORDASH</span><span>UEF</span><span>DEVSiNC</span><span>Bahria University</span><span>Hameed Latif Hospital</span><span>Subway &middot; Aalto University</span><span>World Vision</span><span>Save the Children</span><span>Pioneer Enterprises</span><span>Acumen Enterprises</span><span>CDA Lahore</span><span data-i18n="vel.data">Data Handling</span><span data-i18n="vel.problem">Problem Solving</span><span data-i18n="vel.networking">Networking</span>
   </div>
 </div>
 
@@ -420,7 +420,7 @@
       <div class="exp-card-bar"></div><div class="exp-glow"></div>
       <div class="exp-header">
         <div class="exp-role" data-i18n="exp0.role">Founder &amp; Full-Stack Developer</div>
-        <div class="exp-date">June 2026 &mdash; Present</div>
+        <div class="exp-date" data-i18n="exp0.date">June 2026 &mdash; Present</div>
       </div>
       <div class="exp-company" data-i18n="exp0.company">NORDASH (digital agency) &middot; Helsinki, Finland</div>
       <ul class="exp-bullets">
@@ -442,7 +442,7 @@
       <div class="exp-card-bar"></div><div class="exp-glow"></div>
       <div class="exp-header">
         <div class="exp-role" data-i18n="exp1.role">IT Developer</div>
-        <div class="exp-date">July 2025 &mdash; April 2026</div>
+        <div class="exp-date" data-i18n="exp1.date">July 2025 &mdash; April 2026</div>
       </div>
       <div class="exp-company" data-i18n="exp1.company">DEVSiNC &middot; Remote, Lahore</div>
       <ul class="exp-bullets">
@@ -463,7 +463,7 @@
       <div class="exp-card-bar"></div><div class="exp-glow"></div>
       <div class="exp-header">
         <div class="exp-role" data-i18n="exp2.role">Network System Specialist (Intern)</div>
-        <div class="exp-date">March &mdash; June 2023</div>
+        <div class="exp-date" data-i18n="exp2.date">March &mdash; June 2023</div>
       </div>
       <div class="exp-company" data-i18n="exp2.company">Hameed Latif Hospital &middot; Lahore, Pakistan</div>
       <ul class="exp-bullets">
@@ -484,7 +484,7 @@
       <div class="exp-card-bar"></div><div class="exp-glow"></div>
       <div class="exp-header">
         <div class="exp-role" data-i18n="exp6.role">Sandwich Artist</div>
-        <div class="exp-date">Aug 2026 &mdash; Present</div>
+        <div class="exp-date" data-i18n="exp6.date">Aug 2026 &mdash; Present</div>
       </div>
       <div class="exp-company" data-i18n="exp6.company">Subway (Sodexo) &middot; Aalto University campus, Espoo</div>
       <ul class="exp-bullets">
@@ -505,7 +505,7 @@
       <div class="exp-card-bar"></div><div class="exp-glow"></div>
       <div class="exp-header">
         <div class="exp-role" data-i18n="exp7.role">Student Tutor</div>
-        <div class="exp-date">May &mdash; Oct 2026</div>
+        <div class="exp-date" data-i18n="exp7.date">May &mdash; Oct 2026</div>
       </div>
       <div class="exp-company" data-i18n="exp7.company">University of Eastern Finland &middot; School of Computing, Kuopio</div>
       <ul class="exp-bullets">
@@ -526,7 +526,7 @@
       <div class="exp-card-bar"></div><div class="exp-glow"></div>
       <div class="exp-header">
         <div class="exp-role" data-i18n="exp8.role">Fundraising Representative</div>
-        <div class="exp-date">July &mdash; Sept 2026</div>
+        <div class="exp-date" data-i18n="exp8.date">July &mdash; Sept 2026</div>
       </div>
       <div class="exp-company" data-i18n="exp8.company">World Vision Finland &amp; Save the Children Finland &middot; Helsinki</div>
       <ul class="exp-bullets">
@@ -546,7 +546,7 @@
       <div class="exp-card-bar"></div><div class="exp-glow"></div>
       <div class="exp-header">
         <div class="exp-role" data-i18n="exp3.role">Chairperson</div>
-        <div class="exp-date">Sept 2021 &mdash; Sept 2025</div>
+        <div class="exp-date" data-i18n="exp3.date">Sept 2021 &mdash; Sept 2025</div>
       </div>
       <div class="exp-company" data-i18n="exp3.company">Chanan Development Association (CDA) &middot; Lahore, Pakistan</div>
       <ul class="exp-bullets">
@@ -567,7 +567,7 @@
       <div class="exp-card-bar"></div><div class="exp-glow"></div>
       <div class="exp-header">
         <div class="exp-role" data-i18n="exp4.role">Truck Dispatcher</div>
-        <div class="exp-date">June 2023 &mdash; Aug 2025</div>
+        <div class="exp-date" data-i18n="exp4.date">June 2023 &mdash; Aug 2025</div>
       </div>
       <div class="exp-company" data-i18n="exp4.company">Pioneer Enterprises &amp; Acumen Enterprises &middot; Remote, United States</div>
       <ul class="exp-bullets">
@@ -588,7 +588,7 @@
       <div class="exp-card-bar"></div><div class="exp-glow"></div>
       <div class="exp-header">
         <div class="exp-role" data-i18n="exp5.role">Data Entry Specialist</div>
-        <div class="exp-date">June 2022 &mdash; Feb 2023</div>
+        <div class="exp-date" data-i18n="exp5.date">June 2022 &mdash; Feb 2023</div>
       </div>
       <div class="exp-company" data-i18n="exp5.company">Onestop Grocery Store &middot; Lahore, Pakistan</div>
       <ul class="exp-bullets">
@@ -665,7 +665,7 @@
             <div class="mock-browser-body">
               <div class="mock-wordmark">
                 <span class="mock-nord">NORDASH</span>
-                <span class="mock-tagline">Digital Agency</span>
+                <span data-i18n="projects.mock-tagline" class="mock-tagline">Digital Agency</span>
               </div>
               <img class="nordash-preview" src="assets/NORDASH-PORTAL.webp" alt="NORDASH digital agency portal dashboard showing CRM interface, lead management and job application system" loading="lazy" width="1200" height="768" decoding="async">
             </div>
@@ -803,35 +803,35 @@
   <div class="skills-bars reveal" data-delay="2">
     <div class="sbar-item">
       <div class="sbar-header"><span class="sbar-name" data-i18n="skills.prof.ms-office">Microsoft Office Suite</span><span class="sbar-pct">85%</span></div>
-      <div class="sbar-track"><div class="sbar-fill" data-width="85"></div></div>
+      <div class="sbar-track"><div class="sbar-fill" data-width="85" style="--sda-w:85%"></div></div>
     </div>
     <div class="sbar-item">
       <div class="sbar-header"><span class="sbar-name" data-i18n="skills.prof.data-entry">Data Entry &amp; Management</span><span class="sbar-pct">82%</span></div>
-      <div class="sbar-track"><div class="sbar-fill" data-width="82"></div></div>
+      <div class="sbar-track"><div class="sbar-fill" data-width="82" style="--sda-w:82%"></div></div>
     </div>
     <div class="sbar-item">
       <div class="sbar-header"><span class="sbar-name" data-i18n="skills.prof.problem-solving">Problem Solving &amp; Analysis</span><span class="sbar-pct">80%</span></div>
-      <div class="sbar-track"><div class="sbar-fill" data-width="80"></div></div>
+      <div class="sbar-track"><div class="sbar-fill" data-width="80" style="--sda-w:80%"></div></div>
     </div>
     <div class="sbar-item">
-      <div class="sbar-header"><span class="sbar-name">Full-Stack Development (React/Next.js)</span><span class="sbar-pct">78%</span></div>
-      <div class="sbar-track"><div class="sbar-fill" data-width="78"></div></div>
+      <div class="sbar-header"><span class="sbar-name" data-i18n="skills.prof.fullstack">Full-Stack Development (React/Next.js)</span><span class="sbar-pct">78%</span></div>
+      <div class="sbar-track"><div class="sbar-fill" data-width="78" style="--sda-w:78%"></div></div>
     </div>
     <div class="sbar-item">
       <div class="sbar-header"><span class="sbar-name" data-i18n="skills.prof.it-support">IT Support &amp; Networking</span><span class="sbar-pct">75%</span></div>
-      <div class="sbar-track"><div class="sbar-fill" data-width="75"></div></div>
+      <div class="sbar-track"><div class="sbar-fill" data-width="75" style="--sda-w:75%"></div></div>
     </div>
     <div class="sbar-item">
       <div class="sbar-header"><span class="sbar-name" data-i18n="skills.prof.web-dev">Web Development (HTML/CSS)</span><span class="sbar-pct">72%</span></div>
-      <div class="sbar-track"><div class="sbar-fill" data-width="72"></div></div>
+      <div class="sbar-track"><div class="sbar-fill" data-width="72" style="--sda-w:72%"></div></div>
     </div>
     <div class="sbar-item">
       <div class="sbar-header"><span class="sbar-name" data-i18n="skills.prof.git">Git &amp; Version Control</span><span class="sbar-pct">68%</span></div>
-      <div class="sbar-track"><div class="sbar-fill" data-width="68"></div></div>
+      <div class="sbar-track"><div class="sbar-fill" data-width="68" style="--sda-w:68%"></div></div>
     </div>
     <div class="sbar-item">
       <div class="sbar-header"><span class="sbar-name" data-i18n="skills.prof.python-r">Python &amp; R Programming</span><span class="sbar-pct">65%</span></div>
-      <div class="sbar-track"><div class="sbar-fill" data-width="65"></div></div>
+      <div class="sbar-track"><div class="sbar-fill" data-width="65" style="--sda-w:65%"></div></div>
     </div>
   </div>
 </section>
@@ -876,8 +876,8 @@
   <div class="cert-card reveal" data-delay="1">
     <div class="cert-badge">&#128013;</div>
     <div>
-      <div class="cert-title">Python (Basic)</div>
-      <div class="cert-issuer">HackerRank &middot; 2026 &middot; Credential ID: d68eb9c153f7</div>
+      <div data-i18n="cert1.title" class="cert-title">Python (Basic)</div>
+      <div data-i18n="cert1.issuer" class="cert-issuer">HackerRank &middot; 2026 &middot; Credential ID: d68eb9c153f7</div>
       <div class="cert-desc" data-i18n="cert1.desc">Verified skills assessment covering Python fundamentals: scalar types, operators, control flow, strings, collections, iteration, modularity, classes, and exception handling.</div>
       <a class="cert-verify" href="https://www.hackerrank.com/certificates/d68eb9c153f7" target="_blank" rel="noopener noreferrer">
         <span data-i18n="cert.verify">Verify credential</span>
@@ -888,8 +888,8 @@
   <div class="cert-card reveal" data-delay="2">
     <div class="cert-badge">&#9889;</div>
     <div>
-      <div class="cert-title">JavaScript (Basic)</div>
-      <div class="cert-issuer">HackerRank &middot; 2026 &middot; Credential ID: 1b27c5657457</div>
+      <div data-i18n="cert2.title" class="cert-title">JavaScript (Basic)</div>
+      <div data-i18n="cert2.issuer" class="cert-issuer">HackerRank &middot; 2026 &middot; Credential ID: 1b27c5657457</div>
       <div class="cert-desc" data-i18n="cert2.desc">Verified skills assessment covering JavaScript fundamentals: functions, currying, hoisting, scope, inheritance, events, and error handling.</div>
       <a class="cert-verify" href="https://www.hackerrank.com/certificates/1b27c5657457" target="_blank" rel="noopener noreferrer">
         <span data-i18n="cert.verify">Verify credential</span>
@@ -900,8 +900,8 @@
   <div class="cert-card reveal" data-delay="3">
     <div class="cert-badge">&#129302;</div>
     <div>
-      <div class="cert-title">Artificial Intelligence Literacy</div>
-      <div class="cert-issuer">IBM SkillsBuild &middot; 2026 &middot; Credly verified badge</div>
+      <div data-i18n="cert3.title" class="cert-title">Artificial Intelligence Literacy</div>
+      <div data-i18n="cert3.issuer" class="cert-issuer">IBM SkillsBuild &middot; 2026 &middot; Credly verified badge</div>
       <div class="cert-desc" data-i18n="cert3.desc">Foundational AI literacy: core AI concepts, machine learning basics, AI ethics, and practical applications of artificial intelligence in business and society.</div>
       <a class="cert-verify" href="https://www.credly.com/badges/74002bea-b6a5-494c-9036-aa3c2827f133" target="_blank" rel="noopener noreferrer">
         <span data-i18n="cert.verify">Verify credential</span>
@@ -912,8 +912,8 @@
   <div class="cert-card reveal" data-delay="4">
     <div class="cert-badge">&#127963;&#65039;</div>
     <div>
-      <div class="cert-title">2024 Aspire Leaders Program</div>
-      <div class="cert-issuer">Harvard Business School (HBS) &middot; Aspire Institute &middot; November 2024</div>
+      <div data-i18n="cert4.title" class="cert-title">2024 Aspire Leaders Program</div>
+      <div data-i18n="cert4.issuer" class="cert-issuer">Harvard Business School (HBS) &middot; Aspire Institute &middot; November 2024</div>
       <div class="cert-desc" data-i18n="cert4.desc">Global leadership and personal development program focused on critical thinking, communication, self-confidence, and social impact. Completed 30 hours of coursework within an international learning community. Mode: Online.</div>
       <a class="cert-verify" href="assets/Aspire_Leaders_2024_Certificate.pdf" target="_blank" rel="noopener noreferrer">
         <span data-i18n="cert.view">View certificate</span>
@@ -924,8 +924,8 @@
   <div class="cert-card reveal" data-delay="5">
     <div class="cert-badge">&#127869;&#65039;</div>
     <div>
-      <div class="cert-title">Hygieniapassi &mdash; Food Hygiene Proficiency</div>
-      <div class="cert-issuer">Finnish Food Authority (Ruokavirasto) &middot; Finland</div>
+      <div data-i18n="cert5.title" class="cert-title">Hygieniapassi &mdash; Food Hygiene Proficiency</div>
+      <div data-i18n="cert5.issuer" class="cert-issuer">Finnish Food Authority (Ruokavirasto) &middot; Finland</div>
       <div class="cert-desc" data-i18n="cert5.desc">Finnish food hygiene proficiency certificate (Finnish Food Authority) required for handling unpackaged, perishable food. Covers food safety, hygiene practices and legislation.</div>
     </div>
   </div>
@@ -1029,11 +1029,11 @@
     <div class="map-wrap" id="mapWrap">
       <div class="map-placeholder" id="mapPlaceholder" role="button" tabindex="0" aria-label="Map of Helsinki, Finland" style="display:flex;align-items:center;justify-content:center;height:180px;background:var(--card);border:1px solid var(--border);border-radius:12px;cursor:pointer;color:var(--muted);font-size:.9rem;gap:.6rem;transition:border-color .3s;" onclick="initMap()">
         <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 6-9 13-9 13s-9-7-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
-        <span id="mapPlaceholderText">Loading map&hellip;</span>
+        <span data-i18n="map.loading" id="mapPlaceholderText">Loading map&hellip;</span>
       </div>
       <iframe title="Helsinki Finland map" style="display:none" allowfullscreen></iframe>
     </div>
-    <p class="map-label">&#128205; Helsinki, Finland</p>
+    <p data-i18n="map.label" class="map-label">&#128205; Helsinki, Finland</p>
   </div>
 </section>
 
@@ -1064,24 +1064,24 @@
 <!-- KEYBOARD SHORTCUTS OVERLAY -->
 <div class="kbd-overlay" id="kbdOverlay" role="dialog" aria-label="Keyboard shortcuts">
   <div class="kbd-overlay-inner">
-    <h3>Keyboard Shortcuts</h3>
-    <p class="kbd-sub">Press <kbd>?</kbd> to toggle this overlay</p>
+    <h3 data-i18n="kbd.title">Keyboard Shortcuts</h3>
+    <p data-i18n="kbd.sub" class="kbd-sub">Press <kbd>?</kbd> to toggle this overlay</p>
     <div class="kbd-grid">
-      <div class="kbd-row"><span>Scroll to About</span> <kbd>A</kbd></div>
-      <div class="kbd-row"><span>Scroll to Experience</span> <kbd>E</kbd></div>
-      <div class="kbd-row"><span>Scroll to Projects</span> <kbd>P</kbd></div>
-      <div class="kbd-row"><span>Scroll to Skills</span> <kbd>S</kbd></div>
-      <div class="kbd-row"><span>Scroll to Education</span> <kbd>Shift</kbd>+<kbd>E</kbd></div>
-      <div class="kbd-row"><span>Scroll to Contact</span> <kbd>C</kbd></div>
-      <div class="kbd-row"><span>Open Resume</span> <kbd>R</kbd></div>
-      <div class="kbd-row"><span>Toggle theme</span> <kbd>T</kbd></div>
-      <div class="kbd-row"><span>Toggle language</span> <kbd>L</kbd></div>
-      <div class="kbd-row"><span>Back to top</span> <kbd>Home</kbd> or <kbd>0</kbd></div>
+      <div class="kbd-row"><span data-i18n="kbd.about">Scroll to About</span> <kbd>A</kbd></div>
+      <div class="kbd-row"><span data-i18n="kbd.experience">Scroll to Experience</span> <kbd>E</kbd></div>
+      <div class="kbd-row"><span data-i18n="kbd.projects">Scroll to Projects</span> <kbd>P</kbd></div>
+      <div class="kbd-row"><span data-i18n="kbd.skills">Scroll to Skills</span> <kbd>S</kbd></div>
+      <div class="kbd-row"><span data-i18n="kbd.education">Scroll to Education</span> <kbd>Shift</kbd>+<kbd>E</kbd></div>
+      <div class="kbd-row"><span data-i18n="kbd.contact">Scroll to Contact</span> <kbd>C</kbd></div>
+      <div class="kbd-row"><span data-i18n="kbd.resume">Open Resume</span> <kbd>R</kbd></div>
+      <div class="kbd-row"><span data-i18n="kbd.theme">Toggle theme</span> <kbd>T</kbd></div>
+      <div class="kbd-row"><span data-i18n="kbd.lang">Toggle language</span> <kbd>L</kbd></div>
+      <div class="kbd-row"><span data-i18n="kbd.top">Back to top</span> <kbd>Home</kbd> or <kbd>0</kbd></div>
     </div>
-    <span class="kbd-dismiss">Press <kbd>Esc</kbd> or <kbd>?</kbd> to close</span>
+    <span data-i18n="kbd.dismiss" class="kbd-dismiss">Press <kbd>Esc</kbd> or <kbd>?</kbd> to close</span>
   </div>
 </div>
 
-<script src="script.min.js?v=21" defer></script>
+<script src="script.min.js?v=22" defer></script>
 </body>
 </html>

@@ -1207,7 +1207,10 @@ window.addEventListener('load', () => {
   }, 300);
 });
 
-/* &mdash;&mdash; DRAGGABLE LANYARD &mdash;&mdash; */
+/* &mdash;&mdash; DRAGGABLE LANYARD &mdash;&mdash;
+   Verlet rope + weighted card with its own pendulum swing.
+   Physics runs on a fixed 60 Hz step so it feels the same on 60/90/120 Hz screens.
+   The card's clip ring is pinned to the rope end and the card rotates around it. */
 let tickLanyard = () => {};
 (function initLanyard() {
   const stage  = document.getElementById('lanyardStage');
@@ -1217,6 +1220,7 @@ let tickLanyard = () => {};
 
   const ctx  = canvas.getContext('2d');
   const holo = card.querySelector('.id-holo');
+  const hint = stage.querySelector('.lanyard-hint');
 
   /* ---- ROPE LAYER: wrapper keeps canvas + card in the same stacking context ---- */
   const layer = document.createElement('div');
@@ -1224,247 +1228,313 @@ let tickLanyard = () => {};
   document.body.appendChild(layer);
   layer.style.cssText = 'position:fixed;inset:0;width:100%;height:100%;pointer-events:none;z-index:50;';
 
-  // move both canvas and card into the layer
   layer.appendChild(canvas);
   canvas.style.cssText = 'position:absolute;inset:0;width:100%;height:100%;pointer-events:none;';
 
+  /* the clip ring centre (top:-4px + 28px/2) is where the rope ties on */
+  const ATTACH_Y = 10;
   layer.appendChild(card);
-  card.style.position      = 'absolute';  // same positioning context as canvas
-  card.style.left          = '0px';       // pinned &mdash; moved via transform only
-  card.style.top           = '0px';
-  card.style.willChange    = 'transform';
-  card.style.pointerEvents = 'auto';
-  card.style.zIndex        = '1';         // above canvas (default 0) within the layer
+  card.style.position        = 'absolute';
+  card.style.left            = '0px';
+  card.style.top             = '0px';
+  card.style.willChange      = 'transform';
+  card.style.pointerEvents   = 'auto';
+  card.style.zIndex          = '1';
+  card.style.transformOrigin = `50% ${ATTACH_Y}px`;   // rotate around the clip, not the card centre
+  card.style.cursor          = 'grab';
 
-  /* place the card with a composited transform (never left/top = layout) */
-  function placeCard(rot = 0) {
-    card.style.transform = `translate3d(${last.x}px,${last.y}px,0) translate(-50%,0) rotate(${rot}rad)`;
-  }
+  /* ---- physics constants (CSS px, per 1/60 s step) ---- */
+  const STEP_MS    = 1000 / 60;
+  const N          = 9;          // rope points (anchor + 8 links)
+  const GRAVITY    = 0.55;
+  const AIR        = 0.975;      // velocity kept per step
+  const ITER       = 14;         // constraint iterations: higher = less stretchy rope
+  const CARD_MASS  = 7;          // the card is much heavier than the rope
+  const MAX_SPEED  = 38;         // px/step cap so flings never explode
+  const MAX_PULL   = 300;        // how far the card can be dragged from the anchor
 
-  /* ---- physics constants ---- */
-  const SEGMENTS = 5, SEG_LEN = 18, GRAVITY = 0.65, FRICTION = 0.94, STIFFNESS = 3;
-  let anchorX = 0, anchorY = 0;
   const points = [];
-  for (let i = 0; i < SEGMENTS; i++) points.push({ x: 0, y: 0, ox: 0, oy: 0, pinned: i === 0 });
-  const last = points[SEGMENTS - 1];
+  for (let i = 0; i < N; i++) points.push({ x: 0, y: 0, ox: 0, oy: 0, w: i === 0 ? 0 : (i === N - 1 ? 1 / CARD_MASS : 1) });
+  const end = points[N - 1];
 
-  /* ---- position helpers ---- */
-  function resetToAnchor() {
+  let segLen = 11, anchorX = 0, anchorY = 0;
+
+  /* card pendulum: angle (rad) + angular velocity */
+  let theta = 0, omega = 0;
+
+  /* ---- layout measurement (cached: no forced layout per frame) ---- */
+  let stagePageTop = 0, stagePageCX = 0, stageH = 0, anchorOffset = 0;
+  function measureStage() {
     const sr = stage.getBoundingClientRect();
-    anchorX = sr.left + sr.width / 2;
-    anchorY = sr.top;
-    for (let i = 0; i < SEGMENTS; i++) {
-      const y = anchorY + i * SEG_LEN;
-      points[i].x = anchorX; points[i].y = y;
-      points[i].ox = anchorX; points[i].oy = y;
-    }
+    stagePageTop = sr.top + window.scrollY;
+    stagePageCX  = sr.left + sr.width / 2;
+    stageH       = sr.height;
+    /* hang the rope just below the "Drag me" hint instead of on top of it */
+    anchorOffset = hint && hint.offsetParent ? hint.offsetHeight + 14 : 6;
+    /* rope length adapts so the card always fits inside the stage */
+    const cardH   = card.offsetHeight || 360;
+    const ropeLen = Math.max(50, Math.min(95, stageH - anchorOffset - cardH - 20));
+    segLen = ropeLen / (N - 1);
+    settled = false;
   }
+
+  function resetToAnchor() {
+    anchorX = stagePageCX;
+    anchorY = stagePageTop - window.scrollY + anchorOffset;
+    for (let i = 0; i < N; i++) {
+      const p = points[i];
+      p.x = p.ox = anchorX;
+      p.y = p.oy = anchorY + i * segLen;
+    }
+    theta = omega = 0;
+    settled = false;
+  }
+
+  /* canvas in device pixels so the rope is sharp, sized to the layer's real CSS box
+     (window.innerWidth includes scrollbars/overflow and skewed the rope sideways) */
+  let dpr = 1, ropeGrad = null;
+  function sizeCanvas() {
+    dpr = Math.min(window.devicePixelRatio || 1, 2);
+    const w = layer.clientWidth, h = layer.clientHeight;
+    canvas.width  = Math.round(w * dpr);
+    canvas.height = Math.round(h * dpr);
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    ropeGrad = ctx.createLinearGradient(0, 0, 0, h);
+    ropeGrad.addColorStop(0, '#7c6dfa');
+    ropeGrad.addColorStop(1, '#4fc3f7');
+    dirty = null;
+    settled = false;
+  }
+
+  let settled = false, dirty = null;
+  sizeCanvas();
+  measureStage();
   resetToAnchor();
   placeCard();
-  // subtle fade-in so the card doesn't flash in (it's no longer inside the animated stage)
+
   card.style.opacity = '0';
   requestAnimationFrame(() => {
     card.style.transition = 'opacity 0.7s ease 0.3s';
     card.style.opacity = '1';
   });
 
-  function sizeCanvas() {
-    canvas.width  = window.innerWidth;
-    canvas.height = window.innerHeight;
-  }
-  function buildGradient() {
-    const g = ctx.createLinearGradient(0, 0, 0, canvas.height);
-    g.addColorStop(0, '#7c6dfa');
-    g.addColorStop(1, '#4fc3f7');
-    return g;
-  }
-  let ropeGrad = buildGradient();
-  sizeCanvas();
-
+  window.addEventListener('load', () => { measureStage(); }, { once: true });
+  setTimeout(measureStage, 1200); /* re-measure after fonts settle */
   window.addEventListener('resize', () => {
     sizeCanvas();
-    ropeGrad = buildGradient();
-    const sr = stage.getBoundingClientRect();
-    anchorX = sr.left + sr.width / 2;
-    anchorY = sr.top;
-    points[0].x = anchorX; points[0].y = anchorY;
-    points[0].ox = anchorX; points[0].oy = anchorY;
-    // if card is way off-screen after resize, reset it
-    if (last.x < -300 || last.x > window.innerWidth + 300 ||
-        last.y < -300 || last.y > window.innerHeight + 300) {
-      resetToAnchor();
-      placeCard();
-    }
+    measureStage();
+    if (end.x < -300 || end.x > layer.clientWidth + 300 || end.y < -300 || end.y > layer.clientHeight + 300) resetToAnchor();
   }, { passive: true });
 
   /* ---- drag interaction ---- */
-  let dragging = false, dragX = 0, dragY = 0;
-  function pointerXY(e) {
-    return e.touches ? { x: e.touches[0].clientX, y: e.touches[0].clientY } : { x: e.clientX, y: e.clientY };
-  }
+  let dragging = false, grabDX = 0, grabDY = 0, targetX = 0, targetY = 0;
+  let lastPX = 0, lastPY = 0, lastPT = 0, velX = 0, velY = 0;   // pointer velocity (px per step)
 
   card.addEventListener('pointerdown', e => {
-    dragging = true; last.pinned = true;
+    if (e.button !== undefined && e.button !== 0) return;
+    dragging = true; settled = false;
     card.setPointerCapture(e.pointerId);
-    const p = pointerXY(e); dragX = p.x; dragY = p.y;
+    card.style.cursor = 'grabbing';
+    /* keep the exact spot you grabbed under your finger */
+    grabDX = e.clientX - end.x; grabDY = e.clientY - end.y;
+    targetX = end.x; targetY = end.y;
+    lastPX = e.clientX; lastPY = e.clientY; lastPT = performance.now();
+    velX = velY = 0;
+    e.preventDefault();
   });
 
   card.addEventListener('pointermove', e => {
     if (!dragging) return;
-    const p = pointerXY(e);
-    dragX = Math.max(60, Math.min(window.innerWidth  - 60, p.x));
-    dragY = Math.max(30, Math.min(window.innerHeight - 30, p.y));
+    const now = performance.now();
+    const dt = Math.max(1, now - lastPT) / STEP_MS;
+    /* smoothed pointer velocity, used for the throw on release */
+    velX = velX * 0.6 + ((e.clientX - lastPX) / dt) * 0.4;
+    velY = velY * 0.6 + ((e.clientY - lastPY) / dt) * 0.4;
+    lastPX = e.clientX; lastPY = e.clientY; lastPT = now;
+
+    let tx = e.clientX - grabDX, ty = e.clientY - grabDY;
+    /* limit how far the lanyard stretches */
+    const dx = tx - anchorX, dy = ty - anchorY, d = Math.hypot(dx, dy);
+    if (d > MAX_PULL) { tx = anchorX + dx / d * MAX_PULL; ty = anchorY + dy / d * MAX_PULL; }
+    targetX = Math.max(20, Math.min(layer.clientWidth - 20, tx));
+    targetY = Math.max(10, Math.min(layer.clientHeight - 40, ty));
   });
 
   function endDrag() {
-    if (dragging) { dragging = false; last.pinned = false; }
+    if (!dragging) return;
+    dragging = false;
+    card.style.cursor = 'grab';
+    /* stale pointer (held still before letting go) => no throw */
+    if (performance.now() - lastPT > 80) velX = velY = 0;
+    const s = Math.hypot(velX, velY);
+    if (s > MAX_SPEED) { velX *= MAX_SPEED / s; velY *= MAX_SPEED / s; }
+    end.ox = end.x - velX; end.oy = end.y - velY;
+    settled = false;
   }
-  window.addEventListener('pointerup',     endDrag);
-  window.addEventListener('pointercancel', endDrag);
-  window.addEventListener('blur',          endDrag);   // window loses focus &rarr; end drag
+  card.addEventListener('pointerup',     endDrag);
+  card.addEventListener('pointercancel', endDrag);
+  card.addEventListener('lostpointercapture', endDrag);
+  window.addEventListener('blur', endDrag);
 
-  card.addEventListener('dblclick', () => {
-    resetToAnchor();
-    placeCard();
-    lanyardSettled = false;
-  });
+  card.addEventListener('dblclick', resetToAnchor);
 
-  /* &mdash;&mdash; KEYBOARD ALTERNATIVE for lanyard card &mdash;&mdash;
-     Arrow keys nudge the card so keyboard users can interact. */
-  let kbdNudgeX = 0, kbdNudgeY = 0;
-  function updateCardKeyboardNudge() {
-    if (kbdNudgeX === 0 && kbdNudgeY === 0) return;
-    dragX = Math.max(60, Math.min(window.innerWidth  - 60, anchorX + kbdNudgeX));
-    dragY = Math.max(60, Math.min(window.innerHeight - 30, anchorY + 80 + kbdNudgeY));
-    last.pinned = true;
-    // release after one tick so physics takes over (pull-back effect)
-    setTimeout(() => { if (!dragging) last.pinned = false; }, 200);
-  }
+  /* keyboard: arrow keys give the card a push, Home resets it */
   card.setAttribute('tabindex', '0');
   card.setAttribute('role', 'button');
-  card.setAttribute('aria-label', 'Draggable ID card. Use arrow keys to nudge it.');
+  card.setAttribute('aria-label', 'Draggable ID card. Use arrow keys to swing it.');
   card.addEventListener('keydown', e => {
-    const step = 30;
-    if      (e.key === 'ArrowLeft')  { e.preventDefault(); kbdNudgeX -= step; updateCardKeyboardNudge(); }
-    else if (e.key === 'ArrowRight') { e.preventDefault(); kbdNudgeX += step; updateCardKeyboardNudge(); }
-    else if (e.key === 'ArrowUp')    { e.preventDefault(); kbdNudgeY -= step; updateCardKeyboardNudge(); }
-    else if (e.key === 'ArrowDown')  { e.preventDefault(); kbdNudgeY += step; updateCardKeyboardNudge(); }
-    else if (e.key === 'Home')       { e.preventDefault(); kbdNudgeX = 0; kbdNudgeY = 0; resetToAnchor(); placeCard(); lanyardSettled = false; }
+    const k = 9;
+    const push = { ArrowLeft: [-k, 0], ArrowRight: [k, 0], ArrowUp: [0, -k], ArrowDown: [0, k] }[e.key];
+    if (push) { e.preventDefault(); end.ox -= push[0]; end.oy -= push[1]; settled = false; }
+    else if (e.key === 'Home') { e.preventDefault(); resetToAnchor(); }
   });
 
-  /* ---- physics tick ---- */
-  let layerHidden = false;
-  let lanyardSettled = false, prevAX = -1, prevAY = -1;
+  /* ---- one fixed physics step ---- */
+  function step() {
+    /* integrate (Verlet) */
+    for (let i = 1; i < N; i++) {
+      const p = points[i];
+      if (dragging && p === end) continue;
+      let vx = (p.x - p.ox) * AIR, vy = (p.y - p.oy) * AIR;
+      const s = Math.hypot(vx, vy);
+      if (s > MAX_SPEED) { vx *= MAX_SPEED / s; vy *= MAX_SPEED / s; }
+      p.ox = p.x; p.oy = p.y;
+      p.x += vx; p.y += vy + GRAVITY;
+    }
+    if (dragging) {
+      /* follow the finger with a little lag so the card has weight */
+      end.ox = end.x; end.oy = end.y;
+      end.x += (targetX - end.x) * 0.55;
+      end.y += (targetY - end.y) * 0.55;
+    }
+    points[0].x = points[0].ox = anchorX;
+    points[0].y = points[0].oy = anchorY;
 
-  /* PERF: cache the stage's page position once instead of calling
-     getBoundingClientRect() (a forced layout read) every single frame */
-  let stagePageTop = 0, stagePageCX = 0, stageH = 0;
-  function measureStage() {
-    const sr = stage.getBoundingClientRect();
-    stagePageTop = sr.top + window.scrollY;
-    stagePageCX  = sr.left + sr.width / 2;
-    stageH       = sr.height;
-    lanyardSettled = false;
+    /* distance constraints, mass-weighted so the heavy card pulls the rope taut */
+    for (let k = 0; k < ITER; k++) {
+      for (let i = 0; i < N - 1; i++) {
+        const a = points[i], b = points[i + 1];
+        const wa = a.w, wb = (dragging && b === end) ? 0 : b.w;
+        const wsum = wa + wb;
+        if (wsum === 0) continue;
+        let dx = b.x - a.x, dy = b.y - a.y;
+        let d = Math.hypot(dx, dy);
+        if (d < 1e-4) { dx = 0; dy = 1e-4; d = 1e-4; }
+        if (d <= segLen) continue;          /* rope can go slack but never stretch */
+        const diff = (d - segLen) / d / wsum;
+        if (wa) { a.x += dx * diff * wa; a.y += dy * diff * wa; }
+        if (wb) { b.x -= dx * diff * wb; b.y -= dy * diff * wb; }
+      }
+    }
+
+    /* card pendulum: it wants to hang in line with the last rope link,
+       and lags behind sideways acceleration like a real swinging card */
+    const sl = points[N - 2];
+    const ropeAngle = Math.atan2(end.y - sl.y, end.x - sl.x) - Math.PI / 2;
+    const ax = (end.x - end.ox);
+    let err = ropeAngle - theta;
+    err = Math.atan2(Math.sin(err), Math.cos(err));
+    omega += err * 0.09 - ax * 0.0015;
+    omega *= 0.9;
+    theta += omega;
+    theta = Math.max(-0.95, Math.min(0.95, theta));
   }
-  measureStage();
-  window.addEventListener('load', measureStage);
-  window.addEventListener('resize', measureStage, { passive: true });
-  setTimeout(measureStage, 1200); /* re-measure after fonts settle */
 
-  /* PERF: only clear the small rectangle the rope actually occupies,
-     not the entire fullscreen canvas, and only repaint when moving */
-  let dirtyX = 0, dirtyY = 0, dirtyW = 0, dirtyH = 0;
+  /* ---- render ---- */
+  function placeCard() {
+    card.style.transform =
+      `translate3d(${end.x}px,${end.y}px,0) translate(-50%,-${ATTACH_Y}px) rotate(${theta}rad)`;
+    if (holo) holo.style.transform = `rotate(${theta * 30}deg)`;
+  }
+
+  function drawRope() {
+    let minX = anchorX, maxX = anchorX, minY = anchorY, maxY = anchorY;
+    for (const p of points) {
+      if (p.x < minX) minX = p.x; if (p.x > maxX) maxX = p.x;
+      if (p.y < minY) minY = p.y; if (p.y > maxY) maxY = p.y;
+    }
+    const M = 14;
+    if (dirty) ctx.clearRect(dirty[0], dirty[1], dirty[2], dirty[3]);
+    dirty = [minX - M, minY - M, maxX - minX + M * 2, maxY - minY + M * 2];
+    ctx.clearRect(dirty[0], dirty[1], dirty[2], dirty[3]);
+
+    /* smooth curve through the points (midpoint quadratic) */
+    const path = () => {
+      ctx.beginPath();
+      ctx.moveTo(points[0].x, points[0].y);
+      for (let i = 1; i < N - 1; i++) {
+        const mx = (points[i].x + points[i + 1].x) / 2, my = (points[i].y + points[i + 1].y) / 2;
+        ctx.quadraticCurveTo(points[i].x, points[i].y, mx, my);
+      }
+      ctx.lineTo(end.x, end.y);
+    };
+    ctx.lineJoin = 'round'; ctx.lineCap = 'round';
+    ctx.strokeStyle = ropeGrad; ctx.lineWidth = 5; path(); ctx.stroke();
+    ctx.strokeStyle = 'rgba(255,255,255,.25)'; ctx.lineWidth = 1.5; path(); ctx.stroke();
+
+    ctx.fillStyle = '#9b8df8';
+    ctx.beginPath(); ctx.arc(anchorX, anchorY, 5, 0, Math.PI * 2); ctx.fill();
+  }
+
+  let layerHidden = false, acc = 0, lastT = performance.now(), prevAX = NaN, prevAY = NaN;
 
   tickLanyard = function() {
-    const stageTop    = stagePageTop - window.scrollY;
-    const stageBottom = stageTop + stageH;
+    const now = performance.now();
+    let elapsed = now - lastT; lastT = now;
+    if (elapsed > 100) elapsed = STEP_MS;    // tab was hidden: don't fast-forward
 
-    // skip all physics + rendering once the hero stage is well offscreen
-    if (stageBottom < -250 || stageTop > window.innerHeight + 250) {
+    let stageTop = stagePageTop - window.scrollY;
+    if (stageTop + stageH < -600 || stageTop > window.innerHeight + 600) {
+      if (!layerHidden) { layer.style.visibility = 'hidden'; layerHidden = true; }
+      return;
+    }
+    /* near the viewport: read the live position. Content above the hero can
+       change height after load (lazy sections, fonts), so a cached value drifts. */
+    const sr = stage.getBoundingClientRect();
+    stageTop = sr.top;
+    stagePageTop = sr.top + window.scrollY;
+    stagePageCX = sr.left + sr.width / 2;
+    if (stageTop + stageH < -250 || stageTop > window.innerHeight + 250) {
       if (!layerHidden) { layer.style.visibility = 'hidden'; layerHidden = true; }
       return;
     }
     if (layerHidden) { layer.style.visibility = 'visible'; layerHidden = false; }
 
     anchorX = stagePageCX;
-    anchorY = stageTop;
+    anchorY = stageTop + anchorOffset;
 
-    /* rope at rest + anchor unchanged &rarr; nothing to simulate or repaint */
-    if (lanyardSettled && !dragging &&
-        Math.abs(anchorX - prevAX) < 0.5 && Math.abs(anchorY - prevAY) < 0.5) return;
+    const anchorMoved = Math.abs(anchorX - prevAX) > 0.25 || Math.abs(anchorY - prevAY) > 0.25;
+    if (settled && !dragging && !anchorMoved) return;
     prevAX = anchorX; prevAY = anchorY;
 
-    // Verlet integration
-    for (const p of points) {
-      if (p.pinned) continue;
-      const vx = (p.x - p.ox) * FRICTION;
-      const vy = (p.y - p.oy) * FRICTION;
-      p.ox = p.x; p.oy = p.y;
-      p.x += vx; p.y += vy + GRAVITY;
-    }
-    if (dragging) { last.x = dragX; last.y = dragY; last.ox = dragX; last.oy = dragY; }
-
-    // constraint solving
-    for (let k = 0; k < STIFFNESS; k++) {
-      for (let i = 0; i < SEGMENTS - 1; i++) {
-        const a = points[i], b = points[i + 1];
-        let dx = b.x - a.x, dy = b.y - a.y;
-        let d = Math.hypot(dx, dy);
-        if (d < 0.001) { dx = 0.01; dy = -0.01; d = Math.hypot(dx, dy); }
-        const diff = (SEG_LEN - d) / d;
-        const ox = dx * diff * 0.5, oy = dy * diff * 0.5;
-        if (!a.pinned) { a.x -= ox; a.y -= oy; }
-        if (!b.pinned) { b.x += ox; b.y += oy; }
+    /* scrolling moves the whole page: carry the rope with it so it doesn't whip around */
+    if (anchorMoved && !dragging && points[0].y !== anchorY) {
+      const sx = anchorX - points[0].x, sy = anchorY - points[0].y;
+      if (Math.abs(sy) < 400) for (let i = 1; i < N; i++) {
+        const p = points[i];
+        p.x += sx; p.ox += sx; p.y += sy * 0.92; p.oy += sy * 0.92;
       }
-      points[0].x = anchorX; points[0].y = anchorY;
-      if (dragging) { last.x = dragX; last.y = dragY; }
     }
 
-    /* measure remaining motion &mdash; below threshold means visually static */
-    let energy = 0;
+    acc += elapsed;
+    let steps = 0;
+    while (acc >= STEP_MS && steps < 5) { step(); acc -= STEP_MS; steps++; }
+    if (steps === 5) acc = 0;
+
+    drawRope();
+    placeCard();
+
+    /* only stop simulating once the card really hangs still and straight
+       (low speed alone also happens at the top of every swing) */
+    let energy = Math.abs(omega) * 20;
     for (const p of points) energy += Math.abs(p.x - p.ox) + Math.abs(p.y - p.oy);
-    lanyardSettled = !dragging && energy < 1.2;
-
-    // render rope &mdash; clear only last frame's dirty region, then this frame's
-    let minX = anchorX, maxX = anchorX, minY = anchorY, maxY = anchorY;
-    for (const p of points) {
-      if (p.x < minX) minX = p.x; if (p.x > maxX) maxX = p.x;
-      if (p.y < minY) minY = p.y; if (p.y > maxY) maxY = p.y;
-    }
-    const M = 26; /* line width + anchor dot + AA margin */
-    if (dirtyW) ctx.clearRect(dirtyX, dirtyY, dirtyW, dirtyH);
-    dirtyX = minX - M; dirtyY = minY - M;
-    dirtyW = (maxX - minX) + M * 2; dirtyH = (maxY - minY) + M * 2;
-    ctx.clearRect(dirtyX, dirtyY, dirtyW, dirtyH);
-    ctx.lineJoin = 'round'; ctx.lineCap = 'round';
-
-    ctx.strokeStyle = ropeGrad; ctx.lineWidth = 5;
-    ctx.beginPath();
-    ctx.moveTo(points[0].x, points[0].y);
-    for (let i = 1; i < SEGMENTS; i++) ctx.lineTo(points[i].x, points[i].y);
-    ctx.stroke();
-
-    ctx.strokeStyle = 'rgba(255,255,255,.25)'; ctx.lineWidth = 2;
-    ctx.beginPath();
-    ctx.moveTo(points[0].x, points[0].y);
-    for (let i = 1; i < SEGMENTS; i++) ctx.lineTo(points[i].x, points[i].y);
-    ctx.stroke();
-
-    ctx.fillStyle = '#9b8df8';
-    ctx.beginPath(); ctx.arc(anchorX, anchorY + 2, 5, 0, Math.PI * 2); ctx.fill();
-
-    // position card &mdash; transform ONLY (left/top would force layout every frame)
-    const sl = points[SEGMENTS - 2];
-    const angle = Math.atan2(last.y - sl.y, last.x - sl.x) - Math.PI / 2;
-    card.style.transform = `translate3d(${last.x}px,${last.y}px,0) translate(-50%,0) rotate(${angle}rad)`;
-    if (holo) holo.style.transform = `rotate(${angle * 30}deg)`;
+    settled = !dragging && !anchorMoved && energy < 0.3 &&
+              Math.abs(end.x - anchorX) < 1 && Math.abs(theta) < 0.02;
   };
 
-  // initial swing-in
+  /* initial swing-in */
   if (!REDUCED_MOTION) {
-    setTimeout(() => {
-      if (Math.abs(last.x - anchorX) < 10) { last.x += 80; lanyardSettled = false; }
-    }, 1600);
+    setTimeout(() => { end.ox -= 14; settled = false; }, 1600);
   }
 })();
 

@@ -582,7 +582,7 @@ html[data-theme="light"] .skel-block {
       <div class="header-location" data-i18n="resume.location">Helsinki, Finland &middot; Open to IT &amp; data traineeships</div>
     </div>
     <div class="header-actions">
-      <a class="btn btn-pdf" href="assets/Muneeb_Ahmed_Butt_CV.pdf?v=2026-10" download="Muneeb_Ahmed_Butt_CV.pdf">
+      <a class="btn btn-pdf" data-cv href="assets/Muneeb_Ahmed_Butt_CV.pdf?v=2026-10" download="Muneeb_Ahmed_Butt_CV.pdf">
         <svg viewBox="0 0 20 20" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 3v10M5 13l5 5 5-5M3 17h14"/></svg>
         <span data-i18n="resume.pdf">Download PDF</span>
       </a>
@@ -619,7 +619,7 @@ html[data-theme="light"] .skel-block {
   <section>
     <h2 class="section-title" data-i18n="resume.profile">Profile</h2>
     <p class="profile-text" data-i18n="resume.profile-text">
-      IT student at the <strong>University of Eastern Finland</strong> and full-stack web developer based in <strong>Helsinki</strong>, building fast, interactive websites with React, Next.js, Tailwind CSS and Three.js. <strong>Founder of NORDASH</strong>, a full-stack digital agency for small businesses and startups. Previously IT Developer at DEVSiNC and network intern at Hameed Latif Hospital. <strong>2024 Aspire Leaders Program alumni</strong>, Slush 2026 volunteer and ESN Savo supporter &mdash; looking for an IT or data traineeship in Finland.
+      IT student at the <strong>University of Eastern Finland</strong> and full-stack web developer based in <strong>Helsinki</strong>, building fast, interactive websites with React, Next.js, Tailwind CSS and Three.js. <strong>Founder of NORDASH</strong>, a full-stack digital agency for small businesses and startups. Previously IT Developer at DEVSiNC and network intern at Hameed Latif Hospital. <strong>Aspire Leaders Program 2024 alumnus</strong>, Slush 2026 volunteer and ESN Savo supporter &mdash; looking for an IT or data traineeship in Finland.
     </p>
   </section>
 
@@ -959,7 +959,7 @@ html[data-theme="light"] .skel-block {
       <div class="cert-icon">&#127963;&#65039;</div>
       <div>
         <div class="cert-name" data-i18n="cert4.title">2024 Aspire Leaders Program</div>
-        <div class="cert-issuer" data-i18n="cert4.issuer">Harvard Business School (HBS) &middot; Aspire Institute &middot; November 2024</div>
+        <div class="cert-issuer" data-i18n="cert4.issuer">Aspire Institute &middot; Online &middot; November 2024</div>
         <div class="cert-desc" data-i18n="cert4.desc">Global leadership and personal development program focused on critical thinking, communication, self-confidence, and social impact. Completed 30 hours of coursework within an international learning community. Mode: Online.</div>
       </div>
     </div>
@@ -1136,7 +1136,7 @@ const resumeTranslations = {
     "cert3.issuer": "IBM SkillsBuild &middot; 2026 &middot; Credly verified badge",
     "cert3.desc": "Foundational AI literacy: core AI concepts, machine learning basics, AI ethics, and practical applications of artificial intelligence in business and society.",
     "cert4.title": "2024 Aspire Leaders Program",
-    "cert4.issuer": "Harvard Business School (HBS) &middot; Aspire Institute &middot; November 2024",
+    "cert4.issuer": "Aspire Institute &middot; Online &middot; November 2024",
     "cert4.desc": "Global leadership and personal development program focused on critical thinking, communication, self-confidence, and social impact. Completed 30 hours of coursework within an international learning community. Mode: Online.",
     "cert5.title": "Hygieniapassi &mdash; Food Hygiene Proficiency",
     "cert5.issuer": "Finnish Food Authority (Ruokavirasto) &middot; Finland",
@@ -1148,15 +1148,13 @@ const resumeTranslations = {
     "kbd.back": "Back to Portfolio",
     "kbd.line1": "Press <kbd style=\"background:rgba(255,255,255,.08);border:1px solid rgba(124,109,250,.2);border-radius:3px;padding:.05rem.4rem;font-family:inherit;font-size:.78rem;font-weight:600;\">?</kbd> to toggle",
     "kbd.line2": "Press <kbd style=\"background:rgba(255,255,255,.08);border:1px solid rgba(124,109,250,.2);border-radius:3px;padding:.05rem.4rem;font-family:inherit;font-size:.7rem;font-weight:600;\">Esc</kbd> to close",
-    "cookie.text": "This website uses cookies to enhance your experience. By continuing to visit this site you agree to our use of cookies. <a href=\"/privacy-policy.html\" style=\"color:var(--accent);\">Privacy Policy</a>",
-    "cookie.accept": "Accept",
     'resume.title': 'Muneeb Ahmed Butt — Resume',
     'resume.title-text': 'IT Student &amp; Full-Stack Web Developer &middot; Founder of NORDASH',
     'resume.location': 'Helsinki, Finland &middot; Open to IT &amp; data traineeships',
     'resume.pdf': 'Download PDF',
     'resume.back': '← Back to Portfolio',
     'resume.profile': 'Profile',
-    'resume.profile-text': 'IT student at the <strong>University of Eastern Finland</strong> and full-stack web developer based in <strong>Helsinki</strong>, building fast, interactive websites with React, Next.js, Tailwind CSS and Three.js. <strong>Founder of NORDASH</strong>, a full-stack digital agency for small businesses and startups. Previously IT Developer at DEVSiNC and network intern at Hameed Latif Hospital. <strong>2024 Aspire Leaders Program alumni</strong>, Slush 2026 volunteer and ESN Savo supporter &mdash; looking for an IT or data traineeship in Finland.',
+    'resume.profile-text': 'IT student at the <strong>University of Eastern Finland</strong> and full-stack web developer based in <strong>Helsinki</strong>, building fast, interactive websites with React, Next.js, Tailwind CSS and Three.js. <strong>Founder of NORDASH</strong>, a full-stack digital agency for small businesses and startups. Previously IT Developer at DEVSiNC and network intern at Hameed Latif Hospital. <strong>Aspire Leaders Program 2024 alumnus</strong>, Slush 2026 volunteer and ESN Savo supporter &mdash; looking for an IT or data traineeship in Finland.',
     'resume.experience': 'Experience',
     'resume.education': 'Education',
     'resume.skills': 'Skills',
@@ -1308,7 +1306,7 @@ const resumeTranslations = {
     "cert3.issuer": "IBM SkillsBuild &middot; 2026 &middot; Credlyn vahvistama merkki",
     "cert3.desc": "Perustason teko&auml;lylukutaito: keskeiset teko&auml;lykonseptit, koneoppimisen perusteet, teko&auml;lyn etiikka ja teko&auml;lyn k&auml;yt&auml;nn&ouml;n sovellukset liiketoiminnassa ja yhteiskunnassa.",
     "cert4.title": "Aspire Leaders -ohjelma 2024",
-    "cert4.issuer": "Harvard Business School (HBS) &middot; Aspire Institute &middot; marraskuu 2024",
+    "cert4.issuer": "Aspire Institute &middot; verkossa &middot; marraskuu 2024",
     "cert4.desc": "Maailmanlaajuinen johtajuus- ja henkil&ouml;kohtainen kehitysohjelma, joka keskittyi kriittiseen ajatteluun, viestint&auml;&auml;n, itseluottamukseen ja yhteiskunnalliseen vaikuttamiseen. Suoritit 30 tuntia kurssity&ouml;t&auml; kansainv&auml;lisess&auml; oppimisyhteis&ouml;ss&auml;. Tila: Verkossa.",
     "cert5.title": "Hygieniapassi &mdash; hygieniaosaamistodistus",
     "cert5.issuer": "Ruokavirasto &middot; Suomi",
@@ -1320,8 +1318,6 @@ const resumeTranslations = {
     "kbd.back": "Takaisin portfolioon",
     "kbd.line1": "Paina <kbd style=\"background:rgba(255,255,255,.08);border:1px solid rgba(124,109,250,.2);border-radius:3px;padding:.05rem.4rem;font-family:inherit;font-size:.78rem;font-weight:600;\">?</kbd> avataksesi tai sulkeaksesi",
     "kbd.line2": "Paina <kbd style=\"background:rgba(255,255,255,.08);border:1px solid rgba(124,109,250,.2);border-radius:3px;padding:.05rem.4rem;font-family:inherit;font-size:.7rem;font-weight:600;\">Esc</kbd> sulkeaksesi",
-    "cookie.text": "Tämä sivusto käyttää evästeitä käyttökokemuksen parantamiseksi. Jatkamalla sivuston käyttöä hyväksyt evästeiden käytön. <a href=\"/privacy-policy.html\" style=\"color:var(--accent);\">Tietosuojaseloste</a>",
-    "cookie.accept": "Hyväksy",
     'resume.title': 'Muneeb Ahmed Butt — Ansioluettelo',
     'resume.title-text': 'IT-opiskelija &amp; Full-Stack-verkkokehittäjä &middot; NORDASHin perustaja',
     'resume.location': 'Helsinki, Suomi · Avoin IT- ja data-alan harjoittelupaikoille',
@@ -1353,6 +1349,12 @@ function applyResumeLang(lang) {
     } else if (resumeTranslations.en[key] !== undefined) {
       el.innerHTML = resumeTranslations.en[key];
     }
+  });
+  // CV download links follow the page language
+  document.querySelectorAll('a[data-cv]').forEach(function(a) {
+    var file = lang === 'fi' ? 'Muneeb_Ahmed_Butt_CV_FI.pdf' : 'Muneeb_Ahmed_Butt_CV.pdf';
+    a.href = 'assets/' + file + '?v=2026-10';
+    a.setAttribute('download', file);
   });
   var langBtn = document.getElementById('resumeLangToggle');
   if (langBtn) {
@@ -1448,31 +1450,6 @@ if (themeBtn) {
     });
     setTimeout(function() { skel.classList.add('done'); }, 3000);
   }
-})();
-
-/* ---- COOKIE CONSENT BANNER ---- */
-(function() {
-  const bannerHTML = `
-    <div id="cookie-consent-banner" style="position:fixed;bottom:0;left:0;right:0;background:var(--card);border-top:1px solid var(--border);padding:1.5rem;z-index:1000;display:none;text-align:center;">
-      <p style="margin-bottom:1rem;" data-i18n="cookie.text">This website uses cookies to enhance your experience. By continuing to visit this site you agree to our use of cookies. <a href="/privacy-policy.html" style="color:var(--accent);">Privacy Policy</a></p>
-      <button id="accept-cookies" style="background:var(--accent);color:#fff;border:none;padding:.5rem 1rem;border-radius:5px;cursor:pointer;" data-i18n="cookie.accept">Accept</button>
-    </div>`;
-
-  document.body.insertAdjacentHTML('beforeend', bannerHTML);
-  applyResumeLang(getResumeLang());
-
-  const banner = document.getElementById('cookie-consent-banner');
-  const acceptBtn = document.getElementById('accept-cookies');
-
-  // Check if user has already accepted cookies
-  if (!localStorage.getItem('cookiesAccepted')) {
-    banner.style.display = 'block';
-  }
-
-  acceptBtn.addEventListener('click', function() {
-    localStorage.setItem('cookiesAccepted', 'true');
-    banner.style.display = 'none';
-  });
 })();
 
 /* ---- COLOR THEME (sync with main page) ---- */

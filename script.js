@@ -111,14 +111,14 @@ const translations = {
     'hero.id-status': '&#9679; Available',
     'about.p1': 'I\'m <strong>Muneeb Ahmed Butt</strong>, an IT student at the <strong>University of Eastern Finland</strong> and a web developer based in <strong>Helsinki</strong>. I build fast, interactive websites with React, Next.js, Tailwind CSS and Three.js. Before moving to Finland I completed a B.Tech in Computer Science at Bahria University, worked remotely as an <strong>IT Developer at DEVSiNC</strong>, and supported network operations in the IT department of Hameed Latif Hospital.',
     'about.nordash': 'In June 2026 I founded <strong>NORDASH</strong>, a full-stack digital agency that builds modern, high-performance websites for small businesses and startups. In Finland I\'ve also worked in customer-facing roles in food service and fundraising, which sharpened my communication and teamwork.',
-    'about.p2': 'I completed the <strong>2024 Aspire Leaders Program at Harvard Business School</strong>, a global leadership program focused on critical thinking, communication, and social impact &mdash; 30 hours of coursework with an international community.',
+    'about.p2': 'I completed the <strong>Aspire Leaders Program 2024</strong> (Aspire Institute), a global leadership program focused on critical thinking, communication, and social impact &mdash; 30 hours of coursework with an international community.',
     'about.p3': 'I volunteer at <strong>Slush 2026</strong>, support <strong>ESN Savo</strong>, and served as Chairperson of the Chanan Development Association. I\'m especially interested in data and how technology can support better decisions in healthcare and public policy &mdash; and I\'m learning Finnish step by step. <em>Opiskelen suomea joka päivä!</em>',
     'about.badge.it-dev': 'NORDASH Founder',
     'about.badge.web': 'Web Projects',
     'about.badge.networking': 'Networking',
     'about.badge.data': 'Data Handling',
     'about.badge.esn': 'ESN Member',
-    'about.badge.harvard': 'Harvard Aspire Alumni',
+    'about.badge.harvard': 'Aspire Leaders 2024',
     'about.badge.license': 'Category B License',
     'about.info.studying': 'Currently Studying',
     'about.info.studying-desc': 'B.Sc. IT &mdash; University of Eastern Finland (2025&ndash;2028)',
@@ -163,7 +163,7 @@ const translations = {
     'cv.meta.updated': 'Updated October 2026',
     'footer.copyright': '&copy; 2026 Muneeb Ahmed Butt. All rights reserved.',
     'page.title': 'Muneeb Ahmed Butt &mdash; IT Student &amp; Full-Stack Web Developer | Portfolio',
-    'hero.sr-text': 'IT Student at UEF Finland, full-stack web developer based in Helsinki, Founder of NORDASH, Harvard Aspire 2024 Alumni, Slush 2026 volunteer and problem solver.',
+    'hero.sr-text': 'IT Student at UEF Finland, full-stack web developer based in Helsinki, Founder of NORDASH, Aspire Leaders 2024 alumnus, Slush 2026 volunteer and problem solver.',
     'form.sending': 'Sending…',
     'form.success': '✓ Message sent! I\'ll get back to you as soon as possible.',
     'form.error': '✗ Something went wrong. Please email me directly at muneeb10305896@gmail.com',
@@ -231,7 +231,7 @@ const translations = {
     'cert3.title': 'Artificial Intelligence Literacy',
     'cert3.issuer': 'IBM SkillsBuild &middot; 2026 &middot; Credly verified badge',
     'cert4.title': '2024 Aspire Leaders Program',
-    'cert4.issuer': 'Harvard Business School (HBS) &middot; Aspire Institute &middot; November 2024',
+    'cert4.issuer': 'Aspire Institute &middot; Online &middot; November 2024',
     'cert5.title': 'Hygieniapassi &mdash; Food Hygiene Proficiency',
     'cert5.issuer': 'Finnish Food Authority (Ruokavirasto) &middot; Finland',
     'vel.fullstack': 'Full-Stack Developer',
@@ -254,8 +254,6 @@ const translations = {
     'kbd.lang': 'Toggle language',
     'kbd.top': 'Back to top',
     'kbd.dismiss': 'Press <kbd>Esc</kbd> or <kbd>?</kbd> to close',
-    'cookie.text': 'This website uses cookies to enhance your experience. By continuing to visit this site you agree to our use of cookies. <a href="/privacy-policy.html" style="color:var(--accent);">Privacy Policy</a>',
-    'cookie.accept': 'Accept',
     'skills.pill.pos': 'POS Systems',
     'skills.pill.customer-service': 'Customer Service',
     'skills.pill.leadership': 'Leadership',
@@ -442,14 +440,14 @@ const translations = {
     'hero.id-status': '&#9679; Saatavilla',
     'about.p1': 'Olen <strong>Muneeb Ahmed Butt</strong>, IT-opiskelija <strong>Itä-Suomen yliopistossa</strong> ja verkkokehittäjä <strong>Helsingissä</strong>. Rakennan nopeita ja interaktiivisia verkkosivustoja Reactilla, Next.js:llä, Tailwind CSS:llä ja Three.js:llä. Ennen Suomeen muuttoa suoritin tietojenkäsittelytieteen B.Tech-tutkinnon Bahria Universityssä, työskentelin etänä <strong>IT-kehittäjänä DEVSiNCillä</strong> ja tuin verkkotoimintoja Hameed Latif -sairaalan IT-osastolla.',
     'about.nordash': 'Kesäkuussa 2026 perustin <strong>NORDASHin</strong>, full-stack-digitoimiston, joka rakentaa moderneja ja suorituskykyisiä verkkosivustoja pienyrityksille ja startupeille. Suomessa olen työskennellyt myös asiakaspalvelutehtävissä ravintola-alalla ja varainhankinnassa, mikä on vahvistanut viestintä- ja tiimityötaitojani.',
-    'about.p2': 'Suoritin <strong>vuoden 2024 Aspire Leaders -ohjelman Harvard Business Schoolissa</strong>, maailmanlaajuisen johtajuusohjelman, joka keskittyi kriittiseen ajatteluun, viestint&auml;&auml;n ja yhteiskunnalliseen vaikuttamiseen &mdash; 30 tuntia kurssity&ouml;t&auml; kansainv&auml;lisess&auml; yhteis&ouml;ss&auml;.',
+    'about.p2': 'Suoritin <strong>Aspire Leaders -ohjelman 2024</strong> (Aspire Institute), maailmanlaajuisen johtajuusohjelman, joka keskittyi kriittiseen ajatteluun, viestint&auml;&auml;n ja yhteiskunnalliseen vaikuttamiseen &mdash; 30 tuntia kurssity&ouml;t&auml; kansainv&auml;lisess&auml; yhteis&ouml;ss&auml;.',
     'about.p3': 'Olen vapaaehtoisena <strong>Slush 2026</strong> -tapahtumassa, tuen <strong>ESN Savoa</strong> ja toimin Chanan Development Associationin puheenjohtajana. Olen erityisen kiinnostunut datasta ja siitä, miten teknologia voi tukea parempia päätöksiä terveydenhuollossa ja yhteiskuntapolitiikassa &mdash; ja opiskelen suomea askel kerrallaan. <em>Opiskelen suomea joka päivä!</em>',
     'about.badge.it-dev': 'NORDASHin perustaja',
     'about.badge.web': 'Verkkoprojektit',
     'about.badge.networking': 'Verkkotekniikka',
     'about.badge.data': 'Datan k&auml;sittely',
     'about.badge.esn': 'ESN-j&auml;sen',
-    'about.badge.harvard': 'Harvard Aspire -alumni',
+    'about.badge.harvard': 'Aspire Leaders 2024',
     'about.badge.license': 'B-luokan ajokortti',
     'about.info.studying': 'Opiskelee',
     'about.info.studying-desc': 'B.Sc. IT &mdash; Itä-Suomen yliopisto (2025&ndash;2028)',
@@ -494,7 +492,7 @@ const translations = {
     'cv.meta.updated': 'Päivitetty lokakuu 2026',
     'footer.copyright': '&copy; 2026 Muneeb Ahmed Butt. Kaikki oikeudet pid&auml;tet&auml;&auml;n.',
     'page.title': 'Muneeb Ahmed Butt &mdash; IT-opiskelija &amp; Full-Stack-verkkokehittäjä | Portfolio',
-    'hero.sr-text': 'IT-opiskelija Itä-Suomen yliopistossa, full-stack-verkkokehittäjä Helsingissä, NORDASHin perustaja, Harvard Aspire 2024 -alumni, Slush 2026 -vapaaehtoinen ja ongelmanratkaisija.',
+    'hero.sr-text': 'IT-opiskelija Itä-Suomen yliopistossa, full-stack-verkkokehittäjä Helsingissä, NORDASHin perustaja, Aspire Leaders 2024 -alumni, Slush 2026 -vapaaehtoinen ja ongelmanratkaisija.',
     'form.sending': 'Lähetetään…',
     'form.success': '✓ Viesti lähetetty! Palaan asiaan mahdollisimman pian.',
     'form.error': '✗ Jotain meni pieleen. Lähetä sähköpostia osoitteeseen muneeb10305896@gmail.com',
@@ -562,7 +560,7 @@ const translations = {
     'cert3.title': 'Tekoälylukutaito',
     'cert3.issuer': 'IBM SkillsBuild &middot; 2026 &middot; Credlyn vahvistama merkki',
     'cert4.title': 'Aspire Leaders -ohjelma 2024',
-    'cert4.issuer': 'Harvard Business School (HBS) &middot; Aspire Institute &middot; marraskuu 2024',
+    'cert4.issuer': 'Aspire Institute &middot; verkossa &middot; marraskuu 2024',
     'cert5.title': 'Hygieniapassi &mdash; hygieniaosaamistodistus',
     'cert5.issuer': 'Ruokavirasto &middot; Suomi',
     'vel.fullstack': 'Full-Stack-kehittäjä',
@@ -585,8 +583,6 @@ const translations = {
     'kbd.lang': 'Vaihda kieli',
     'kbd.top': 'Takaisin ylös',
     'kbd.dismiss': 'Sulje painamalla <kbd>Esc</kbd> tai <kbd>?</kbd>',
-    'cookie.text': 'Tämä sivusto käyttää evästeitä käyttökokemuksen parantamiseksi. Jatkamalla sivuston käyttöä hyväksyt evästeiden käytön. <a href="/privacy-policy.html" style="color:var(--accent);">Tietosuojaseloste</a>',
-    'cookie.accept': 'Hyväksy',
     'skills.pill.pos': 'Kassajärjestelmät',
     'skills.pill.customer-service': 'Asiakaspalvelu',
     'skills.pill.leadership': 'Johtajuus',
@@ -706,6 +702,12 @@ function applyLanguage(lang) {
       const fallback = translations.en[key];
       if (fallback !== undefined) el.placeholder = fallback;
     }
+  });
+  // CV download links follow the page language
+  document.querySelectorAll('a[data-cv]').forEach(a => {
+    const file = lang === 'fi' ? 'Muneeb_Ahmed_Butt_CV_FI.pdf' : 'Muneeb_Ahmed_Butt_CV.pdf';
+    a.href = 'assets/' + file + '?v=2026-10';
+    a.setAttribute('download', file);
   });
   // translate page title
   if (t['page.title']) document.title = t['page.title'];
@@ -1040,14 +1042,14 @@ const twPhrasesByLang = {
     'IT Student at UEF \uD83C\uDDEB\uD83C\uDDEE',
     'Founder of NORDASH',
     'Full-Stack Web Developer',
-    'Harvard Aspire 2024 Alumni',
+    'Aspire Leaders 2024 alumnus',
     'Slush 2026 Volunteer'
   ],
   fi: [
     'IT-opiskelija, UEF \uD83C\uDDEB\uD83C\uDDEE',
     'NORDASHin perustaja',
     'Full-stack-verkkokehitt\u00e4j\u00e4',
-    'Harvard Aspire 2024 -alumni',
+    'Aspire Leaders 2024 -alumni',
     'Slush 2026 -vapaaehtoinen'
   ]
 };

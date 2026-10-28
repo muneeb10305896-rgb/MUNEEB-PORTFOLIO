@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<!-- Source for assets/Muneeb_Ahmed_Butt_CV.pdf — build with: node cv-source/build-cv.js -->
+<html lang="fi">
+<head>
+<meta charset="UTF-8">
+<title>Muneeb Ahmed Butt — Ansioluettelo</title>
+<style>
+  @page { size: A4; margin: 0; }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --navy: #162635;
+    --accent: #2e7fb5;
+    --rule: #3f6a8c;
+    --sub: #9fc3dd;
+    --text: #2b2b2b;
+    --muted: #666666;
+  }
+  html, body { width: 210mm; height: 297mm; }
+  body {
+    font-family: "Liberation Sans", Arial, Helvetica, sans-serif;
+    color: var(--text);
+    font-size: 8.4pt;
+    line-height: 1.28;
+    display: flex;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+  a { color: inherit; text-decoration: none; }
+
+  /* ---------- Sidebar ---------- */
+  .side {
+    width: 64mm;
+    min-height: 297mm;
+    background: var(--navy);
+    color: #fff;
+    padding: 7mm 6mm 5mm;
+  }
+  .photo {
+    display: block;
+    width: 30mm; height: 30mm;
+    margin: 0 auto 2.2mm;
+    border-radius: 50%;
+    border: 1.2mm solid var(--accent);
+    object-fit: cover;
+  }
+  .name { text-align: center; font-size: 13.5pt; font-weight: 700; }
+  .title { text-align: center; color: var(--sub); font-size: 8.8pt; margin: .6mm 0 1.5mm; }
+  .side h2 {
+    font-size: 9.6pt; font-weight: 700; letter-spacing: .4pt;
+    border-bottom: .5mm solid var(--rule);
+    padding-bottom: .6mm; margin: 2.6mm 0 1.2mm;
+  }
+  .side .label { font-weight: 700; margin-top: .7mm; }
+  .side .link { color: #4a9bd1; }
+  .side p, .side li { font-size: 8.2pt; }
+  .side ul { list-style: none; }
+  .side li { margin-bottom: .35mm; }
+  .side .cert { margin-bottom: .7mm; }
+  .side .cert b { display: block; }
+  .side .cert span { color: var(--sub); font-size: 7.5pt; }
+
+  /* ---------- Main ---------- */
+  .main { flex: 1; padding: 6.5mm 7mm 5mm 6.5mm; }
+  .main h2 {
+    color: var(--navy); font-size: 10.6pt; font-weight: 700; letter-spacing: .4pt;
+    border-bottom: .55mm solid var(--accent);
+    padding-bottom: .5mm; margin: 2.4mm 0 1.3mm;
+  }
+  .main h2:first-child { margin-top: 0; }
+  .about { text-align: justify; }
+  .job { margin-bottom: 1.3mm; }
+  .job h3 { font-size: 8.8pt; font-weight: 700; }
+  .org { color: var(--accent); font-weight: 700; }
+  .date { color: var(--muted); font-style: italic; font-weight: 400; }
+  .job ul { margin: .5mm 0 0 4mm; }
+  .job li { margin-bottom: 0; padding-left: .5mm; }
+  .tech { color: var(--muted); }
+  .about { text-align: left; }
+</style>
+</head>
+<body>
+  <aside class="side">
+    <img class="photo" src="photo.jpg" alt="">
+    <div class="name">Muneeb Ahmed Butt</div>
+    <div class="title">IT-opiskelija &amp; verkkokehittäjä</div>
+
+    <h2>YHTEYSTIEDOT</h2>
+    <p class="label">Puhelin</p><p>+358 41 7414677</p>
+    <p class="label">Sähköposti</p><p>muneeb10305896@gmail.com</p>
+    <p class="label">Sijainti</p><p>Helsinki</p>
+    <p class="label">Portfolio</p><p><a class="link" href="https://muneeb-ahmed-butt.vercel.app">muneeb-ahmed-butt.vercel.app</a></p>
+    <p class="label">LinkedIn</p><p><a class="link" href="https://www.linkedin.com/in/muneebahmedbutt">linkedin.com/in/muneebahmedbutt</a></p>
+    <p class="label">GitHub</p><p><a class="link" href="https://github.com/muneeb10305896-rgb">github.com/muneeb10305896-rgb</a></p>
+
+    <h2>KIELITAITO</h2>
+    <ul>
+      <li>Englanti — sujuva</li>
+      <li>Suomi — A2 (opiskelen päivittäin)</li>
+      <li>Urdu — äidinkieli</li>
+    </ul>
+
+    <h2>TAIDOT</h2>
+    <ul>
+      <li>JavaScript / Python</li>
+      <li>React / Next.js / Tailwind CSS</li>
+      <li>Three.js / Framer Motion</li>
+      <li>Node.js / REST-rajapinnat</li>
+      <li>MongoDB / tietokannat</li>
+      <li>Solidity / lohkoketjut</li>
+      <li>Tietoverkkojen perusteet</li>
+      <li>IT-tuki &amp; vianmääritys</li>
+      <li>Git / versionhallinta</li>
+      <li>Microsoft Office (Word, Excel)</li>
+    </ul>
+
+    <h2>KOULUTUS</h2>
+    <p class="label">B.Sc. tietojenkäsittely (IT)</p>
+    <p>Itä-Suomen yliopisto — 2025–2028</p>
+    <p class="label">B.Tech tietojenkäsittelytiede</p>
+    <p>Bahria University — 2023–2025</p>
+
+    <h2>SERTIFIKAATIT</h2>
+    <div class="cert"><b>Aspire Leaders -ohjelma 2024</b><span>Aspire Institute · marraskuu 2024</span></div>
+    <div class="cert"><b>HackerRank Python (perustaso)</b><span>Tunniste: d68eb9c153f7</span></div>
+    <div class="cert"><b>HackerRank JavaScript (perustaso)</b><span>Tunniste: 1b27c5657457</span></div>
+    <div class="cert"><b>IBM AI Literacy -merkki</b><span>IBM / Credly</span></div>
+    <div class="cert"><b>Hygieniapassi</b><span>Ruokavirasto</span></div>
+
+    <h2>VAPAAEHTOISTYÖ</h2>
+    <ul>
+      <li>Slush 2026 — vapaaehtoinen</li>
+      <li>ESN Savo — hallituksen tukijäsen</li>
+    </ul>
+
+    <h2>AJOKORTTI</h2>
+    <p>B-luokka (henkilöauto)</p>
+  </aside>
+
+  <main class="main">
+    <h2>PROFIILI</h2>
+    <p class="about">IT-opiskelija Itä-Suomen yliopistossa ja full-stack-verkkokehittäjä Helsingissä. Rakennan nopeita ja interaktiivisia verkkosivustoja Reactilla, Next.js:llä, Tailwind CSS:llä ja Three.js:llä, ja perustin NORDASH-digitoimiston, joka toteuttaa oikeita projekteja oikeille asiakkaille. Minulla on käytännön kokemusta etänä tehtävästä verkkokehityksestä sekä sairaalan IT- ja verkkotuesta, ja asiakaspalvelutyö Suomessa on vahvistanut viestintä- ja tiimityötaitojani. Etsin IT- tai data-alan harjoittelupaikkaa, jossa voin oppia nopeasti ja tuoda lisäarvoa ensimmäisestä päivästä lähtien.</p>
+
+    <h2>IT-TYÖKOKEMUS</h2>
+    <div class="job">
+      <h3>Perustaja &amp; full-stack-kehittäjä</h3>
+      <div><span class="org">NORDASH, Helsinki</span> <span class="date">| 6/2026 – nyt</span></div>
+      <ul>
+        <li>Perustin full-stack-digitoimiston, joka rakentaa moderneja ja suorituskykyisiä verkkosivustoja pienyrityksille ja startupeille</li>
+        <li>Rakensin toimiston alustan Next.js:llä, Reactilla, Tailwind CSS:llä, Framer Motionilla ja Three.js:llä: MongoDB-taustajärjestelmä, CRM-hallintapaneeli ja liidien hallinta; julkaistu Vercelissä</li>
+        <li>Kirjoitin tuotevaatimusdokumentin (PRD), joka määrittelee palvelut, rakenteen ja käyttäjäpolut</li>
+        <li>Vastaan koko prosessista suunnittelusta ja kehityksestä julkaisuun ja asiakasviestintään</li>
+      </ul>
+    </div>
+    <div class="job">
+      <h3>IT-kehittäjä</h3>
+      <div><span class="org">DEVSiNC (etätyö), Lahore</span> <span class="date">| 7/2025 – 4/2026</span></div>
+      <ul>
+        <li>Hallinnoin ja päivitin yrityksen verkkosivustoja varmistaen niiden toimivuuden ja sisällön oikeellisuuden</li>
+        <li>Kehitin asiakkaiden verkkosivustoja vaatimusten mukaisesti: suunnittelu, päivitykset ja jatkuva ylläpito</li>
+        <li>Tein yhteistyötä tiimin kanssa kehitystyökaluja ja Git-versionhallintaa käyttäen</li>
+      </ul>
+    </div>
+    <div class="job">
+      <h3>Verkkojärjestelmäasiantuntija (harjoittelija)</h3>
+      <div><span class="org">Hameed Latif -sairaala, Lahore</span> <span class="date">| 3/2023 – 6/2023</span></div>
+      <ul>
+        <li>Ylläpidin sisäverkkoa, jonka kautta lääkärit ja henkilökunta käyttävät potilastietoja ja sairaalan järjestelmiä</li>
+        <li>Tuin vianmääritystä, järjestelmien konfigurointia, yhteysongelmien ratkaisua ja työasemien asennusta</li>
+      </ul>
+    </div>
+
+    <h2>MUU TYÖKOKEMUS</h2>
+    <div class="job">
+      <h3>Sandwich Artist</h3>
+      <div><span class="org">Subway (Sodexo), Aalto-yliopisto, Espoo</span> <span class="date">| 8/2026 – nyt</span></div>
+      <ul>
+        <li>Käytän kassajärjestelmää, käsittelen päivittäisen myynnin ja hallinnoin varastoa, inventaarioita ja myyntitietoja</li>
+        <li>Tarjoan nopeaa ja ystävällistä palvelua vilkkaassa kampusympäristössä elintarviketurvallisuusmääräyksiä noudattaen</li>
+      </ul>
+    </div>
+    <div class="job">
+      <h3>Opiskelijatuutori</h3>
+      <div><span class="org">Itä-Suomen yliopisto, tietojenkäsittelytieteen laitos</span> <span class="date">| 5/2026 – 10/2026</span></div>
+      <ul>
+        <li>Kokosin 12 tuutorin esittelyt Smart Start -oppaaseen; perustin WhatsApp- ja Telegram-ryhmät</li>
+        <li>Tuin uusia kansainvälisiä opiskelijoita asumisessa, saapumisessa, opinnoissa ja opiskelijaelämässä</li>
+      </ul>
+    </div>
+    <div class="job">
+      <h3>Varainhankkija</h3>
+      <div><span class="org">World Vision Suomi &amp; Pelastakaa Lapset ry</span> <span class="date">| 7/2026 – 9/2026</span></div>
+      <ul>
+        <li>Kasvokkain varainhankintaa Helsingissä; rakensin luottamusta nopeasti ja hankin pitkäaikaisia kuukausilahjoittajia tavoitteellisessa tiimissä</li>
+      </ul>
+    </div>
+    <div class="job">
+      <h3>Puheenjohtaja</h3>
+      <div><span class="org">Chanan Development Association (CDA), Pakistan</span> <span class="date">| 9/2021 – 9/2025</span></div>
+      <ul>
+        <li>Etenin toimeenpanevan komitean jäsenestä puheenjohtajaksi; johdin tapahtumia, projekteja ja vapaaehtoistiimejä</li>
+        <li>Vastasin päätöksenteosta, tiimin johtamisesta ja yhteisöohjelmien onnistuneesta toteutuksesta</li>
+      </ul>
+    </div>
+    <div class="job">
+      <h3>Kuljetusten ajojärjestelijä</h3>
+      <div><span class="org">Pioneer Enterprises &amp; Acumen Enterprises (USA, etätyö)</span> <span class="date">| 6/2023 – 8/2025</span></div>
+      <ul>
+        <li>Hallinnoin päivittäisiä rahtikuljetuksia DAT Load Boardilla ja RingCentralilla: reittisuunnittelu, kuljettajien seuranta reaaliajassa, hintavahvistukset ja kirjanpito</li>
+      </ul>
+    </div>
+    <div class="job">
+      <h3>Tietojen syöttäjä</h3>
+      <div><span class="org">Onestop Grocery Store, Lahore</span> <span class="date">| 6/2022 – 2/2023</span></div>
+      <ul>
+        <li>Kirjasin päivittäiset myynti-, varasto-, hinta- ja varastosaldotiedot tarkasti IPOS-järjestelmään</li>
+      </ul>
+    </div>
+
+    <h2>PROJEKTIT</h2>
+    <div class="job">
+      <h3>BubbaCoin (BUBBA) — ERC-20-lohkoketjutoken <span class="date">| UEF:n kurssiprojekti, 5/2026</span></h3>
+      <ul>
+        <li>Suunnittelin ja julkaisin oman ERC-20-tokenin Ethereum Sepolia -verkossa; 1 000 000 BUBBA-tokenia, julkisesti tarkistettavissa Etherscanissa <span class="tech">(Solidity, Hardhat, ethers.js, MetaMask)</span></li>
+      </ul>
+    </div>
+    <div class="job">
+      <h3>Henkilökohtainen portfolio <span class="date">| muneeb-ahmed-butt.vercel.app</span></h3>
+      <ul>
+        <li>Käsin koodattu sivusto ilman kehyksiä: EN/FI-käännös, vaalea ja tumma teema sekä canvas-animaatiot <span class="tech">(HTML, CSS, JavaScript)</span></li>
+      </ul>
+    </div>
+  </main>
+</body>
+</html>

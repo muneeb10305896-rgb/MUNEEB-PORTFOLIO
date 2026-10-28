@@ -222,10 +222,14 @@ body::after {
   background: rgba(124,109,250,.18); border: 1.5px solid rgba(124,109,250,.28);
   transition: all .4s cubic-bezier(.34,1.56,.64,1); text-decoration: none; display: block;
 }
-/* increase invisible hit-target from 8px → ~28px so the dots aren't frustrating to click */
+/* enlarge the invisible hit-target (8px → 36×20px) without overlapping neighbours:
+   dots are 20px apart (8px + .75rem gap), so each target covers exactly its own slot.
+   Scaled dots (hover/active) shrink their inset to keep the same on-screen size. */
 .section-dot::after {
-  content: ''; position: absolute; inset: -18px; border-radius: 50%;
+  content: ''; position: absolute; inset: -6px -14px;
 }
+.section-dot:hover:not(.active)::after { inset: -4px -10.5px; }
+.section-dot.active::after { inset: -2.5px -8.5px; }
 .section-dot::before {
   content: attr(aria-label); position: absolute; right: 18px; top: 50%;
   transform: translateY(-50%) translateX(4px);

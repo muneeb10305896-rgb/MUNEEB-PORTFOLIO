@@ -680,6 +680,13 @@ const translations = {
   }
 };
 
+/* placeholders are plain text, so turn entities like &hellip; into characters */
+function decodeEntities(str) {
+  const ta = document.createElement('textarea');
+  ta.innerHTML = str;
+  return ta.value;
+}
+
 function applyLanguage(lang) {
   const t = translations[lang];
   if (!t) return;
@@ -696,12 +703,8 @@ function applyLanguage(lang) {
   // translate placeholders
   document.querySelectorAll('[data-i18n-placeholder]').forEach(el => {
     const key = el.dataset.i18nPlaceholder;
-    if (t[key] !== undefined) {
-      el.placeholder = t[key];
-    } else {
-      const fallback = translations.en[key];
-      if (fallback !== undefined) el.placeholder = fallback;
-    }
+    const val = t[key] !== undefined ? t[key] : translations.en[key];
+    if (val !== undefined) el.placeholder = decodeEntities(val);
   });
   // CV download links follow the page language
   document.querySelectorAll('a[data-cv]').forEach(a => {
@@ -1712,6 +1715,7 @@ function initMap() {
     window.addEventListener('load', () => setTimeout(loadMap, 2500), { once: true });
   }
 }
+initMap();
 
 /* ============================================
    15. LIVE CLOCK — Helsinki, Finland
